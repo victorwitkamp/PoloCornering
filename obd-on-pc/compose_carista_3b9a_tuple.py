@@ -162,9 +162,8 @@ def main() -> int:
     parser.add_argument("--tail", default="", help="Tail bytes recovered from Carista/VagEcuInfo")
     args = parser.parse_args()
 
-    bit_actions = [item is not None for item in (args.set_bit, args.clear_bit)]
-    if sum(bit_actions) > 1:
-        raise ValueError("choose only one of --set-bit or --clear-bit")
+    if args.set_bit is not None and args.clear_bit is not None:
+        raise ValueError("cannot specify both --set-bit and --clear-bit")
 
     coding = read_coding(args.coding, args.coding_file)
     derived: DerivedValue | None = None
