@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import re
 from dataclasses import dataclass
 from pathlib import Path
@@ -65,7 +66,18 @@ def normalize_coding(value: str) -> str:
 
 def read_coding(coding: str | None, coding_file: str | None) -> str | None:
     if coding_file:
-        return normalize_coding(Path(coding_file).read_text(encoding="utf-8"))
+        text = Path(coding_file).read_text(encoding="utf-8")
+        if Path(coding_file).suffix.lower() == ".json":
+            data = json.loads(text)
+            entries = data if isinstance(data, list) else [data]
+            for entry in entries:
+                if not isinstance(entry, dict):
+                    continue
+                read_result = entry.get("read_result")
+                if isinstance(read_result, str) and read_result:
+                    return normalize_coding(read_result)
+            raise ValueError(f"no read_result found in {coding_file}")
+        return normalize_coding(text)
     if coding:
         return normalize_coding(coding)
     return None

@@ -105,6 +105,19 @@ coding type / tail bytes
 required pre-write session/state
 ```
 
+That means the remaining write work is now deliberately narrow:
+
+```text
+1. Confirm the car still reports the two cornering bits as clear with a fresh 220600 read.
+2. Recover or trace the real Carista tuple metadata for each changed chunk:
+   - base-fog:    value6 6C680ED000C8 + unknown rawAddress4/codingType/tail
+   - turn-signal: value6 412F60A60000 + unknown rawAddress4/codingType/tail
+3. Dry-run the exact structured 3B9A request and verify the TP2.0 frame split.
+4. Only execute a write after the generated 3B9A request is reviewed and repeated
+   exactly through --confirm-request.
+5. Immediately re-read 220600 and compare the result with the known-good coding.
+```
+
 The offline composer for the final shape is `compose_carista_3b9a_tuple.py`.
 It can now derive the two cornering `value6` chunks from a fresh long-coding
 read with `--cornering-fix base-fog` or `--cornering-fix turn-signal`, but it
@@ -185,6 +198,45 @@ logs/pq25_next_baseline_220600_settings_report.txt
 That report compares the fresh read against the known-good cornering-enabled
 coding, shows the high-confidence cornering bits, and includes a full bit table
 with unknown values labelled as unknown.
+
+For the fuller next-visit workflow, use the prepared write-readiness wrapper:
+
+```powershell
+.\run_next_cornering_write_prep.ps1 -Port COM10
+```
+
+It still performs only read/dry-run work:
+
+```text
+1. fresh direct 220600 baseline read
+2. decoded settings report
+3. base-fog structured tuple dry-run/value6 plan
+4. turn-signal structured tuple dry-run/value6 plan
+```
+
+If a Carista trace or later offline RE has recovered real tuple metadata, include
+it to produce complete dry-run requests:
+
+```powershell
+.\run_next_cornering_write_prep.ps1 -Port COM10 `
+  -BaseFogRawAddress4 <real-4-byte-hex> -BaseFogCodingType <real-type> -BaseFogTail <real-tail-if-any> `
+  -TurnSignalRawAddress4 <real-4-byte-hex> -TurnSignalCodingType <real-type> -TurnSignalTail <real-tail-if-any>
+```
+
+The wrapper does not execute writes. It writes the dry-run plans to:
+
+```text
+logs/pq25_next_base_fog_tuple_dry_run.txt
+logs/pq25_next_turn_signal_tuple_dry_run.txt
+```
+
+After reviewing one complete dry-run request, the guarded manual writer is:
+
+```powershell
+python .\write_carista_3b9a_tuple.py --request <reviewed-3B9A-request> --skip-session --execute --confirm-request <same-reviewed-3B9A-request> --i-understand-this-writes-bcm-coding
+```
+
+Do not run the manual writer with placeholders.
 
 Optional direct KWP comparison, still read-only:
 

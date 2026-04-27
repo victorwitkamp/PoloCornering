@@ -656,6 +656,26 @@ It still refuses to print a complete `3B9A` request unless real recovered
 `rawAddress4` and `codingType` values are supplied; placeholder raw-address bytes
 must not be used for an in-car write.
 
+The next in-car write-readiness wrapper is:
+
+```text
+run_next_cornering_write_prep.ps1
+```
+
+It performs the fresh `220600` read, regenerates the settings report, and writes
+dry-run plans for both cornering tuples. With recovered tuple metadata supplied,
+it also prints the complete structured `3B9A` request and TP2.0 frame plan, but
+it still does not execute writes.
+
+The guarded sender for a reviewed recovered tuple is:
+
+```text
+write_carista_3b9a_tuple.py
+```
+
+It defaults to dry-run. Execution requires an exact `--confirm-request` match and
+`--i-understand-this-writes-bcm-coding`.
+
 Carista's adaptation path appears to use `31B8`, `31BA`, `31B9`, and `32B8` routine/adaptation commands. Those remain blocked in scripted mode.
 
 Older external PQ25/Polo 6R coding references pointed to these long-coding locations for cornering lights:
