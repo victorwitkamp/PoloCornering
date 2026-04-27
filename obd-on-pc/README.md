@@ -485,8 +485,9 @@ The latest `vw_tp20_readonly_probe.py` update now:
 
 `decode_pq25_longcoding.py` now turns a raw coding string or direct-read JSON
 summary into a settings report. It compares the current coding against the
-known-good cornering-enabled reference, prints the known candidate bits, and
-includes a full byte/bit table with unknown bits explicitly marked.
+known-good cornering-enabled reference, prints the known candidate bits, derives
+the changed 6-byte Carista value chunks for the cornering fix, and includes a
+full byte/bit table with unknown bits explicitly marked.
 
 Additional Carista native-library research is written here:
 
@@ -642,6 +643,18 @@ Offline composer for a future proven Carista-shaped tuple:
 ```text
 compose_carista_3b9a_tuple.py
 ```
+
+The composer can now recreate the two candidate cornering value chunks directly
+from a live long-coding read, without hand-copying the 6-byte chunk:
+
+```powershell
+python .\compose_carista_3b9a_tuple.py --coding <current-longcoding> --cornering-fix base-fog
+python .\compose_carista_3b9a_tuple.py --coding <current-longcoding> --cornering-fix turn-signal
+```
+
+It still refuses to print a complete `3B9A` request unless real recovered
+`rawAddress4` and `codingType` values are supplied; placeholder raw-address bytes
+must not be used for an in-car write.
 
 Carista's adaptation path appears to use `31B8`, `31BA`, `31B9`, and `32B8` routine/adaptation commands. Those remain blocked in scripted mode.
 

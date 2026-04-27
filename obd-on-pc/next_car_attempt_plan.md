@@ -105,8 +105,11 @@ coding type / tail bytes
 required pre-write session/state
 ```
 
-The offline composer for the final shape is `compose_carista_3b9a_tuple.py`,
-but it must only be used with recovered real raw-address and tail bytes.
+The offline composer for the final shape is `compose_carista_3b9a_tuple.py`.
+It can now derive the two cornering `value6` chunks from a fresh long-coding
+read with `--cornering-fix base-fog` or `--cornering-fix turn-signal`, but it
+must only print a complete request when recovered real raw-address, coding type,
+and tail bytes are supplied.
 
 The direct `2E0600 + full coding` attempt was parsed by the BCM but rejected
 with `7F2E22`, so it proves the address/service is meaningful but not that the

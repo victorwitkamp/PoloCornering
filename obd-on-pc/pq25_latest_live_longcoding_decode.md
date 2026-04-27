@@ -106,6 +106,17 @@ byte 22: 00 == 00
 - The minimal proven target remains restoring byte 12 bit 6 and byte 21 bit 2 to the set state without disturbing the rest of the coding.
 - Because Carista's native write path is now known to use a structured `3B9A` builder rather than a 30-byte blob, the write implementation still has to be fixed before another live attempt is trustworthy.
 
+The decoder now carries the Carista-shaped value-chunk context into the current
+settings report:
+
+```text
+chunk 2 bytes 12-17: 2C680ED000C8 -> 6C680ED000C8
+chunk 3 bytes 18-23: 412F60A20000 -> 412F60A60000
+```
+
+Those are only the `value6` inputs. The complete `3B9A` tuple still requires the
+recovered Carista `rawAddress4`, `codingType`, and tail bytes.
+
 ## Unknown Settings
 
 - The remaining bytes and bits in this 30-byte coding string are not confidently mapped in this workspace yet.
