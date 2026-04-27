@@ -124,7 +124,8 @@ def derive_value6(
 
 def build_request(value6: str, raw_address4: str, coding_type: int, tail: str) -> str:
     if coding_type not in CODING_TYPE_LOOKUP:
-        raise ValueError(f"coding type must be one of {sorted(CODING_TYPE_LOOKUP.keys())}, got {coding_type}")
+        valid_types = ", ".join(str(key) for key in sorted(CODING_TYPE_LOOKUP.keys()))
+        raise ValueError(f"coding type must be one of {valid_types}, got {coding_type}")
     mapped_type = CODING_TYPE_LOOKUP[coding_type]
     if coding_type == 2:
         if len(tail) // 2 != 3:
@@ -194,7 +195,10 @@ def main() -> int:
     raw_address4 = require_len(args.raw_address4, "raw-address4", 4) if args.raw_address4 else None
     if (raw_address4 is None) != (args.coding_type is None):
         raise ValueError("--raw-address4 and --coding-type must be supplied together or not at all")
-    request = build_request(value6, raw_address4, args.coding_type, tail) if raw_address4 else None
+    if raw_address4 is not None and args.coding_type is not None:
+        request = build_request(value6, raw_address4, args.coding_type, tail)
+    else:
+        request = None
 
     print("Offline Carista-shaped 3B9A request")
     print()

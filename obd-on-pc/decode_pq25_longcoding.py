@@ -218,6 +218,8 @@ def format_chunk_write_context(
             continue
 
         changed_bits: list[str] = []
+        # Use None sentinels so a short final chunk is reported as a length
+        # mismatch instead of being rendered as a real 0x00 byte difference.
         for offset, (current_byte, reference_byte) in enumerate(
             itertools.zip_longest(current_chunk, reference_chunk)
         ):
