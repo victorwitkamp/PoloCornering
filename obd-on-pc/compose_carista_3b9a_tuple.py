@@ -204,7 +204,7 @@ def main() -> int:
 
     tail = clean_hex(args.tail, "tail")
     raw_address4 = require_len(args.raw_address4, "raw-address4", 4) if args.raw_address4 else None
-    if (raw_address4 is None) != (args.coding_type is None):
+    if (raw_address4 is None) ^ (args.coding_type is None):
         raise ValueError("--raw-address4 and --coding-type must be supplied together or not at all")
     if raw_address4 is not None and args.coding_type is not None:
         request = build_request(value6, raw_address4, args.coding_type, tail)

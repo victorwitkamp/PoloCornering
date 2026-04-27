@@ -79,6 +79,7 @@ def execute(args: argparse.Namespace, request: str) -> int:
     log_path = args.output_dir / f"{args.run_id}_write_carista_3b9a_tuple.txt"
     logger = Logger(log_path)
     send_header = ""
+    channel_opened = False
     try:
         with serial.Serial(args.port, args.baud, timeout=args.timeout, write_timeout=args.timeout) as ser:
             logger.write("Structured Carista 3B9A tuple write attempt")
@@ -96,6 +97,7 @@ def execute(args: argparse.Namespace, request: str) -> int:
             if channel is None:
                 raise RuntimeError(f"Could not open VW TP2.0 channel to unit address {args.unit}")
             send_header, listen_header, _open_frames = channel
+            channel_opened = True
 
             if not args.skip_channel_parameters:
                 get_channel_parameters(ser, logger, send_header, listen_header, args.timeout, args.parameter_profile)
@@ -126,7 +128,7 @@ def execute(args: argparse.Namespace, request: str) -> int:
             return 0 if status == "positive" else 3
     except (RuntimeError, ValueError, serial.SerialException) as exc:
         logger.write(f"ERROR: {exc}")
-        if send_header:
+        if channel_opened:
             logger.write("Channel may need an ignition cycle or adapter reconnect before retrying.")
         return 2
     finally:
