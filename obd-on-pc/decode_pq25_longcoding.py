@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import itertools
 import json
 import re
 from dataclasses import dataclass
@@ -25,6 +26,15 @@ class Candidate:
     @property
     def short_label(self) -> str:
         return f"[{self.confidence}] {self.label}"
+
+
+@dataclass(frozen=True)
+class ChunkDelta:
+    chunk_index: int
+    byte_start: int
+    current: str
+    reference: str
+    changed_bits: list[str]
 
 
 def normalize_hex(raw: str) -> str:
@@ -188,6 +198,81 @@ def format_full_bit_table(values: bytes, candidates: dict[tuple[int, int], Candi
     return lines
 
 
+def format_chunk_write_context(
+    values: bytes,
+    reference_values: bytes | None,
+    candidates: dict[tuple[int, int], Candidate],
+    chunk_size: int = 6,
+) -> list[str]:
+    lines: list[str] = []
+    if reference_values is None:
+        lines.append("No reference coding supplied; cannot derive target value chunks.")
+        return lines
+
+    chunk_deltas: list[ChunkDelta] = []
+    max_len = max(len(values), len(reference_values))
+    for start in range(0, max_len, chunk_size):
+        current_chunk = values[start:start + chunk_size]
+        reference_chunk = reference_values[start:start + chunk_size]
+        if current_chunk == reference_chunk:
+            continue
+
+        changed_bits: list[str] = []
+        # Use None sentinels so a short final chunk is reported as missing data,
+        # not rendered the same as an explicit 0x00 byte difference.
+        for offset, (current_byte, reference_byte) in enumerate(
+            itertools.zip_longest(current_chunk, reference_chunk)
+        ):
+            if current_byte is None or reference_byte is None:
+                changed_bits.append(
+                    f"byte {start + offset} length mismatch current={current_byte!r} reference={reference_byte!r}"
+                )
+                continue
+            if current_byte == reference_byte:
+                continue
+            absolute_byte = start + offset
+            for bit_index in range(8):
+                if not ((current_byte ^ reference_byte) & (1 << bit_index)):
+                    continue
+                candidate = candidates.get((absolute_byte, bit_index))
+                label = candidate.short_label if candidate else "unknown"
+                changed_bits.append(
+                    f"byte {absolute_byte} bit {bit_index} "
+                    f"{bit_state(current_byte, bit_index)} -> {bit_state(reference_byte, bit_index)} ({label})"
+                )
+
+        chunk_deltas.append(
+            ChunkDelta(
+                chunk_index=start // chunk_size,
+                byte_start=start,
+                current=current_chunk.hex().upper(),
+                reference=reference_chunk.hex().upper(),
+                changed_bits=changed_bits,
+            )
+        )
+
+    if not chunk_deltas:
+        lines.append("No changed value chunks versus reference.")
+        return lines
+
+    lines.extend(
+        [
+            "Carista-shaped write tuple context:",
+            "  Known request shape: 3B9A + value6 + rawAddress4 + coding-type/tail.",
+            "  The report can derive value6 from long coding, but rawAddress4/coding-type/tail still require Carista metadata or trace evidence.",
+        ]
+    )
+    for delta in chunk_deltas:
+        lines.append(
+            f"  chunk {delta.chunk_index} bytes {delta.byte_start:02d}-{delta.byte_start + chunk_size - 1:02d}: "
+            f"{delta.current} -> {delta.reference}"
+        )
+        for change in delta.changed_bits:
+            lines.append(f"    {change}")
+        lines.append(f"    composer value6: {delta.reference}")
+    return lines
+
+
 def format_report(
     coding: str,
     values: bytes,
@@ -221,6 +306,8 @@ def format_report(
             "",
             "Known setting states:",
             *[f"  {line}" for line in format_known_states(values, reference_values, candidates)],
+            "",
+            *format_chunk_write_context(values, reference_values, candidates_by_bit),
             "",
             "Full bit table:",
             *[f"  {line}" for line in format_full_bit_table(values, candidates_by_bit)],

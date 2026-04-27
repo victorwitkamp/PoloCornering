@@ -152,7 +152,7 @@ controller family, but it does not expose a full plaintext bit map.
 | 28 | `00` | `00000000` | unknown |
 | 29 | `00` | `00000000` | unknown |
 
-## Write-Tuple Implications
+## Current Write-Tuple Context
 
 Carista's native `WriteVagCodingCommand` does not write:
 
@@ -278,6 +278,27 @@ where `value6` is likely one of:
 ```
 
 but `rawAddress4` and `tail` are still unknown.
+
+The long-coding decoder now includes this value-chunk context automatically in
+the current settings report:
+
+```text
+Carista-shaped write tuple context:
+  Known request shape: 3B9A + value6 + rawAddress4 + coding-type/tail.
+  chunk 2 bytes 12-17: 2C680ED000C8 -> 6C680ED000C8
+  chunk 3 bytes 18-23: 412F60A20000 -> 412F60A60000
+```
+
+The tuple composer can recreate those `value6` chunks from a fresh long-coding
+read before a later write attempt:
+
+```powershell
+python compose_carista_3b9a_tuple.py --coding 3AB82B9F08A10000003008002C680ED000C8412F60A20000200000000000 --cornering-fix base-fog
+python compose_carista_3b9a_tuple.py --coding 3AB82B9F08A10000003008002C680ED000C8412F60A20000200000000000 --cornering-fix turn-signal
+```
+
+These commands intentionally print only the derived `value6` unless real
+`rawAddress4` and `codingType` values are supplied.
 
 ## Next Work Items
 

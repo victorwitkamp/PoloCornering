@@ -50,6 +50,16 @@ Known setting states:
   byte 21 bit 7 [A2] set   [medium] Fog-related capability/install bit; exact meaning uncertain; matches reference
   byte 22 bit 5 [00] clear [medium] Probable ADL-related bit; matches reference
 
+Carista-shaped write tuple context:
+  Known request shape: 3B9A + value6 + rawAddress4 + coding-type/tail.
+  The report can derive value6 from long coding, but rawAddress4/coding-type/tail still require Carista metadata or trace evidence.
+  chunk 2 bytes 12-17: 2C680ED000C8 -> 6C680ED000C8
+    byte 12 bit 6 clear -> set ([high] Base fog-light cornering function)
+    composer value6: 6C680ED000C8
+  chunk 3 bytes 18-23: 412F60A20000 -> 412F60A60000
+    byte 21 bit 2 clear -> set ([high] Turn-signal-triggered cornering assist)
+    composer value6: 412F60A60000
+
 Full bit table:
   byte 00: 3A 00111010
     bit 0: clear unknown
