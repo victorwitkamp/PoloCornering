@@ -1,0 +1,102 @@
+[
+  {
+    "attempt_id": "direct_ctr0_220600",
+    "mode": "direct_read",
+    "started": "2026-04-25T22:17:41.786",
+    "log_file": "logs\\pq25_after_cycle_all_params_read_direct_read_direct_ctr0_220600.txt",
+    "unit": "20",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "all",
+    "channel_parameter_status": "answered",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 138,
+      "T2": 255,
+      "T3": 79,
+      "T4": 255
+    },
+    "session_command": "",
+    "session_command_label": "",
+    "session_counter": "",
+    "session_status": "",
+    "session_result": "",
+    "pre_read_sequence": "",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": "",
+    "read_counter": "0",
+    "read_command": "220600",
+    "read_command_label": "",
+    "read_status": "positive",
+    "read_result": "6206003AB82B9F08A10000003008002C680ED000C8412F60A20000200000000000",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-25T22:17:47.977",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-25T22:17:49.289",
+        "source": "A00F8AFF32FF",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-25T22:17:49.289",
+        "source": "A00F8AFF32FF",
+        "header": "300",
+        "payload": "A10F8AFF4FFF",
+        "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+      },
+      {
+        "timestamp": "2026-04-25T22:17:50.463",
+        "source": "100003220600",
+        "header": "300",
+        "payload": "B1",
+        "tp20_label": "TP2.0 ACK/control frame"
+      },
+      {
+        "timestamp": "2026-04-25T22:17:50.463",
+        "source": "100003220600",
+        "header": "300",
+        "payload": "2000216206003AB8",
+        "tp20_label": "TP2.0 application frame with more data seq=0"
+      },
+      {
+        "timestamp": "2026-04-25T22:17:50.463",
+        "source": "100003220600",
+        "header": "300",
+        "payload": "212B9F08A1000000",
+        "tp20_label": "TP2.0 application frame with more data seq=1"
+      },
+      {
+        "timestamp": "2026-04-25T22:17:50.463",
+        "source": "100003220600",
+        "header": "300",
+        "payload": "223008002C680ED0",
+        "tp20_label": "TP2.0 application frame with more data seq=2"
+      },
+      {
+        "timestamp": "2026-04-25T22:17:50.463",
+        "source": "100003220600",
+        "header": "300",
+        "payload": "2300C8412F60A200",
+        "tp20_label": "TP2.0 application frame with more data seq=3"
+      },
+      {
+        "timestamp": "2026-04-25T22:17:50.463",
+        "source": "100003220600",
+        "header": "300",
+        "payload": "1400200000000000",
+        "tp20_label": "TP2.0 application final frame seq=4"
+      }
+    ],
+    "error": ""
+  }
+]

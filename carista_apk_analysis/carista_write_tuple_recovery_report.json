@@ -1,0 +1,99 @@
+{
+  "changed_chunks": [
+    {
+      "byte_start": 12,
+      "changed_bits": [
+        "byte 12 bit 6: clear -> set"
+      ],
+      "chunk_index": 2,
+      "current": "2C680ED000C8",
+      "target": "6C680ED000C8"
+    },
+    {
+      "byte_start": 18,
+      "changed_bits": [
+        "byte 21 bit 2: clear -> set"
+      ],
+      "chunk_index": 3,
+      "current": "412F60A20000",
+      "target": "412F60A60000"
+    }
+  ],
+  "coding_type_lookup": [
+    "00",
+    "10",
+    "10",
+    "03",
+    "10",
+    "10"
+  ],
+  "current_coding": "3AB82B9F08A10000003008002C680ED000C8412F60A20000200000000000",
+  "known_builder_shape": {
+    "prefix": "3B9A",
+    "raw_address_length": 4,
+    "type_2_tail_length": 3,
+    "value_length": 6
+  },
+  "read_literal": "1A9A",
+  "symbols": [
+    {
+      "address": 13640860,
+      "label": "ReadVagCanLongCodingCommand::getRequest",
+      "size": 20
+    },
+    {
+      "address": 13644476,
+      "label": "WriteVagCodingCommand::getRequest",
+      "size": 300
+    },
+    {
+      "address": 13643848,
+      "label": "WriteVagCodingCommand::ctor",
+      "size": 552
+    },
+    {
+      "address": 18068038,
+      "label": "VagSetting::insertValue",
+      "size": 22
+    },
+    {
+      "address": 19761296,
+      "label": "ByteUtils::insertValue",
+      "size": 344
+    },
+    {
+      "address": 19276012,
+      "label": "VagOperationDelegate::getSettingRawAddress",
+      "size": 204
+    },
+    {
+      "address": 19283180,
+      "label": "VagOperationDelegate::writeVagCanCodingValue",
+      "size": 324
+    },
+    {
+      "address": 17102080,
+      "label": "VagCanLongCodingSetting::ctor_bit",
+      "size": 120
+    },
+    {
+      "address": 17101956,
+      "label": "VagCanLongCodingSetting::ctor_vector",
+      "size": 124
+    }
+  ],
+  "target_coding": "3AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000",
+  "write_literal": "3B9A",
+  "writer_flow_findings": {
+    "blind_full_coding_results": {
+      "2E0600_plus_30_byte_coding": "parsed negative response 7F2E22",
+      "3B9A_plus_30_byte_coding": "no useful response"
+    },
+    "coding_type_rules": [
+      "type 2 preserved",
+      "non-type-2 normalized to type 3",
+      "sentinel metadata path forces type 5"
+    ],
+    "input_shape": "64-bit raw-value key plus compact value vector"
+  }
+}

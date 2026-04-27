@@ -1,0 +1,323 @@
+PQ25 BCM long-coding decode
+
+Coding bytes: 30
+Coding hex:   3AB82B9F08A10000003008002C680ED000C8412F60A20000200000000000
+Reference:    3AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000
+
+Deltas versus known-good cornering-enabled reference:
+  byte 12: 2C -> 6C; bit 6 clear -> set ([high] Base fog-light cornering function)
+  byte 21: A2 -> A6; bit 2 clear -> set ([high] Turn-signal-triggered cornering assist)
+
+Bytes:
+  00: 3A 00111010
+  01: B8 10111000
+  02: 2B 00101011
+  03: 9F 10011111
+  04: 08 00001000
+  05: A1 10100001
+  06: 00 00000000
+  07: 00 00000000
+  08: 00 00000000
+  09: 30 00110000
+  10: 08 00001000
+  11: 00 00000000
+  12: 2C 00101100
+  13: 68 01101000
+  14: 0E 00001110
+  15: D0 11010000
+  16: 00 00000000
+  17: C8 11001000
+  18: 41 01000001
+  19: 2F 00101111
+  20: 60 01100000
+  21: A2 10100010
+  22: 00 00000000
+  23: 00 00000000
+  24: 20 00100000
+  25: 00 00000000
+  26: 00 00000000
+  27: 00 00000000
+  28: 00 00000000
+  29: 00 00000000
+
+Known setting states:
+  byte 12 bit 6 [2C] clear [high] Base fog-light cornering function; reference set
+  byte 21 bit 2 [A2] clear [high] Turn-signal-triggered cornering assist; reference set
+  byte 13 bit 6 [68] set   [medium] Coming/Leaving Home fog-vs-low-beam selector (docs disagree with Carista UI); matches reference
+  byte 13 bit 0 [68] clear [medium] Parking-light behavior group member; matches reference
+  byte 13 bit 1 [68] clear [medium] Parking-light behavior group member; matches reference
+  byte 13 bit 3 [68] set   [medium] Parking-light behavior group member; matches reference
+  byte 21 bit 7 [A2] set   [medium] Fog-related capability/install bit; exact meaning uncertain; matches reference
+  byte 22 bit 5 [00] clear [medium] Probable ADL-related bit; matches reference
+
+Full bit table:
+  byte 00: 3A 00111010
+    bit 0: clear unknown
+    bit 1: set   unknown
+    bit 2: clear unknown
+    bit 3: set   unknown
+    bit 4: set   unknown
+    bit 5: set   unknown
+    bit 6: clear unknown
+    bit 7: clear unknown
+  byte 01: B8 10111000
+    bit 0: clear unknown
+    bit 1: clear unknown
+    bit 2: clear unknown
+    bit 3: set   unknown
+    bit 4: set   unknown
+    bit 5: set   unknown
+    bit 6: clear unknown
+    bit 7: set   unknown
+  byte 02: 2B 00101011
+    bit 0: set   unknown
+    bit 1: set   unknown
+    bit 2: clear unknown
+    bit 3: set   unknown
+    bit 4: clear unknown
+    bit 5: set   unknown
+    bit 6: clear unknown
+    bit 7: clear unknown
+  byte 03: 9F 10011111
+    bit 0: set   unknown
+    bit 1: set   unknown
+    bit 2: set   unknown
+    bit 3: set   unknown
+    bit 4: set   unknown
+    bit 5: clear unknown
+    bit 6: clear unknown
+    bit 7: set   unknown
+  byte 04: 08 00001000
+    bit 0: clear unknown
+    bit 1: clear unknown
+    bit 2: clear unknown
+    bit 3: set   unknown
+    bit 4: clear unknown
+    bit 5: clear unknown
+    bit 6: clear unknown
+    bit 7: clear unknown
+  byte 05: A1 10100001
+    bit 0: set   unknown
+    bit 1: clear unknown
+    bit 2: clear unknown
+    bit 3: clear unknown
+    bit 4: clear unknown
+    bit 5: set   unknown
+    bit 6: clear unknown
+    bit 7: set   unknown
+  byte 06: 00 00000000
+    bit 0: clear unknown
+    bit 1: clear unknown
+    bit 2: clear unknown
+    bit 3: clear unknown
+    bit 4: clear unknown
+    bit 5: clear unknown
+    bit 6: clear unknown
+    bit 7: clear unknown
+  byte 07: 00 00000000
+    bit 0: clear unknown
+    bit 1: clear unknown
+    bit 2: clear unknown
+    bit 3: clear unknown
+    bit 4: clear unknown
+    bit 5: clear unknown
+    bit 6: clear unknown
+    bit 7: clear unknown
+  byte 08: 00 00000000
+    bit 0: clear unknown
+    bit 1: clear unknown
+    bit 2: clear unknown
+    bit 3: clear unknown
+    bit 4: clear unknown
+    bit 5: clear unknown
+    bit 6: clear unknown
+    bit 7: clear unknown
+  byte 09: 30 00110000
+    bit 0: clear unknown
+    bit 1: clear unknown
+    bit 2: clear unknown
+    bit 3: clear unknown
+    bit 4: set   unknown
+    bit 5: set   unknown
+    bit 6: clear unknown
+    bit 7: clear unknown
+  byte 10: 08 00001000
+    bit 0: clear unknown
+    bit 1: clear unknown
+    bit 2: clear unknown
+    bit 3: set   unknown
+    bit 4: clear unknown
+    bit 5: clear unknown
+    bit 6: clear unknown
+    bit 7: clear unknown
+  byte 11: 00 00000000
+    bit 0: clear unknown
+    bit 1: clear unknown
+    bit 2: clear unknown
+    bit 3: clear unknown
+    bit 4: clear unknown
+    bit 5: clear unknown
+    bit 6: clear unknown
+    bit 7: clear unknown
+  byte 12: 2C 00101100
+    bit 0: clear unknown
+    bit 1: clear unknown
+    bit 2: set   unknown
+    bit 3: set   unknown
+    bit 4: clear unknown
+    bit 5: set   unknown
+    bit 6: clear [high] Base fog-light cornering function
+    bit 7: clear unknown
+  byte 13: 68 01101000
+    bit 0: clear [medium] Parking-light behavior group member
+    bit 1: clear [medium] Parking-light behavior group member
+    bit 2: clear unknown
+    bit 3: set   [medium] Parking-light behavior group member
+    bit 4: clear unknown
+    bit 5: set   unknown
+    bit 6: set   [medium] Coming/Leaving Home fog-vs-low-beam selector (docs disagree with Carista UI)
+    bit 7: clear unknown
+  byte 14: 0E 00001110
+    bit 0: clear unknown
+    bit 1: set   unknown
+    bit 2: set   unknown
+    bit 3: set   unknown
+    bit 4: clear unknown
+    bit 5: clear unknown
+    bit 6: clear unknown
+    bit 7: clear unknown
+  byte 15: D0 11010000
+    bit 0: clear unknown
+    bit 1: clear unknown
+    bit 2: clear unknown
+    bit 3: clear unknown
+    bit 4: set   unknown
+    bit 5: clear unknown
+    bit 6: set   unknown
+    bit 7: set   unknown
+  byte 16: 00 00000000
+    bit 0: clear unknown
+    bit 1: clear unknown
+    bit 2: clear unknown
+    bit 3: clear unknown
+    bit 4: clear unknown
+    bit 5: clear unknown
+    bit 6: clear unknown
+    bit 7: clear unknown
+  byte 17: C8 11001000
+    bit 0: clear unknown
+    bit 1: clear unknown
+    bit 2: clear unknown
+    bit 3: set   unknown
+    bit 4: clear unknown
+    bit 5: clear unknown
+    bit 6: set   unknown
+    bit 7: set   unknown
+  byte 18: 41 01000001
+    bit 0: set   unknown
+    bit 1: clear unknown
+    bit 2: clear unknown
+    bit 3: clear unknown
+    bit 4: clear unknown
+    bit 5: clear unknown
+    bit 6: set   unknown
+    bit 7: clear unknown
+  byte 19: 2F 00101111
+    bit 0: set   unknown
+    bit 1: set   unknown
+    bit 2: set   unknown
+    bit 3: set   unknown
+    bit 4: clear unknown
+    bit 5: set   unknown
+    bit 6: clear unknown
+    bit 7: clear unknown
+  byte 20: 60 01100000
+    bit 0: clear unknown
+    bit 1: clear unknown
+    bit 2: clear unknown
+    bit 3: clear unknown
+    bit 4: clear unknown
+    bit 5: set   unknown
+    bit 6: set   unknown
+    bit 7: clear unknown
+  byte 21: A2 10100010
+    bit 0: clear unknown
+    bit 1: set   unknown
+    bit 2: clear [high] Turn-signal-triggered cornering assist
+    bit 3: clear unknown
+    bit 4: clear unknown
+    bit 5: set   unknown
+    bit 6: clear unknown
+    bit 7: set   [medium] Fog-related capability/install bit; exact meaning uncertain
+  byte 22: 00 00000000
+    bit 0: clear unknown
+    bit 1: clear unknown
+    bit 2: clear unknown
+    bit 3: clear unknown
+    bit 4: clear unknown
+    bit 5: clear [medium] Probable ADL-related bit
+    bit 6: clear unknown
+    bit 7: clear unknown
+  byte 23: 00 00000000
+    bit 0: clear unknown
+    bit 1: clear unknown
+    bit 2: clear unknown
+    bit 3: clear unknown
+    bit 4: clear unknown
+    bit 5: clear unknown
+    bit 6: clear unknown
+    bit 7: clear unknown
+  byte 24: 20 00100000
+    bit 0: clear unknown
+    bit 1: clear unknown
+    bit 2: clear unknown
+    bit 3: clear unknown
+    bit 4: clear unknown
+    bit 5: set   unknown
+    bit 6: clear unknown
+    bit 7: clear unknown
+  byte 25: 00 00000000
+    bit 0: clear unknown
+    bit 1: clear unknown
+    bit 2: clear unknown
+    bit 3: clear unknown
+    bit 4: clear unknown
+    bit 5: clear unknown
+    bit 6: clear unknown
+    bit 7: clear unknown
+  byte 26: 00 00000000
+    bit 0: clear unknown
+    bit 1: clear unknown
+    bit 2: clear unknown
+    bit 3: clear unknown
+    bit 4: clear unknown
+    bit 5: clear unknown
+    bit 6: clear unknown
+    bit 7: clear unknown
+  byte 27: 00 00000000
+    bit 0: clear unknown
+    bit 1: clear unknown
+    bit 2: clear unknown
+    bit 3: clear unknown
+    bit 4: clear unknown
+    bit 5: clear unknown
+    bit 6: clear unknown
+    bit 7: clear unknown
+  byte 28: 00 00000000
+    bit 0: clear unknown
+    bit 1: clear unknown
+    bit 2: clear unknown
+    bit 3: clear unknown
+    bit 4: clear unknown
+    bit 5: clear unknown
+    bit 6: clear unknown
+    bit 7: clear unknown
+  byte 29: 00 00000000
+    bit 0: clear unknown
+    bit 1: clear unknown
+    bit 2: clear unknown
+    bit 3: clear unknown
+    bit 4: clear unknown
+    bit 5: clear unknown
+    bit 6: clear unknown
+    bit 7: clear unknown

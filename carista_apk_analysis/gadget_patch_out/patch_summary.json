@@ -1,0 +1,18 @@
+{
+  "base_apk": "C:\\Users\\victo\\Downloads\\2026-04-14 17-26-52\\carista_apk_analysis\\gadget_patch_out\\signed\\com.prizmos.carista.apk",
+  "arm_split_apk": "C:\\Users\\victo\\Downloads\\2026-04-14 17-26-52\\carista_apk_analysis\\gadget_patch_out\\signed\\config.armeabi_v7a.apk",
+  "hdpi_split_apk": "C:\\Users\\victo\\Downloads\\2026-04-14 17-26-52\\carista_apk_analysis\\gadget_patch_out\\signed\\config.hdpi.apk",
+  "install_helper": "C:\\Users\\victo\\Downloads\\2026-04-14 17-26-52\\carista_apk_analysis\\gadget_patch_out\\install_patched_carista.ps1",
+  "patched_lib": "C:\\Users\\victo\\Downloads\\2026-04-14 17-26-52\\carista_apk_analysis\\gadget_patch_out\\work\\libCarista.patched.so",
+  "gadget_name": "libgadget.so",
+  "gadget_config_name": "libgadget.config.so",
+  "gadget_listen": "127.0.0.1:27042",
+  "carista_libraries": [
+    "libgadget.so",
+    "libpairipcore.so",
+    "liblog.so",
+    "libdl.so",
+    "libc.so",
+    "libm.so"
+  ]
+}

@@ -1,0 +1,161 @@
+{
+  "candidates": [
+    {
+      "basis": "The UI label is the exact fog-light cornering wording, and the only working/non-working coding delta for that function is byte 12 bit 6. Static native analysis has not yet recovered the concrete Setting object.",
+      "bit_index": 6,
+      "byte_index": 12,
+      "confidence": "high practical / medium static",
+      "key": "car_setting_cornering_lights_via_fogs",
+      "label": "Cornering lights (using fog lights)"
+    },
+    {
+      "basis": "Likely older/alternate Carista key for the same fog-light cornering function.",
+      "bit_index": 6,
+      "byte_index": 12,
+      "confidence": "medium",
+      "key": "car_setting_cornering_lights_via_fogs_experimental",
+      "label": "Cornering lights (using fog lights) (experimental)"
+    },
+    {
+      "basis": "High-level selector wording; may be a parent/multiple-choice setting rather than the direct bit.",
+      "bit_index": 6,
+      "byte_index": 12,
+      "confidence": "medium",
+      "key": "car_setting_use_cornering_lights",
+      "label": "Use cornering lights\u2026"
+    },
+    {
+      "basis": "This typo-preserved key says 'Activate cornering lights with turn signal'; the known working delta for turn-signal-triggered cornering is byte 21 bit 2.",
+      "bit_index": 2,
+      "byte_index": 21,
+      "confidence": "high practical / medium static",
+      "key": "car_setting_cornerig_lights_with_turn_signal",
+      "label": "Activate cornering lights with turn signal"
+    },
+    {
+      "basis": "Clear newer key for the same turn-signal-triggered cornering behavior.",
+      "bit_index": 2,
+      "byte_index": 21,
+      "confidence": "high practical / medium static",
+      "key": "car_setting_cornering_lights_with_turn_signals",
+      "label": "Turn on cornering lights when turn signal is on"
+    },
+    {
+      "basis": "Likely category/umbrella label, not enough evidence for one direct byte/bit.",
+      "bit_index": null,
+      "byte_index": null,
+      "confidence": "group label",
+      "key": "car_setting_cornering_lights",
+      "label": "Cornering lights"
+    },
+    {
+      "basis": "May apply to newer or per-side lamp-channel platforms; no observed distinct delta on this Polo coding.",
+      "bit_index": null,
+      "byte_index": null,
+      "confidence": "unknown for this BCM",
+      "key": "car_setting_cornering_lights_via_fogs_left",
+      "label": "Left cornering light (using fog light)"
+    },
+    {
+      "basis": "May apply to newer or per-side lamp-channel platforms; no observed distinct delta on this Polo coding.",
+      "bit_index": null,
+      "byte_index": null,
+      "confidence": "unknown for this BCM",
+      "key": "car_setting_cornering_lights_via_fogs_right",
+      "label": "Right cornering light (using fog light)"
+    }
+  ],
+  "resources": [
+    {
+      "key": "car_setting_cornerig_lights_with_turn_signal",
+      "label": "Activate cornering lights with turn signal",
+      "native_refs": [],
+      "native_va": 6915246,
+      "resource_id": "0x7f1407f0"
+    },
+    {
+      "key": "car_setting_cornering_lights",
+      "label": "Cornering lights",
+      "native_refs": [],
+      "native_va": 9342138,
+      "resource_id": "0x7f1407f1"
+    },
+    {
+      "key": "car_setting_cornering_lights_activation",
+      "label": "Cornering lights activation",
+      "native_refs": [],
+      "native_va": 12305358,
+      "resource_id": "0x7f1407f2"
+    },
+    {
+      "key": "car_setting_cornering_lights_via",
+      "label": "Cornering lights use\u2026",
+      "native_refs": [],
+      "native_va": 10598544,
+      "resource_id": "0x7f140801"
+    },
+    {
+      "key": "car_setting_cornering_lights_via_fogs",
+      "label": "Cornering lights (using fog lights)",
+      "native_refs": [],
+      "native_va": 11793303,
+      "resource_id": "0x7f140802"
+    },
+    {
+      "key": "car_setting_cornering_lights_via_fogs_experimental",
+      "label": "Cornering lights (using fog lights) (experimental)",
+      "native_refs": [],
+      "native_va": 9307894,
+      "resource_id": "0x7f140803"
+    },
+    {
+      "key": "car_setting_cornering_lights_via_fogs_left",
+      "label": "Left cornering light (using fog light)",
+      "native_refs": [],
+      "native_va": 11380759,
+      "resource_id": "0x7f140804"
+    },
+    {
+      "key": "car_setting_cornering_lights_via_fogs_right",
+      "label": "Right cornering light (using fog light)",
+      "native_refs": [],
+      "native_va": 11380802,
+      "resource_id": "0x7f140805"
+    },
+    {
+      "key": "car_setting_cornering_lights_with_turn_signals",
+      "label": "Turn on cornering lights when turn signal is on",
+      "native_refs": [],
+      "native_va": 10598577,
+      "resource_id": "0x7f140808"
+    },
+    {
+      "key": "car_setting_cornering_lights_with_turn_signals_one_touch",
+      "label": "Turn on cornering lights when one-touch turn signal is on",
+      "native_refs": [],
+      "native_va": 8516177,
+      "resource_id": "0x7f140809"
+    },
+    {
+      "key": "car_setting_use_cornering_lights",
+      "label": "Use cornering lights\u2026",
+      "native_refs": [],
+      "native_va": 8377173,
+      "resource_id": "0x7f1411be"
+    },
+    {
+      "key": "car_setting_instruction_activate_cornering_lights",
+      "label": "Note to enable the cornering lights, activate \\\"Use fog lights when\u2026\\\", \\\"Use the left fog light as\u2026\\\", and \\\"Use the right fog light as\u2026\\\", and set all three to either \\\"Cornering lights\\\" or \\\"Use DRL via fog and cornering lights\\\".",
+      "native_refs": [],
+      "native_va": 9563140,
+      "resource_id": "0x7f140ab4"
+    },
+    {
+      "key": "car_setting_instruction_requires_cornering_lights",
+      "label": "To use this setting, enable the cornering lights.",
+      "native_refs": [],
+      "native_va": 8855292,
+      "resource_id": "0x7f140b33"
+    }
+  ]
+}
