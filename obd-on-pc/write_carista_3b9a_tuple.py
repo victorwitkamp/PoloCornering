@@ -105,8 +105,8 @@ def execute(args: argparse.Namespace, request: str) -> int:
 
             if args.skip_session:
                 logger.section("Diagnostic session skipped")
-                pre_write_frames = send_pre_read_sequence(ser, logger, args.pre_write_sequence, args.timeout)
-                if any(frame.header == listen_header and frame.payload.startswith("A8") for frame in pre_write_frames):
+                pre_write_sequence_frames = send_pre_read_sequence(ser, logger, args.pre_write_sequence, args.timeout)
+                if any(frame.header == listen_header and frame.payload.startswith("A8") for frame in pre_write_sequence_frames):
                     raise RuntimeError("channel disconnected before write")
                 write_counter = args.write_counter if args.write_counter is not None else 0
             else:
