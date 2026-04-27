@@ -124,7 +124,7 @@ def derive_value6(
 
 def build_request(value6: str, raw_address4: str, coding_type: int, tail: str) -> str:
     if coding_type not in CODING_TYPE_LOOKUP:
-        raise ValueError(f"coding type must be one of {sorted(CODING_TYPE_LOOKUP.keys())}")
+        raise ValueError(f"coding type must be one of {sorted(CODING_TYPE_LOOKUP.keys())}, got {coding_type}")
     mapped_type = CODING_TYPE_LOOKUP[coding_type]
     if coding_type == 2:
         if len(tail) // 2 != 3:
@@ -174,8 +174,14 @@ def main() -> int:
     else:
         if coding is None:
             raise ValueError("provide --value6 or --coding/--coding-file")
-        bit_index = args.set_bit if args.set_bit is not None else args.clear_bit
-        bit_action = "set" if args.set_bit is not None else "clear" if args.clear_bit is not None else None
+        bit_index = None
+        bit_action = None
+        if args.set_bit is not None:
+            bit_index = args.set_bit
+            bit_action = "set"
+        elif args.clear_bit is not None:
+            bit_index = args.clear_bit
+            bit_action = "clear"
         derived = derive_value6(coding, args.chunk_size, args.chunk_index, args.byte_index, bit_index, bit_action, None)
 
     if derived is not None:

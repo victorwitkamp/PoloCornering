@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import itertools
 import json
 import re
 from dataclasses import dataclass
@@ -217,7 +218,14 @@ def format_chunk_write_context(
             continue
 
         changed_bits: list[str] = []
-        for offset, (current_byte, reference_byte) in enumerate(zip(current_chunk, reference_chunk)):
+        for offset, (current_byte, reference_byte) in enumerate(
+            itertools.zip_longest(current_chunk, reference_chunk)
+        ):
+            if current_byte is None or reference_byte is None:
+                changed_bits.append(
+                    f"byte {start + offset} length mismatch current={current_byte!r} reference={reference_byte!r}"
+                )
+                continue
             if current_byte == reference_byte:
                 continue
             absolute_byte = start + offset
