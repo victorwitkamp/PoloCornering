@@ -140,7 +140,10 @@ def main() -> int:
     parser = argparse.ArgumentParser(
         description="Offline composer for Carista-shaped 3B9A coding requests. Does not send anything."
     )
-    parser.add_argument("--value6", help="6-byte coding value vector, e.g. 6C680ED000C8")
+    parser.add_argument(
+        "--value6",
+        help="Optional explicit 6-byte coding value vector; alternatively derive it from --coding/--coding-file",
+    )
     parser.add_argument("--coding", help="Long-coding hex string or raw 620600/5A9A response to derive a value chunk from")
     parser.add_argument("--coding-file", help="File containing long-coding hex or a raw 620600/5A9A response")
     parser.add_argument(
@@ -189,10 +192,8 @@ def main() -> int:
 
     tail = clean_hex(args.tail, "tail")
     raw_address4 = require_len(args.raw_address4, "raw-address4", 4) if args.raw_address4 else None
-    if raw_address4 and args.coding_type is None:
-        raise ValueError("--coding-type is required when --raw-address4 is supplied")
-    if args.coding_type is not None and not raw_address4:
-        raise ValueError("--raw-address4 is required when --coding-type is supplied")
+    if (raw_address4 is None) != (args.coding_type is None):
+        raise ValueError("--raw-address4 and --coding-type must be supplied together or not at all")
     request = build_request(value6, raw_address4, args.coding_type, tail) if raw_address4 else None
 
     print("Offline Carista-shaped 3B9A request")
