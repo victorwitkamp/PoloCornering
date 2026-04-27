@@ -73,7 +73,7 @@ def read_coding(coding: str | None, coding_file: str | None) -> str | None:
 
 def apply_bit(value: int, bit_index: int, action: str) -> int:
     if not 0 <= bit_index <= 7:
-        raise ValueError("bit index must be 0..7")
+        raise ValueError("bit index must be between 0 and 7 (inclusive)")
     mask = 1 << bit_index
     if action == "set":
         return value | mask
@@ -124,7 +124,7 @@ def derive_value6(
 
 def build_request(value6: str, raw_address4: str, coding_type: int, tail: str) -> str:
     if coding_type not in CODING_TYPE_LOOKUP:
-        raise ValueError(f"coding type must be one of {sorted(CODING_TYPE_LOOKUP)}")
+        raise ValueError(f"coding type must be one of {sorted(CODING_TYPE_LOOKUP.keys())}")
     mapped_type = CODING_TYPE_LOOKUP[coding_type]
     if coding_type == 2:
         if len(tail) // 2 != 3:
