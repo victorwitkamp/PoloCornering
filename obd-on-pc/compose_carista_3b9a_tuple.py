@@ -1,18 +1,19 @@
 from __future__ import annotations
 
 import argparse
+import sys
+from pathlib import Path
 
-from carista_vagcan_repro import (
-    BitAction,
-    CODING_TYPE_LOOKUP,
-    CORNERING_FIXES,
-    DerivedValue,
-    build_request,
-    clean_hex,
-    derive_value6,
-    read_coding,
-    require_len,
-)
+WORKSPACE_ROOT = Path(__file__).resolve().parents[1]
+if str(WORKSPACE_ROOT) not in sys.path:
+    sys.path.insert(0, str(WORKSPACE_ROOT))
+
+from CaristaReproduction.ByteUtils import clean_hex, require_len
+from CaristaReproduction.Commands.WriteVagCodingCommand import build_request
+from CaristaReproduction.Constants import CODING_TYPE_LOOKUP, CORNERING_FIXES
+from CaristaReproduction.Models.DerivedValue import DerivedValue
+from CaristaReproduction.Types import BitAction
+from CaristaReproduction.VagCoding import derive_value6, read_coding
 
 
 def main() -> int:

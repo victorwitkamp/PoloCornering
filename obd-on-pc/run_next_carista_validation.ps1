@@ -157,7 +157,8 @@ if (-not $DryRun) {
 $SummaryArgs = @($Python, ".\summarize_carista_tuple_proof_read.py", "--summaries") + $SummaryFiles.ToArray() + @("--output", $Report, "--json-output", $JsonReport)
 Invoke-Step -Command $SummaryArgs
 
-$WorkflowArgs = @($Python, ".\carista_vagcan_repro.py", "--validate-workflow", "--coding-file", $BaselineSummary)
+$ReproductionCli = Join-Path $WorkspaceRoot "CaristaReproduction"
+$WorkflowArgs = @($Python, $ReproductionCli, "--validate-workflow", "--coding-file", $BaselineSummary)
 foreach ($SummaryFile in $SummaryFiles) {
     $WorkflowArgs += @("--ecu-info-file", $SummaryFile)
 }

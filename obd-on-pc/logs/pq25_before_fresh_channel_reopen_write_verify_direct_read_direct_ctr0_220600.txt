@@ -1,0 +1,10 @@
+VW PQ25 TP2.0 read-only sequencing experiment
+Started: 2026-04-28T17:21:02.398
+Mode: direct_read
+Attempt: direct_ctr0_220600
+Port: COM10
+Baud: 38400
+Unit TP2.0 address: 20
+Channel parameter profile: minimal
+Blocked services: 27, 2E, 31, 3B
+ERROR: could not open port 'COM10': OSError(22, 'De time-outperiode van de semafoor is verlopen.', None, 121)

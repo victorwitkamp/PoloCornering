@@ -1,9 +1,13 @@
 param(
     [switch]$RunHeadless,
     [switch]$ExportTargets,
+    [switch]$PrepareAndroidDex,
+    [switch]$RunAndroidDexHeadless,
+    [switch]$ExportAndroidBridge,
     [switch]$CleanProject,
     [string]$HeadlessMaxMem = "8G",
     [string]$ExportDir = "",
+    [string]$AndroidExportDir = "",
     [switch]$Force
 )
 
@@ -19,11 +23,19 @@ $JdkDir = Join-Path $ToolsDir "jdk21"
 $ExtractDir = Join-Path $ScriptDir "extracted"
 $XapkPath = Join-Path $ScriptDir "reacquire_20260424\carista_9.8.2.xapk"
 $LibPath = Join-Path $ExtractDir "libCarista.so"
+$AndroidExtractDir = Join-Path $ExtractDir "android"
+$AndroidBaseApkPath = Join-Path $AndroidExtractDir "com.prizmos.carista.apk"
+$AndroidDexDir = Join-Path $AndroidExtractDir "dex"
 $ProjectDir = Join-Path $ScriptDir "ghidra_project"
 $ProjectName = "CaristaNative"
+$AndroidProjectDir = Join-Path $ScriptDir "ghidra_android_project"
+$AndroidProjectName = "CaristaAndroid"
 $GhidraScriptsDir = Join-Path $ScriptDir "ghidra_scripts"
 if (-not $ExportDir) {
     $ExportDir = Join-Path $ScriptDir "ghidra_exports"
+}
+if (-not $AndroidExportDir) {
+    $AndroidExportDir = Join-Path $ScriptDir "ghidra_android_exports"
 }
 
 function Ensure-Directory($Path) {
@@ -54,9 +66,62 @@ function Invoke-GhidraHeadless($HeadlessArgs) {
     }
 }
 
+function Expand-CaristaAndroidInputs {
+    Add-Type -AssemblyName System.IO.Compression.FileSystem
+    Ensure-Directory $AndroidExtractDir
+    Ensure-Directory $AndroidDexDir
+
+    $Xapk = [System.IO.Compression.ZipFile]::OpenRead($XapkPath)
+    try {
+        $BaseApkEntry = $Xapk.Entries | Where-Object { $_.FullName -eq "com.prizmos.carista.apk" } | Select-Object -First 1
+        if (-not $BaseApkEntry) { throw "com.prizmos.carista.apk not found in XAPK." }
+        $ArmApkEntry = $Xapk.Entries | Where-Object { $_.FullName -eq "config.armeabi_v7a.apk" } | Select-Object -First 1
+        if (-not $ArmApkEntry) { throw "config.armeabi_v7a.apk not found in XAPK." }
+
+        if ((-not (Test-Path $AndroidBaseApkPath)) -or $Force) {
+            Write-Host "Extracting Android base APK..."
+            [System.IO.Compression.ZipFileExtensions]::ExtractToFile($BaseApkEntry, $AndroidBaseApkPath, $true)
+        }
+
+        $ArmApkOut = Join-Path $AndroidExtractDir "config.armeabi_v7a.apk"
+        if ((-not (Test-Path $ArmApkOut)) -or $Force) {
+            Write-Host "Extracting ARMv7 split APK..."
+            [System.IO.Compression.ZipFileExtensions]::ExtractToFile($ArmApkEntry, $ArmApkOut, $true)
+        }
+    } finally {
+        $Xapk.Dispose()
+    }
+
+    $BaseApk = [System.IO.Compression.ZipFile]::OpenRead($AndroidBaseApkPath)
+    try {
+        foreach ($Entry in ($BaseApk.Entries | Where-Object { $_.FullName -match '^classes.*\.dex$' })) {
+            $OutPath = Join-Path $AndroidDexDir $Entry.FullName
+            if ((-not (Test-Path $OutPath)) -or $Force) {
+                Write-Host "Extracting $($Entry.FullName)..."
+                [System.IO.Compression.ZipFileExtensions]::ExtractToFile($Entry, $OutPath, $true)
+            }
+        }
+    } finally {
+        $BaseApk.Dispose()
+    }
+
+    Write-Host "Android APK: $AndroidBaseApkPath"
+    Write-Host "DEX dir:     $AndroidDexDir"
+    Write-Host "Ghidra UI: import the APK from Code Browser, decline immediate analysis, set External Program associations for every classes*.dex, then Analyze All Open."
+}
+
 Ensure-Directory $ToolsDir
 Ensure-Directory $DownloadDir
 Ensure-Directory $ExtractDir
+
+if (-not (Test-Path $XapkPath)) {
+    throw "Missing XAPK at $XapkPath"
+}
+
+if ($PrepareAndroidDex -and -not ($RunHeadless -or $ExportTargets -or $RunAndroidDexHeadless -or $ExportAndroidBridge)) {
+    Expand-CaristaAndroidInputs
+    return
+}
 
 Write-Host "Resolving latest Ghidra release..."
 $GhidraRelease = Invoke-RestMethod -Uri "https://api.github.com/repos/NationalSecurityAgency/ghidra/releases/latest" -Headers @{ "User-Agent" = "PoloCornering-Ghidra-Setup" }
@@ -114,10 +179,6 @@ if (-not (Test-Path $JdkDir)) {
     Write-Host "Using existing JDK directory"
 }
 
-if (-not (Test-Path $XapkPath)) {
-    throw "Missing XAPK at $XapkPath"
-}
-
 if ((-not (Test-Path $LibPath)) -or $Force) {
     Add-Type -AssemblyName System.IO.Compression.FileSystem
     Write-Host "Extracting libCarista.so from XAPK..."
@@ -165,6 +226,7 @@ if (-not (Test-Path $AnalyzeHeadless)) { throw "Missing $AnalyzeHeadless" }
 if (-not (Test-Path $LaunchBat)) { throw "Missing $LaunchBat" }
 if (-not (Test-Path $JavaExe)) { throw "Missing $JavaExe" }
 if ($ExportTargets -and -not (Test-Path $GhidraScriptsDir)) { throw "Missing $GhidraScriptsDir" }
+if ($ExportAndroidBridge -and -not (Test-Path $GhidraScriptsDir)) { throw "Missing $GhidraScriptsDir" }
 
 $env:JAVA_HOME = $JdkDir
 $env:PATH = "$JdkDir\bin;$env:PATH"
@@ -175,6 +237,10 @@ Write-Host "JDK:           $JdkDir"
 Write-Host "libCarista.so: $LibPath"
 Write-Host "Ghidra UI:     $GhidraRun"
 Write-Host "Headless:      $AnalyzeHeadless"
+
+if ($PrepareAndroidDex -or $RunAndroidDexHeadless -or $ExportAndroidBridge) {
+    Expand-CaristaAndroidInputs
+}
 
 if ($RunHeadless) {
     if ($CleanProject -and (Test-Path $ProjectDir)) {
@@ -193,4 +259,26 @@ if ($ExportTargets) {
     Ensure-Directory $ExportDir
     Write-Host "Exporting target decompilation to $ExportDir"
     Invoke-GhidraHeadless @($ProjectDir, $ProjectName, "-process", "libCarista.so", "-readOnly", "-noanalysis", "-scriptPath", $GhidraScriptsDir, "-postScript", "ExportCaristaTargets.java", $ExportDir)
+}
+
+if ($RunAndroidDexHeadless) {
+    if ($CleanProject -and (Test-Path $AndroidProjectDir)) {
+        Write-Host "Removing existing Android Ghidra project: $AndroidProjectDir"
+        Remove-Item -Recurse -Force $AndroidProjectDir
+    }
+    Ensure-Directory $AndroidProjectDir
+    Write-Host "Running Ghidra headless import/analyze for extracted DEX files with heap $HeadlessMaxMem..."
+    Invoke-GhidraHeadless @($AndroidProjectDir, $AndroidProjectName, "-import", $AndroidDexDir, "-recursive", "-overwrite", "-analysisTimeoutPerFile", "1800")
+}
+
+if ($ExportAndroidBridge) {
+    if (-not (Test-Path $AndroidProjectDir)) {
+        throw "Missing Ghidra Android project at $AndroidProjectDir. Run with -RunAndroidDexHeadless first."
+    }
+    Ensure-Directory $AndroidExportDir
+    Write-Host "Exporting Android bridge decompilation to $AndroidExportDir"
+    $AndroidDexProject = "$AndroidProjectName/dex"
+    foreach ($DexFile in (Get-ChildItem -Path $AndroidDexDir -Filter "classes*.dex" | Sort-Object Name)) {
+        Invoke-GhidraHeadless @($AndroidProjectDir, $AndroidDexProject, "-process", $DexFile.Name, "-readOnly", "-noanalysis", "-scriptPath", $GhidraScriptsDir, "-postScript", "ExportCaristaAndroidBridge.java", $AndroidExportDir)
+    }
 }

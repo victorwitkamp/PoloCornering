@@ -6,7 +6,9 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import ghidra.app.decompiler.DecompInterface;
 import ghidra.app.decompiler.DecompileOptions;
@@ -14,14 +16,19 @@ import ghidra.app.decompiler.DecompileResults;
 import ghidra.app.decompiler.component.DecompilerUtils;
 import ghidra.app.script.GhidraScript;
 import ghidra.program.model.address.Address;
+import ghidra.program.model.address.AddressIterator;
 import ghidra.program.model.lang.Register;
 import ghidra.program.model.listing.Function;
 import ghidra.program.model.listing.FunctionManager;
 import ghidra.program.model.listing.Instruction;
 import ghidra.program.model.listing.Listing;
+import ghidra.program.model.listing.Parameter;
+import ghidra.program.model.symbol.Reference;
+import ghidra.program.model.symbol.ReferenceManager;
 
 public class ExportCaristaTargets extends GhidraScript {
     private static final long GHIDRA_IMAGE_BASE_DELTA = 0x10000L;
+    private static final int MAX_REFERENCES_PER_FUNCTION = 120;
 
     private static class Target {
         final String label;
@@ -38,6 +45,38 @@ public class ExportCaristaTargets extends GhidraScript {
     }
 
     private final Target[] targets = new Target[] {
+        new Target("JNI_ChangeSettingOperation_initNative", "00CB645C", 520,
+            "Java_com_prizmos_carista_library_operation_ChangeSettingOperation_initNative"),
+        new Target("JNI_ChangeSettingOperation_native_ctor_helper", "00CB674C", 64,
+            "local helper called by ChangeSettingOperation_initNative"),
+        new Target("JNI_CheckSettingsOperation_initNative", "00CB93C8", 460,
+            "Java_com_prizmos_carista_library_operation_CheckSettingsOperation_initNative"),
+        new Target("JNI_CheckSettingsOperation_native_ctor_helper", "00CB9594", 52,
+            "local helper called by CheckSettingsOperation_initNative"),
+        new Target("JNI_GetEcuInfoOperation_initNative", "00CBB01C", 472,
+            "Java_com_prizmos_carista_library_operation_GetEcuInfoOperation_initNative"),
+        new Target("JNI_GetEcuInfoOperation_native_ctor_helper", "00CBB1F4", 60,
+            "local helper called by GetEcuInfoOperation_initNative"),
+        new Target("JNI_GetEcuInfoOperation_getCodingRawAddress", "00CBB40C", 340,
+            "Java_com_prizmos_carista_library_operation_GetEcuInfoOperation_getCodingRawAddress"),
+        new Target("JNI_ReadValuesOperation_getAvailableItems", "00CBDB9C", 1164,
+            "Java_com_prizmos_carista_library_operation_ReadValuesOperation_getAvailableItems"),
+        new Target("JNI_ReadValuesOperation_available_items_bridge_helper", "00CBE028", 52,
+            "local helper called by ReadValuesOperation_getAvailableItems"),
+        new Target("JNI_ReadValuesOperation_getSettingValue", "00CBE1DC", 416,
+            "Java_com_prizmos_carista_library_operation_ReadValuesOperation_getSettingValue"),
+        new Target("JNI_SettingCategory_valuesNative", "00CC1254", 568,
+            "Java_com_prizmos_carista_library_model_SettingCategory_valuesNative"),
+        new Target("JNI_SettingRef_getEcu", "00CC1E64", 368,
+            "Java_com_prizmos_carista_library_model_SettingRef_getEcu"),
+        new Target("JNI_SettingRef_getNameResIdNative", "00CC1FD4", 372,
+            "Java_com_prizmos_carista_library_model_SettingRef_getNameResIdNative"),
+        new Target("JNI_SettingRef_getInstruction", "00CC2298", 396,
+            "Java_com_prizmos_carista_library_model_SettingRef_getInstruction"),
+        new Target("JNI_SettingRef_toEventStringNative", "00CC2424", 396,
+            "Java_com_prizmos_carista_library_model_SettingRef_toEventStringNative"),
+        new Target("JNI_SettingRef_getInterpretation", "00CC25B0", 408,
+            "Java_com_prizmos_carista_library_model_SettingRef_getInterpretation"),
         new Target("GetVagCanEcuInfoCommand_getRequest", "00CF8230", 20,
             "_ZNK23GetVagCanEcuInfoCommand10getRequestEv"),
         new Target("GetVagCanEcuInfoCommand_processPayloads", "00CF8244", 444,
@@ -66,6 +105,20 @@ public class ExportCaristaTargets extends GhidraScript {
             "_ZN28WriteDataByIdentifierCommandC1EP3EcutRKNSt6__ndk16vectorIhNS2_9allocatorIhEEEEj"),
         new Target("WriteDataByIdentifierCommand_getRequest", "00CF80B4", 120,
             "_ZNK28WriteDataByIdentifierCommand10getRequestEv"),
+        new Target("WriteDataByIdentifierCommand_processPayload", "00CF812C", 10,
+            "_ZNK28WriteDataByIdentifierCommand14processPayloadERKNSt6__ndk16vectorIhNS0_9allocatorIhEEEE"),
+        new Target("BaseCommand_extractPayloads", "00CCE52C", 276,
+            "_ZNK11BaseCommand15extractPayloadsERKNSt6__ndk16vectorINS1_IhNS0_9allocatorIhEEEENS2_IS4_EEEE"),
+        new Target("BaseCommand_filterOutErrors", "00CCE640", 156,
+            "_ZN11BaseCommand15filterOutErrorsERKNSt6__ndk16vectorINS1_IhNS0_9allocatorIhEEEENS2_IS4_EEEE"),
+        new Target("BaseCommand_removeEcho", "00CCE858", 264,
+            "_ZNK11BaseCommand10removeEchoERKNSt6__ndk16vectorIhNS0_9allocatorIhEEEE"),
+        new Target("BaseCommand_extractState", "00CCEA40", 236,
+            "_ZN11BaseCommand12extractStateERKNSt6__ndk16vectorIhNS0_9allocatorIhEEEE"),
+        new Target("BaseCommand_isPositiveResponse", "00CCE9C0", 30,
+            "_ZN11BaseCommand18isPositiveResponseERKNSt6__ndk16vectorIhNS0_9allocatorIhEEEES6_j"),
+        new Target("BaseCommand_isPositiveUSDTResponse", "00CCEB7C", 140,
+            "_ZN11BaseCommand22isPositiveUSDTResponseERKNSt6__ndk16vectorIhNS0_9allocatorIhEEEES6_j"),
         new Target("ReadDataByIdentifierCommand_Bytes_getRequest", "00CD5234", 116,
             "_ZNK27ReadDataByIdentifierCommandI10BytesModelE10getRequestEv"),
         new Target("GetVagUdsEcuWorkshopCodeCommand_ctor", "00D0505C", 56,
@@ -99,7 +152,71 @@ public class ExportCaristaTargets extends GhidraScript {
         new Target("VagOperationDelegate_readEcuInfoCached", "01266BD0", 500,
             "_ZN20VagOperationDelegate17readEcuInfoCachedEP3Ecujj"),
         new Target("VagOperationDelegate_readVagCanEcuInfo", "01266E30", 620,
-            "_ZN20VagOperationDelegate17readVagCanEcuInfoEP9VagCanEcu")
+            "_ZN20VagOperationDelegate17readVagCanEcuInfoEP9VagCanEcu"),
+        new Target("Result_EmptyModel_isFatalFail", "011D620E", 8,
+            "_ZNK6ResultI10EmptyModelvE11isFatalFailEv"),
+        new Target("Result_EmptyModel_isFail", "011D63BA", 8,
+            "_ZNK6ResultI10EmptyModelvE6isFailEv"),
+        new Target("Result_EmptyModel_isIn", "011DDD30", 12,
+            "_ZNK6ResultI10EmptyModelvE4isInERKN5State3SetE"),
+        new Target("State_isFatalError", "00D2785C", 32,
+            "_ZN5State12isFatalErrorEi"),
+        new Target("State_isError", "00D27858", 4,
+            "_ZN5State7isErrorEi"),
+        new Target("State_Set_fatalError", "00D2787C", 184,
+            "_ZN5State3Set10fatalErrorEv"),
+        new Target("State_Set_obd2RequestNotSupported", "00D27A60", 164,
+            "_ZN5State3Set23obd2RequestNotSupportedEv"),
+        new Target("State_Set_obd2NegativeResponse", "00D279A8", 160,
+            "_ZN5State3Set20obd2NegativeResponseEv"),
+        new Target("OperationDelegate_runCommand_EmptyModel", "011D3F74", 160,
+            "_ZN17OperationDelegate10runCommandI10EmptyModelEE6ResultIT_vERKNSt6__ndk110shared_ptrI7CommandIS3_EEERKNS6_I8ProgressEE"),
+        new Target("ConnectionManager_runCommand_EmptyModel", "011DBC98", 240,
+            "_ZN17ConnectionManager10runCommandI10EmptyModelEE6ResultIT_vERKNSt6__ndk110shared_ptrI7CommandIS3_EEERKNS6_IN5State21OnStateUpdateListenerEEE"),
+        new Target("Communicator_runCommand_EmptyModel", "011DC844", 2072,
+            "_ZN12Communicator10runCommandI10EmptyModelEE6ResultIT_vERKNSt6__ndk110shared_ptrI7CommandIS3_EEERKNS6_I10StatisticsEE"),
+        new Target("SingleResponseCommand_EmptyModel_processResponses", "00CD1078", 148,
+            "_ZNK21SingleResponseCommandI10EmptyModelE16processResponsesERKNSt6__ndk16vectorINS3_IhNS2_9allocatorIhEEEENS4_IS6_EEEE"),
+        new Target("BroadcastCommandResult_EmptyModel_extractCommandResult", "011DC234", 132,
+            "_ZNK22BroadcastCommandResultI10EmptyModelE20extractCommandResultEP3Ecu"),
+        new Target("Communicator_internalExecuteCommand_EmptyModel", "011DD384", 520,
+            "_ZN12Communicator22internalExecuteCommandI10EmptyModelEE22BroadcastCommandResultIT_ERKNSt6__ndk110shared_ptrI7CommandIS3_EEEjb"),
+        new Target("VagCanCommunicator_postInitialize", "00D1759C", 192,
+            "_ZN18VagCanCommunicator14postInitializeEv"),
+        new Target("VagCanCommunicator_establishEcuComm", "00D1765C", 1036,
+            "_ZN18VagCanCommunicator16establishEcuCommEP3Ecu"),
+        new Target("VagCanCommunicator_sendDisconnect", "00D17D4C", 140,
+            "_ZN18VagCanCommunicator14sendDisconnectEv"),
+        new Target("VagCanCommunicator_closeEcuComm", "00D17DD8", 34,
+            "_ZN18VagCanCommunicator12closeEcuCommEv"),
+        new Target("VagCanCommunicator_readResponses", "00D182A8", 1532,
+            "_ZN18VagCanCommunicator13readResponsesEv"),
+        new Target("VagCanCommunicator_receive", "00D188A4", 84,
+            "_ZN18VagCanCommunicator7receiveEv"),
+        new Target("VagCanCommunicator_receiveMore", "00D1898C", 128,
+            "_ZN18VagCanCommunicator11receiveMoreEv"),
+        new Target("VagCanCommunicator_isOldSeqNum", "00D18A0C", 20,
+            "_ZN18VagCanCommunicator11isOldSeqNumEhh"),
+        new Target("VagCanCommunicator_incrementSeqNum", "00D18A46", 8,
+            "_ZN18VagCanCommunicator15incrementSeqNumEh"),
+        new Target("VagCanCommunicator_sendNack", "00D18A4E", 10,
+            "_ZN18VagCanCommunicator8sendNackEh"),
+        new Target("VagCanCommunicator_sendAck_seq", "00D18A94", 14,
+            "_ZN18VagCanCommunicator7sendAckEhb"),
+        new Target("VagCanCommunicator_sendAck_opcode", "00D18AD8", 192,
+            "_ZN18VagCanCommunicator7sendAckENS_6OpCodeEhb"),
+        new Target("VagCanCommunicator_getTimeoutSpec", "00D18BD8", 188,
+            "_ZN18VagCanCommunicator14getTimeoutSpecEv"),
+        new Target("VagCanCommunicator_getSeqNum", "00D18DB0", 18,
+            "_ZN18VagCanCommunicator9getSeqNumEv"),
+        new Target("VagCanPacket_isData", "00D173E8", 34,
+            "_ZN18VagCanCommunicator12VagCanPacket6isDataEv"),
+        new Target("VagCanPacket_ctor_fields", "00D172E4", 44,
+            "_ZN18VagCanCommunicator12VagCanPacketC1EtNS_6OpCodeEhRKNSt6__ndk16vectorIhNS2_9allocatorIhEEEE"),
+        new Target("VagCanCommunicator_parsePacket", "00D17A68", 620,
+            "_ZN18VagCanCommunicator11parsePacketERKNSt6__ndk112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEEb"),
+        new Target("VagCanPacket_toRawBytesForSending", "00D1740C", 180,
+            "_ZN18VagCanCommunicator12VagCanPacket20toRawBytesForSendingEv")
     };
 
     @Override
@@ -167,7 +284,18 @@ public class ExportCaristaTargets extends GhidraScript {
             if (function != null) {
                 writer.println(" * Resolved function: " + function.getName(true) + " @ " +
                     function.getEntryPoint());
+                writer.println(" * Signature: " + function.getSignature());
+                writer.println(" * Return type: " + function.getReturnType());
                 writer.println(" * Function body: " + function.getBody());
+                writer.println(" * Parameters:");
+                for (Parameter parameter : function.getParameters()) {
+                    writer.println(" *   [" + parameter.getOrdinal() + "] " +
+                        parameter.getDataType() + " " + parameter.getName());
+                }
+                writer.println(" * Direct callers:");
+                writeReferenceLines(writer, describeCallers(function));
+                writer.println(" * Direct callees/references:");
+                writeReferenceLines(writer, describeCallees(function));
             }
             writer.println(" */");
             writer.println();
@@ -242,11 +370,11 @@ public class ExportCaristaTargets extends GhidraScript {
         Function function = functions.getFunctionAt(address);
         Function containing = functions.getFunctionContaining(address);
         if (function != null) {
-            println("Removing exact existing function " + function.getName(true) + " @ " +
-                function.getEntryPoint() + " before recreating " + target.label + " @ " + address);
-            removeFunction(function);
+            println("Using exact existing function " + function.getName(true) + " @ " +
+                function.getEntryPoint() + " for " + target.label + " @ " + address);
+            return function;
         }
-        else if (containing != null) {
+        if (containing != null) {
             println("Removing merged containing function " + containing.getName(true) + " @ " +
                 containing.getEntryPoint() + " before recreating " + target.label + " @ " + address);
             removeFunction(containing);
@@ -269,6 +397,53 @@ public class ExportCaristaTargets extends GhidraScript {
             function = functions.getFunctionContaining(address);
         }
         return function;
+    }
+
+    private List<String> describeCallers(Function function) {
+        ReferenceManager references = currentProgram.getReferenceManager();
+        FunctionManager functions = currentProgram.getFunctionManager();
+        Set<String> lines = new LinkedHashSet<>();
+        for (Reference reference : references.getReferencesTo(function.getEntryPoint())) {
+            Function caller = functions.getFunctionContaining(reference.getFromAddress());
+            String callerName = caller == null ? "<no function>" : caller.getName(true) +
+                " @ " + caller.getEntryPoint();
+            lines.add(callerName + " -> " + reference.getReferenceType() +
+                " from " + reference.getFromAddress());
+            if (lines.size() >= MAX_REFERENCES_PER_FUNCTION) {
+                break;
+            }
+        }
+        return new ArrayList<>(lines);
+    }
+
+    private List<String> describeCallees(Function function) {
+        ReferenceManager references = currentProgram.getReferenceManager();
+        FunctionManager functions = currentProgram.getFunctionManager();
+        Set<String> lines = new LinkedHashSet<>();
+        AddressIterator addresses = function.getBody().getAddresses(true);
+        while (addresses.hasNext() && lines.size() < MAX_REFERENCES_PER_FUNCTION) {
+            Address from = addresses.next();
+            for (Reference reference : references.getReferencesFrom(from)) {
+                Function callee = functions.getFunctionContaining(reference.getToAddress());
+                String calleeName = callee == null ? reference.getToAddress().toString()
+                    : callee.getName(true) + " @ " + callee.getEntryPoint();
+                lines.add(reference.getReferenceType() + " " + calleeName + " from " + from);
+                if (lines.size() >= MAX_REFERENCES_PER_FUNCTION) {
+                    break;
+                }
+            }
+        }
+        return new ArrayList<>(lines);
+    }
+
+    private void writeReferenceLines(PrintWriter writer, List<String> lines) {
+        if (lines.isEmpty()) {
+            writer.println(" *   <none recorded>");
+            return;
+        }
+        for (String line : lines) {
+            writer.println(" *   " + line);
+        }
     }
 
     private String toHex(byte[] bytes) {

@@ -31,6 +31,19 @@ The next write candidate is therefore:
 2E06003AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000
 ```
 
+Fresh exact-flow exports now prove that F199/F198 `7F2E31` is nonfatal in
+Carista's metadata gates: `BaseCommand::extractState` maps `7F xx 31` to state
+`-32`, `-32` is in `State::Set::obd2NegativeResponse()`, and it is not in
+`State::Set::fatalError()`. `Result<EmptyModel>::isFatalFail` checks the fatal
+set, and `writeVagUdsValue` uses `isFatalFail` for F199/F198. The final
+`2E0600` write is still required to be positive.
+
+The transport exports also prove the ACK rule: `VagCanCommunicator::readResponses`
+ACKs accepted data packets in the receive loop, and `sendAck(seq,bool)` sends
+`0xB0` with `(seq + 1) & 0x0F`. In the observed live frames this is `B5` after
+the baseline response ending at sequence 4 and `B6` after the F199 `7F2E31`
+response at sequence 5.
+
 The old `3B9A` tuple path remains real in Carista, but it is no longer the main
 candidate for this live BCM because the car binds to the UDS-style `220600`
 coding path and did not produce usable positive `5A9B` metadata.

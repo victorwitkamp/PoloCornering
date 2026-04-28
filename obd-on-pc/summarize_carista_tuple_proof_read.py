@@ -2,20 +2,23 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
-from carista_vagcan_repro import (
-    CORNERING_FIXES,
-    GetVagCanEcuInfoCommand_processEcuInfo,
-    JsonObject,
-    VagEcuInfoWithCoding,
-    VagOperationDelegate_writeVagCanCodingValue,
-    WriteVagCodingCommand_getRequest,
-    json_objects_from_text,
-    normalize_coding,
-    normalize_hex,
-)
+WORKSPACE_ROOT = Path(__file__).resolve().parents[1]
+if str(WORKSPACE_ROOT) not in sys.path:
+    sys.path.insert(0, str(WORKSPACE_ROOT))
+
+from CaristaReproduction.ByteUtils import normalize_hex
+from CaristaReproduction.Commands.GetVagCanEcuInfoCommand import GetVagCanEcuInfoCommand_processEcuInfo
+from CaristaReproduction.Commands.WriteVagCodingCommand import WriteVagCodingCommand_getRequest
+from CaristaReproduction.Constants import CORNERING_FIXES
+from CaristaReproduction.JsonUtils import json_objects_from_text
+from CaristaReproduction.Models.VagEcuInfoWithCoding import VagEcuInfoWithCoding
+from CaristaReproduction.Types import JsonObject
+from CaristaReproduction.VagCoding import normalize_coding
+from CaristaReproduction.VagOperationDelegate import VagOperationDelegate_writeVagCanCodingValue
 
 
 @dataclass(frozen=True)

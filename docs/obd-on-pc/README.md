@@ -456,7 +456,7 @@ Related offline helper files created from this finding:
 obd-on-pc/lcode/pq25_6r0_937_08x_cornering_candidates.xpl
 obd-on-pc/lcode/6R0937087K_cornering_enabled_longcoding.txt
 obd-on-pc/decode_pq25_longcoding.py
-obd-on-pc/carista_vagcan_repro.py
+CaristaReproduction/
 obd-on-pc/compose_carista_3b9a_tuple.py
 obd-on-pc/write_carista_3b9a_tuple.py
 docs/obd-on-pc/pq25_longcoding_change_plan.md
@@ -642,7 +642,7 @@ pq25_current_settings_carista_report.md
 Shared Python reproduction of the recovered Carista native helpers:
 
 ```text
-carista_vagcan_repro.py
+CaristaReproduction/
 ```
 
 It contains the recovered names used by the next in-car validation flow:
@@ -701,12 +701,12 @@ run_next_carista_validation.ps1
 It replaces the older tuple-proof sweep wrapper. The default path is deliberately
 short: fresh `220600`, direct `1A9B`/`1A9A` with the known-good minimal parameter
 profile, direct `1A9B`/`1A9A` with Carista's decompiled parameter profile, then
-automatic `5A9B` parsing through `carista_vagcan_repro.py`.
+automatic `5A9B` parsing through `CaristaReproduction/`.
 
 The same wrapper also runs:
 
 ```powershell
-python .\carista_vagcan_repro.py --validate-workflow ...
+python ..\CaristaReproduction --validate-workflow ...
 ```
 
 That validates the current coding load, PQ25 supported-setting mapping, ECU-info

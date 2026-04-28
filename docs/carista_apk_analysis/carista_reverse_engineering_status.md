@@ -13,6 +13,21 @@ write path for PQ25 cornering-light settings on BCM `6R0937087K`, using the
 Carista adapter and Carista's own setting model instead of another blind full-
 coding write attempt.
 
+## Current Exact-Flow Update
+
+Fresh Ghidra exports prove that Carista's UDS type-8 coding path writes F199,
+then F198, then target DID 0600. F199/F198 are gated with `isFatalFail`.
+`BaseCommand::extractState` maps `7F xx 31` to state `-32`; `-32` is in
+`State::Set::obd2NegativeResponse()` and is not in `State::Set::fatalError()`.
+Therefore F199/F198 `7F2E31` is nonfatal in Carista's metadata gates, while the
+final `2E0600` coding write still must be positive.
+
+The TP2.0 receive-loop exports also prove ACK timing: `readResponses` ACKs
+accepted data packets immediately, and `sendAck(seq,bool)` sends `0xB0` with
+`(seq + 1) & 0x0F`. For the observed live frames this means `B5` after the
+baseline response ending at sequence 4 and `B6` after the F199 `7F2E31` response
+at sequence 5.
+
 ## What Was Done
 
 ### Car / protocol groundwork

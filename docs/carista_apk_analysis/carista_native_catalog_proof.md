@@ -256,9 +256,47 @@ The next guarded write candidate is:
 2E06003AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000
 ```
 
+## Negative-Response Fatality Proof
+
+Additional exact-flow exports prove how Carista treats the live F199/F198
+response `7F2E31`:
+
+| Export | Finding |
+|---|---|
+| `BaseCommand_extractState_00CDEA40.c` | UDS `7F xx 31` returns `0xffffffe0`, which is signed state `-32`. |
+| `State_Set_obd2NegativeResponse_00D379A8.c` | The OBD2-negative-response set contains `-32`. |
+| `State_Set_fatalError_00D3787C.c` | The fatal set is `[-12, -1, -7, -4, -16, -51, -1000]`; it does not contain `-32`. |
+| `State_isError_00D37858.c` | Generic error status is the sign bit, so `-32` is an error. |
+| `Result_EmptyModel_isFatalFail_011E620E.c` | `isFatalFail` delegates to `State::isFatalError`, not generic `isError`. |
+| `VagOperationDelegate_writeVagUdsValue_byEcuDid_012737E0.c` | F199 and F198 metadata writes are gated with `isFatalFail`; the final target DID write is returned normally. |
+
+Conclusion: `7F2E31` on `F199` or `F198` is a Carista OBD2-negative-response
+state, but it is not fatal for the metadata pre-write gates. This proves why the
+local guarded writer may continue past exactly F199/F198 `7F2E31` when the user
+explicitly enables that behavior, while still requiring the final `2E0600` write
+to be positive.
+
+## TP2.0 ACK Timing Proof
+
+The same exact-flow export pass proves that Carista ACKs accepted ECU data
+frames inside the receive loop, before treating the application response as
+complete:
+
+| Export | Finding |
+|---|---|
+| `VagCanCommunicator_readResponses_00D282A8.c` | Accepted data packets are accumulated and ACKed in the receive loop. |
+| `VagCanCommunicator_sendAck_seq_00D28A94.c` | `sendAck(seq,bool)` calls the opcode overload with `0xB0` and `(seq + 1) & 0x0F`. |
+| `VagCanCommunicator_sendAck_opcode_00D28AD8.c` | The ACK packet is sent through the ELM communicator and then receive is called again. |
+| `VagCanPacket_toRawBytesForSending_00D2740C.c` | Raw send bytes start with `opcode | sequence`, followed by payload. |
+
+For the live traces, this yields ACK `B5` for the completed multi-frame
+`220600` response ending at sequence 4, and ACK `B6` for the single-frame F199
+`7F2E31` response at sequence 5.
+
 Still not proved:
 
-- Whether the BCM will accept the recovered `F199`/`F198` pre-write sequence without a hidden higher-level session side effect.
+- Whether the BCM will accept the final `2E0600` coding write after Carista-style
+  handling of the nonfatal `F199`/`F198` metadata negatives.
 - Whether the target write should start at a specific TP2.0 application counter, though previous reads/writes show the BCM understands ordinary counters.
 
 Operational boundary: do not promote any `31B8`-derived `3B9A` tuple or blind `2E0600`

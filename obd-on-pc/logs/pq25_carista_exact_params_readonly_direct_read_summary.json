@@ -1,0 +1,46 @@
+[
+  {
+    "attempt_id": "direct_ctr0_220600",
+    "mode": "direct_read",
+    "started": "2026-04-28T17:08:32.836",
+    "log_file": "logs\\pq25_carista_exact_params_readonly_direct_read_direct_ctr0_220600.txt",
+    "unit": "20",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "carista",
+    "channel_parameter_status": "defaulted",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 255,
+      "T2": 255,
+      "T3": 255,
+      "T4": 255
+    },
+    "session_command": "",
+    "session_command_label": "",
+    "session_counter": "",
+    "session_status": "",
+    "session_result": "",
+    "pre_read_sequence": "",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": "",
+    "read_counter": "0",
+    "read_command": "220600",
+    "read_command_label": "direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding",
+    "read_status": "no_response",
+    "read_result": "",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-28T17:08:40.206",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      }
+    ],
+    "error": ""
+  }
+]

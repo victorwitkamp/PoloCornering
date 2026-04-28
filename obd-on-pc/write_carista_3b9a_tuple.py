@@ -1,14 +1,21 @@
 from __future__ import annotations
 
 import argparse
+import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Literal
 
 import serial
 
-from carista_vagcan_repro import build_request, clean_hex, read_coding, require_len
-from carista_vagcan_repro import CORNERING_FIXES, derive_value6
+WORKSPACE_ROOT = Path(__file__).resolve().parents[1]
+if str(WORKSPACE_ROOT) not in sys.path:
+    sys.path.insert(0, str(WORKSPACE_ROOT))
+
+from CaristaReproduction.ByteUtils import clean_hex, require_len
+from CaristaReproduction.Commands.WriteVagCodingCommand import build_request
+from CaristaReproduction.Constants import CORNERING_FIXES
+from CaristaReproduction.VagCoding import derive_value6, read_coding
 from vw_tp20_readonly_probe import (
     ApplicationStatus,
     CanFrame,

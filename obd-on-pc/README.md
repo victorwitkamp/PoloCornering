@@ -683,7 +683,7 @@ pq25_current_settings_carista_report.md
 Shared Python reproduction of the recovered Carista native helpers:
 
 ```text
-carista_vagcan_repro.py
+../CaristaReproduction/
 ```
 
 It contains the recovered names used by the next in-car validation flow:
@@ -742,7 +742,7 @@ run_next_carista_validation.ps1
 It replaces the older tuple-proof sweep wrapper. The default path is deliberately
 short: fresh `220600`, direct `1A9B`/`1A9A` with the known-good minimal parameter
 profile, direct `1A9B`/`1A9A` with Carista's decompiled parameter profile, then
-automatic `5A9B` parsing through `carista_vagcan_repro.py`.
+automatic `5A9B` parsing through `../CaristaReproduction/`.
 
 Carista's adaptation path appears to use `31B8`, `31BA`, `31B9`, and `32B8` routine/adaptation commands. Those remain blocked in scripted mode.
 

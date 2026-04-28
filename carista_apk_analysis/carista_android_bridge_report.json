@@ -1,0 +1,369 @@
+{
+  "artifacts": [
+    {
+      "label": "com.prizmos.carista.apk",
+      "path": "carista_apk_analysis\\extracted\\android\\com.prizmos.carista.apk",
+      "size": 37999682
+    },
+    {
+      "label": "config.armeabi_v7a.apk",
+      "path": "carista_apk_analysis\\extracted\\android\\config.armeabi_v7a.apk",
+      "size": 29344505
+    },
+    {
+      "label": "classes.dex",
+      "path": "carista_apk_analysis\\extracted\\android\\dex\\classes.dex",
+      "size": 9845356
+    },
+    {
+      "label": "classes2.dex",
+      "path": "carista_apk_analysis\\extracted\\android\\dex\\classes2.dex",
+      "size": 7628632
+    },
+    {
+      "label": "libCarista.so",
+      "path": "carista_apk_analysis\\extracted\\android\\lib\\armeabi-v7a\\libCarista.so",
+      "size": 22611320
+    }
+  ],
+  "bridge_classes": [
+    {
+      "descriptor": "Lcom/prizmos/carista/library/model/Ecu;",
+      "dex_file": "classes2.dex",
+      "java_name": "com.prizmos.carista.library.model.Ecu",
+      "methods": [
+        {
+          "access_flags": "public constructor",
+          "descriptor": "(J)V",
+          "name": "<init>",
+          "native": false
+        },
+        {
+          "access_flags": "public",
+          "descriptor": "(Ljava/lang/Object;)Z",
+          "name": "equals",
+          "native": false
+        },
+        {
+          "access_flags": "public native",
+          "descriptor": "()Ljava/lang/String;",
+          "name": "getNameResId",
+          "native": true
+        },
+        {
+          "access_flags": "public",
+          "descriptor": "()I",
+          "name": "hashCode",
+          "native": false
+        },
+        {
+          "access_flags": "public",
+          "descriptor": "()Z",
+          "name": "isObd2",
+          "native": false
+        },
+        {
+          "access_flags": "public native",
+          "descriptor": "()Z",
+          "name": "isObd2Native",
+          "native": true
+        }
+      ]
+    },
+    {
+      "descriptor": "Lcom/prizmos/carista/library/model/Interpretation;",
+      "dex_file": "classes2.dex",
+      "java_name": "com.prizmos.carista.library.model.Interpretation",
+      "methods": []
+    },
+    {
+      "descriptor": "Lcom/prizmos/carista/library/model/Setting;",
+      "dex_file": "classes2.dex",
+      "java_name": "com.prizmos.carista.library.model.Setting",
+      "methods": [
+        {
+          "access_flags": "public constructor",
+          "descriptor": "()V",
+          "name": "<init>",
+          "native": false
+        },
+        {
+          "access_flags": "public abstract",
+          "descriptor": "()Lcom/prizmos/carista/library/model/Ecu;",
+          "name": "getEcu",
+          "native": false
+        },
+        {
+          "access_flags": "public abstract",
+          "descriptor": "()Ljava/lang/String;",
+          "name": "getInstruction",
+          "native": false
+        },
+        {
+          "access_flags": "public abstract",
+          "descriptor": "()Lcom/prizmos/carista/library/model/Interpretation;",
+          "name": "getInterpretation",
+          "native": false
+        },
+        {
+          "access_flags": "public abstract",
+          "descriptor": "()Ljava/lang/String;",
+          "name": "getNameResId",
+          "native": false
+        },
+        {
+          "access_flags": "public abstract",
+          "descriptor": "()Ljava/lang/String;",
+          "name": "toEventString",
+          "native": false
+        }
+      ]
+    },
+    {
+      "descriptor": "Lcom/prizmos/carista/library/model/SettingCategory;",
+      "dex_file": "classes2.dex",
+      "java_name": "com.prizmos.carista.library.model.SettingCategory",
+      "methods": [
+        {
+          "access_flags": "public constructor",
+          "descriptor": "(J)V",
+          "name": "<init>",
+          "native": false
+        },
+        {
+          "access_flags": "public static",
+          "descriptor": "()[Lcom/prizmos/carista/library/model/SettingCategory;",
+          "name": "getValues",
+          "native": false
+        },
+        {
+          "access_flags": "private static native",
+          "descriptor": "()[Lcom/prizmos/carista/library/model/SettingCategory;",
+          "name": "valuesNative",
+          "native": true
+        },
+        {
+          "access_flags": "public",
+          "descriptor": "(Ljava/lang/Object;)Z",
+          "name": "equals",
+          "native": false
+        },
+        {
+          "access_flags": "public",
+          "descriptor": "()Ljava/lang/String;",
+          "name": "getNameResId",
+          "native": false
+        },
+        {
+          "access_flags": "public",
+          "descriptor": "()J",
+          "name": "getNativeId",
+          "native": false
+        },
+        {
+          "access_flags": "public",
+          "descriptor": "()I",
+          "name": "hashCode",
+          "native": false
+        }
+      ]
+    },
+    {
+      "descriptor": "Lcom/prizmos/carista/library/model/SettingRef;",
+      "dex_file": "classes2.dex",
+      "java_name": "com.prizmos.carista.library.model.SettingRef",
+      "methods": [
+        {
+          "access_flags": "public constructor",
+          "descriptor": "(J)V",
+          "name": "<init>",
+          "native": false
+        },
+        {
+          "access_flags": "private native",
+          "descriptor": "()Ljava/lang/String;",
+          "name": "getNameResIdNative",
+          "native": true
+        },
+        {
+          "access_flags": "private native",
+          "descriptor": "()Ljava/lang/String;",
+          "name": "toEventStringNative",
+          "native": true
+        },
+        {
+          "access_flags": "public native",
+          "descriptor": "()Lcom/prizmos/carista/library/model/Ecu;",
+          "name": "getEcu",
+          "native": true
+        },
+        {
+          "access_flags": "public native",
+          "descriptor": "()Ljava/lang/String;",
+          "name": "getInstruction",
+          "native": true
+        },
+        {
+          "access_flags": "public native",
+          "descriptor": "()Lcom/prizmos/carista/library/model/Interpretation;",
+          "name": "getInterpretation",
+          "native": true
+        },
+        {
+          "access_flags": "public",
+          "descriptor": "()Ljava/lang/String;",
+          "name": "getNameResId",
+          "native": false
+        },
+        {
+          "access_flags": "public",
+          "descriptor": "()J",
+          "name": "getNativeId",
+          "native": false
+        },
+        {
+          "access_flags": "public",
+          "descriptor": "()Ljava/lang/String;",
+          "name": "toEventString",
+          "native": false
+        }
+      ]
+    },
+    {
+      "descriptor": "Lcom/prizmos/carista/library/operation/ChangeSettingOperation;",
+      "dex_file": "classes2.dex",
+      "java_name": "com.prizmos.carista.library.operation.ChangeSettingOperation",
+      "methods": [
+        {
+          "access_flags": "public constructor",
+          "descriptor": "()V",
+          "name": "<init>",
+          "native": false
+        },
+        {
+          "access_flags": "public constructor",
+          "descriptor": "(Lcom/prizmos/carista/library/model/Setting; [B Lcom/prizmos/carista/library/operation/ReadValuesOperation;)V",
+          "name": "<init>",
+          "native": false
+        },
+        {
+          "access_flags": "private native",
+          "descriptor": "(Lcom/prizmos/carista/library/model/Setting; [B Lcom/prizmos/carista/library/operation/ReadValuesOperation;)J",
+          "name": "initNative",
+          "native": true
+        }
+      ]
+    },
+    {
+      "descriptor": "Lcom/prizmos/carista/library/operation/CheckSettingsOperation;",
+      "dex_file": "classes2.dex",
+      "java_name": "com.prizmos.carista.library.operation.CheckSettingsOperation",
+      "methods": [
+        {
+          "access_flags": "public constructor",
+          "descriptor": "(Lcom/prizmos/carista/library/operation/Operation;)V",
+          "name": "<init>",
+          "native": false
+        },
+        {
+          "access_flags": "private native",
+          "descriptor": "(Lcom/prizmos/carista/library/operation/Operation;)J",
+          "name": "initNative",
+          "native": true
+        }
+      ]
+    },
+    {
+      "descriptor": "Lcom/prizmos/carista/library/operation/GetEcuInfoOperation;",
+      "dex_file": "classes2.dex",
+      "java_name": "com.prizmos.carista.library.operation.GetEcuInfoOperation",
+      "methods": [
+        {
+          "access_flags": "public constructor",
+          "descriptor": "(Lcom/prizmos/carista/library/model/Ecu; Lcom/prizmos/carista/library/operation/Operation;)V",
+          "name": "<init>",
+          "native": false
+        },
+        {
+          "access_flags": "private native",
+          "descriptor": "(Lcom/prizmos/carista/library/model/Ecu; Lcom/prizmos/carista/library/operation/Operation;)J",
+          "name": "initNative",
+          "native": true
+        },
+        {
+          "access_flags": "public native",
+          "descriptor": "(S)J",
+          "name": "getAdaptationRawAddress",
+          "native": true
+        },
+        {
+          "access_flags": "public native",
+          "descriptor": "(S)J",
+          "name": "getCodingRawAddress",
+          "native": true
+        },
+        {
+          "access_flags": "public native",
+          "descriptor": "()Lcom/prizmos/carista/library/model/Ecu;",
+          "name": "getEcu",
+          "native": true
+        },
+        {
+          "access_flags": "public native",
+          "descriptor": "(J)Z",
+          "name": "isValueInterpretedAsDecimal",
+          "native": true
+        },
+        {
+          "access_flags": "public native",
+          "descriptor": "()Z",
+          "name": "supportsAdaptation",
+          "native": true
+        },
+        {
+          "access_flags": "public native",
+          "descriptor": "()Z",
+          "name": "supportsDiagnostics",
+          "native": true
+        },
+        {
+          "access_flags": "public native",
+          "descriptor": "()Z",
+          "name": "supportsMultiCoding",
+          "native": true
+        },
+        {
+          "access_flags": "public native",
+          "descriptor": "()Z",
+          "name": "supportsSingleCoding",
+          "native": true
+        }
+      ]
+    },
+    {
+      "descriptor": "Lcom/prizmos/carista/library/operation/ReadValuesOperation;",
+      "dex_file": "classes2.dex",
+      "java_name": "com.prizmos.carista.library.operation.ReadValuesOperation",
+      "methods": [
+        {
+          "access_flags": "public constructor",
+          "descriptor": "()V",
+          "name": "<init>",
+          "native": false
+        },
+        {
+          "access_flags": "public native",
+          "descriptor": "()Ljava/util/Map;",
+          "name": "getAvailableItems",
+          "native": true
+        },
+        {
+          "access_flags": "public native",
+          "descriptor": "(Lcom/prizmos/carista/library/model/Setting;)[B",
+          "name": "getSettingValue",
+          "native": true
+        }
+      ]
+    }
+  ]
+}

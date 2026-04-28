@@ -2,6 +2,57 @@
 
 Purpose: keep the next live session short and evidence-driven.
 
+## Superseding Carista UDS Proof - 2026-04-28
+
+The current write candidate is the Carista UDS type-8 path, not the old compact
+`3B9A` tuple path:
+
+```text
+2EF199YYMMDD
+2EF1980005F3C7E719
+2E06003AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000
+```
+
+Fresh Ghidra exports in `carista_apk_analysis/ghidra_exports_exact_flow/` prove:
+
+```text
+BaseCommand_extractState maps 7F xx 31 to Carista state -32.
+State_Set_obd2NegativeResponse contains -32.
+State_Set_fatalError is [-12, -1, -7, -4, -16, -51, -1000] and does not contain -32.
+Result_EmptyModel_isFatalFail delegates to State::isFatalError.
+writeVagUdsValue checks F199/F198 with isFatalFail.
+```
+
+So F199/F198 `7F2E31` is nonfatal in Carista's metadata pre-write gates. The
+guarded writer may continue past exactly those metadata negatives only when
+`--allow-unsupported-metadata-prewrite` is explicitly supplied; final DID `0600`
+must still return positive and be verified by `220600`.
+
+The same exports prove TP2.0 ACK timing:
+
+```text
+VagCanCommunicator_readResponses ACKs accepted data packets inside the receive loop.
+VagCanCommunicator_sendAck(seq,bool) sends opcode 0xB0 with (seq + 1) & 0x0F.
+VagCanPacket_toRawBytesForSending serializes opcode | sequence as the first raw byte.
+```
+
+For the observed live frames, ACK `B5` matches the completed baseline response
+ending at sequence 4, and ACK `B6` matches the F199 `7F2E31` response at
+sequence 5. The local writer has been repaired and compiles cleanly, but no
+live write should be run until the user is back in the car and confirms.
+
+Follow-up static audit found and fixed one more replication mismatch: native
+`generateOutgoingPackets` consumes one outgoing TP2.0 sequence number per
+generated data packet, not once per logical UDS request. The writer now advances
+the counter by the number of TP2.0 frames sent. For write-counter `0`, the
+expected dry-run starts are now F199 `20/11`, F198 `22/13`, and final DID 0600
+`24/25/26/27/18`.
+
+Remaining non-exact areas are documented in
+`carista_apk_analysis/carista_replication_gap_analysis.md`; the main live risk
+is still transport/session envelope fidelity, not the `2EF199` / `2EF198` /
+`2E0600` request payloads themselves.
+
 ## In-Car Tuple-Proof Read Result - 2026-04-28
 
 The no-phone tuple-proof read was run in the car on `COM10` and stayed
@@ -69,7 +120,7 @@ GetVagCanEcuInfoCommand_processEcuInfo  -> positive 5A9B parser
 VagOperationDelegate_writeVagCanCodingValue / WriteVagCodingCommand_getRequest -> dry-run only
 ```
 
-`carista_vagcan_repro.py --validate-workflow` then checks the whole process:
+`CaristaReproduction --validate-workflow` then checks the whole process:
 
 ```text
 1. current long coding is loaded from 220600/5A9A data
@@ -299,7 +350,10 @@ That means the remaining write work is now deliberately narrow:
 5. Immediately re-read 220600 and compare the result with the known-good coding.
 ```
 
-The shared Python reproduction module is `carista_vagcan_repro.py`. It contains
+The Python reproduction package is `CaristaReproduction/`. It is split into
+source-shaped modules such as `Commands/GetVagCanEcuInfoCommand.py`,
+`Commands/WriteVagCodingCommand.py`, `VagOperationDelegate.py`, and
+`VagCanCommunicator.py`. It contains
 the recovered Carista-named request/parser/builder functions and is used by both
 the composer and the tuple-proof summarizer.
 
@@ -424,3 +478,47 @@ Do not execute another write unless one of these is true:
 If using the Python writer anyway, the only parsed full-coding baseline is
 direct `2E0600`, and it must start from a fresh `220600` readback and end with
 another immediate `220600` verification.
+
+## 2026-04-28 Guarded UDS Retry Note
+
+The latest guarded Carista UDS writer uses the native-proven sequence:
+
+```text
+2EF199 + date payload
+2EF198 + workshop-code payload
+2E0600 + full target coding payload
+```
+
+2026-04-28 live retry notes:
+
+```text
+1. First guarded F199 write attempt closed with 300A8 immediately after a
+  fresh multi-frame 220600 baseline read. The writer now ACKs completed ECU
+  responses before sending the next TP2.0 application request; for the
+  observed baseline response this is B5 for final response sequence 4.
+2. After B5, F199 reached the ECU and returned 7F2E31. Native
+  writeVagUdsValue checks metadata pre-writes with isFatalFail, so the writer
+  has an explicit --allow-unsupported-metadata-prewrite option that may
+  continue past F199/F198 7F2E31 only; the final 2E0600 coding write still
+  must be positive and verified by 220600.
+3. The latest attempt showed F199 7F2E31 repeated three times and then 300A8
+  before the host could ACK it. The next test should use the new shorter
+  metadata final-frame timing defaults so the first single-frame negative can
+  be ACKed with B6 before deciding whether to continue.
+```
+
+These changes affect TP2.0 cleanup/timing and metadata pre-write fatality only;
+they do not change the Carista-derived payloads.
+
+Current direct write command after a successful read-only prep dry-run:
+
+```powershell
+python .\write_carista_uds_coding.py `
+  --coding-file .\logs\pq25_next_carista_uds_prep_direct_read_summary.json `
+  --workshop-code-file .\logs\pq25_next_carista_uds_prep_direct_read_summary.json `
+  --confirm-target 3AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000 `
+  --allow-unsupported-metadata-prewrite `
+  --run-id pq25_cornering_direct_write_after_prep `
+  --execute `
+  --i-understand-this-writes-bcm-coding
+```

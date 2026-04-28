@@ -1,0 +1,36 @@
+{
+  "changed_bytes": {
+    "12": [
+      "2C",
+      "6C"
+    ],
+    "21": [
+      "A2",
+      "A6"
+    ]
+  },
+  "current_coding": "3AB82B9F08A10000003008002C680ED000C8412F60A20000200000000000",
+  "date_payload": "260428",
+  "requests": [
+    {
+      "did": 61849,
+      "label": "Carista DATE_WRITE_ID pre-write",
+      "payload": "260428",
+      "request": "2EF199260428"
+    },
+    {
+      "did": 61848,
+      "label": "Carista WORKSHOP_CODE_WRITE_ID pre-write",
+      "payload": "0005F3C7E719",
+      "request": "2EF1980005F3C7E719"
+    },
+    {
+      "did": 1536,
+      "label": "Carista UDS long-coding write",
+      "payload": "3AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000",
+      "request": "2E06003AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000"
+    }
+  ],
+  "target_coding": "3AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000",
+  "workshop_code_payload": "0005F3C7E719"
+}

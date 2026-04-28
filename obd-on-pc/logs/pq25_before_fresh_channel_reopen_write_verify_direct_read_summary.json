@@ -1,0 +1,32 @@
+[
+  {
+    "attempt_id": "direct_ctr0_220600",
+    "mode": "direct_read",
+    "started": "2026-04-28T17:21:02.398",
+    "log_file": "logs\\pq25_before_fresh_channel_reopen_write_verify_direct_read_direct_ctr0_220600.txt",
+    "unit": "20",
+    "send_header": "",
+    "listen_header": "",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "",
+    "channel_parameters": {},
+    "session_command": "",
+    "session_command_label": "",
+    "session_counter": "",
+    "session_status": "",
+    "session_result": "",
+    "pre_read_sequence": "",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": "",
+    "read_counter": "",
+    "read_command": "",
+    "read_command_label": "",
+    "read_status": "",
+    "read_result": "",
+    "stopped_early": "",
+    "raw_payloads": [],
+    "error": "could not open port 'COM10': OSError(22, 'De time-outperiode van de semafoor is verlopen.', None, 121)"
+  }
+]
