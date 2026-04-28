@@ -4,13 +4,37 @@ Purpose: prepare the offline steps after a successful `1A9A` read. This file
 does not authorize writing to the car. The live scripts still block write,
 security, and routine-control services.
 
+## 2026-04-28 Update
+
+The current best path is Carista's UDS DID `0600` writer, not the old `3B9A`
+tuple hypothesis.
+
+Recovered sequence:
+
+```text
+2EF199 + YYMMDD
+2EF198 + workshop-code payload from 22F1A5
+2E0600 + full 30-byte target coding
+```
+
+For this BCM, the latest live `22F1A5` payload was `0005F3C7E719`, and the
+target coding remains:
+
+```text
+3AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000
+```
+
+Use `write_carista_uds_coding.py` for dry-run planning and guarded execution.
+It re-reads `220600` before any write and verifies `220600` after the write.
+
 ## Inputs Needed
 
 After the next car run, we need one of these:
 
 ```text
-1A9A positive response, usually starting with 5A9A...
-or the extracted long-coding payload after 5A9A
+preferred current path: direct 220600 positive response, usually starting with 620600...
+or, if the Carista/KWP path is later recovered, a 1A9A positive response starting with 5A9A...
+or the extracted 30-byte long-coding payload after either prefix
 ```
 
 Known-good reference currently stored locally:
@@ -27,16 +51,23 @@ Reference value:
 
 ## First Offline Check
 
-If the next scan captures a raw `5A9A...` response, run:
+If the next scan captures a raw `620600...` or `5A9A...` response, run:
 
 ```powershell
-python .\decode_pq25_longcoding.py --coding 5A9A...
+python .\decode_pq25_longcoding.py --coding 620600...
 ```
 
 Then compare it against the known-good coding:
 
 ```powershell
 python .\prepare_pq25_coding_change.py --current 5A9A...
+```
+
+For the current stable direct-read wrapper, the decoder reads the generated JSON
+summary directly:
+
+```powershell
+python .\decode_pq25_longcoding.py --coding-file .\logs\pq25_next_baseline_220600_direct_read_summary.json --output .\logs\pq25_next_baseline_220600_settings_report.txt
 ```
 
 ## Candidate Change Profiles

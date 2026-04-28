@@ -1,0 +1,100 @@
+{
+  "coding": {
+    "length_bytes": 30,
+    "value": "3AB82B9F08A10000003008002C680ED000C8412F60A20000200000000000"
+  },
+  "ecu_info": {
+    "coding_type": 3,
+    "coding_type_selector": "10",
+    "initial_value6": "000000000000",
+    "part_number": "1K0937049S",
+    "raw_address4": "B0373034",
+    "response": "5A9B314B30393337303439532020B037303410000000000000000000",
+    "stripped_payload": "314B30393337303439532020B037303410000000000000000000",
+    "suffix": "0301FF",
+    "tail": ""
+  },
+  "gates": [
+    {
+      "detail": "Current coding is loaded from direct 220600 or Carista 5A9A long-coding data.",
+      "name": "read_long_coding",
+      "status": "pass"
+    },
+    {
+      "detail": "PQ25 cornering settings are mapped from Carista labels to byte 12 bit 6 and byte 21 bit 2.",
+      "name": "map_supported_settings_for_car",
+      "status": "pass"
+    },
+    {
+      "detail": "Positive 5A9B metadata decoded.",
+      "name": "get_vag_can_ecu_info",
+      "status": "pass"
+    },
+    {
+      "detail": "WriteVagCodingCommand requests are review-ready.",
+      "name": "build_write_tuples",
+      "status": "pass"
+    }
+  ],
+  "requests": {
+    "GetVagCanEcuInfoCommand_getRequest": "1A9B",
+    "ReadVagCanLongCodingCommand_getRequest": "1A9A",
+    "WriteVagCodingCommand_prefix": "3B9A"
+  },
+  "supported_settings": [
+    {
+      "bit_index": 6,
+      "byte_index": 12,
+      "byte_start": 12,
+      "chunk_index": 2,
+      "cornering_fix": "base-fog",
+      "current_state": "clear",
+      "current_value6": "2C680ED000C8",
+      "desired_state": "set",
+      "key": "car_setting_cornering_lights_via_fogs",
+      "label": "Cornering lights using fog lights",
+      "status": "pending_enable",
+      "target_value6": "6C680ED000C8"
+    },
+    {
+      "bit_index": 2,
+      "byte_index": 21,
+      "byte_start": 18,
+      "chunk_index": 3,
+      "cornering_fix": "turn-signal",
+      "current_state": "clear",
+      "current_value6": "412F60A20000",
+      "desired_state": "set",
+      "key": "car_setting_cornering_lights_with_turn_signals",
+      "label": "Turn on cornering lights when turn signal is on",
+      "status": "pending_enable",
+      "target_value6": "412F60A60000"
+    }
+  ],
+  "tuple_candidates": [
+    {
+      "coding_type": 3,
+      "cornering_fix": "base-fog",
+      "key": "car_setting_cornering_lights_via_fogs",
+      "label": "Cornering lights using fog lights",
+      "raw_address4": "B0373034",
+      "reason": "",
+      "request": "3B9A6C680ED000C8B03730340301FF",
+      "status": "ready_for_review",
+      "tail": "",
+      "value6": "6C680ED000C8"
+    },
+    {
+      "coding_type": 3,
+      "cornering_fix": "turn-signal",
+      "key": "car_setting_cornering_lights_with_turn_signals",
+      "label": "Turn on cornering lights when turn signal is on",
+      "raw_address4": "B0373034",
+      "reason": "",
+      "request": "3B9A412F60A60000B03730340301FF",
+      "status": "ready_for_review",
+      "tail": "",
+      "value6": "412F60A60000"
+    }
+  ]
+}

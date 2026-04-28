@@ -1,6 +1,6 @@
 # Carista Reverse-Engineering Status
 
-Date: 2026-04-27
+Date: 2026-04-28
 
 Purpose: consolidate the Carista reverse-engineering work for the VW Polo 6R /
 PQ25 BCM cornering-light investigation so the offline path can continue even
@@ -12,6 +12,28 @@ The working goal is not generic APK reversing. The target is the exact Carista
 write path for PQ25 cornering-light settings on BCM `6R0937087K`, using the
 Carista adapter and Carista's own setting model instead of another blind full-
 coding write attempt.
+
+## Current Conclusion
+
+The best-supported path for this BCM is now the Carista UDS type-8 coding path:
+
+```text
+VagUdsCodingSetting(ecu, vector) -> DID 0600
+writeRawValue type 8             -> writeVagUdsValue
+writeVagUdsValue                 -> 2EF199, 2EF198, then 2E0600
+```
+
+The next write candidate is therefore:
+
+```text
+2EF199YYMMDD
+2EF1980005F3C7E719
+2E06003AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000
+```
+
+The old `3B9A` tuple path remains real in Carista, but it is no longer the main
+candidate for this live BCM because the car binds to the UDS-style `220600`
+coding path and did not produce usable positive `5A9B` metadata.
 
 ## What Was Done
 
@@ -117,6 +139,14 @@ A00194FF82FF
 A00F8AFF32FF
 ```
 
+- 2026-04-28 in-car no-phone tuple-proof reads on `COM10` preserved the fresh
+  `220600` baseline but did not recover positive `5A9B`: direct `1A9B` was
+  `7F1A11` or no response, focused `1089`/pre-read/fallback variants produced
+  no `5A9B`, and the broad direct `carista_kwp` profile found no adjacent KWP
+  metadata (`1A9F`/`1A9A` no response, `1A91`/`1A86` `7F1A11`). The current
+  car-side proof path is exhausted until a new sequencing hypothesis or phone
+  trace is available.
+
 ### Structured write-model recovery
 
 - The old model `3B9A + full 30-byte coding` was disproven.
@@ -131,6 +161,33 @@ A00F8AFF32FF
 + 6-byte coding value
 + 4-byte coding raw address
 + coding-type-dependent tail
+```
+
+- Corrected Ghidra headless decompilation is now automated through:
+
+```text
+carista_apk_analysis/setup_ghidra_re.ps1 -ExportTargets -HeadlessMaxMem 8G
+carista_apk_analysis/ghidra_scripts/ExportCaristaTargets.java
+```
+
+- Important tooling correction: Ghidra loads `libCarista.so` with a `+0x10000`
+  image-base delta relative to the ELF symbol values. The exporter now translates
+  ELF addresses before decompiling and writes both addresses into each export.
+
+- The corrected native exports prove the `WriteVagCodingCommand` suffix split:
+
+```text
+type 2:     selector + 3-byte tail
+other type: selector + (tail length + 1) + tail bytes + FF
+```
+
+- The corrected constructor field layout is:
+
+```text
+this + 0x10 -> 6-byte value vector
+this + 0x1c -> 4-byte raw-address/component-id vector
+this + 0x24 -> coding type enum
+this + 0x28 -> tail/short-coding vector
 ```
 
 - Additional disassembly proved that the raw address is not a pasted `0600`
@@ -154,6 +211,17 @@ WriteRawValuesOperation(vector<pair<uint64, vector<byte>>>)
 
 - Practical implication: a normal Carista UI toggle is converted into a compact
   setting-specific coding value before the final write command is built.
+
+- The corrected `writeVagCanCodingValue`, `readEcuInfoCached`, and
+  `readVagCanEcuInfo` decompiles show that the rawAddress4/tail bridge is parsed
+  ECU-info metadata. `writeVagCanCodingValue` reads/caches `VagEcuInfo`, takes the
+  coding-info raw-address vector from that object, and then constructs
+  `WriteVagCodingCommand`. No source-like native fallback was found that derives
+  those bytes from the current `220600` long-coding string alone.
+
+- Current conclusion for `6R0937087K`: the value6 chunks are proven, but the full
+  `3B9A` tuple remains unproven until a positive `5A9B` ECU-info payload or an
+  equivalent cached/catalog metadata source is recovered.
 
 ### Java / resource bridge recovery
 
@@ -288,6 +356,7 @@ car_setting_cornering_lights_with_turn_signals
 ```text
 carista_apk_analysis/analyze_carista_write_builder.py
 carista_apk_analysis/analyze_carista_write_tuple.py
+carista_apk_analysis/analyze_carista_offline_tuple_candidates.py
 carista_apk_analysis/map_carista_pq25_cornering.py
 carista_apk_analysis/build_carista_supported_settings_map.py
 ```
@@ -309,13 +378,9 @@ summarize_carista_cornering_trace.py
 run_carista_cornering_capture.ps1
 ```
 
-- Gadget patch/build tooling for the stock-phone path:
-
-```text
-build_carista_gadget_apks.py
-carista_gadget_patch_workflow.md
-gadget_patch_out/
-```
+- Removed obsolete local Gadget APK patch/build tooling, generated output,
+  debug signing key, and downloaded Gadget payload after the no-phone
+  constraint made that route unavailable.
 
 ## What Was Accomplished
 
@@ -356,6 +421,34 @@ coding type 2 is preserved
 most other coding is normalized to type 3
 a sentinel metadata path forces type 5
 ```
+
+- The offline-only VAGCAN20 simulator pass found embedded `31B80000` responses
+  that expose compact ECU-list coding-address shorts:
+
+```text
+1K0937049S-style profile: 0103 0104 0106 0108 0102 0107
+BCM25/5C0937087E profile: 0106 0102 0103 0107 0108 0114
+```
+
+- The BCM25 profile is the closest static analogue because it has direct
+  `220600` long-coding data. Its first short, `0106`, is now only an
+  address-family clue, not a proven write address.
+
+- The deeper ECU-info parser pass corrected the raw-address proof boundary.
+  `WriteVagCodingCommand` receives rawAddress4/coding selector metadata from
+  positive `1A9B` / `5A9B` ECU-info parsing, not directly from `31B8`:
+
+```text
+payload[0x0c:0x10] -> rawAddress4
+payload[0x10]      -> coding selector
+payload[0x11:0x14] -> tail for type-2/type-4 selector branches
+payload[0x14:0x1a] -> stored 6-byte coding value
+```
+
+- The embedded 1K0937049S-style simulator proves that parser with rawAddress4
+  `B0373034`, selector `10`, coding type `3`, empty tail, and suffix `0301FF`.
+  The actual `6R0937087K` evidence has no positive `1A9B`, so the complete
+  tuple remains unproven offline.
 
 - Dex inspection with Androguard confirmed the Java/native bridge classes that
   matter for a future trace or deeper static bridge:
@@ -432,6 +525,18 @@ What remains unknown is the rest of the compact Carista write tuple:
 coding type / tail bytes
 required session or state precondition
 ```
+
+The old static candidate set is now explicitly rejected as proof:
+
+```text
+31B8 short:              0106
+rawAddress4 hypotheses:  00000106 / 00200106
+type-3 empty-tail suffix: 0301FF
+```
+
+Those bytes are not write candidates. The actual missing proof is a positive
+`1A9B` / `5A9B` response for `6R0937087K`, a native catalog equivalent for the
+same metadata bytes, or a future live trace.
 
 ### 1. App setting -> native setting mapping
 
@@ -521,8 +626,9 @@ cornering-setting value mapping without the phone.
 
 ### Phone-side blocker
 
-Right now the phone is unavailable, so the Gadget install-and-trace path cannot
-be exercised.
+Right now the phone is unavailable, so the Gadget install-and-trace path is not
+actionable for this work session. Keep the patch/build notes as historical
+tooling only; the active path is offline static analysis.
 
 ### Offline blocker
 
@@ -557,7 +663,15 @@ That is the missing chain needed to stop guessing at writes.
 
 Until the phone is available again, the highest-value static work is:
 
-### 1. JNI constructor / init path tracing
+### 1. Actual ECU-info metadata recovery
+
+The static parser side is now proven: positive `1A9B` / `5A9B` payload bytes
+carry the final rawAddress4, coding selector, and tail fields consumed by
+`WriteVagCodingCommand`. The missing work is no longer to convert `31B8` shorts;
+it is to recover those positive `1A9B` bytes for the actual `6R0937087K`, or to
+reconstruct an equivalent native-catalog source for the same metadata.
+
+### 2. JNI constructor / init path tracing
 
 Recover the exact JNI path that turns Java-side setting references into native
 `Setting*` pointers and operation objects. This should narrow whether
@@ -573,20 +687,20 @@ SettingRef.getNameResIdNative / toEventStringNative
 SettingCategory.valuesNative
 ```
 
-### 2. VagCanSettings catalog analysis
+### 3. VagCanSettings catalog analysis
 
 Push deeper into `VagCanSettings::getSettings()` and nearby data structures to
 locate the compiled catalog entries associated with the recovered cornering
 resource keys.
 
-### 3. Cornering-setting neighborhood mapping
+### 4. Cornering-setting neighborhood mapping
 
 Use the recovered cornering resource strings and event strings as anchors to map
 nearby setting records, candidate IDs, and possible coding metadata, with the
 specific aim of recovering which app-visible cornering toggle produces which
 compact coding value.
 
-### 4. insertValue path recovery
+### 5. insertValue path recovery
 
 Trace how `VagOperationDelegate::insertValue`, `VagSetting::insertValue`, and
 `ByteUtils::insertValue` transform a high-level setting value into the compact
@@ -598,11 +712,10 @@ can be related back to the actual coding-bit change.
 If continuing offline right now, the best next slice is:
 
 ```text
-map the Java/JNI SettingRef bridge into the native Setting catalog,
-locate the real cornering setting entry inside VagCanSettings,
-and then try to recover the compact value bytes that Carista would emit
-for that setting without relying on the phone
+recover actual 6R0937087K positive-1A9B metadata or an equivalent native catalog record,
+then bind that metadata to the real cornering setting values in the native Setting catalog
 ```
 
-This is the shortest remaining static path toward the final missing bridge from
-app-visible setting -> Carista value bytes -> actual coding effect.
+This is now the shortest remaining static path toward the final missing bridge:
+actual 1A9B metadata -> rawAddress4/tail -> app-visible setting -> Carista
+value bytes -> actual coding effect.

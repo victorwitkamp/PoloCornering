@@ -1,271 +1,133 @@
 # Next Car Attempt Plan
 
-Purpose: keep the next live session short and evidence-driven.
+Purpose: keep the next live session short, focused, and reversible.
 
 ## Current State
 
-Latest confirmed live coding:
+Latest confirmed broken coding:
 
 ```text
 3AB82B9F08A10000003008002C680ED000C8412F60A20000200000000000
 ```
 
-Known-good working coding:
+Known working cornering-enabled coding:
 
 ```text
 3AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000
 ```
 
-Only two bytes differ:
+Only two bytes should change:
 
 ```text
-byte 12: 2C -> 6C
-byte 21: A2 -> A6
+byte 12: 2C -> 6C  (byte 12 bit 6, fog-light cornering)
+byte 21: A2 -> A6  (byte 21 bit 2, turn-signal cornering trigger)
 ```
 
-That sets:
+If a fresh read differs in any other byte, stop and decode that new state first.
+
+## Latest Carista RE Finding
+
+The current best write model is no longer the old `3B9A` tuple path.
+
+Ghidra exports now show:
 
 ```text
-byte 12 bit 6 = base fog-light cornering function
-byte 21 bit 2 = turn-signal-triggered cornering assist
+VagUdsCodingSetting(ecu, vector) hardcodes DID 0600 and setting type 8.
+writeRawValue dispatches type 8 to writeVagUdsValue.
+WriteDataByIdentifierCommand serializes 2E + DID + payload.
+writeVagUdsValue sends:
+  2EF199 + date payload
+  2EF198 + workshop-code payload
+  2E0600 + target coding payload
 ```
 
-VCDS reference check:
+The earlier direct `2E0600 + full coding` reached the BCM and failed with
+`7F2E22`, so the payload/DID was meaningful. The missing part was probably the
+Carista pre-write sequence, not TP2.0 framing.
+
+The live `22F1A5` result already gave the workshop-code payload Carista needs:
 
 ```text
-C:\Users\victo\Downloads\VCDS-Release-26.3.0-Installer\Labels\6R-09.lbl
+22F1A5 -> 62F1A50005F3C7E719
+F198 payload = 0005F3C7E719
 ```
 
-confirms this BCM family redirects to `6R0-937-08x-09.CLB` as `High+`, matching
-`6R0937087K`. The actual CLB is binary/encrypted, so it confirms the right label
-family but does not give this project a full plaintext bit map. Details are in:
+`VagEcuInfo::getWorkshopCodeForWriting()` accepts a 6-byte workshop code and
+only fills default WSC/importer/equipment fields if those subfields are zero.
+The live payload is nonzero, so the next writer uses it as-is.
 
-```text
-vcds_pq25_reference_notes.md
-```
+## Before Writing
 
-## Carista Write Finding
-
-Do not repeat the old blind full-coding `3B9A` write. Carista's native builder
-does not match that shape.
-
-Current Carista-shaped model:
-
-```text
-3B9A + 6-byte value + 4-byte coding raw address + coding-type-dependent tail
-```
-
-Latest offline bridge result:
-
-```text
-ChangeSettingOperation uses shared_ptr<Setting> + value bytes.
-WriteRawValuesOperation is the separate lower-level vector<pair<uint64, bytes>> path.
-The next offline blocker is the compiled VagCanSettings catalog / SettingRef bridge for the cornering setting, not another guessed standalone raw key.
-```
-
-Offline Carista label mapping now points to the same two practical bits:
-
-```text
-Carista "Cornering lights (using fog lights)" / "Use cornering lights"
-  -> byte 12 bit 6
-
-Carista "Turn on cornering lights when turn signal is on"
-  -> byte 21 bit 2
-```
-
-This maps the visible setting effect, but it still does not recover Carista's
-exact compact write tuple.
-
-The broader generated Carista settings map is now available for filtering and
-handoff work:
-
-```text
-carista_apk_analysis/carista_supported_settings_map.md
-carista_apk_analysis/carista_supported_settings_map.csv
-carista_apk_analysis/carista_supported_settings_map.json
-```
-
-It marks only the two cornering chunks as pending write targets. CH/LH and ADL
-rows are context only because their mapped bits do not differ between the
-current and known-good BCM coding.
-
-The latest tuple recovery narrows the likely 6-byte value vectors if Carista is
-writing 6-byte coding chunks:
-
-```text
-byte 12 bit 6 target chunk: 6C680ED000C8
-byte 21 bit 2 target chunk: 412F60A60000
-```
-
-Still missing before a Carista-shaped write is complete:
-
-```text
-rawAddress4 for each chunk
-coding type / tail bytes
-required pre-write session/state
-```
-
-That means the remaining write work is now deliberately narrow:
-
-```text
-1. Confirm the car still reports the two cornering bits as clear with a fresh 220600 read.
-2. Recover or trace the real Carista tuple metadata for each changed chunk:
-   - base-fog:    value6 6C680ED000C8 + unknown rawAddress4/codingType/tail
-   - turn-signal: value6 412F60A60000 + unknown rawAddress4/codingType/tail
-3. Dry-run the exact structured 3B9A request and verify the TP2.0 frame split.
-4. Only execute a write after the generated 3B9A request is reviewed and repeated
-   exactly through --confirm-request.
-5. Immediately re-read 220600 and compare the result with the known-good coding.
-```
-
-The offline composer for the final shape is `compose_carista_3b9a_tuple.py`.
-It can now derive the two cornering `value6` chunks from a fresh long-coding
-read with `--cornering-fix base-fog` or `--cornering-fix turn-signal`, but it
-must only print a complete request when recovered real raw-address, coding type,
-and tail bytes are supplied.
-
-The direct `2E0600 + full coding` attempt was parsed by the BCM but rejected
-with `7F2E22`, so it proves the address/service is meaningful but not that the
-write path is complete.
-
-New offline writer-flow finding:
-
-```text
-Carista's lower writer takes a 64-bit raw-value key plus compact value bytes.
-writeVagCanCodingValue then resolves ECU coding metadata and builds:
-3B9A + 6-byte value + 4-byte raw address + coding-type/tail.
-
-The coding type path preserves type 2, normalizes most other coding to type 3,
-and has a sentinel path that forces type 5.
-```
-
-This means the missing data is probably attached to the native Setting/catalog
-entry or ECU metadata, not recoverable from `220600` alone.
-
-## Carista-Only Next Step
-
-Because the phone is currently unavailable, the traced Carista UI-toggle path is
-prepared but not actionable for the next car visit. Keep it as the fastest route
-when the phone is available again.
-
-Use the capture workflow documented here:
-
-```text
-carista_apk_analysis/next_carista_cornering_capture.md
-```
-
-The new capture tooling is:
-
-```text
-carista_apk_analysis/run_carista_cornering_trace.py
-carista_apk_analysis/carista_cornering_trace.js
-carista_apk_analysis/summarize_carista_cornering_trace.py
-```
-
-What that trace must recover from one real cornering setting change:
-
-```text
-- setting name/event string
-- nativeId / native Setting pointer
-- insertValue bytes
-- getSettingRawAddress raw key
-- WriteVagCodingCommand ctor value
-- 4-byte raw-address vector
-- coding type and tail bytes
-```
-
-That is the shortest path to a correctly shaped adapter-only write.
-
-Without the phone, the next car step is adapter-only verification: read the
-current long coding, decode it, and confirm whether byte 12 bit 6 and byte 21
-bit 2 are still clear before deciding anything about writes.
-
-## In-Car First Step
-
-From `obd-on-pc`:
+From `obd-on-pc`, run the read-only validation wrapper:
 
 ```powershell
-.\run_next_car_probe.ps1 -Port COM10
+.\run_next_carista_validation.ps1 -Port COM10
 ```
 
-This only performs a fresh read-only direct `220600` coding read and writes a
-timestamped log plus JSON/CSV summary. It then runs the decoder and writes:
+It does:
 
 ```text
-logs/pq25_next_baseline_220600_settings_report.txt
+1. opens TP2.0 unit 20
+2. reads 220600 current coding
+3. reads 22F1A5 workshop-code payload
+4. decodes current coding
+5. prints a dry-run Carista UDS write plan
 ```
 
-That report compares the fresh read against the known-good cornering-enabled
-coding, shows the high-confidence cornering bits, and includes a full bit table
-with unknown values labelled as unknown.
+No `2E`, `27`, `31`, or `3B` write/routine/security service is sent by that
+wrapper.
 
-For the fuller next-visit workflow, use the prepared write-readiness wrapper:
-
-```powershell
-.\run_next_cornering_write_prep.ps1 -Port COM10
-```
-
-It still performs only read/dry-run work:
+Expected dry-run requests if the car is still in the known broken state:
 
 ```text
-1. fresh direct 220600 baseline read
-2. decoded settings report
-3. base-fog structured tuple dry-run/value6 plan
-4. turn-signal structured tuple dry-run/value6 plan
+2EF199YYMMDD
+2EF1980005F3C7E719
+2E06003AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000
 ```
 
-If a Carista trace or later offline RE has recovered real tuple metadata, include
-it to produce complete dry-run requests:
+`YYMMDD` is generated from the current date, matching Carista's date-write code.
+
+## Guarded Write Candidate
+
+The prepared writer is:
 
 ```powershell
-.\run_next_cornering_write_prep.ps1 -Port COM10 `
-  -BaseFogRawAddress4 <real-4-byte-hex> -BaseFogCodingType <real-type> -BaseFogTail <real-tail-if-any> `
-  -TurnSignalRawAddress4 <real-4-byte-hex> -TurnSignalCodingType <real-type> -TurnSignalTail <real-tail-if-any>
+python .\write_carista_uds_coding.py --coding-file .\logs\pq25_carista_validation_baseline_220600_direct_read_summary.json --workshop-code-file .\logs\pq25_carista_validation_baseline_220600_direct_read_summary.json
 ```
 
-The wrapper does not execute writes. It writes the dry-run plans to:
+That command is dry-run only.
+
+Execution requires all guards:
+
+```powershell
+python .\write_carista_uds_coding.py `
+  --coding 3AB82B9F08A10000003008002C680ED000C8412F60A20000200000000000 `
+  --workshop-code 0005F3C7E719 `
+  --confirm-target 3AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000 `
+  --execute `
+  --i-understand-this-writes-bcm-coding
+```
+
+The writer always re-reads `220600` before writing and refuses to continue if
+the live coding differs from the expected current coding. After the write
+sequence it immediately re-reads `220600` and requires exact target match.
+
+## No-Go List
+
+Do not repeat these unless a new reason appears:
 
 ```text
-logs/pq25_next_base_fog_tuple_dry_run.txt
-logs/pq25_next_turn_signal_tuple_dry_run.txt
+blind full-coding 3B9A
+old 1089 -> 2E0600 branch
+positive-1A9B hunting as the main path
+31B8-derived rawAddress guesses
+any 27 security-access experiment
 ```
 
-After reviewing one complete dry-run request, the guarded manual writer is:
+Optional `1A9B` comparison still exists:
 
 ```powershell
-python .\write_carista_3b9a_tuple.py --request <reviewed-3B9A-request> --skip-session --execute --confirm-request <same-reviewed-3B9A-request> --i-understand-this-writes-bcm-coding
+.\run_next_carista_validation.ps1 -Port COM10 -IncludeKwpComparison
 ```
 
-Do not run the manual writer with placeholders.
-
-Optional direct KWP comparison, still read-only:
-
-```powershell
-.\run_next_car_probe.ps1 -Port COM10 -IncludeKwpReads
-```
-
-Do not automatically send `31B80000` yet. Carista's simulator uses it as a
-VAGCAN20 capability/metadata query, but it starts with `31`, which this project
-previously blocked from scripted read-only sweeps. Treat it as a deliberate
-manual diagnostic probe only after we decide the risk is acceptable.
-
-Only retest the older `1089` branch as a negative-control comparison:
-
-```powershell
-.\run_next_car_probe.ps1 -Port COM10 -IncludeOldSessionBranch
-```
-
-## Write Decision Gate
-
-Do not execute another write unless one of these is true:
-
-```text
-1. The structured Carista 3B9A value/address/tail is derived for the real cornering setting from a traced Carista toggle.
-2. The exact same tuple has been reviewed offline and mapped back to the two missing long-coding bits.
-3. A deliberate manual full-coding write is chosen with the latest readback as
-   baseline, accepting that this is not yet the proven Carista-shaped route.
-```
-
-If using the Python writer anyway, the only parsed full-coding baseline is
-direct `2E0600`, and it must start from a fresh `220600` readback and end with
-another immediate `220600` verification.
+Use it only as a comparison, not as the main repair path.

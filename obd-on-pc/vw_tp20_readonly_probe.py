@@ -69,10 +69,10 @@ ChannelParameterStatus: TypeAlias = Literal["answered", "defaulted", "skipped"]
 CARISTA_COMMAND_LABELS: dict[HexString, str] = {
     "1089": "diagnostic session observed by Carista/PQ25 flow; positive response is 5089",
     "220600": "direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding",
-    "1A9B": "GetVagCanEcuInfoCommand / ECU component identity",
+    "1A9B": "GetVagCanEcuInfoCommand_getRequest / ECU component identity",
     "1A9F": "GetVagCanEcuListCommand / ECU list/info",
     "1A91": "Carista VAGCAN20 simulator identity/coding-related block",
-    "1A9A": "ReadVagCanLongCodingCommand / long coding",
+    "1A9A": "ReadVagCanLongCodingCommand_getRequest / long coding",
     "1A86": "Carista VAGCAN20 simulator software/version dataset block",
     "A00194FF82FF": "Carista exact TP2.0 channel parameter setup from libCarista.so",
     "A00F8AFF32FF": "known-good minimal TP2.0 channel parameter request for this Polo",
@@ -809,6 +809,22 @@ def base_row(args: argparse.Namespace, mode: str, attempt_id: str, log_file: Pat
     }
 
 
+def clone_sequence_row(row: dict[str, object], attempt_id: str) -> dict[str, object]:
+    sequence_row = dict(row)
+    post_session_frames = row.get("post_session_extra_frames", [])
+    raw_payloads = row.get("raw_payloads", [])
+    sequence_row["attempt_id"] = attempt_id
+    sequence_row["post_session_extra_frames"] = list(post_session_frames) if isinstance(post_session_frames, list) else []
+    sequence_row["raw_payloads"] = list(raw_payloads) if isinstance(raw_payloads, list) else []
+    sequence_row["read_counter"] = ""
+    sequence_row["read_command"] = ""
+    sequence_row["read_command_label"] = ""
+    sequence_row["read_status"] = ""
+    sequence_row["read_result"] = ""
+    sequence_row["stopped_early"] = ""
+    return sequence_row
+
+
 AttemptOperation = Callable[[serial.Serial, Logger, dict[str, object], CanHeader, CanHeader], None]
 
 
@@ -949,6 +965,51 @@ def run_direct_read(args: argparse.Namespace) -> list[dict[str, object]]:
 
         rows.append(run_isolated_attempt(args, "direct_read", attempt_id, operation))
     return rows
+
+
+def run_direct_sequence(args: argparse.Namespace) -> list[dict[str, object]]:
+    sequence_rows: list[dict[str, object]] = []
+    read_commands = selected_read_commands(args)
+    start_counter = args.read_counter if args.read_counter is not None else 0
+    attempt_id = f"sequence_ctr{start_counter:X}_{'_'.join(read_commands)}"
+
+    def operation(
+        ser: serial.Serial,
+        logger: Logger,
+        row: dict[str, object],
+        _send_header: str,
+        listen_header: str,
+    ) -> None:
+        logger.section(f"Direct same-channel sequence: counter={start_counter:X}, reads={','.join(read_commands)}")
+        counter = start_counter
+        for read_command in read_commands:
+            sequence_attempt_id = f"sequence_ctr{counter:X}_{read_command}"
+            sequence_row = clone_sequence_row(row, sequence_attempt_id)
+            sequence_row["read_counter"] = f"{counter:X}"
+            set_read_command(sequence_row, read_command)
+
+            logger.section(f"Sequence read: counter={counter:X}, read={read_command}")
+            read_status, read_payload, read_frames, counter = send_tp20_application_request(
+                ser,
+                logger,
+                read_command,
+                counter=counter,
+                listen_header=listen_header,
+                timeout=args.timeout,
+                auto_ack=True,
+            )
+            sequence_row["read_status"] = read_status
+            sequence_row["read_result"] = read_payload
+            append_frames(sequence_row, read_frames)
+            sequence_rows.append(sequence_row)
+
+            if read_status == "disconnect":
+                sequence_row["stopped_early"] = "true"
+                logger.write("Stopping same-channel sequence after TP2.0 disconnect.")
+                break
+
+    base_result = run_isolated_attempt(args, "direct_sequence", attempt_id, operation)
+    return sequence_rows if sequence_rows else [base_result]
 
 
 def run_ack_sweep(args: argparse.Namespace) -> list[dict[str, object]]:
@@ -1313,6 +1374,7 @@ def build_parser() -> argparse.ArgumentParser:
         epilog="""
 Examples:
   python vw_tp20_readonly_probe.py --mode direct_read --port COM10 --read-commands 220600
+    python vw_tp20_readonly_probe.py --mode direct_sequence --port COM10 --read-commands 220600,1A9B,1A9A
   python vw_tp20_readonly_probe.py --mode session_sweep --port COM10
   python vw_tp20_readonly_probe.py --mode passive_sniff --port COM10 --session 1089
   python vw_tp20_readonly_probe.py --mode ack_sweep --port COM10 --session 1089 --read-command 1A9B
@@ -1329,6 +1391,7 @@ Examples:
         "--mode",
         choices=(
             "direct_read",
+            "direct_sequence",
             "session_sweep",
             "ack_sweep",
             "counter_sweep",
@@ -1401,6 +1464,7 @@ def main() -> int:
 
     runners: dict[str, Callable[[argparse.Namespace], list[dict[str, object]]]] = {
         "direct_read": run_direct_read,
+        "direct_sequence": run_direct_sequence,
         "session_sweep": run_session_sweep,
         "ack_sweep": run_ack_sweep,
         "counter_sweep": run_counter_sweep,

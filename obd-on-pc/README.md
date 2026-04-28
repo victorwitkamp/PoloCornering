@@ -1,5 +1,47 @@
 # OBD On PC
 
+## Current Best Path - 2026-04-28
+
+The latest Carista native reverse engineering points to the UDS coding writer,
+not the older `3B9A` tuple path, for this PQ25 BCM.
+
+Recovered Carista sequence:
+
+```text
+2EF199 + YYMMDD date payload
+2EF198 + 6-byte workshop-code payload from 22F1A5
+2E0600 + full 30-byte target coding
+```
+
+For the latest live BCM state:
+
+```text
+current: 3AB82B9F08A10000003008002C680ED000C8412F60A20000200000000000
+target:  3AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000
+```
+
+Only two bits change:
+
+```text
+byte 12 bit 6: base fog-light cornering
+byte 21 bit 2: turn-signal cornering trigger
+```
+
+Next in-car read-only prep:
+
+```powershell
+.\run_next_carista_validation.ps1 -Port COM10
+```
+
+Guarded dry-run writer:
+
+```powershell
+python .\write_carista_uds_coding.py --coding-file .\logs\pq25_carista_validation_baseline_220600_direct_read_summary.json --workshop-code-file .\logs\pq25_carista_validation_baseline_220600_direct_read_summary.json
+```
+
+The writer refuses to execute unless the fresh `220600` read matches the
+expected current coding and the exact target is confirmed.
+
 ## Progress So Far - 2026-04-16
 
 This folder is for a VW Polo 6R troubleshooting session. The owner clarified the car is PQ25, not PQ26/MQB. That matters because the earlier `70E -> 778` BCM target and `22055C` / `22055D` light-channel reads come from Car Scanner's PQ26/MQB coding database and did not work on this car.
@@ -638,6 +680,21 @@ Current full settings/write-state report:
 pq25_current_settings_carista_report.md
 ```
 
+Shared Python reproduction of the recovered Carista native helpers:
+
+```text
+carista_vagcan_repro.py
+```
+
+It contains the recovered names used by the next in-car validation flow:
+
+```text
+GetVagCanEcuInfoCommand_getRequest      -> 1A9B
+ReadVagCanLongCodingCommand_getRequest  -> 1A9A
+GetVagCanEcuInfoCommand_processEcuInfo  -> positive 5A9B parser
+WriteVagCodingCommand_getRequest        -> 3B9A tuple serializer
+```
+
 Offline composer for a future proven Carista-shaped tuple:
 
 ```text
@@ -675,6 +732,17 @@ write_carista_3b9a_tuple.py
 
 It defaults to dry-run. Execution requires an exact `--confirm-request` match and
 `--i-understand-this-writes-bcm-coding`.
+
+The next adapter-only metadata validation wrapper is:
+
+```text
+run_next_carista_validation.ps1
+```
+
+It replaces the older tuple-proof sweep wrapper. The default path is deliberately
+short: fresh `220600`, direct `1A9B`/`1A9A` with the known-good minimal parameter
+profile, direct `1A9B`/`1A9A` with Carista's decompiled parameter profile, then
+automatic `5A9B` parsing through `carista_vagcan_repro.py`.
 
 Carista's adaptation path appears to use `31B8`, `31BA`, `31B9`, and `32B8` routine/adaptation commands. Those remain blocked in scripted mode.
 
@@ -777,21 +845,24 @@ Run these from `obd-on-pc` with the Carista adapter on `COM10`.
 Shortest low-typing option for the next branch:
 
 ```powershell
+.\run_next_carista_validation.ps1 -Port COM10
+```
+
+That default run captures a fresh direct `220600` baseline, tries the recovered
+Carista `1A9B`/`1A9A` read builders with minimal and Carista-exact parameter
+profiles, then writes `logs/pq25_carista_validation_report.md`.
+
+For a baseline-only run, keep the older short probe available:
+
+```powershell
 .\run_next_car_probe.ps1 -Port COM10
 ```
 
-That default run only captures a fresh direct `220600` baseline. Add direct
-Carista KWP reads intentionally:
-
-```powershell
-.\run_next_car_probe.ps1 -Port COM10 -IncludeKwpReads
-```
-
-Only retest the older `1089` session branch if we deliberately want another
+Only retest the older `1089` session branch if deliberately collecting a single
 negative-control comparison:
 
 ```powershell
-.\run_next_car_probe.ps1 -Port COM10 -IncludeOldSessionBranch
+.\run_next_carista_validation.ps1 -Port COM10 -IncludeSessionComparison
 ```
 
 First confirm the baseline session behavior:

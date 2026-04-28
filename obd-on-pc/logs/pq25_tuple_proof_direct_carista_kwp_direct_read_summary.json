@@ -1,0 +1,278 @@
+[
+  {
+    "attempt_id": "direct_ctr0_1A9B",
+    "mode": "direct_read",
+    "started": "2026-04-28T00:24:35.564",
+    "log_file": "logs\\pq25_tuple_proof_direct_carista_kwp_direct_read_direct_ctr0_1A9B.txt",
+    "unit": "20",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "defaulted",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 255,
+      "T2": 255,
+      "T3": 255,
+      "T4": 255
+    },
+    "session_command": "",
+    "session_command_label": "",
+    "session_counter": "",
+    "session_status": "",
+    "session_result": "",
+    "pre_read_sequence": "",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": "",
+    "read_counter": "0",
+    "read_command": "1A9B",
+    "read_command_label": "GetVagCanEcuInfoCommand / ECU component identity",
+    "read_status": "no_response",
+    "read_result": "",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-28T00:24:42.729",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "direct_ctr0_1A9F",
+    "mode": "direct_read",
+    "started": "2026-04-28T00:24:46.107",
+    "log_file": "logs\\pq25_tuple_proof_direct_carista_kwp_direct_read_direct_ctr0_1A9F.txt",
+    "unit": "20",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "defaulted",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 255,
+      "T2": 255,
+      "T3": 255,
+      "T4": 255
+    },
+    "session_command": "",
+    "session_command_label": "",
+    "session_counter": "",
+    "session_status": "",
+    "session_result": "",
+    "pre_read_sequence": "",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": "",
+    "read_counter": "0",
+    "read_command": "1A9F",
+    "read_command_label": "GetVagCanEcuListCommand / ECU list/info",
+    "read_status": "no_response",
+    "read_result": "",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-28T00:24:51.646",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "direct_ctr0_1A91",
+    "mode": "direct_read",
+    "started": "2026-04-28T00:24:55.021",
+    "log_file": "logs\\pq25_tuple_proof_direct_carista_kwp_direct_read_direct_ctr0_1A91.txt",
+    "unit": "20",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "answered",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 138,
+      "T2": 255,
+      "T3": 79,
+      "T4": 255
+    },
+    "session_command": "",
+    "session_command_label": "",
+    "session_counter": "",
+    "session_status": "",
+    "session_result": "",
+    "pre_read_sequence": "",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": "",
+    "read_counter": "0",
+    "read_command": "1A91",
+    "read_command_label": "Carista VAGCAN20 simulator identity/coding-related block",
+    "read_status": "negative",
+    "read_result": "7F1A11",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-28T00:25:00.557",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-28T00:25:01.863",
+        "source": "A00F8AFF32FF",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-28T00:25:01.863",
+        "source": "A00F8AFF32FF",
+        "header": "300",
+        "payload": "A10F8AFF4FFF",
+        "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+      },
+      {
+        "timestamp": "2026-04-28T00:25:03.021",
+        "source": "1000021A91",
+        "header": "300",
+        "payload": "B1",
+        "tp20_label": "TP2.0 ACK/control frame"
+      },
+      {
+        "timestamp": "2026-04-28T00:25:03.021",
+        "source": "1000021A91",
+        "header": "300",
+        "payload": "1000037F1A11",
+        "tp20_label": "TP2.0 application first frame seq=0 len=3"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "direct_ctr0_1A9A",
+    "mode": "direct_read",
+    "started": "2026-04-28T00:25:03.938",
+    "log_file": "logs\\pq25_tuple_proof_direct_carista_kwp_direct_read_direct_ctr0_1A9A.txt",
+    "unit": "20",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "defaulted",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 255,
+      "T2": 255,
+      "T3": 255,
+      "T4": 255
+    },
+    "session_command": "",
+    "session_command_label": "",
+    "session_counter": "",
+    "session_status": "",
+    "session_result": "",
+    "pre_read_sequence": "",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": "",
+    "read_counter": "0",
+    "read_command": "1A9A",
+    "read_command_label": "ReadVagCanLongCodingCommand / long coding",
+    "read_status": "no_response",
+    "read_result": "",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-28T00:25:09.519",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "direct_ctr0_1A86",
+    "mode": "direct_read",
+    "started": "2026-04-28T00:25:12.900",
+    "log_file": "logs\\pq25_tuple_proof_direct_carista_kwp_direct_read_direct_ctr0_1A86.txt",
+    "unit": "20",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "answered",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 138,
+      "T2": 255,
+      "T3": 79,
+      "T4": 255
+    },
+    "session_command": "",
+    "session_command_label": "",
+    "session_counter": "",
+    "session_status": "",
+    "session_result": "",
+    "pre_read_sequence": "",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": "",
+    "read_counter": "0",
+    "read_command": "1A86",
+    "read_command_label": "Carista VAGCAN20 simulator software/version dataset block",
+    "read_status": "negative",
+    "read_result": "7F1A11",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-28T00:25:18.436",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-28T00:25:19.738",
+        "source": "A00F8AFF32FF",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-28T00:25:19.739",
+        "source": "A00F8AFF32FF",
+        "header": "300",
+        "payload": "A10F8AFF4FFF",
+        "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+      },
+      {
+        "timestamp": "2026-04-28T00:25:20.897",
+        "source": "1000021A86",
+        "header": "300",
+        "payload": "B1",
+        "tp20_label": "TP2.0 ACK/control frame"
+      },
+      {
+        "timestamp": "2026-04-28T00:25:20.897",
+        "source": "1000021A86",
+        "header": "300",
+        "payload": "1000037F1A11",
+        "tp20_label": "TP2.0 application first frame seq=0 len=3"
+      }
+    ],
+    "error": ""
+  }
+]

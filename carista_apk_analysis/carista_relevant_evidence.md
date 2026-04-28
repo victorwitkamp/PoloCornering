@@ -118,6 +118,26 @@ constructor checks: 6-byte value vector, 4-byte raw-address vector
 special branch check: 3-byte trailing vector for one coding type
 ```
 
+Corrected Ghidra decompilation on 2026-04-28 fixed the earlier address-boundary problem. Ghidra loads this ELF with a `+0x10000` image-base delta; the reliable exports are the files whose headers show both ELF and Ghidra addresses in `carista_apk_analysis/ghidra_exports`.
+
+The corrected `WriteVagCodingCommand::getRequest` semantics are:
+
+```text
+3B9A + value6 + rawAddress4 + suffix
+
+type 2 suffix:     selector + 3-byte tail
+non-type-2 suffix: selector + (tail length + 1) + tail bytes + FF
+```
+
+The corrected constructor stores:
+
+```text
+this + 0x10 = 6-byte value vector
+this + 0x1c = shared 4-byte raw-address/component-id vector
+this + 0x24 = coding type enum
+this + 0x28 = shared tail/short-coding vector
+```
+
 Additional getter-path findings from the next disassembly pass:
 
 ```text
@@ -141,8 +161,10 @@ Practical implications from that disassembly slice:
 
 ```text
 - the function caches the raw value by a 64-bit key before building the command
+- ECU info is read/cached before the command is built
 - one virtual helper is called with that key and its result is normalized to coding-family values 2 or 3
 - one sentinel path forces that family value to 5 instead
+- the 4-byte raw-address vector is taken from parsed `VagEcuInfo` metadata (`coding-info + 0x2c` in the corrected decompile)
 - the write builder is therefore keyed by a higher-level setting identifier plus ECU metadata, not by a direct raw full-coding blob API
 ```
 
@@ -201,9 +223,11 @@ ChangeSettingOperation
 ```
 
 `writeVagCanCodingValue` takes a 64-bit raw-value key plus compact value bytes,
-not a 30-byte long-coding blob. It caches by that key, queries ECU metadata for
-the coding type, preserves coding type 2, normalizes most other coding to type
-3, and has a sentinel path that forces type 5.
+not a 30-byte long-coding blob. It caches by that key, reads/caches ECU metadata,
+uses the parsed coding-info raw-address vector, preserves coding type 2,
+normalizes most other coding to type 3, and has a sentinel path that forces type
+5. No corrected native path was found that derives the missing rawAddress4/tail
+from the `220600` long-coding bytes alone.
 
 Dex-side bridge check with Androguard confirmed:
 
@@ -338,9 +362,150 @@ Practical Carista-first conclusion:
 ```text
 1. Keep using the Carista adapter/TP2.0 unit 20 path for reads and verification.
 2. Do not repeat blind 3B9A or default 1089-based did-0600 writes.
-3. The next useful reverse-engineering target is Carista's coding raw-address + coding-type write builder.
-4. Any future scripted write attempt should start from a 6-byte value + 4-byte raw-address model, not a 30-byte model.
+3. For this live BCM, prioritize the UDS type-8 coding path over 3B9A metadata hunting.
+4. The recovered Carista UDS sequence is F199 date, F198 workshop code, then 0600 coding.
 ```
+
+## Updated UDS Write-Path Evidence - 2026-04-28
+
+The later Ghidra pass recovered the missing part of the UDS branch:
+
+```text
+VagUdsCodingSetting(ecu, vector) -> setting type 8, DID 0600
+writeRawValue type 8             -> writeVagUdsValue
+WriteDataByIdentifierCommand     -> 2E + DID + payload
+writeVagUdsValue                 -> F199 date, F198 workshop code, then requested DID
+```
+
+`GetVagUdsEcuWorkshopCodeCommand` reads DID `F1A5` and requires exactly six
+payload bytes. The live positive read was:
+
+```text
+22F1A5 -> 62F1A50005F3C7E719
+```
+
+So the recovered Carista-shaped write candidate for the known target coding is:
+
+```text
+2EF199YYMMDD
+2EF1980005F3C7E719
+2E06003AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000
+```
+
+The prepared guarded writer is:
+
+```text
+obd-on-pc/write_carista_uds_coding.py
+```
+
+It performs a fresh `220600` read before writing, refuses unexpected current
+coding, sends the recovered Carista UDS sequence, then verifies `220600`.
+
+## Offline 31B8 Simulator Metadata Pass
+
+The no-phone static pass added a repeatable analyzer for Carista's embedded
+VAGCAN20 simulator records:
+
+```text
+carista_apk_analysis/analyze_carista_offline_tuple_candidates.py
+carista_apk_analysis/carista_offline_tuple_candidate_report.md
+carista_apk_analysis/carista_offline_tuple_candidate_report.json
+```
+
+That analyzer reads `libCarista.so` from the extracted split path, the ARM split
+APK, or the XAPK, then parses the embedded `ECU VAGCAN20 ...` records.
+
+The two useful `31B80000` metadata responses are:
+
+```text
+1K0937049S-style profile: 71B8010301040106010801020107
+    decoded shorts: 0103 0104 0106 0108 0102 0107
+
+BCM25/5C0937087E profile: 71B8010601020103010701080114
+    decoded shorts: 0106 0102 0103 0107 0108 0114
+```
+
+The BCM25 profile is the closest embedded analogue because it also contains a
+direct `220600` long-coding sample and identifies as central electrics:
+
+```text
+22F187 -> 5C0937087E
+22F191 -> 5C0937087A
+22F197 -> BCM25 JLB H3
+220600 -> 30-byte coding sample
+```
+
+Updated interpretation after the deeper parser pass:
+
+```text
+31B80000 / 71B8 exposes compact ECU-list coding-address shorts.
+It does not directly populate the 4-byte rawAddress4 consumed by WriteVagCodingCommand.
+The final rawAddress4/coding selector/tail come from positive 1A9B / 5A9B ECU-info parsing.
+```
+
+The recovered `GetVagCanEcuInfoCommand::processEcuInfo` offsets, after
+stripping the positive `5A9B` prefix, are:
+
+```text
+payload[0x0c:0x10] -> rawAddress4
+payload[0x10]      -> coding selector
+payload[0x11:0x14] -> tail for type-2/type-4 selector branches
+payload[0x14:0x1a] -> stored 6-byte coding value
+```
+
+The embedded 1K0937049S-style simulator proves that parser with a real positive
+`1A9B` response: rawAddress4 `B0373034`, selector `10`, Carista coding type
+`3`, empty tail, and writer suffix `0301FF`.
+
+The closest BCM25 profile has direct `220600` data and the `0106` short in
+`31B8`, but its `1A9B` response is negative. That means `00200106` is no longer
+a defensible rawAddress4 proof; keep the generated examples only as rejected
+proof attempts, not write candidates.
+
+For the actual `6R0937087K` evidence in this workspace, the proven final pieces
+remain only:
+
+```text
+base fog value6:     6C680ED000C8
+turn-signal value6:  412F60A60000
+```
+
+The complete tuple still requires a positive `1A9B` for this ECU, or a native
+catalog/data-flow equivalent that proves those same metadata bytes.
+
+## In-Car Tuple-Proof Read Attempt - 2026-04-28
+
+The prepared no-phone tuple-proof workflow was run read-only against the car on
+`COM10`.
+
+Fresh direct `220600` still showed the known broken coding:
+
+```text
+3AB82B9F08A10000003008002C680ED000C8412F60A20000200000000000
+```
+
+The proof target, positive `5A9B`, was not captured:
+
+```text
+direct 1A9B: 7F1A11 on one run, no response on another
+1089 + pre-read 1A9B variants: no 5A9B
+fallback session-counter variants: no 5A9B
+skip-parameters 1089/read_sweep 1A9B: no 5A9B
+direct carista_kwp profile: 1A9F/1A9A no response; 1A91/1A86 7F1A11
+```
+
+Evidence files:
+
+```text
+obd-on-pc/logs/pq25_tuple_proof_read_report.md
+obd-on-pc/logs/pq25_tuple_proof_read_report.json
+obd-on-pc/logs/pq25_tuple_proof_direct_carista_kwp_direct_read_summary.json
+```
+
+This is negative evidence for the current adapter-only `1A9B` sequencing path,
+not proof of a complete tuple. The missing metadata must now come from a new
+offline sequencing hypothesis, native catalog/data-flow recovery, or a future
+phone/Carista trace.
 
 ## Adaptation/Routine Clues
 

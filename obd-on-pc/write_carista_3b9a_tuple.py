@@ -3,30 +3,122 @@ from __future__ import annotations
 import argparse
 from datetime import datetime
 from pathlib import Path
+from typing import Literal
 
 import serial
 
-from compose_carista_3b9a_tuple import build_request, clean_hex, read_coding, require_len
-from compose_carista_3b9a_tuple import CORNERING_FIXES, derive_value6
+from carista_vagcan_repro import build_request, clean_hex, read_coding, require_len
+from carista_vagcan_repro import CORNERING_FIXES, derive_value6
 from vw_tp20_readonly_probe import (
+    ApplicationStatus,
+    CanFrame,
     DEFAULT_BAUD,
     DEFAULT_PORT,
     DEFAULT_UNIT,
     Logger,
+    classify_application_payload,
     close_channel,
+    collect_passive_frames,
     configure_data_channel,
+    extract_tp20_application_payload,
     get_channel_parameters,
+    has_disconnect_frame,
     init_elm,
     open_tp20_channel,
     parse_counters,
     parse_pre_read_sequence,
+    send,
     send_pre_read_sequence,
 )
-from write_pq25_longcoding import (
-    build_tp20_application_frames,
-    describe_write_outcome,
-    send_write_request,
-)
+
+
+WriteStatus = ApplicationStatus | Literal["disconnect"]
+NEGATIVE_RESPONSE_CODES = {
+    "11": "serviceNotSupported",
+    "12": "subFunctionNotSupported",
+    "22": "conditionsNotCorrect",
+    "31": "requestOutOfRange",
+    "33": "securityAccessDenied",
+}
+
+
+def build_tp20_application_frames(counter: int, command: str) -> list[str]:
+    payload = bytes.fromhex(command)
+    if not payload:
+        raise ValueError("empty application payload")
+    if len(payload) <= 5:
+        return [f"1{counter:X}{len(payload):04X}{payload.hex().upper()}"]
+
+    frames = [f"2{counter:X}{len(payload):04X}{payload[:5].hex().upper()}"]
+    sequence = (counter + 1) & 0xF
+    chunks = [payload[offset:offset + 7] for offset in range(5, len(payload), 7)]
+    for index, chunk in enumerate(chunks):
+        opcode = "1" if index == len(chunks) - 1 else "2"
+        frames.append(f"{opcode}{sequence:X}{chunk.hex().upper()}")
+        sequence = (sequence + 1) & 0xF
+    return frames
+
+
+def classify_structured_write_response(payload: str, frames: list[CanFrame], listen_header: str) -> ApplicationStatus:
+    if payload.startswith("7F"):
+        return "negative"
+    if payload.startswith("7B9A"):
+        return "positive"
+    return classify_application_payload("3B9A", payload, frames, listen_header)
+
+
+def describe_negative_payload(payload: str) -> str:
+    if not payload.startswith("7F") or len(payload) < 6:
+        return payload
+    service = payload[2:4]
+    code = payload[4:6]
+    code_text = NEGATIVE_RESPONSE_CODES.get(code, "unknownNegativeResponse")
+    return f"{payload} service=0x{service} nrc=0x{code} ({code_text})"
+
+
+def describe_write_outcome(status: WriteStatus, payload: str) -> str:
+    if status == "negative":
+        return f"Write status: {status} payload={describe_negative_payload(payload)}"
+    if status == "disconnect":
+        return f"Write status: disconnect payload={payload} (A8 disconnect after write transition)"
+    return f"Write status: {status} payload={payload}"
+
+
+def send_write_request(
+    ser: serial.Serial,
+    logger: Logger,
+    command: str,
+    counter: int,
+    listen_header: str,
+    timeout: float,
+    final_listen_ms: int,
+) -> tuple[WriteStatus, str, list[CanFrame]]:
+    frames_to_send = build_tp20_application_frames(counter, command)
+    logger.write("TP2.0 write frame plan:")
+    for frame in frames_to_send:
+        logger.write(f"  {frame}")
+
+    received_frames: list[CanFrame] = []
+    if len(frames_to_send) > 1:
+        send(ser, logger, "ATST01", timeout=timeout, pause=0.05, reset_input=False)
+
+    for index, frame in enumerate(frames_to_send):
+        is_final_frame = index == len(frames_to_send) - 1
+        if is_final_frame:
+            send(ser, logger, "ATST32", timeout=timeout, pause=0.05, reset_input=False)
+
+        frame_timeout = 2.5 if is_final_frame else 0.25
+        frame_pause = 0.45 if is_final_frame else 0.03
+        result = send(ser, logger, frame, timeout=frame_timeout, pause=frame_pause, reset_input=False)
+        received_frames.extend(result.frames)
+        if has_disconnect_frame(result.frames, listen_header):
+            payload = extract_tp20_application_payload(received_frames, listen_header)
+            return "disconnect", payload, received_frames
+
+    final_frames = collect_passive_frames(ser, logger, final_listen_ms, "post_write", listen_header)
+    received_frames.extend(final_frames)
+    payload = extract_tp20_application_payload(received_frames, listen_header)
+    return classify_structured_write_response(payload, received_frames, listen_header), payload, received_frames
 
 
 def clean_request(request: str) -> str:
@@ -63,7 +155,7 @@ def dry_run(args: argparse.Namespace, request: str) -> None:
     print()
     print("Safety:")
     print("  Nothing was sent to the car.")
-    print("  Execute only after a real Carista trace has recovered rawAddress4/codingType/tail.")
+    print("  Execute only after positive 1A9B or later RE has recovered rawAddress4/codingType/tail.")
     print("  Execute requires --execute, --confirm-request, and --i-understand-this-writes-bcm-coding.")
     print()
     print(f"Request:       {request}")
@@ -110,14 +202,13 @@ def execute(args: argparse.Namespace, request: str) -> int:
                     raise RuntimeError("channel disconnected before write")
                 write_counter = args.write_counter if args.write_counter is not None else 0
             else:
-                raise RuntimeError("structured tuple execution currently requires --skip-session until Carista trace proves a session path")
+                raise RuntimeError("structured tuple execution currently requires --skip-session until the required session path is proven")
 
             logger.section(f"Structured 3B9A tuple write using counter {write_counter:X}")
             status, payload, _frames = send_write_request(
                 ser,
                 logger,
                 request,
-                "carista-3b9a",
                 counter=write_counter,
                 listen_header=listen_header,
                 timeout=args.timeout,

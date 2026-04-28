@@ -1,0 +1,12 @@
+{
+  "attempts": [],
+  "chunk_matches": [],
+  "fresh_coding": "3AB82B9F08A10000003008002C680ED000C8412F60A20000200000000000",
+  "positive_attempt": null,
+  "positive_metadata": null,
+  "status": "positive_1a9b_not_found",
+  "summaries": [
+    "logs\\pq25_carista_validation_baseline_220600_direct_read_summary.json"
+  ],
+  "tuple_dry_runs": []
+}

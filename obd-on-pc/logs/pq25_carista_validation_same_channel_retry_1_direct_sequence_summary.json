@@ -1,0 +1,134 @@
+[
+  {
+    "attempt_id": "sequence_ctr0_220600",
+    "mode": "direct_sequence",
+    "started": "2026-04-28T11:07:53.893",
+    "log_file": "logs\\pq25_carista_validation_same_channel_retry_1_direct_sequence_sequence_ctr0_220600_1A9B_1A9A.txt",
+    "unit": "20",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "defaulted",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 255,
+      "T2": 255,
+      "T3": 255,
+      "T4": 255
+    },
+    "session_command": "",
+    "session_command_label": "",
+    "session_counter": "",
+    "session_status": "",
+    "session_result": "",
+    "pre_read_sequence": "",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": "",
+    "read_counter": "0",
+    "read_command": "220600",
+    "read_command_label": "direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding",
+    "read_status": "no_response",
+    "read_result": "",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-28T11:08:04.121",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "sequence_ctr1_1A9B",
+    "mode": "direct_sequence",
+    "started": "2026-04-28T11:07:53.893",
+    "log_file": "logs\\pq25_carista_validation_same_channel_retry_1_direct_sequence_sequence_ctr0_220600_1A9B_1A9A.txt",
+    "unit": "20",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "defaulted",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 255,
+      "T2": 255,
+      "T3": 255,
+      "T4": 255
+    },
+    "session_command": "",
+    "session_command_label": "",
+    "session_counter": "",
+    "session_status": "",
+    "session_result": "",
+    "pre_read_sequence": "",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": "",
+    "read_counter": "1",
+    "read_command": "1A9B",
+    "read_command_label": "GetVagCanEcuInfoCommand_getRequest / ECU component identity",
+    "read_status": "no_response",
+    "read_result": "",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-28T11:08:04.121",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "sequence_ctr2_1A9A",
+    "mode": "direct_sequence",
+    "started": "2026-04-28T11:07:53.893",
+    "log_file": "logs\\pq25_carista_validation_same_channel_retry_1_direct_sequence_sequence_ctr0_220600_1A9B_1A9A.txt",
+    "unit": "20",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "defaulted",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 255,
+      "T2": 255,
+      "T3": 255,
+      "T4": 255
+    },
+    "session_command": "",
+    "session_command_label": "",
+    "session_counter": "",
+    "session_status": "",
+    "session_result": "",
+    "pre_read_sequence": "",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": "",
+    "read_counter": "2",
+    "read_command": "1A9A",
+    "read_command_label": "ReadVagCanLongCodingCommand_getRequest / long coding",
+    "read_status": "no_response",
+    "read_result": "",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-28T11:08:04.121",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      }
+    ],
+    "error": ""
+  }
+]

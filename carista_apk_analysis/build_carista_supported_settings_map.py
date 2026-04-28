@@ -14,6 +14,7 @@ from elftools.elf.elffile import ELFFile
 
 
 ROOT = Path(__file__).resolve().parent
+DOCS_ROOT = ROOT.parent / "docs" / "carista_apk_analysis"
 VALUES_DIR = ROOT / "reacquire_20260424" / "base_smali" / "res" / "values"
 LIB_PATH = ROOT / "reacquire_20260424" / "split_armv7_unpacked" / "lib" / "armeabi-v7a" / "libCarista.so"
 
@@ -395,6 +396,9 @@ def build_report(rows: list[SettingRow]) -> str:
 
 
 def write_outputs(rows: list[SettingRow], md_path: Path, csv_path: Path, json_path: Path) -> None:
+    md_path.parent.mkdir(parents=True, exist_ok=True)
+    csv_path.parent.mkdir(parents=True, exist_ok=True)
+    json_path.parent.mkdir(parents=True, exist_ok=True)
     md_path.write_text(build_report(rows), encoding="utf-8")
     with csv_path.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(asdict(rows[0]).keys()))
@@ -421,7 +425,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Build an offline Carista app-visible settings map.")
     parser.add_argument("--values-dir", type=Path, default=VALUES_DIR)
     parser.add_argument("--lib", type=Path, default=LIB_PATH)
-    parser.add_argument("--md-output", type=Path, default=ROOT / "carista_supported_settings_map.md")
+    parser.add_argument("--md-output", type=Path, default=DOCS_ROOT / "carista_supported_settings_map.md")
     parser.add_argument("--csv-output", type=Path, default=ROOT / "carista_supported_settings_map.csv")
     parser.add_argument("--json-output", type=Path, default=ROOT / "carista_supported_settings_map.json")
     args = parser.parse_args()

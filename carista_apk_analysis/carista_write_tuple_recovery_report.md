@@ -20,7 +20,9 @@ This is an offline static report. It does not use a phone trace.
 
 - Long-coding read literal resolves to `1A9A` at `0x007381E6`.
 - Write-coding literal resolves to `3B9A` at `0x008C8D6C`.
-- Coding-type lookup bytes are: `00 10 10 03 10 10`.
+- Corrected Ghidra headless exports are generated in `carista_apk_analysis/ghidra_exports`.
+- Ghidra loads this ELF with a `+0x10000` image-base delta, so the exporter records both ELF symbol addresses and Ghidra addresses.
+- Coding-type lookup bytes are: `10 10 03 10 10 31`.
 
 Static request shape recovered from `WriteVagCodingCommand::getRequest`:
 
@@ -39,7 +41,21 @@ raw-address vector length = 4
 coding type 2 tail length = 3
 ```
 
-For non-type-2 coding, the builder appends a mapped coding-type byte, a length byte, the tail bytes, and `FF`.
+Corrected `WriteVagCodingCommand::getRequest` pseudocode proves the suffix split:
+
+```text
+type 2:     selector byte + 3-byte tail vector
+other type: selector byte + (tail length + 1) + tail bytes + FF
+```
+
+The constructor stores the fields used by the serializer at fixed offsets:
+
+```text
+this + 0x10 -> 6-byte value vector
+this + 0x1c -> shared 4-byte raw-address/component-id vector
+this + 0x24 -> coding type enum
+this + 0x28 -> shared tail/short-coding vector
+```
 
 ## Insert-Value Model
 
@@ -76,16 +92,28 @@ ChangeSettingOperation
 
 `writeVagCanCodingValue` does not receive a raw full-coding blob. It receives a 64-bit raw-value key plus the compact value vector. It then resolves ECU coding metadata before constructing `WriteVagCodingCommand`.
 
-Static disassembly of `writeVagCanCodingValue` shows:
+Corrected Ghidra pseudocode of `writeVagCanCodingValue` shows:
 
 ```text
 - the raw value is cached by the 64-bit key before the write command is built
-- ECU metadata is queried with that key to choose the coding type
+- ECU metadata is queried/cached before the command is built
 - coding type 2 is preserved
 - non-type-2 coding is normalized to type 3
 - a sentinel metadata path forces coding type 5
 - the final command still goes through the 6-byte value + 4-byte raw-address + tail constructor
+- the 4-byte vector passed to the constructor is taken from parsed `VagEcuInfo` metadata, not from the visible `0600` DID
 ```
+
+The important native bridge is now explicit:
+
+```text
+writeVagCanCodingValue(...)
+-> read/cached VagEcuInfo for the target ECU
+-> use metadata at the coding-info object (`+0x2c`) as the 4-byte raw-address vector
+-> pass coding type and tail vector to WriteVagCodingCommand
+```
+
+`readEcuInfoCached` first checks whether the cached `VagEcuInfo` already contains the required/optional masks. If not, it calls the live ECU-info reader and stores the result. `readVagCanEcuInfo` runs `GetVagCanEcuInfoCommand`, validates the returned `VagEcuInfoWithCoding`, and stores coding raw-address metadata for the main ECU and submodules. This is a cache/read path, not a static fallback table that can derive the tuple from `220600` alone.
 
 The Java/Dex bridge confirms the same high-level boundary:
 
@@ -129,11 +157,31 @@ turn-signal tuple value:        412F60A60000
 
 The still-missing pieces are the 4-byte raw-address vectors and exact tail bytes for those chunks. Those are derived from ECU metadata and Carista's setting catalog, not from the visible long-coding string alone.
 
-Additional read-like evidence worth recovering next time is Carista's TP2.0 `1A9A` long-coding read and, only if deliberately allowed despite the old `31...` block, the Carista simulator's `31B80000` capability query. The latter appears in Carista's VAGCAN20 simulator data as a compact metadata response, not as the actual long-coding value.
+The latest Ghidra pass corrected the raw-address proof boundary. Static decompilation shows that `WriteVagCodingCommand` receives its 4-byte rawAddress4, coding selector, and tail vector through parsed/cached `VagEcuInfo` populated by positive `1A9B` / `5A9B` ECU-info parsing, not directly from the `31B80000` ECU-list response and not from the visible `220600` long-coding DID.
+
+Recovered `1A9B` parser offsets after stripping the positive `5A9B` prefix:
+
+```text
+payload[0x0c:0x10] -> rawAddress4
+payload[0x10]      -> coding selector
+payload[0x11:0x14] -> tail for type-2/type-4 selector branches
+payload[0x14:0x1a] -> stored 6-byte coding value
+```
+
+The embedded 1K0937049S-style simulator has a positive `1A9B` and proves the parser with rawAddress4 `B0373034`, selector `10`, coding type `3`, empty tail, and suffix `0301FF`. The BCM25/5C0937087E simulator has direct `220600` coding and a `31B80000` list, but its `1A9B` response is negative, so it does not prove the final rawAddress4 for that profile either.
+
+The actual `6R0937087K` workspace evidence has direct `220600` coding but no positive `1A9B` / `5A9B` response. The corrected native path makes the consequence stronger: the full `3B9A` tuple for this car is not recoverable from current coding alone. Only the two target value6 chunks are proven until the missing `VagEcuInfo` metadata bytes are recovered.
+
+The dedicated offline report is generated by:
+
+```text
+carista_apk_analysis/analyze_carista_offline_tuple_candidates.py
+carista_apk_analysis/carista_offline_tuple_candidate_report.md
+```
 
 ## Next Static Target
 
-The next offline target is to recover the `VagCanLongCodingSetting` catalog entries around byte 12 bit 6 and byte 21 bit 2. The fields to recover for each entry are:
+The next offline target is now narrower: recover a positive `1A9B` response for the actual `6R0937087K` or reconstruct the same bytes from a native catalog/data-flow path. In parallel, recover the `VagCanLongCodingSetting` catalog entries around byte 12 bit 6 and byte 21 bit 2. The fields to recover for each entry are:
 
 ```text
 setting name key
@@ -145,7 +193,7 @@ interpretation values
 coding tail bytes used by WriteVagCodingCommand
 ```
 
-Without that bridge or a phone trace, do not treat any complete `3B9A` tuple as proven.
+Without an actual positive `1A9B` metadata bridge, a native catalog equivalent, or a phone trace, do not treat any complete `3B9A` tuple as proven.
 
 ## Static Catalog Boundary
 

@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.venv/
+carista_apk_analysis/reacquire_20260424/com.prizmos.carista.apk
+carista_apk_analysis/reacquire_20260424/config.*.apk
+carista_apk_analysis/reacquire_20260424/icon.png
+carista_apk_analysis/reacquire_20260424/manifest.json
+carista_apk_analysis/reacquire_20260424/split_armv7_unpacked/
+tools/
+carista_apk_analysis/extracted/
+carista_apk_analysis/ghidra_project/
+carista_apk_analysis/ghidra_exports/
+carista_apk_analysis/gadget_patch_out/
+carista_apk_analysis/keys/carista-gadget-debug.jks
+carista_apk_analysis/downloads/frida-gadget-*-android-*.so.xz

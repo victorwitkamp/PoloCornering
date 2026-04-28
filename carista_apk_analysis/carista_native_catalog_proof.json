@@ -1,0 +1,1359 @@
+{
+  "artifacts": [
+    {
+      "label": "source XAPK",
+      "path": "carista_apk_analysis/reacquire_20260424/carista_9.8.2.xapk",
+      "sha256": "250b36ced2aa66b59df059bbdf25fdf2942c48991c1e34740d310b3398558781",
+      "size": 67485813
+    },
+    {
+      "label": "sibling base APK",
+      "path": "carista_apk_analysis/reacquire_20260424/carista_9.8.2.apk",
+      "sha256": "deb5e94f5a89fbcad0fe7fe4fc74a4af7b6f5e8b2fc97bf6fdc51c04b20fde45",
+      "size": 5417
+    },
+    {
+      "label": "previous extracted libCarista.so",
+      "path": "carista_apk_analysis/extracted/libCarista.so",
+      "sha256": "eac6217741a7501a4072ea32610b54088646f0a1d3fc90b0ee8cb1201410b69b",
+      "size": 22611320
+    },
+    {
+      "label": "config.armeabi_v7a.apk",
+      "path": "carista_apk_analysis/reextracted_native_proof/carista_9.8.2/config.armeabi_v7a.apk",
+      "sha256": "bedb54e0408dd0daf2b085da681e48de6821d0120657838e74dae41687b26e3c",
+      "size": 29344505
+    },
+    {
+      "label": "libCarista.so",
+      "path": "carista_apk_analysis/reextracted_native_proof/carista_9.8.2/lib/armeabi-v7a/libCarista.so",
+      "sha256": "eac6217741a7501a4072ea32610b54088646f0a1d3fc90b0ee8cb1201410b69b",
+      "size": 22611320
+    }
+  ],
+  "ascii_token_counts": {
+    "1A9A": 33,
+    "1A9B": 459,
+    "3B9A": 1
+  },
+  "ascii_tokens": [
+    {
+      "context_ascii": ".311100.2106.2F.1A9A.31BB. dataIds a",
+      "file_offset": "0x007381E6",
+      "token": "1A9A",
+      "virtual_address": "0x007381E6"
+    },
+    {
+      "context_ascii": "00004275001700051A9A170113CB62BB1702",
+      "file_offset": "0x0081296A",
+      "token": "1A9A",
+      "virtual_address": "0x0081296A"
+    },
+    {
+      "context_ascii": "FF.ECU VAGCAN1F 1A9A: 5A9A0006462204",
+      "file_offset": "0x008E2872",
+      "token": "1A9A",
+      "virtual_address": "0x008E2872"
+    },
+    {
+      "context_ascii": "12.ECU VAGCAN01 1A9A: 7F1A12.ECU VAG",
+      "file_offset": "0x008E2E1A",
+      "token": "1A9A",
+      "virtual_address": "0x008E2E1A"
+    },
+    {
+      "context_ascii": "31.ECU VAGCAN03 1A9A: 7F1A31.ECU VAG",
+      "file_offset": "0x008E3262",
+      "token": "1A9A",
+      "virtual_address": "0x008E3262"
+    },
+    {
+      "context_ascii": "12.ECU VAGCAN09 1A9A: 7F1A12.ECU VAG",
+      "file_offset": "0x008E3624",
+      "token": "1A9A",
+      "virtual_address": "0x008E3624"
+    },
+    {
+      "context_ascii": "1..ECU VAGCAN1F 1A9B: 5A9B314B303930",
+      "file_offset": "0x008E27C8",
+      "token": "1A9B",
+      "virtual_address": "0x008E27C8"
+    },
+    {
+      "context_ascii": "11.ECU VAGCAN01 1A9B: 5A9B3036413930",
+      "file_offset": "0x008E2D52",
+      "token": "1A9B",
+      "virtual_address": "0x008E2D52"
+    },
+    {
+      "context_ascii": "11.ECU VAGCAN15 1A9B: -5.ECU VAGCAN1",
+      "file_offset": "0x008E3188",
+      "token": "1A9B",
+      "virtual_address": "0x008E3188"
+    },
+    {
+      "context_ascii": "-5.ECU VAGCAN16 1A9B: -5.ECU VAGCAN0",
+      "file_offset": "0x008E319E",
+      "token": "1A9B",
+      "virtual_address": "0x008E319E"
+    },
+    {
+      "context_ascii": "-5.ECU VAGCAN02 1A9B: -5.ECU VAGCAN0",
+      "file_offset": "0x008E31B4",
+      "token": "1A9B",
+      "virtual_address": "0x008E31B4"
+    },
+    {
+      "context_ascii": "-5.ECU VAGCAN03 1A9B: 7F1A78.5A9B314",
+      "file_offset": "0x008E31CA",
+      "token": "1A9B",
+      "virtual_address": "0x008E31CA"
+    },
+    {
+      "context_ascii": "alid length!.FF.3B9A.GetVagUdsEcuLis",
+      "file_offset": "0x008C8D6E",
+      "token": "3B9A",
+      "virtual_address": "0x008C8D6E"
+    }
+  ],
+  "branches": [],
+  "changed_chunks": [
+    {
+      "byte_start": 12,
+      "changed_bits": [
+        "byte 12 bit 6: False->True"
+      ],
+      "chunk_index": 2,
+      "current": "2C680ED000C8",
+      "target": "6C680ED000C8"
+    },
+    {
+      "byte_start": 18,
+      "changed_bits": [
+        "byte 21 bit 2: False->True"
+      ],
+      "chunk_index": 3,
+      "current": "412F60A20000",
+      "target": "412F60A60000"
+    }
+  ],
+  "decompile_proof": {
+    "path": "carista_apk_analysis/ghidra_exports/VagOperationDelegate_writeRawValue_01271140.c",
+    "sha256": "4743bf2ea5d97270ced5b1b216e3b5157a766a367e34286b11819e3c4c59d186",
+    "snippet": [
+      "    switch(uVar2) {",
+      "    case 0:",
+      "    case 1:",
+      "      uVar2 = FUN_00cd5ef0(auStack_e0,param_5);",
+      "      (**(code **)(*param_2 + 0x1b8))(aRStack_d4,param_2,param_3,param_4,uVar2,param_6);",
+      "      FUN_00cb7f50(auStack_e0);",
+      "      Result<BytesModel,std::__ndk1::basic_string<char,std::__ndk1::char_traits<char>,std::__ndk1::allocator<char>>>",
+      "      ::Result(param_1,*local_bc,psStack_b8);",
+      "      Result<BytesModel,void>::~Result(aRStack_d4);",
+      "      goto LAB_01271338;",
+      "    case 2:",
+      "    case 3:",
+      "      (**(code **)(*param_2 + 0x1c8))(aRStack_d4,param_2,param_3,param_4,param_5);",
+      "      break;",
+      "    case 4:",
+      "      (**(code **)(*param_2 + 0x1cc))(aRStack_d4,param_2,param_3,param_4,param_5);",
+      "      break;",
+      "    case 5:",
+      "      uVar2 = (**(code **)(*param_2 + 0x154))(param_2,*(code **)(*param_2 + 0x154),param_3,param_4);",
+      "      uVar4 = (**(code **)(*param_2 + 0x180))(param_2,*(code **)(*param_2 + 0x180),param_3,param_4);",
+      "      uVar4 = (**(code **)(*param_2 + 0x1e0))(param_2,uVar4);",
+      "      (**(code **)(*param_2 + 0x1c4))(aRStack_d4,param_2,uVar2,uVar4,param_5);",
+      "      break;",
+      "    default:",
+      "      this = (IllegalArgumentException *)__cxa_allocate_exception(8);",
+      "      FUN_00cb4d44(aRStack_d4,\"Invalid VAG setting type\");",
+      "      IllegalArgumentException::IllegalArgumentException(this,(basic_string *)aRStack_d4);",
+      "                    /* WARNING: Subroutine does not return */",
+      "      __cxa_throw(this,&IllegalArgumentException::typeinfo,",
+      "                  IllegalStateException::~IllegalStateException);",
+      "    case 7:",
+      "    case 8:",
+      "      (**(code **)(*param_2 + 0x1c0))(aRStack_d4,param_2,param_3,param_4,param_5);",
+      "      break;",
+      "    case 9:",
+      "      uVar2 = (**(code **)(*param_2 + 0x154))(param_2,*(code **)(*param_2 + 0x154),param_3,param_4);",
+      "      uVar4 = (**(code **)(*param_2 + 0x180))(param_2,*(code **)(*param_2 + 0x180),param_3,param_4);",
+      "      uVar4 = (**(code **)(*param_2 + 0x1d4))(param_2,uVar4);",
+      "      (**(code **)(*param_2 + 0x1c4))(aRStack_d4,param_2,uVar2,uVar4,param_5);",
+      "    }",
+      "    Result<EmptyModel,void>::operator=(aRStack_b0,(Result *)aRStack_d4);",
+      "    Result<EmptyModel,void>::~Result((Result<EmptyModel,void> *)aRStack_d4);",
+      "    Result<EmptyModel,void>::",
+      "    stateAs<BytesModel,std::__ndk1::basic_string<char,std::__ndk1::char_traits<char>,std::__ndk1::allocator<char>>>",
+      "              ();",
+      "LAB_01271338:",
+      "    Result<EmptyModel,void>::~Result(aRStack_b0);",
+      "  }",
+      "  RunOnScopeExit::~RunOnScopeExit(aRStack_48);",
+      "LAB_01271344:"
+    ]
+  },
+  "immediates": [
+    {
+      "instruction": "movs r1, #0x2e",
+      "instruction_address": "0x00CF80D8",
+      "source_label": "WriteDataByIdentifierCommand::getRequest",
+      "source_symbol": "_ZNK28WriteDataByIdentifierCommand10getRequestEv",
+      "value": "0x2E"
+    },
+    {
+      "instruction": "movs r2, #0xff",
+      "instruction_address": "0x00D0334A",
+      "source_label": "WriteVagCodingCommand::getRequest",
+      "source_symbol": "_ZNK21WriteVagCodingCommand10getRequestEv",
+      "value": "0xFF"
+    }
+  ],
+  "instructions": [
+    {
+      "finding": "loads virtual slot +0x154 to resolve the ECU from the raw key",
+      "instruction": "ldr.w r1, [r0, #0x154]",
+      "instruction_address": "0x012637AE",
+      "source_label": "VagOperationDelegate::writeVagUdsValue(raw-key)",
+      "source_symbol": "_ZN20VagOperationDelegate16writeVagUdsValueEyRKNSt6__ndk16vectorIhNS0_9allocatorIhEEEE"
+    },
+    {
+      "finding": "loads virtual slot +0x158 to resolve the raw short/DID from the raw key",
+      "instruction": "ldr.w r1, [r0, #0x158]",
+      "instruction_address": "0x012637BE",
+      "source_label": "VagOperationDelegate::writeVagUdsValue(raw-key)",
+      "source_symbol": "_ZN20VagOperationDelegate16writeVagUdsValueEyRKNSt6__ndk16vectorIhNS0_9allocatorIhEEEE"
+    },
+    {
+      "finding": "loads virtual slot +0x1C4, which the fresh vtable maps to writeVagUdsValue(ecu,did)",
+      "instruction": "ldr.w r5, [r0, #0x1c4]",
+      "instruction_address": "0x012637CE",
+      "source_label": "VagOperationDelegate::writeVagUdsValue(raw-key)",
+      "source_symbol": "_ZN20VagOperationDelegate16writeVagUdsValueEyRKNSt6__ndk16vectorIhNS0_9allocatorIhEEEE"
+    },
+    {
+      "finding": "dispatches into the ECU/DID UDS writer",
+      "instruction": "blx r5",
+      "instruction_address": "0x012637D8",
+      "source_label": "VagOperationDelegate::writeVagUdsValue(raw-key)",
+      "source_symbol": "_ZN20VagOperationDelegate16writeVagUdsValueEyRKNSt6__ndk16vectorIhNS0_9allocatorIhEEEE"
+    },
+    {
+      "finding": "stores the DID argument as a 16-bit value for later command construction",
+      "instruction": "strh r3, [r7, #-0x1e]",
+      "instruction_address": "0x012637FE",
+      "source_label": "VagOperationDelegate::writeVagUdsValue(ecu,did)",
+      "source_symbol": "_ZN20VagOperationDelegate16writeVagUdsValueEP3EcutRKNSt6__ndk16vectorIhNS2_9allocatorIhEEEE"
+    },
+    {
+      "finding": "sets up a local UDS command-builder path",
+      "instruction": "add r0, sp, #0x54",
+      "instruction_address": "0x01263A10",
+      "source_label": "VagOperationDelegate::writeVagUdsValue(ecu,did)",
+      "source_symbol": "_ZN20VagOperationDelegate16writeVagUdsValueEP3EcutRKNSt6__ndk16vectorIhNS2_9allocatorIhEEEE"
+    },
+    {
+      "finding": "passes the saved DID pointer into that local command-builder path",
+      "instruction": "sub.w r2, r7, #0x1e",
+      "instruction_address": "0x01263A14",
+      "source_label": "VagOperationDelegate::writeVagUdsValue(ecu,did)",
+      "source_symbol": "_ZN20VagOperationDelegate16writeVagUdsValueEP3EcutRKNSt6__ndk16vectorIhNS2_9allocatorIhEEEE"
+    },
+    {
+      "finding": "branches to the local command-builder helper inside writeVagUdsValue(ecu,did)",
+      "instruction": "bl #0x1263cb1",
+      "instruction_address": "0x01263A18",
+      "source_label": "VagOperationDelegate::writeVagUdsValue(ecu,did)",
+      "source_symbol": "_ZN20VagOperationDelegate16writeVagUdsValueEP3EcutRKNSt6__ndk16vectorIhNS2_9allocatorIhEEEE"
+    },
+    {
+      "finding": "loads the stored DID halfword from the command object",
+      "instruction": "ldrh r1, [r1, #0x10]",
+      "instruction_address": "0x00CF80CC",
+      "source_label": "WriteDataByIdentifierCommand::getRequest",
+      "source_symbol": "_ZNK28WriteDataByIdentifierCommand10getRequestEv"
+    },
+    {
+      "finding": "prepends UDS service byte 0x2E",
+      "instruction": "movs r1, #0x2e",
+      "instruction_address": "0x00CF80D8",
+      "source_label": "WriteDataByIdentifierCommand::getRequest",
+      "source_symbol": "_ZNK28WriteDataByIdentifierCommand10getRequestEv"
+    },
+    {
+      "finding": "appends the payload vector after service and DID",
+      "instruction": "add.w r2, r5, #0x14",
+      "instruction_address": "0x00CF80E0",
+      "source_label": "WriteDataByIdentifierCommand::getRequest",
+      "source_symbol": "_ZNK28WriteDataByIdentifierCommand10getRequestEv"
+    }
+  ],
+  "live_reads": [
+    {
+      "channel_parameter_status": "answered",
+      "channel_parameters": {
+        "T1": 138,
+        "T2": 255,
+        "T3": 79,
+        "T4": 255,
+        "block": 15
+      },
+      "command": "220600",
+      "log_file": "logs\\pq25_carista_validation_same_channel_uds_identity_retry_1_direct_sequence_sequence_ctr0_220600_220601_220606_22F187_22F191_22F197_22F1A3_22F1A5_22F1AA_22F1DF.txt",
+      "response": "6206003AB82B9F08A10000003008002C680ED000C8412F60A20000200000000000",
+      "started": "2026-04-28T11:12:28.207",
+      "summary_path": "obd-on-pc/logs/pq25_carista_validation_same_channel_uds_identity_retry_1_direct_sequence_summary.json"
+    },
+    {
+      "channel_parameter_status": "answered",
+      "channel_parameters": {
+        "T1": 138,
+        "T2": 255,
+        "T3": 79,
+        "T4": 255,
+        "block": 15
+      },
+      "command": "220601",
+      "log_file": "logs\\pq25_carista_validation_retry_220601_3_direct_read_direct_ctr0_220601.txt",
+      "response": "6206011E",
+      "started": "2026-04-28T11:16:47.549",
+      "summary_path": "obd-on-pc/logs/pq25_carista_validation_retry_220601_3_direct_read_summary.json"
+    },
+    {
+      "channel_parameter_status": "answered",
+      "channel_parameters": {
+        "T1": 138,
+        "T2": 255,
+        "T3": 79,
+        "T4": 255,
+        "block": 15
+      },
+      "command": "220606",
+      "log_file": "logs\\pq25_carista_validation_retry_220606_8_direct_read_direct_ctr0_220606.txt",
+      "response": "620606001800018000",
+      "started": "2026-04-28T11:20:00.256",
+      "summary_path": "obd-on-pc/logs/pq25_carista_validation_retry_220606_8_direct_read_summary.json"
+    },
+    {
+      "channel_parameter_status": "answered",
+      "channel_parameters": {
+        "T1": 138,
+        "T2": 255,
+        "T3": 79,
+        "T4": 255,
+        "block": 15
+      },
+      "command": "22F187",
+      "log_file": "logs\\pq25_carista_validation_retry_22F187_3_direct_read_direct_ctr0_22F187.txt",
+      "response": "62F1873652303933373038374B20",
+      "started": "2026-04-28T11:17:44.894",
+      "summary_path": "obd-on-pc/logs/pq25_carista_validation_retry_22F187_3_direct_read_summary.json"
+    },
+    {
+      "channel_parameter_status": "answered",
+      "channel_parameters": {
+        "T1": 138,
+        "T2": 255,
+        "T3": 79,
+        "T4": 255,
+        "block": 15
+      },
+      "command": "22F191",
+      "log_file": "logs\\pq25_carista_validation_isolated_uds_identity_direct_read_direct_ctr0_22F191.txt",
+      "response": "62F1913652303933373038372020",
+      "started": "2026-04-28T11:14:39.885",
+      "summary_path": "obd-on-pc/logs/pq25_carista_validation_isolated_uds_identity_direct_read_summary.json"
+    },
+    {
+      "channel_parameter_status": "answered",
+      "channel_parameters": {
+        "T1": 138,
+        "T2": 255,
+        "T3": 79,
+        "T4": 255,
+        "block": 15
+      },
+      "command": "22F197",
+      "log_file": "logs\\pq25_carista_validation_retry_22F197_7_direct_read_direct_ctr0_22F197.txt",
+      "response": "62F19742434D205051323520482B3420",
+      "started": "2026-04-28T11:20:37.919",
+      "summary_path": "obd-on-pc/logs/pq25_carista_validation_retry_22F197_7_direct_read_summary.json"
+    },
+    {
+      "channel_parameter_status": "answered",
+      "channel_parameters": {
+        "T1": 138,
+        "T2": 255,
+        "T3": 79,
+        "T4": 255,
+        "block": 15
+      },
+      "command": "22F1A3",
+      "log_file": "logs\\pq25_carista_validation_isolated_uds_identity_direct_read_direct_ctr0_22F1A3.txt",
+      "response": "62F1A3483436",
+      "started": "2026-04-28T11:14:57.695",
+      "summary_path": "obd-on-pc/logs/pq25_carista_validation_isolated_uds_identity_direct_read_summary.json"
+    },
+    {
+      "channel_parameter_status": "answered",
+      "channel_parameters": {
+        "T1": 138,
+        "T2": 255,
+        "T3": 79,
+        "T4": 255,
+        "block": 15
+      },
+      "command": "22F1A5",
+      "log_file": "logs\\pq25_carista_validation_isolated_uds_identity_direct_read_direct_ctr0_22F1A5.txt",
+      "response": "62F1A50005F3C7E719",
+      "started": "2026-04-28T11:15:06.624",
+      "summary_path": "obd-on-pc/logs/pq25_carista_validation_isolated_uds_identity_direct_read_summary.json"
+    },
+    {
+      "channel_parameter_status": "answered",
+      "channel_parameters": {
+        "T1": 138,
+        "T2": 255,
+        "T3": 79,
+        "T4": 255,
+        "block": 15
+      },
+      "command": "22F1AA",
+      "log_file": "logs\\pq25_carista_validation_isolated_uds_identity_direct_read_direct_ctr0_22F1AA.txt",
+      "response": "62F1AA4A35313920",
+      "started": "2026-04-28T11:15:15.627",
+      "summary_path": "obd-on-pc/logs/pq25_carista_validation_isolated_uds_identity_direct_read_summary.json"
+    },
+    {
+      "channel_parameter_status": "answered",
+      "channel_parameters": {
+        "T1": 138,
+        "T2": 255,
+        "T3": 79,
+        "T4": 255,
+        "block": 15
+      },
+      "command": "22F1DF",
+      "log_file": "logs\\pq25_carista_validation_isolated_uds_identity_direct_read_direct_ctr0_22F1DF.txt",
+      "response": "62F1DF40",
+      "started": "2026-04-28T11:15:24.619",
+      "summary_path": "obd-on-pc/logs/pq25_carista_validation_isolated_uds_identity_direct_read_summary.json"
+    }
+  ],
+  "metadata": {
+    "current_coding": "3AB82B9F08A10000003008002C680ED000C8412F60A20000200000000000",
+    "date": "2026-04-28",
+    "proof_boundary": "Evidence is proof-only. No complete write request is generated or recommended.",
+    "source": "carista_apk_analysis/reacquire_20260424/carista_9.8.2.xapk!config.armeabi_v7a.apk!lib/armeabi-v7a/libCarista.so",
+    "target_coding": "3AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000"
+  },
+  "profile_comparisons": [
+    {
+      "compared_commands": 10,
+      "evidence": [
+        "220600: sim=6206007B994BB808AB0B0000382000240884CD00C2502E60000000300000000000 live=6206003AB82B9F08A10000003008002C680ED000C8412F60A20000200000000000 (byte 3: 7B->3A; byte 4: 99->B8; byte 5: 4B->2B; byte 6: B8->9F; byte 8: AB->A1; byte 9: 0B->00; byte 12: 38->30; byte 13: 20->08)",
+        "220601: sim=6206011E live=6206011E (exact)",
+        "220606: sim=620606001800038000 live=620606001800018000 (byte 6: 03->01)",
+        "22F187: sim=62F1873543303933373038374520 live=62F1873652303933373038374B20 (byte 3: 35->36; byte 4: 43->52; byte 12: 45->4B)",
+        "22F191: sim=62F1913543303933373038374120 live=62F1913652303933373038372020 (byte 3: 35->36; byte 4: 43->52; byte 12: 41->20)",
+        "22F197: sim=62F19742434D3235204A4C4220483320 live=62F19742434D205051323520482B3420 (byte 6: 32->20; byte 7: 35->50; byte 8: 20->51; byte 9: 4A->32; byte 10: 4C->35; byte 11: 42->20; byte 12: 20->48; byte 13: 48->2B)",
+        "22F1A3: sim=62F1A3483636 live=62F1A3483436 (byte 4: 36->34)",
+        "22F1A5: sim=62F1A5000000000042 live=62F1A50005F3C7E719 (byte 4: 00->05; byte 5: 00->F3; byte 6: 00->C7; byte 7: 00->E7; byte 8: 42->19)",
+        "22F1AA: sim=62F1AA4A35313920 live=62F1AA4A35313920 (exact)",
+        "22F1DF: sim=62F1DF40 live=62F1DF40 (exact)"
+      ],
+      "exact_matches": 3,
+      "notes": "UDS-style 220600 coding profile; has 31B80000 coding-address list",
+      "profile_index": 6
+    },
+    {
+      "compared_commands": 10,
+      "evidence": [
+        "220600: sim=7F2211 live=6206003AB82B9F08A10000003008002C680ED000C8412F60A20000200000000000 (different)",
+        "220601: sim=7F2211 live=6206011E (different)",
+        "220606: sim=7F2211 live=620606001800018000 (different)",
+        "22F187: sim=7F2211 live=62F1873652303933373038374B20 (different)",
+        "22F191: sim=7F2211 live=62F1913652303933373038372020 (different)",
+        "22F197: sim=7F2211 live=62F19742434D205051323520482B3420 (different)",
+        "22F1A3: sim=7F2211 live=62F1A3483436 (different)",
+        "22F1A5: sim=7F2211 live=62F1A50005F3C7E719 (different)",
+        "22F1AA: sim=7F2211 live=62F1AA4A35313920 (different)",
+        "22F1DF: sim=7F2211 live=62F1DF40 (different)"
+      ],
+      "exact_matches": 0,
+      "notes": "has 31B80000 coding-address list; has positive 1A9B metadata",
+      "profile_index": 2
+    }
+  ],
+  "profiles": [
+    {
+      "coding_address_shorts": [],
+      "coding_source": "",
+      "has_positive_1a9b": false,
+      "identity": "",
+      "profile_index": 1,
+      "records": [
+        {
+          "command": "1A90",
+          "file_offset": "0x0071D760",
+          "response": "-5"
+        },
+        {
+          "command": "1A90",
+          "file_offset": "0x008ADA5E",
+          "response": "-5"
+        }
+      ]
+    },
+    {
+      "coding_address_shorts": [
+        "0103",
+        "0104",
+        "0106",
+        "0108",
+        "0102",
+        "0107"
+      ],
+      "coding_source": "1A9A -> 5A9A000000000000B03730341012EC8F8F2600041800001400001400000000FF",
+      "has_positive_1a9b": true,
+      "identity": "1A9B=Z.1K0937049S  .704..........Bordnetz-SG 1.0 H30 ; 22F187=.\".; 22F191=.\".; 22F197=.\".; 22F1A3=.\".; 22F1AA=.\".; 22F1DF=.\".",
+      "profile_index": 2,
+      "records": [
+        {
+          "command": "1A9B",
+          "file_offset": "0x008E5303",
+          "response": "5A9B314B30393337303439532020B037303410000000000000000000426F72646E65747A2D534720312E302048333020"
+        },
+        {
+          "command": "1A91",
+          "file_offset": "0x008E53E1",
+          "response": "5A910D314B3039333730343953202A04303633033236FF"
+        },
+        {
+          "command": "1A9A",
+          "file_offset": "0x008E5423",
+          "response": "5A9A000000000000B03730341012EC8F8F2600041800001400001400000000FF"
+        },
+        {
+          "command": "1A86",
+          "file_offset": "0x008E5477",
+          "response": "5A860F3030303030303031313032373039204256422D39303632322E30392E303430304833303030303037303431343031FF"
+        },
+        {
+          "command": "31B80000",
+          "file_offset": "0x008E54EF",
+          "response": "71B8010301040106010801020107"
+        },
+        {
+          "command": "22F17E",
+          "file_offset": "0x008E5523",
+          "response": "7F2211"
+        },
+        {
+          "command": "22F187",
+          "file_offset": "0x008E553F",
+          "response": "7F2211"
+        },
+        {
+          "command": "22F189",
+          "file_offset": "0x008E555B",
+          "response": "7F2211"
+        },
+        {
+          "command": "22F18C",
+          "file_offset": "0x008E5577",
+          "response": "7F2211"
+        },
+        {
+          "command": "22F191",
+          "file_offset": "0x008E5593",
+          "response": "7F2211"
+        },
+        {
+          "command": "22F197",
+          "file_offset": "0x008E55AF",
+          "response": "7F2211"
+        },
+        {
+          "command": "22F198",
+          "file_offset": "0x008E55CB",
+          "response": "7F2211"
+        },
+        {
+          "command": "22F199",
+          "file_offset": "0x008E55E7",
+          "response": "7F2211"
+        },
+        {
+          "command": "22F19E",
+          "file_offset": "0x008E5603",
+          "response": "7F2211"
+        },
+        {
+          "command": "22F1A2",
+          "file_offset": "0x008E561F",
+          "response": "7F2211"
+        },
+        {
+          "command": "22F1A3",
+          "file_offset": "0x008E563B",
+          "response": "7F2211"
+        },
+        {
+          "command": "22F1A5",
+          "file_offset": "0x008E5657",
+          "response": "7F2211"
+        },
+        {
+          "command": "22F1AA",
+          "file_offset": "0x008E5673",
+          "response": "7F2211"
+        },
+        {
+          "command": "22F1DF",
+          "file_offset": "0x008E568F",
+          "response": "7F2211"
+        },
+        {
+          "command": "220600",
+          "file_offset": "0x008E56AB",
+          "response": "7F2211"
+        },
+        {
+          "command": "220601",
+          "file_offset": "0x008E56C7",
+          "response": "7F2211"
+        },
+        {
+          "command": "220606",
+          "file_offset": "0x008E56E3",
+          "response": "7F2211"
+        },
+        {
+          "command": "220607",
+          "file_offset": "0x008E56FF",
+          "response": "7F2211"
+        },
+        {
+          "command": "220610",
+          "file_offset": "0x008E571B",
+          "response": "7F2211"
+        },
+        {
+          "command": "220670",
+          "file_offset": "0x008E5737",
+          "response": "7F2211"
+        },
+        {
+          "command": "2206A0",
+          "file_offset": "0x008E5753",
+          "response": "7F2211"
+        },
+        {
+          "command": "2206D0",
+          "file_offset": "0x008E576F",
+          "response": "7F2211"
+        },
+        {
+          "command": "220640",
+          "file_offset": "0x008E578B",
+          "response": "7F2211"
+        },
+        {
+          "command": "220730",
+          "file_offset": "0x008E57A7",
+          "response": "7F2211"
+        }
+      ]
+    },
+    {
+      "coding_address_shorts": [],
+      "coding_source": "",
+      "has_positive_1a9b": false,
+      "identity": "",
+      "profile_index": 3,
+      "records": [
+        {
+          "command": "1A9B",
+          "file_offset": "0x009F7947",
+          "response": "-5"
+        }
+      ]
+    },
+    {
+      "coding_address_shorts": [],
+      "coding_source": "",
+      "has_positive_1a9b": false,
+      "identity": "",
+      "profile_index": 4,
+      "records": [
+        {
+          "command": "1A9B",
+          "file_offset": "0x00BA4872",
+          "response": "-5"
+        }
+      ]
+    },
+    {
+      "coding_address_shorts": [],
+      "coding_source": "",
+      "has_positive_1a9b": false,
+      "identity": "",
+      "profile_index": 5,
+      "records": [
+        {
+          "command": "1802FF00",
+          "file_offset": "0x00C57EA0",
+          "response": "5800"
+        },
+        {
+          "command": "1A86",
+          "file_offset": "0x00C57EBC",
+          "response": "7F1A11"
+        },
+        {
+          "command": "1A91",
+          "file_offset": "0x00C57ED6",
+          "response": "7F1A11"
+        },
+        {
+          "command": "1A9A",
+          "file_offset": "0x00C57EF0",
+          "response": "7F1A11"
+        }
+      ]
+    },
+    {
+      "coding_address_shorts": [
+        "0106",
+        "0102",
+        "0103",
+        "0107",
+        "0108",
+        "0114"
+      ],
+      "coding_source": "220600 -> 6206007B994BB808AB0B0000382000240884CD00C2502E60000000300000000000",
+      "has_positive_1a9b": false,
+      "identity": "1A9B=...; 22F187=b..5C0937087E ; 22F191=b..5C0937087A ; 22F197=b..BCM25 JLB H3 ; 22F1A3=b..H66; 22F1AA=b..J519 ; 22F1DF=b..@",
+      "profile_index": 6,
+      "records": [
+        {
+          "command": "1A9B",
+          "file_offset": "0x00C57F0A",
+          "response": "7F1A11"
+        },
+        {
+          "command": "220174",
+          "file_offset": "0x00C57F24",
+          "response": "7F2231"
+        },
+        {
+          "command": "220600",
+          "file_offset": "0x00C57F40",
+          "response": "6206007B994BB808AB0B0000382000240884CD00C2502E60000000300000000000"
+        },
+        {
+          "command": "220601",
+          "file_offset": "0x00C57F98",
+          "response": "6206011E"
+        },
+        {
+          "command": "220606",
+          "file_offset": "0x00C57FB6",
+          "response": "620606001800038000"
+        },
+        {
+          "command": "220607",
+          "file_offset": "0x00C57FDE",
+          "response": "7F2231"
+        },
+        {
+          "command": "220608",
+          "file_offset": "0x00C57FFA",
+          "response": "7F2231"
+        },
+        {
+          "command": "220670",
+          "file_offset": "0x00C58016",
+          "response": "7F2231"
+        },
+        {
+          "command": "2206A0",
+          "file_offset": "0x00C58032",
+          "response": "7F2231"
+        },
+        {
+          "command": "2206D0",
+          "file_offset": "0x00C5804E",
+          "response": "7F2231"
+        },
+        {
+          "command": "223C0E",
+          "file_offset": "0x00C5806A",
+          "response": "7F2231"
+        },
+        {
+          "command": "22F17E",
+          "file_offset": "0x00C58086",
+          "response": "62F17E4232303636303031"
+        },
+        {
+          "command": "22F187",
+          "file_offset": "0x00C580B2",
+          "response": "62F1873543303933373038374520"
+        },
+        {
+          "command": "22F189",
+          "file_offset": "0x00C580E4",
+          "response": "62F18930323531"
+        },
+        {
+          "command": "22F18C",
+          "file_offset": "0x00C58108",
+          "response": "62F18C3034333731313830313130373935"
+        },
+        {
+          "command": "22F191",
+          "file_offset": "0x00C58140",
+          "response": "62F1913543303933373038374120"
+        },
+        {
+          "command": "22F197",
+          "file_offset": "0x00C58172",
+          "response": "62F19742434D3235204A4C4220483320"
+        },
+        {
+          "command": "22F198",
+          "file_offset": "0x00C581A8",
+          "response": "7F2231"
+        },
+        {
+          "command": "22F199",
+          "file_offset": "0x00C581C4",
+          "response": "7F2231"
+        },
+        {
+          "command": "22F19E",
+          "file_offset": "0x00C581E0",
+          "response": "7F2231"
+        },
+        {
+          "command": "22F1A2",
+          "file_offset": "0x00C581FC",
+          "response": "7F2231"
+        },
+        {
+          "command": "22F1A3",
+          "file_offset": "0x00C58218",
+          "response": "62F1A3483636"
+        },
+        {
+          "command": "22F1A5",
+          "file_offset": "0x00C5823A",
+          "response": "62F1A5000000000042"
+        },
+        {
+          "command": "22F1AA",
+          "file_offset": "0x00C58262",
+          "response": "62F1AA4A35313920"
+        },
+        {
+          "command": "22F1DF",
+          "file_offset": "0x00C58288",
+          "response": "62F1DF40"
+        },
+        {
+          "command": "31B80000",
+          "file_offset": "0x00C582A6",
+          "response": "71B8010601020103010701080114"
+        },
+        {
+          "command": "ADAPT01",
+          "file_offset": "0x00C582DA",
+          "response": "0000"
+        },
+        {
+          "command": "ADAPT02",
+          "file_offset": "0x00C582F5",
+          "response": "-32"
+        },
+        {
+          "command": "ADAPT03",
+          "file_offset": "0x00C5830F",
+          "response": "0001"
+        },
+        {
+          "command": "ADAPT04",
+          "file_offset": "0x00C5832A",
+          "response": "0001"
+        },
+        {
+          "command": "ADAPT05",
+          "file_offset": "0x00C58345",
+          "response": "0001"
+        },
+        {
+          "command": "ADAPT06",
+          "file_offset": "0x00C58360",
+          "response": "0001"
+        },
+        {
+          "command": "ADAPT07",
+          "file_offset": "0x00C5837B",
+          "response": "0001"
+        },
+        {
+          "command": "ADAPT08",
+          "file_offset": "0x00C58396",
+          "response": "0001"
+        },
+        {
+          "command": "ADAPT09",
+          "file_offset": "0x00C583B1",
+          "response": "0000"
+        },
+        {
+          "command": "ADAPT0B",
+          "file_offset": "0x00C583CC",
+          "response": "0001"
+        },
+        {
+          "command": "ADAPT0C",
+          "file_offset": "0x00C583E7",
+          "response": "0001"
+        },
+        {
+          "command": "ADAPT0D",
+          "file_offset": "0x00C58402",
+          "response": "0000"
+        },
+        {
+          "command": "ADAPT11",
+          "file_offset": "0x00C5841D",
+          "response": "-32"
+        },
+        {
+          "command": "ADAPT13",
+          "file_offset": "0x00C58437",
+          "response": "-32"
+        },
+        {
+          "command": "ADAPT14",
+          "file_offset": "0x00C58451",
+          "response": "0001"
+        },
+        {
+          "command": "ADAPT16",
+          "file_offset": "0x00C5846C",
+          "response": "0000"
+        },
+        {
+          "command": "ADAPT17",
+          "file_offset": "0x00C58487",
+          "response": "0001"
+        },
+        {
+          "command": "ADAPT18",
+          "file_offset": "0x00C584A2",
+          "response": "0000"
+        },
+        {
+          "command": "ADAPT19",
+          "file_offset": "0x00C584BD",
+          "response": "0000"
+        },
+        {
+          "command": "ADAPT1A",
+          "file_offset": "0x00C584D8",
+          "response": "-32"
+        },
+        {
+          "command": "ADAPT1B",
+          "file_offset": "0x00C584F2",
+          "response": "0000"
+        },
+        {
+          "command": "ADAPT1C",
+          "file_offset": "0x00C5850D",
+          "response": "0000"
+        },
+        {
+          "command": "ADAPT1F",
+          "file_offset": "0x00C58528",
+          "response": "0000"
+        },
+        {
+          "command": "ADAPT22",
+          "file_offset": "0x00C58543",
+          "response": "001E"
+        },
+        {
+          "command": "ADAPT25",
+          "file_offset": "0x00C5855E",
+          "response": "0050"
+        },
+        {
+          "command": "ADAPT2B",
+          "file_offset": "0x00C58579",
+          "response": "0003"
+        },
+        {
+          "command": "ADAPT2F",
+          "file_offset": "0x00C58594",
+          "response": "000F"
+        },
+        {
+          "command": "ADAPT30",
+          "file_offset": "0x00C585AF",
+          "response": "000F"
+        },
+        {
+          "command": "ADAPT34",
+          "file_offset": "0x00C585CA",
+          "response": "0000"
+        },
+        {
+          "command": "ADAPT3F",
+          "file_offset": "0x00C585E5",
+          "response": "-32"
+        },
+        {
+          "command": "ADAPT40",
+          "file_offset": "0x00C585FF",
+          "response": "-32"
+        },
+        {
+          "command": "ADAPT41",
+          "file_offset": "0x00C58619",
+          "response": "-32"
+        },
+        {
+          "command": "ADAPT42",
+          "file_offset": "0x00C58633",
+          "response": "-32"
+        }
+      ]
+    }
+  ],
+  "symbols": [
+    {
+      "address": "0x01261140",
+      "label": "VagOperationDelegate::writeRawValue",
+      "size": 704,
+      "status": "present",
+      "symbol": "_ZN20VagOperationDelegate13writeRawValueEyRKNSt6__ndk16vectorIhNS0_9allocatorIhEEEERKNS0_10shared_ptrI8ProgressEE"
+    },
+    {
+      "address": "0x01263CEC",
+      "label": "VagOperationDelegate::writeVagCanCodingValue",
+      "size": 324,
+      "status": "present",
+      "symbol": "_ZN20VagOperationDelegate22writeVagCanCodingValueEyRKNSt6__ndk16vectorIhNS0_9allocatorIhEEEE"
+    },
+    {
+      "address": "0x0126379C",
+      "label": "VagOperationDelegate::writeVagUdsValue(raw-key)",
+      "size": 68,
+      "status": "present",
+      "symbol": "_ZN20VagOperationDelegate16writeVagUdsValueEyRKNSt6__ndk16vectorIhNS0_9allocatorIhEEEE"
+    },
+    {
+      "address": "0x012637E0",
+      "label": "VagOperationDelegate::writeVagUdsValue(ecu,did)",
+      "size": 1060,
+      "status": "present",
+      "symbol": "_ZN20VagOperationDelegate16writeVagUdsValueEP3EcutRKNSt6__ndk16vectorIhNS2_9allocatorIhEEEE"
+    },
+    {
+      "address": "0x01262DB0",
+      "label": "VagOperationDelegate::writeVagCanAdaptationValue",
+      "size": 268,
+      "status": "present",
+      "symbol": "_ZN20VagOperationDelegate26writeVagCanAdaptationValueEyNSt6__ndk16vectorIhNS0_9allocatorIhEEEERKNS0_10shared_ptrI8ProgressEE"
+    },
+    {
+      "address": "0x0125BE08",
+      "label": "VagOperationDelegate::getCodingRawAddress",
+      "size": 492,
+      "status": "present",
+      "symbol": "_ZN20VagOperationDelegate19getCodingRawAddressEP3Ecut"
+    },
+    {
+      "address": "0x012620EC",
+      "label": "VagOperationDelegate::getSettingRawAddress",
+      "size": 204,
+      "status": "present",
+      "symbol": "_ZN20VagOperationDelegate20getSettingRawAddressERKNSt6__ndk110shared_ptrI7SettingEE"
+    },
+    {
+      "address": "0x00D032BC",
+      "label": "WriteVagCodingCommand::getRequest",
+      "size": 300,
+      "status": "present",
+      "symbol": "_ZNK21WriteVagCodingCommand10getRequestEv"
+    },
+    {
+      "address": "0x00D03048",
+      "label": "WriteVagCodingCommand::ctor",
+      "size": 552,
+      "status": "present",
+      "symbol": "_ZN21WriteVagCodingCommandC1EP3EcuRKNSt6__ndk16vectorIhNS2_9allocatorIhEEEERKNS2_10shared_ptrIS7_EEN10VagEcuInfo10CodingTypeESC_"
+    },
+    {
+      "address": "0x00CF80B4",
+      "label": "WriteDataByIdentifierCommand::getRequest",
+      "size": 120,
+      "status": "present",
+      "symbol": "_ZNK28WriteDataByIdentifierCommand10getRequestEv"
+    },
+    {
+      "address": "0x00CF8034",
+      "label": "WriteDataByIdentifierCommand::ctor",
+      "size": 68,
+      "status": "present",
+      "symbol": "_ZN28WriteDataByIdentifierCommandC1EP3EcutRKNSt6__ndk16vectorIhNS2_9allocatorIhEEEEj"
+    },
+    {
+      "address": "0x00CF8654",
+      "label": "GetVagCanEcuInfoCommand::processEcuInfo",
+      "size": 888,
+      "status": "present",
+      "symbol": "_ZNK23GetVagCanEcuInfoCommand14processEcuInfoERKNSt6__ndk16vectorIhNS0_9allocatorIhEEEE"
+    },
+    {
+      "address": "0x014AA62C",
+      "label": "VagOperationDelegate vtable",
+      "size": 548,
+      "status": "present",
+      "symbol": "_ZTV20VagOperationDelegate"
+    }
+  ],
+  "vtable": [
+    {
+      "label": "current ECU id helper",
+      "offset": "+0x154",
+      "relocation_address": "0x014AA788",
+      "target_address": "0x012621C2",
+      "target_symbol": "_ZN20VagOperationDelegate6getEcuEy"
+    },
+    {
+      "label": "setting type resolver",
+      "offset": "+0x15C",
+      "relocation_address": "0x014AA790",
+      "target_address": "0x0123280A",
+      "target_symbol": "_ZN17OperationDelegate10getRawTypeEy"
+    },
+    {
+      "label": "generic raw-address formatter",
+      "offset": "+0x17C",
+      "relocation_address": "0x014AA7B0",
+      "target_address": "0x0125BCB4",
+      "target_symbol": "_ZN20VagOperationDelegate13getRawAddressEN10VagSetting4TypeEP3Ecut"
+    },
+    {
+      "label": "raw-address DID helper",
+      "offset": "+0x180",
+      "relocation_address": "0x014AA7B4",
+      "target_address": "0x01262270",
+      "target_symbol": "_ZN20VagOperationDelegate14getSubmoduleIdEy"
+    },
+    {
+      "label": "ECU supports coding?",
+      "offset": "+0x184",
+      "relocation_address": "0x014AA7B8",
+      "target_address": "0x01266920",
+      "target_symbol": "_ZN20VagOperationDelegate13isConnectedToEP3Ecu"
+    },
+    {
+      "label": "read ECU info cached",
+      "offset": "+0x194",
+      "relocation_address": "0x014AA7C8",
+      "target_address": "0x01266BD0",
+      "target_symbol": "_ZN20VagOperationDelegate17readEcuInfoCachedEP3Ecujj"
+    },
+    {
+      "label": "read primary ECU info",
+      "offset": "+0x198",
+      "relocation_address": "0x014AA7CC",
+      "target_address": "0x01266E30",
+      "target_symbol": "_ZN20VagOperationDelegate17readVagCanEcuInfoEP9VagCanEcu"
+    },
+    {
+      "label": "read ECU info cached/masked",
+      "offset": "+0x19C",
+      "relocation_address": "0x014AA7D0",
+      "target_address": "0x012672BC",
+      "target_symbol": "_ZN20VagOperationDelegate29readVagEcuInfoWithUdsCommandsEP3Ecujj"
+    },
+    {
+      "label": "write ordinary raw value",
+      "offset": "+0x1B8",
+      "relocation_address": "0x014AA7EC",
+      "target_address": "0x01262DB0",
+      "target_symbol": "_ZN20VagOperationDelegate26writeVagCanAdaptationValueEyNSt6__ndk16vectorIhNS0_9allocatorIhEEEERKNS0_10shared_ptrI8ProgressEE"
+    },
+    {
+      "label": "write UDS raw value",
+      "offset": "+0x1C0",
+      "relocation_address": "0x014AA7F4",
+      "target_address": "0x0126379C",
+      "target_symbol": "_ZN20VagOperationDelegate16writeVagUdsValueEyRKNSt6__ndk16vectorIhNS0_9allocatorIhEEEE"
+    },
+    {
+      "label": "write UDS ECU/DID value",
+      "offset": "+0x1C4",
+      "relocation_address": "0x014AA7F8",
+      "target_address": "0x012637E0",
+      "target_symbol": "_ZN20VagOperationDelegate16writeVagUdsValueEP3EcutRKNSt6__ndk16vectorIhNS2_9allocatorIhEEEE"
+    },
+    {
+      "label": "write VAG-CAN coding",
+      "offset": "+0x1C8",
+      "relocation_address": "0x014AA7FC",
+      "target_address": "0x01263CEC",
+      "target_symbol": "_ZN20VagOperationDelegate22writeVagCanCodingValueEyRKNSt6__ndk16vectorIhNS0_9allocatorIhEEEE"
+    },
+    {
+      "label": "write VAG-CAN submodule coding",
+      "offset": "+0x1CC",
+      "relocation_address": "0x014AA800",
+      "target_address": "0x01263E8C",
+      "target_symbol": "_ZN20VagOperationDelegate31writeVagCanSubmoduleCodingValueEyRKNSt6__ndk16vectorIhNS0_9allocatorIhEEEE"
+    },
+    {
+      "label": "long adaptation writer helper",
+      "offset": "+0x1D4",
+      "relocation_address": "0x014AA808",
+      "target_address": "0x0125FB6E",
+      "target_symbol": "_ZN20VagOperationDelegate39getReadWriteUdsSubmoduleCodingCommandIdEh"
+    },
+    {
+      "label": "adaptation writer helper",
+      "offset": "+0x1E0",
+      "relocation_address": "0x014AA814",
+      "target_address": "0x0125FB92",
+      "target_symbol": "_ZN20VagOperationDelegate42getWriteCanOverUdsSubmoduleCodingCommandIdEh"
+    },
+    {
+      "label": "connected ECU-info cache",
+      "offset": "+0x1F8",
+      "relocation_address": "0x014AA82C",
+      "target_address": "0x0126918C",
+      "target_symbol": "_ZN20VagOperationDelegate10getEcuInfoEP3Ecu"
+    },
+    {
+      "label": "must connect to UDS?",
+      "offset": "+0x214",
+      "relocation_address": "0x014AA848",
+      "target_address": "0x0126B3EC",
+      "target_symbol": "_ZN20VagOperationDelegate16mustConnectToCanEP3Ecu"
+    },
+    {
+      "label": "can accept cached fallback?",
+      "offset": "+0x218",
+      "relocation_address": "0x014AA84C",
+      "target_address": "0x0126B524",
+      "target_symbol": "_ZN20VagOperationDelegate16mustConnectToUdsEP3Ecui"
+    }
+  ],
+  "write_data_by_identifier_symbols": [
+    {
+      "address": "0x00CF8034",
+      "label": "WriteDataByIdentifier related symbol",
+      "size": 68,
+      "status": "present",
+      "symbol": "_ZN28WriteDataByIdentifierCommandC1EP3EcutRKNSt6__ndk16vectorIhNS2_9allocatorIhEEEEj"
+    },
+    {
+      "address": "0x00CF8034",
+      "label": "WriteDataByIdentifier related symbol",
+      "size": 68,
+      "status": "present",
+      "symbol": "_ZN28WriteDataByIdentifierCommandC2EP3EcutRKNSt6__ndk16vectorIhNS2_9allocatorIhEEEEj"
+    },
+    {
+      "address": "0x00CF8078",
+      "label": "WriteDataByIdentifier related symbol",
+      "size": 40,
+      "status": "present",
+      "symbol": "_ZN28WriteDataByIdentifierCommandD1Ev"
+    },
+    {
+      "address": "0x00CF8078",
+      "label": "WriteDataByIdentifier related symbol",
+      "size": 40,
+      "status": "present",
+      "symbol": "_ZN28WriteDataByIdentifierCommandD2Ev"
+    },
+    {
+      "address": "0x00CF80A0",
+      "label": "WriteDataByIdentifier related symbol",
+      "size": 20,
+      "status": "present",
+      "symbol": "_ZN28WriteDataByIdentifierCommandD0Ev"
+    },
+    {
+      "address": "0x00CF80B4",
+      "label": "WriteDataByIdentifier related symbol",
+      "size": 120,
+      "status": "present",
+      "symbol": "_ZNK28WriteDataByIdentifierCommand10getRequestEv"
+    },
+    {
+      "address": "0x00CF812C",
+      "label": "WriteDataByIdentifier related symbol",
+      "size": 10,
+      "status": "present",
+      "symbol": "_ZNK28WriteDataByIdentifierCommand14processPayloadERKNSt6__ndk16vectorIhNS0_9allocatorIhEEEE"
+    },
+    {
+      "address": "0x01271D10",
+      "label": "WriteDataByIdentifier related symbol",
+      "size": 100,
+      "status": "present",
+      "symbol": "_ZNSt6__ndk120__shared_ptr_emplaceI28WriteDataByIdentifierCommandNS_9allocatorIS1_EEEC2B8ne190000IJRP3EcuRKtNS_6vectorIhNS2_IhEEEEES3_TnNS_9enable_ifIXntsr7is_sameINT0_10value_typeENS_19__for_overwrite_tagEEE5valueEiE4typeELi0EEES3_DpOT_"
+    },
+    {
+      "address": "0x01271D74",
+      "label": "WriteDataByIdentifier related symbol",
+      "size": 36,
+      "status": "present",
+      "symbol": "_ZNSt6__ndk19allocatorI28WriteDataByIdentifierCommandE9constructB8ne190000IS1_JRP3EcuRKtNS_6vectorIhNS0_IhEEEEEEEvPT_DpOT0_"
+    },
+    {
+      "address": "0x01271FC8",
+      "label": "WriteDataByIdentifier related symbol",
+      "size": 100,
+      "status": "present",
+      "symbol": "_ZNSt6__ndk120__shared_ptr_emplaceI28WriteDataByIdentifierCommandNS_9allocatorIS1_EEEC2B8ne190000IJRP3EcuRKtRKNS_6vectorIhNS2_IhEEEEES3_TnNS_9enable_ifIXntsr7is_sameINT0_10value_typeENS_19__for_overwrite_tagEEE5valueEiE4typeELi0EEES3_DpOT_"
+    },
+    {
+      "address": "0x0127202C",
+      "label": "WriteDataByIdentifier related symbol",
+      "size": 36,
+      "status": "present",
+      "symbol": "_ZNSt6__ndk19allocatorI28WriteDataByIdentifierCommandE9constructB8ne190000IS1_JRP3EcuRKtRKNS_6vectorIhNS0_IhEEEEEEEvPT_DpOT0_"
+    },
+    {
+      "address": "0x0127DB24",
+      "label": "WriteDataByIdentifier related symbol",
+      "size": 100,
+      "status": "present",
+      "symbol": "_ZNSt6__ndk120__shared_ptr_emplaceI28WriteDataByIdentifierCommandNS_9allocatorIS1_EEEC2B8ne190000IJRKP3EcuRKtRNS_6vectorIhNS2_IhEEEEES3_TnNS_9enable_ifIXntsr7is_sameINT0_10value_typeENS_19__for_overwrite_tagEEE5valueEiE4typeELi0EEES3_DpOT_"
+    },
+    {
+      "address": "0x0127DB88",
+      "label": "WriteDataByIdentifier related symbol",
+      "size": 36,
+      "status": "present",
+      "symbol": "_ZNSt6__ndk19allocatorI28WriteDataByIdentifierCommandE9constructB8ne190000IS1_JRKP3EcuRKtRNS_6vectorIhNS0_IhEEEEEEEvPT_DpOT0_"
+    },
+    {
+      "address": "0x01281918",
+      "label": "WriteDataByIdentifier related symbol",
+      "size": 100,
+      "status": "present",
+      "symbol": "_ZNSt6__ndk120__shared_ptr_emplaceI28WriteDataByIdentifierCommandNS_9allocatorIS1_EEEC2B8ne190000IJRKP3EcuRKtNS_6vectorIhNS2_IhEEEEES3_TnNS_9enable_ifIXntsr7is_sameINT0_10value_typeENS_19__for_overwrite_tagEEE5valueEiE4typeELi0EEES3_DpOT_"
+    }
+  ]
+}

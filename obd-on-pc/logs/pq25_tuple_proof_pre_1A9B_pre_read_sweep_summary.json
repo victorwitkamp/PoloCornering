@@ -1,0 +1,1165 @@
+[
+  {
+    "attempt_id": "pre_1089_sctr0_none_0ms_rctr0_read_1A9B",
+    "mode": "pre_read_sweep",
+    "started": "2026-04-28T00:19:07.788",
+    "log_file": "logs\\pq25_tuple_proof_pre_1A9B_pre_read_sweep_pre_1089_sctr0_none_0ms_rctr0_read_1A9B.txt",
+    "unit": "20",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "answered",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 138,
+      "T2": 255,
+      "T3": 79,
+      "T4": 255
+    },
+    "session_command": "1089",
+    "session_command_label": "diagnostic session observed by Carista/PQ25 flow; positive response is 5089",
+    "session_counter": "0",
+    "session_status": "positive",
+    "session_result": "5089",
+    "pre_read_sequence": "none",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": 0,
+    "read_counter": "0",
+    "read_command": "1A9B",
+    "read_command_label": "GetVagCanEcuInfoCommand / ECU component identity",
+    "read_status": "disconnect",
+    "read_result": "",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-28T00:19:13.416",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-28T00:19:14.723",
+        "source": "A00F8AFF32FF",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-28T00:19:14.723",
+        "source": "A00F8AFF32FF",
+        "header": "300",
+        "payload": "A10F8AFF4FFF",
+        "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+      },
+      {
+        "timestamp": "2026-04-28T00:19:15.880",
+        "source": "1000021089",
+        "header": "300",
+        "payload": "B1",
+        "tp20_label": "TP2.0 ACK/control frame"
+      },
+      {
+        "timestamp": "2026-04-28T00:19:15.880",
+        "source": "1000021089",
+        "header": "300",
+        "payload": "1000025089",
+        "tp20_label": "TP2.0 application first frame seq=0 len=2"
+      },
+      {
+        "timestamp": "2026-04-28T00:19:16.583",
+        "source": "1000021A9B",
+        "header": "300",
+        "payload": "A8",
+        "tp20_label": "TP2.0 disconnect/close frame"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "pre_1089_sctr0_none_0ms_rctr1_read_1A9B",
+    "mode": "pre_read_sweep",
+    "started": "2026-04-28T00:19:17.497",
+    "log_file": "logs\\pq25_tuple_proof_pre_1A9B_pre_read_sweep_pre_1089_sctr0_none_0ms_rctr1_read_1A9B.txt",
+    "unit": "20",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "defaulted",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 255,
+      "T2": 255,
+      "T3": 255,
+      "T4": 255
+    },
+    "session_command": "1089",
+    "session_command_label": "diagnostic session observed by Carista/PQ25 flow; positive response is 5089",
+    "session_counter": "0",
+    "session_status": "no_response",
+    "session_result": "",
+    "pre_read_sequence": "none",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": 0,
+    "read_counter": "1",
+    "read_command": "1A9B",
+    "read_command_label": "GetVagCanEcuInfoCommand / ECU component identity",
+    "read_status": "",
+    "read_result": "",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-28T00:19:23.056",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "pre_1089_sctr0_none_0ms_rctr2_read_1A9B",
+    "mode": "pre_read_sweep",
+    "started": "2026-04-28T00:19:26.435",
+    "log_file": "logs\\pq25_tuple_proof_pre_1A9B_pre_read_sweep_pre_1089_sctr0_none_0ms_rctr2_read_1A9B.txt",
+    "unit": "20",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "defaulted",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 255,
+      "T2": 255,
+      "T3": 255,
+      "T4": 255
+    },
+    "session_command": "1089",
+    "session_command_label": "diagnostic session observed by Carista/PQ25 flow; positive response is 5089",
+    "session_counter": "0",
+    "session_status": "no_response",
+    "session_result": "",
+    "pre_read_sequence": "none",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": 0,
+    "read_counter": "2",
+    "read_command": "1A9B",
+    "read_command_label": "GetVagCanEcuInfoCommand / ECU component identity",
+    "read_status": "",
+    "read_result": "",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-28T00:19:31.995",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "pre_1089_sctr0_none_50ms_rctr0_read_1A9B",
+    "mode": "pre_read_sweep",
+    "started": "2026-04-28T00:19:35.373",
+    "log_file": "logs\\pq25_tuple_proof_pre_1A9B_pre_read_sweep_pre_1089_sctr0_none_50ms_rctr0_read_1A9B.txt",
+    "unit": "20",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "defaulted",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 255,
+      "T2": 255,
+      "T3": 255,
+      "T4": 255
+    },
+    "session_command": "1089",
+    "session_command_label": "diagnostic session observed by Carista/PQ25 flow; positive response is 5089",
+    "session_counter": "0",
+    "session_status": "no_response",
+    "session_result": "",
+    "pre_read_sequence": "none",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": 50,
+    "read_counter": "0",
+    "read_command": "1A9B",
+    "read_command_label": "GetVagCanEcuInfoCommand / ECU component identity",
+    "read_status": "",
+    "read_result": "",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-28T00:19:41.015",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "pre_1089_sctr0_none_50ms_rctr1_read_1A9B",
+    "mode": "pre_read_sweep",
+    "started": "2026-04-28T00:19:44.395",
+    "log_file": "logs\\pq25_tuple_proof_pre_1A9B_pre_read_sweep_pre_1089_sctr0_none_50ms_rctr1_read_1A9B.txt",
+    "unit": "20",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "answered",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 138,
+      "T2": 255,
+      "T3": 79,
+      "T4": 255
+    },
+    "session_command": "1089",
+    "session_command_label": "diagnostic session observed by Carista/PQ25 flow; positive response is 5089",
+    "session_counter": "0",
+    "session_status": "positive",
+    "session_result": "5089",
+    "pre_read_sequence": "none",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": 50,
+    "read_counter": "1",
+    "read_command": "1A9B",
+    "read_command_label": "GetVagCanEcuInfoCommand / ECU component identity",
+    "read_status": "disconnect",
+    "read_result": "",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-28T00:19:49.952",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-28T00:19:51.258",
+        "source": "A00F8AFF32FF",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-28T00:19:51.258",
+        "source": "A00F8AFF32FF",
+        "header": "300",
+        "payload": "A10F8AFF4FFF",
+        "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+      },
+      {
+        "timestamp": "2026-04-28T00:19:52.416",
+        "source": "1000021089",
+        "header": "300",
+        "payload": "B1",
+        "tp20_label": "TP2.0 ACK/control frame"
+      },
+      {
+        "timestamp": "2026-04-28T00:19:52.416",
+        "source": "1000021089",
+        "header": "300",
+        "payload": "1000025089",
+        "tp20_label": "TP2.0 application first frame seq=0 len=2"
+      },
+      {
+        "timestamp": "2026-04-28T00:19:53.180",
+        "source": "1100021A9B",
+        "header": "300",
+        "payload": "A8",
+        "tp20_label": "TP2.0 disconnect/close frame"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "pre_1089_sctr0_none_50ms_rctr2_read_1A9B",
+    "mode": "pre_read_sweep",
+    "started": "2026-04-28T00:19:54.093",
+    "log_file": "logs\\pq25_tuple_proof_pre_1A9B_pre_read_sweep_pre_1089_sctr0_none_50ms_rctr2_read_1A9B.txt",
+    "unit": "20",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "defaulted",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 255,
+      "T2": 255,
+      "T3": 255,
+      "T4": 255
+    },
+    "session_command": "1089",
+    "session_command_label": "diagnostic session observed by Carista/PQ25 flow; positive response is 5089",
+    "session_counter": "0",
+    "session_status": "no_response",
+    "session_result": "",
+    "pre_read_sequence": "none",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": 50,
+    "read_counter": "2",
+    "read_command": "1A9B",
+    "read_command_label": "GetVagCanEcuInfoCommand / ECU component identity",
+    "read_status": "",
+    "read_result": "",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-28T00:19:59.704",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "pre_1089_sctr0_A3_0ms_rctr0_read_1A9B",
+    "mode": "pre_read_sweep",
+    "started": "2026-04-28T00:20:03.079",
+    "log_file": "logs\\pq25_tuple_proof_pre_1A9B_pre_read_sweep_pre_1089_sctr0_A3_0ms_rctr0_read_1A9B.txt",
+    "unit": "20",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "defaulted",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 255,
+      "T2": 255,
+      "T3": 255,
+      "T4": 255
+    },
+    "session_command": "1089",
+    "session_command_label": "diagnostic session observed by Carista/PQ25 flow; positive response is 5089",
+    "session_counter": "0",
+    "session_status": "no_response",
+    "session_result": "",
+    "pre_read_sequence": "A3",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": 0,
+    "read_counter": "0",
+    "read_command": "1A9B",
+    "read_command_label": "GetVagCanEcuInfoCommand / ECU component identity",
+    "read_status": "",
+    "read_result": "",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-28T00:20:08.632",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "pre_1089_sctr0_A3_0ms_rctr1_read_1A9B",
+    "mode": "pre_read_sweep",
+    "started": "2026-04-28T00:20:12.013",
+    "log_file": "logs\\pq25_tuple_proof_pre_1A9B_pre_read_sweep_pre_1089_sctr0_A3_0ms_rctr1_read_1A9B.txt",
+    "unit": "20",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "defaulted",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 255,
+      "T2": 255,
+      "T3": 255,
+      "T4": 255
+    },
+    "session_command": "1089",
+    "session_command_label": "diagnostic session observed by Carista/PQ25 flow; positive response is 5089",
+    "session_counter": "0",
+    "session_status": "no_response",
+    "session_result": "",
+    "pre_read_sequence": "A3",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": 0,
+    "read_counter": "1",
+    "read_command": "1A9B",
+    "read_command_label": "GetVagCanEcuInfoCommand / ECU component identity",
+    "read_status": "",
+    "read_result": "",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-28T00:20:17.586",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "pre_1089_sctr0_A3_0ms_rctr2_read_1A9B",
+    "mode": "pre_read_sweep",
+    "started": "2026-04-28T00:20:20.963",
+    "log_file": "logs\\pq25_tuple_proof_pre_1A9B_pre_read_sweep_pre_1089_sctr0_A3_0ms_rctr2_read_1A9B.txt",
+    "unit": "20",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "defaulted",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 255,
+      "T2": 255,
+      "T3": 255,
+      "T4": 255
+    },
+    "session_command": "1089",
+    "session_command_label": "diagnostic session observed by Carista/PQ25 flow; positive response is 5089",
+    "session_counter": "0",
+    "session_status": "no_response",
+    "session_result": "",
+    "pre_read_sequence": "A3",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": 0,
+    "read_counter": "2",
+    "read_command": "1A9B",
+    "read_command_label": "GetVagCanEcuInfoCommand / ECU component identity",
+    "read_status": "",
+    "read_result": "",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-28T00:20:26.573",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "pre_1089_sctr0_A3_50ms_rctr0_read_1A9B",
+    "mode": "pre_read_sweep",
+    "started": "2026-04-28T00:20:29.949",
+    "log_file": "logs\\pq25_tuple_proof_pre_1A9B_pre_read_sweep_pre_1089_sctr0_A3_50ms_rctr0_read_1A9B.txt",
+    "unit": "20",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "answered",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 138,
+      "T2": 255,
+      "T3": 79,
+      "T4": 255
+    },
+    "session_command": "1089",
+    "session_command_label": "diagnostic session observed by Carista/PQ25 flow; positive response is 5089",
+    "session_counter": "0",
+    "session_status": "positive",
+    "session_result": "5089",
+    "pre_read_sequence": "A3",
+    "post_session_extra_frames": [
+      {
+        "timestamp": "2026-04-28T00:20:38.227",
+        "source": "A3",
+        "header": "300",
+        "payload": "A8",
+        "tp20_label": "TP2.0 disconnect/close frame"
+      }
+    ],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": 50,
+    "read_counter": "0",
+    "read_command": "1A9B",
+    "read_command_label": "GetVagCanEcuInfoCommand / ECU component identity",
+    "read_status": "disconnect",
+    "read_result": "",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-28T00:20:35.513",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-28T00:20:36.818",
+        "source": "A00F8AFF32FF",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-28T00:20:36.818",
+        "source": "A00F8AFF32FF",
+        "header": "300",
+        "payload": "A10F8AFF4FFF",
+        "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+      },
+      {
+        "timestamp": "2026-04-28T00:20:37.975",
+        "source": "1000021089",
+        "header": "300",
+        "payload": "B1",
+        "tp20_label": "TP2.0 ACK/control frame"
+      },
+      {
+        "timestamp": "2026-04-28T00:20:37.975",
+        "source": "1000021089",
+        "header": "300",
+        "payload": "1000025089",
+        "tp20_label": "TP2.0 application first frame seq=0 len=2"
+      },
+      {
+        "timestamp": "2026-04-28T00:20:38.227",
+        "source": "A3",
+        "header": "300",
+        "payload": "A8",
+        "tp20_label": "TP2.0 disconnect/close frame"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "pre_1089_sctr0_A3_50ms_rctr1_read_1A9B",
+    "mode": "pre_read_sweep",
+    "started": "2026-04-28T00:20:39.206",
+    "log_file": "logs\\pq25_tuple_proof_pre_1A9B_pre_read_sweep_pre_1089_sctr0_A3_50ms_rctr1_read_1A9B.txt",
+    "unit": "20",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "defaulted",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 255,
+      "T2": 255,
+      "T3": 255,
+      "T4": 255
+    },
+    "session_command": "1089",
+    "session_command_label": "diagnostic session observed by Carista/PQ25 flow; positive response is 5089",
+    "session_counter": "0",
+    "session_status": "no_response",
+    "session_result": "",
+    "pre_read_sequence": "A3",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": 50,
+    "read_counter": "1",
+    "read_command": "1A9B",
+    "read_command_label": "GetVagCanEcuInfoCommand / ECU component identity",
+    "read_status": "",
+    "read_result": "",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-28T00:20:44.733",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "pre_1089_sctr0_A3_50ms_rctr2_read_1A9B",
+    "mode": "pre_read_sweep",
+    "started": "2026-04-28T00:20:48.114",
+    "log_file": "logs\\pq25_tuple_proof_pre_1A9B_pre_read_sweep_pre_1089_sctr0_A3_50ms_rctr2_read_1A9B.txt",
+    "unit": "20",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "answered",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 138,
+      "T2": 255,
+      "T3": 79,
+      "T4": 255
+    },
+    "session_command": "1089",
+    "session_command_label": "diagnostic session observed by Carista/PQ25 flow; positive response is 5089",
+    "session_counter": "0",
+    "session_status": "positive",
+    "session_result": "5089",
+    "pre_read_sequence": "A3",
+    "post_session_extra_frames": [
+      {
+        "timestamp": "2026-04-28T00:20:56.436",
+        "source": "A3",
+        "header": "300",
+        "payload": "A8",
+        "tp20_label": "TP2.0 disconnect/close frame"
+      }
+    ],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": 50,
+    "read_counter": "2",
+    "read_command": "1A9B",
+    "read_command_label": "GetVagCanEcuInfoCommand / ECU component identity",
+    "read_status": "disconnect",
+    "read_result": "",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-28T00:20:53.716",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-28T00:20:55.024",
+        "source": "A00F8AFF32FF",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-28T00:20:55.024",
+        "source": "A00F8AFF32FF",
+        "header": "300",
+        "payload": "A10F8AFF4FFF",
+        "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+      },
+      {
+        "timestamp": "2026-04-28T00:20:56.183",
+        "source": "1000021089",
+        "header": "300",
+        "payload": "B1",
+        "tp20_label": "TP2.0 ACK/control frame"
+      },
+      {
+        "timestamp": "2026-04-28T00:20:56.183",
+        "source": "1000021089",
+        "header": "300",
+        "payload": "1000025089",
+        "tp20_label": "TP2.0 application first frame seq=0 len=2"
+      },
+      {
+        "timestamp": "2026-04-28T00:20:56.436",
+        "source": "A3",
+        "header": "300",
+        "payload": "A8",
+        "tp20_label": "TP2.0 disconnect/close frame"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "pre_1089_sctr0_A3+B1_0ms_rctr0_read_1A9B",
+    "mode": "pre_read_sweep",
+    "started": "2026-04-28T00:20:57.415",
+    "log_file": "logs\\pq25_tuple_proof_pre_1A9B_pre_read_sweep_pre_1089_sctr0_A3_B1_0ms_rctr0_read_1A9B.txt",
+    "unit": "20",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "answered",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 138,
+      "T2": 255,
+      "T3": 79,
+      "T4": 255
+    },
+    "session_command": "1089",
+    "session_command_label": "diagnostic session observed by Carista/PQ25 flow; positive response is 5089",
+    "session_counter": "0",
+    "session_status": "positive",
+    "session_result": "5089",
+    "pre_read_sequence": "A3+B1",
+    "post_session_extra_frames": [
+      {
+        "timestamp": "2026-04-28T00:21:05.691",
+        "source": "A3",
+        "header": "300",
+        "payload": "A8",
+        "tp20_label": "TP2.0 disconnect/close frame"
+      }
+    ],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": 0,
+    "read_counter": "0",
+    "read_command": "1A9B",
+    "read_command_label": "GetVagCanEcuInfoCommand / ECU component identity",
+    "read_status": "disconnect",
+    "read_result": "",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-28T00:21:02.971",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-28T00:21:04.277",
+        "source": "A00F8AFF32FF",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-28T00:21:04.277",
+        "source": "A00F8AFF32FF",
+        "header": "300",
+        "payload": "A10F8AFF4FFF",
+        "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+      },
+      {
+        "timestamp": "2026-04-28T00:21:05.437",
+        "source": "1000021089",
+        "header": "300",
+        "payload": "B1",
+        "tp20_label": "TP2.0 ACK/control frame"
+      },
+      {
+        "timestamp": "2026-04-28T00:21:05.437",
+        "source": "1000021089",
+        "header": "300",
+        "payload": "1000025089",
+        "tp20_label": "TP2.0 application first frame seq=0 len=2"
+      },
+      {
+        "timestamp": "2026-04-28T00:21:05.691",
+        "source": "A3",
+        "header": "300",
+        "payload": "A8",
+        "tp20_label": "TP2.0 disconnect/close frame"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "pre_1089_sctr0_A3+B1_0ms_rctr1_read_1A9B",
+    "mode": "pre_read_sweep",
+    "started": "2026-04-28T00:21:06.878",
+    "log_file": "logs\\pq25_tuple_proof_pre_1A9B_pre_read_sweep_pre_1089_sctr0_A3_B1_0ms_rctr1_read_1A9B.txt",
+    "unit": "20",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "answered",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 138,
+      "T2": 255,
+      "T3": 79,
+      "T4": 255
+    },
+    "session_command": "1089",
+    "session_command_label": "diagnostic session observed by Carista/PQ25 flow; positive response is 5089",
+    "session_counter": "0",
+    "session_status": "positive",
+    "session_result": "5089",
+    "pre_read_sequence": "A3+B1",
+    "post_session_extra_frames": [
+      {
+        "timestamp": "2026-04-28T00:21:15.265",
+        "source": "A3",
+        "header": "300",
+        "payload": "A8",
+        "tp20_label": "TP2.0 disconnect/close frame"
+      }
+    ],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": 0,
+    "read_counter": "1",
+    "read_command": "1A9B",
+    "read_command_label": "GetVagCanEcuInfoCommand / ECU component identity",
+    "read_status": "disconnect",
+    "read_result": "",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-28T00:21:12.549",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-28T00:21:13.856",
+        "source": "A00F8AFF32FF",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-28T00:21:13.856",
+        "source": "A00F8AFF32FF",
+        "header": "300",
+        "payload": "A10F8AFF4FFF",
+        "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+      },
+      {
+        "timestamp": "2026-04-28T00:21:15.013",
+        "source": "1000021089",
+        "header": "300",
+        "payload": "B1",
+        "tp20_label": "TP2.0 ACK/control frame"
+      },
+      {
+        "timestamp": "2026-04-28T00:21:15.013",
+        "source": "1000021089",
+        "header": "300",
+        "payload": "1000025089",
+        "tp20_label": "TP2.0 application first frame seq=0 len=2"
+      },
+      {
+        "timestamp": "2026-04-28T00:21:15.265",
+        "source": "A3",
+        "header": "300",
+        "payload": "A8",
+        "tp20_label": "TP2.0 disconnect/close frame"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "pre_1089_sctr0_A3+B1_0ms_rctr2_read_1A9B",
+    "mode": "pre_read_sweep",
+    "started": "2026-04-28T00:21:16.430",
+    "log_file": "logs\\pq25_tuple_proof_pre_1A9B_pre_read_sweep_pre_1089_sctr0_A3_B1_0ms_rctr2_read_1A9B.txt",
+    "unit": "20",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "defaulted",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 255,
+      "T2": 255,
+      "T3": 255,
+      "T4": 255
+    },
+    "session_command": "1089",
+    "session_command_label": "diagnostic session observed by Carista/PQ25 flow; positive response is 5089",
+    "session_counter": "0",
+    "session_status": "no_response",
+    "session_result": "",
+    "pre_read_sequence": "A3+B1",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": 0,
+    "read_counter": "2",
+    "read_command": "1A9B",
+    "read_command_label": "GetVagCanEcuInfoCommand / ECU component identity",
+    "read_status": "",
+    "read_result": "",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-28T00:21:22.089",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "pre_1089_sctr0_A3+B1_50ms_rctr0_read_1A9B",
+    "mode": "pre_read_sweep",
+    "started": "2026-04-28T00:21:25.465",
+    "log_file": "logs\\pq25_tuple_proof_pre_1A9B_pre_read_sweep_pre_1089_sctr0_A3_B1_50ms_rctr0_read_1A9B.txt",
+    "unit": "20",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "answered",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 138,
+      "T2": 255,
+      "T3": 79,
+      "T4": 255
+    },
+    "session_command": "1089",
+    "session_command_label": "diagnostic session observed by Carista/PQ25 flow; positive response is 5089",
+    "session_counter": "0",
+    "session_status": "positive",
+    "session_result": "5089",
+    "pre_read_sequence": "A3+B1",
+    "post_session_extra_frames": [
+      {
+        "timestamp": "2026-04-28T00:21:33.743",
+        "source": "A3",
+        "header": "300",
+        "payload": "A8",
+        "tp20_label": "TP2.0 disconnect/close frame"
+      }
+    ],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": 50,
+    "read_counter": "0",
+    "read_command": "1A9B",
+    "read_command_label": "GetVagCanEcuInfoCommand / ECU component identity",
+    "read_status": "disconnect",
+    "read_result": "",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-28T00:21:31.027",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-28T00:21:32.331",
+        "source": "A00F8AFF32FF",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-28T00:21:32.331",
+        "source": "A00F8AFF32FF",
+        "header": "300",
+        "payload": "A10F8AFF4FFF",
+        "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+      },
+      {
+        "timestamp": "2026-04-28T00:21:33.490",
+        "source": "1000021089",
+        "header": "300",
+        "payload": "B1",
+        "tp20_label": "TP2.0 ACK/control frame"
+      },
+      {
+        "timestamp": "2026-04-28T00:21:33.491",
+        "source": "1000021089",
+        "header": "300",
+        "payload": "1000025089",
+        "tp20_label": "TP2.0 application first frame seq=0 len=2"
+      },
+      {
+        "timestamp": "2026-04-28T00:21:33.743",
+        "source": "A3",
+        "header": "300",
+        "payload": "A8",
+        "tp20_label": "TP2.0 disconnect/close frame"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "pre_1089_sctr0_A3+B1_50ms_rctr1_read_1A9B",
+    "mode": "pre_read_sweep",
+    "started": "2026-04-28T00:21:34.966",
+    "log_file": "logs\\pq25_tuple_proof_pre_1A9B_pre_read_sweep_pre_1089_sctr0_A3_B1_50ms_rctr1_read_1A9B.txt",
+    "unit": "20",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "answered",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 138,
+      "T2": 255,
+      "T3": 79,
+      "T4": 255
+    },
+    "session_command": "1089",
+    "session_command_label": "diagnostic session observed by Carista/PQ25 flow; positive response is 5089",
+    "session_counter": "0",
+    "session_status": "positive",
+    "session_result": "5089",
+    "pre_read_sequence": "A3+B1",
+    "post_session_extra_frames": [
+      {
+        "timestamp": "2026-04-28T00:21:43.249",
+        "source": "A3",
+        "header": "300",
+        "payload": "A8",
+        "tp20_label": "TP2.0 disconnect/close frame"
+      }
+    ],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": 50,
+    "read_counter": "1",
+    "read_command": "1A9B",
+    "read_command_label": "GetVagCanEcuInfoCommand / ECU component identity",
+    "read_status": "disconnect",
+    "read_result": "",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-28T00:21:40.530",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-28T00:21:41.836",
+        "source": "A00F8AFF32FF",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-28T00:21:41.836",
+        "source": "A00F8AFF32FF",
+        "header": "300",
+        "payload": "A10F8AFF4FFF",
+        "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+      },
+      {
+        "timestamp": "2026-04-28T00:21:42.994",
+        "source": "1000021089",
+        "header": "300",
+        "payload": "B1",
+        "tp20_label": "TP2.0 ACK/control frame"
+      },
+      {
+        "timestamp": "2026-04-28T00:21:42.994",
+        "source": "1000021089",
+        "header": "300",
+        "payload": "1000025089",
+        "tp20_label": "TP2.0 application first frame seq=0 len=2"
+      },
+      {
+        "timestamp": "2026-04-28T00:21:43.249",
+        "source": "A3",
+        "header": "300",
+        "payload": "A8",
+        "tp20_label": "TP2.0 disconnect/close frame"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "pre_1089_sctr0_A3+B1_50ms_rctr2_read_1A9B",
+    "mode": "pre_read_sweep",
+    "started": "2026-04-28T00:21:44.498",
+    "log_file": "logs\\pq25_tuple_proof_pre_1A9B_pre_read_sweep_pre_1089_sctr0_A3_B1_50ms_rctr2_read_1A9B.txt",
+    "unit": "20",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "answered",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 138,
+      "T2": 255,
+      "T3": 79,
+      "T4": 255
+    },
+    "session_command": "1089",
+    "session_command_label": "diagnostic session observed by Carista/PQ25 flow; positive response is 5089",
+    "session_counter": "0",
+    "session_status": "positive",
+    "session_result": "5089",
+    "pre_read_sequence": "A3+B1",
+    "post_session_extra_frames": [
+      {
+        "timestamp": "2026-04-28T00:21:52.752",
+        "source": "A3",
+        "header": "300",
+        "payload": "A8",
+        "tp20_label": "TP2.0 disconnect/close frame"
+      }
+    ],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": 50,
+    "read_counter": "2",
+    "read_command": "1A9B",
+    "read_command_label": "GetVagCanEcuInfoCommand / ECU component identity",
+    "read_status": "disconnect",
+    "read_result": "",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-28T00:21:50.032",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-28T00:21:51.338",
+        "source": "A00F8AFF32FF",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-28T00:21:51.338",
+        "source": "A00F8AFF32FF",
+        "header": "300",
+        "payload": "A10F8AFF4FFF",
+        "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+      },
+      {
+        "timestamp": "2026-04-28T00:21:52.498",
+        "source": "1000021089",
+        "header": "300",
+        "payload": "B1",
+        "tp20_label": "TP2.0 ACK/control frame"
+      },
+      {
+        "timestamp": "2026-04-28T00:21:52.498",
+        "source": "1000021089",
+        "header": "300",
+        "payload": "1000025089",
+        "tp20_label": "TP2.0 application first frame seq=0 len=2"
+      },
+      {
+        "timestamp": "2026-04-28T00:21:52.752",
+        "source": "A3",
+        "header": "300",
+        "payload": "A8",
+        "tp20_label": "TP2.0 disconnect/close frame"
+      }
+    ],
+    "error": ""
+  }
+]

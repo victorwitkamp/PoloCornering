@@ -3,14 +3,20 @@ from __future__ import annotations
 import argparse
 import json
 import struct
+import zipfile
 from dataclasses import dataclass
+from io import BytesIO
 from pathlib import Path
 
 from elftools.elf.elffile import ELFFile
 
 
 ROOT = Path(__file__).resolve().parent
+DOCS_ROOT = ROOT.parent / "docs" / "carista_apk_analysis"
 LIB_PATH = ROOT / "reacquire_20260424" / "split_armv7_unpacked" / "lib" / "armeabi-v7a" / "libCarista.so"
+ARM_SPLIT_APK = ROOT / "reacquire_20260424" / "config.armeabi_v7a.apk"
+XAPK_PATH = ROOT / "reacquire_20260424" / "carista_9.8.2.xapk"
+LIB_IN_APK = "lib/armeabi-v7a/libCarista.so"
 
 CURRENT_CODING = "3AB82B9F08A10000003008002C680ED000C8412F60A20000200000000000"
 TARGET_CODING = "3AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000"
@@ -69,16 +75,15 @@ def thumb_pc(address: int) -> int:
 
 
 class ElfInspector:
-    def __init__(self, path: Path) -> None:
-        self.path = path
-        self.data = path.read_bytes()
-        with path.open("rb") as handle:
-            self.elf = ELFFile(handle)
-            self.sections = [
-                (section.name, int(section["sh_addr"]), int(section["sh_offset"]), int(section["sh_size"]))
-                for section in self.elf.iter_sections()
-            ]
-            self.symbols = self._load_symbols()
+    def __init__(self, data: bytes, source: str) -> None:
+        self.source = source
+        self.data = data
+        self.elf = ELFFile(BytesIO(data))
+        self.sections = [
+            (section.name, int(section["sh_addr"]), int(section["sh_offset"]), int(section["sh_size"]))
+            for section in self.elf.iter_sections()
+        ]
+        self.symbols = self._load_symbols()
 
     def _load_symbols(self) -> dict[str, tuple[int, int]]:
         symbols: dict[str, tuple[int, int]] = {}
@@ -108,6 +113,23 @@ class ElfInspector:
     def symbol_info(self, label: str, symbol_name: str) -> SymbolInfo:
         address, size = self.symbols[symbol_name]
         return SymbolInfo(label=label, address=address, size=size)
+
+
+def load_lib_bytes() -> tuple[bytes, str]:
+    if LIB_PATH.exists():
+        return LIB_PATH.read_bytes(), str(LIB_PATH)
+
+    if ARM_SPLIT_APK.exists():
+        with zipfile.ZipFile(ARM_SPLIT_APK) as archive:
+            return archive.read(LIB_IN_APK), f"{ARM_SPLIT_APK}!{LIB_IN_APK}"
+
+    if XAPK_PATH.exists():
+        with zipfile.ZipFile(XAPK_PATH) as xapk:
+            arm_split = xapk.read("config.armeabi_v7a.apk")
+        with zipfile.ZipFile(BytesIO(arm_split)) as archive:
+            return archive.read(LIB_IN_APK), f"{XAPK_PATH}!config.armeabi_v7a.apk!{LIB_IN_APK}"
+
+    raise FileNotFoundError("could not find libCarista.so, config.armeabi_v7a.apk, or carista_9.8.2.xapk")
 
 
 def literal_target(inspector: ElfInspector, ldr_address: int, immediate: int, add_address: int) -> int:
@@ -303,11 +325,31 @@ def build_report(inspector: ElfInspector) -> tuple[str, dict[str, object]]:
             "",
             "The still-missing pieces are the 4-byte raw-address vectors and exact tail bytes for those chunks. Those are derived from ECU metadata and Carista's setting catalog, not from the visible long-coding string alone.",
             "",
-            "Additional read-like evidence worth recovering next time is Carista's TP2.0 `1A9A` long-coding read and, only if deliberately allowed despite the old `31...` block, the Carista simulator's `31B80000` capability query. The latter appears in Carista's VAGCAN20 simulator data as a compact metadata response, not as the actual long-coding value.",
+            "The latest offline-only VAGCAN20 simulator pass corrected the raw-address proof boundary. Static disassembly shows that `WriteVagCodingCommand` receives its 4-byte rawAddress4 and coding selector from positive `1A9B` / `5A9B` ECU-info parsing, not directly from the `31B80000` ECU-list response.",
+            "",
+            "Recovered `1A9B` parser offsets after stripping the positive `5A9B` prefix:",
+            "",
+            "```text",
+            "payload[0x0c:0x10] -> rawAddress4",
+            "payload[0x10]      -> coding selector",
+            "payload[0x11:0x14] -> tail for type-2/type-4 selector branches",
+            "payload[0x14:0x1a] -> stored 6-byte coding value",
+            "```",
+            "",
+            "The embedded 1K0937049S-style simulator has a positive `1A9B` and proves the parser with rawAddress4 `B0373034`, selector `10`, coding type `3`, empty tail, and suffix `0301FF`. The BCM25/5C0937087E simulator has direct `220600` coding and a `31B80000` list, but its `1A9B` response is negative, so it does not prove the final rawAddress4 for that profile either.",
+            "",
+            "The actual `6R0937087K` workspace evidence has direct `220600` coding but no positive `1A9B` / `5A9B` response. Therefore the full `3B9A` tuple for this car is not proven offline; only the two target value6 chunks are proven.",
+            "",
+            "The dedicated offline report is generated by:",
+            "",
+            "```text",
+            "carista_apk_analysis/analyze_carista_offline_tuple_candidates.py",
+            "docs/carista_apk_analysis/carista_offline_tuple_candidate_report.md",
+            "```",
             "",
             "## Next Static Target",
             "",
-            "The next offline target is to recover the `VagCanLongCodingSetting` catalog entries around byte 12 bit 6 and byte 21 bit 2. The fields to recover for each entry are:",
+            "The next offline target is now narrower: recover a positive `1A9B` response for the actual `6R0937087K` or reconstruct the same bytes from a native catalog/data-flow path. In parallel, recover the `VagCanLongCodingSetting` catalog entries around byte 12 bit 6 and byte 21 bit 2. The fields to recover for each entry are:",
             "",
             "```text",
             "setting name key",
@@ -319,7 +361,7 @@ def build_report(inspector: ElfInspector) -> tuple[str, dict[str, object]]:
             "coding tail bytes used by WriteVagCodingCommand",
             "```",
             "",
-            "Without that bridge or a phone trace, do not treat any complete `3B9A` tuple as proven.",
+            "Without an actual positive `1A9B` metadata bridge, a native catalog equivalent, or a phone trace, do not treat any complete `3B9A` tuple as proven.",
             "",
             "## Static Catalog Boundary",
             "",
@@ -343,7 +385,7 @@ def build_report(inspector: ElfInspector) -> tuple[str, dict[str, object]]:
         ]
     )
 
-    data = {
+    data: dict[str, object] = {
         "current_coding": CURRENT_CODING,
         "target_coding": TARGET_CODING,
         "read_literal": read_request,
@@ -356,6 +398,12 @@ def build_report(inspector: ElfInspector) -> tuple[str, dict[str, object]]:
             "value_length": 6,
             "raw_address_length": 4,
             "type_2_tail_length": 3,
+        },
+        "offline_31b8_findings": {
+            "kwp_profile_coding_address_shorts": ["0103", "0104", "0106", "0108", "0102", "0107"],
+            "bcm25_profile_coding_address_shorts": ["0106", "0102", "0103", "0107", "0108", "0114"],
+            "closest_static_address_short": "0106",
+            "status": "31B8 exposes ECU-list coding-address shorts only; actual rawAddress4/coding selector/tail require positive 1A9B metadata",
         },
         "writer_flow_findings": {
             "input_shape": "64-bit raw-value key plus compact value vector",
@@ -375,12 +423,15 @@ def build_report(inspector: ElfInspector) -> tuple[str, dict[str, object]]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Analyze Carista's static write tuple inputs.")
-    parser.add_argument("--output", type=Path, default=ROOT / "carista_write_tuple_recovery_report.md")
+    parser.add_argument("--output", type=Path, default=DOCS_ROOT / "carista_write_tuple_recovery_report.md")
     parser.add_argument("--json-output", type=Path, default=ROOT / "carista_write_tuple_recovery_report.json")
     args = parser.parse_args()
 
-    inspector = ElfInspector(LIB_PATH)
+    lib_data, source = load_lib_bytes()
+    inspector = ElfInspector(lib_data, source)
     report, data = build_report(inspector)
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.json_output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(report, encoding="utf-8")
     args.json_output.write_text(json.dumps(data, indent=2, sort_keys=True), encoding="utf-8")
     print(report)

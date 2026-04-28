@@ -1,25 +1,27 @@
 param(
     [string]$Port = "COM10",
     [int]$Baud = 38400,
-    [switch]$DryRun,
-    [string]$BaseFogRawAddress4 = "",
-    [Nullable[int]]$BaseFogCodingType = $null,
-    [string]$BaseFogTail = "",
-    [string]$TurnSignalRawAddress4 = "",
-    [Nullable[int]]$TurnSignalCodingType = $null,
-    [string]$TurnSignalTail = ""
+    [switch]$DryRun
 )
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 $Root = Split-Path -Parent $MyInvocation.MyCommand.Path
+$WorkspaceRoot = Split-Path -Parent $Root
+$VenvPython = Join-Path $WorkspaceRoot ".venv\Scripts\python.exe"
+$Python = if (Test-Path $VenvPython) { $VenvPython } else { "python" }
+$DocsLogDir = Join-Path $WorkspaceRoot "docs\obd-on-pc\logs"
 Set-Location $Root
 
-$Summary = ".\logs\pq25_next_baseline_220600_direct_read_summary.json"
-$Report = ".\logs\pq25_next_baseline_220600_settings_report.txt"
-$BaseFogPlan = ".\logs\pq25_next_base_fog_tuple_dry_run.txt"
-$TurnSignalPlan = ".\logs\pq25_next_turn_signal_tuple_dry_run.txt"
+$RunId = "pq25_next_carista_uds_prep"
+$Summary = ".\logs\${RunId}_direct_read_summary.json"
+$Report = Join-Path $DocsLogDir "${RunId}_settings_report.txt"
+$Plan = Join-Path $DocsLogDir "${RunId}_uds_write_dry_run.txt"
+
+if (-not $DryRun) {
+    New-Item -ItemType Directory -Force -Path $DocsLogDir | Out-Null
+}
 
 function Invoke-Step {
     param([string[]]$Command, [string]$OutFile = "")
@@ -43,65 +45,36 @@ function Invoke-Step {
     }
 }
 
-function New-TupleDryRunCommand {
-    param(
-        [string]$Fix,
-        [string]$RawAddress4,
-        [Nullable[int]]$CodingType,
-        [string]$Tail
-    )
-
-    if ($RawAddress4 -or $null -ne $CodingType) {
-        if (-not $RawAddress4 -or $null -eq $CodingType) {
-            throw "${Fix}: rawAddress4 and codingType must be supplied together"
-        }
-        $Command = @(
-            "python", ".\write_carista_3b9a_tuple.py",
-            "--coding-file", $Summary,
-            "--cornering-fix", $Fix,
-            "--run-id", "pq25_next_${Fix}_tuple",
-            "--raw-address4", $RawAddress4,
-            "--coding-type", "$CodingType"
-        )
-        if ($Tail) {
-            $Command += @("--tail", $Tail)
-        }
-        return $Command
-    }
-
-    return @(
-        "python", ".\compose_carista_3b9a_tuple.py",
-        "--coding-file", $Summary,
-        "--cornering-fix", $Fix
-    )
-}
+Write-Host "Read-only prep for guarded Carista UDS DID 0600 write"
+Write-Host "Reads 220600 and 22F1A5, then prints the dry-run F199/F198/0600 plan."
 
 Invoke-Step -Command @(
-    "python", ".\vw_tp20_readonly_probe.py",
+    $Python, ".\vw_tp20_readonly_probe.py",
     "--mode", "direct_read",
     "--port", $Port,
     "--baud", "$Baud",
     "--parameter-profile", "minimal",
-    "--read-commands", "220600",
+    "--read-commands", "220600,22F1A5",
     "--read-counter", "0",
-    "--run-id", "pq25_next_baseline_220600"
+    "--run-id", $RunId
 )
 
 Invoke-Step -Command @(
-    "python", ".\decode_pq25_longcoding.py",
+    $Python, ".\decode_pq25_longcoding.py",
     "--coding-file", $Summary,
     "--output", $Report
 )
 
-Invoke-Step -Command (New-TupleDryRunCommand -Fix "base-fog" -RawAddress4 $BaseFogRawAddress4 -CodingType $BaseFogCodingType -Tail $BaseFogTail) -OutFile $BaseFogPlan
-Invoke-Step -Command (New-TupleDryRunCommand -Fix "turn-signal" -RawAddress4 $TurnSignalRawAddress4 -CodingType $TurnSignalCodingType -Tail $TurnSignalTail) -OutFile $TurnSignalPlan
+Invoke-Step -Command @(
+    $Python, ".\write_carista_uds_coding.py",
+    "--coding-file", $Summary,
+    "--workshop-code-file", $Summary
+) -OutFile $Plan
 
 Write-Host ""
 Write-Host "Prepared files:"
 Write-Host "  $Summary"
 Write-Host "  $Report"
-Write-Host "  $BaseFogPlan"
-Write-Host "  $TurnSignalPlan"
+Write-Host "  $Plan"
 Write-Host ""
-Write-Host "This wrapper does not execute writes. If a real Carista trace provides rawAddress4/codingType/tail,"
-Write-Host "review the dry-run request and run write_carista_3b9a_tuple.py manually with --execute and --confirm-request."
+Write-Host "This wrapper does not execute writes. Review the target and use write_carista_uds_coding.py guards for execution."

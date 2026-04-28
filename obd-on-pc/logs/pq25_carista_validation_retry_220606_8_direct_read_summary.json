@@ -1,0 +1,81 @@
+[
+  {
+    "attempt_id": "direct_ctr0_220606",
+    "mode": "direct_read",
+    "started": "2026-04-28T11:20:00.256",
+    "log_file": "logs\\pq25_carista_validation_retry_220606_8_direct_read_direct_ctr0_220606.txt",
+    "unit": "20",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "answered",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 138,
+      "T2": 255,
+      "T3": 79,
+      "T4": 255
+    },
+    "session_command": "",
+    "session_command_label": "",
+    "session_counter": "",
+    "session_status": "",
+    "session_result": "",
+    "pre_read_sequence": "",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": "",
+    "read_counter": "0",
+    "read_command": "220606",
+    "read_command_label": "",
+    "read_status": "positive",
+    "read_result": "620606001800018000",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-28T11:20:05.836",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-28T11:20:07.141",
+        "source": "A00F8AFF32FF",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-28T11:20:07.141",
+        "source": "A00F8AFF32FF",
+        "header": "300",
+        "payload": "A10F8AFF4FFF",
+        "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+      },
+      {
+        "timestamp": "2026-04-28T11:20:08.300",
+        "source": "100003220606",
+        "header": "300",
+        "payload": "B1",
+        "tp20_label": "TP2.0 ACK/control frame"
+      },
+      {
+        "timestamp": "2026-04-28T11:20:08.300",
+        "source": "100003220606",
+        "header": "300",
+        "payload": "2000096206060018",
+        "tp20_label": "TP2.0 application continuation frame seq=0"
+      },
+      {
+        "timestamp": "2026-04-28T11:20:08.300",
+        "source": "100003220606",
+        "header": "300",
+        "payload": "1100018000",
+        "tp20_label": "TP2.0 application first frame seq=1 len=1"
+      }
+    ],
+    "error": ""
+  }
+]

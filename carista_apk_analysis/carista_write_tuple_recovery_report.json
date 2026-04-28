@@ -34,6 +34,26 @@
     "type_2_tail_length": 3,
     "value_length": 6
   },
+  "offline_31b8_findings": {
+    "bcm25_profile_coding_address_shorts": [
+      "0106",
+      "0102",
+      "0103",
+      "0107",
+      "0108",
+      "0114"
+    ],
+    "closest_static_address_short": "0106",
+    "kwp_profile_coding_address_shorts": [
+      "0103",
+      "0104",
+      "0106",
+      "0108",
+      "0102",
+      "0107"
+    ],
+    "status": "31B8 exposes ECU-list coding-address shorts only; actual rawAddress4/coding selector/tail require positive 1A9B metadata"
+  },
   "read_literal": "1A9A",
   "symbols": [
     {

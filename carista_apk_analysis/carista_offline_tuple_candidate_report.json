@@ -1,0 +1,1018 @@
+{
+  "metadata": {
+    "current_coding": "3AB82B9F08A10000003008002C680ED000C8412F60A20000200000000000",
+    "date": "2026-04-27",
+    "note": "Parser proof: final rawAddress4/coding selector come from positive 1A9B ECU-info bytes. No positive 1A9B for the actual 6R0937087K is present, so complete requests remain unproven.",
+    "source": "C:\\Users\\victo\\Downloads\\PoloCornering\\carista_apk_analysis\\reacquire_20260424\\carista_9.8.2.xapk!config.armeabi_v7a.apk!lib/armeabi-v7a/libCarista.so",
+    "target_coding": "3AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000"
+  },
+  "profiles": [
+    {
+      "coding_address_shorts": [],
+      "ecu_info_metadata": null,
+      "identity": "",
+      "long_coding_source": "",
+      "notes": "",
+      "profile_index": 1,
+      "records": [
+        {
+          "command": "1A90",
+          "file_offset": "0x0071D760",
+          "response": "-5"
+        },
+        {
+          "command": "1A90",
+          "file_offset": "0x008ADA5E",
+          "response": "-5"
+        }
+      ]
+    },
+    {
+      "coding_address_shorts": [
+        "0103",
+        "0104",
+        "0106",
+        "0108",
+        "0102",
+        "0107"
+      ],
+      "ecu_info_metadata": {
+        "coding_type": 3,
+        "coding_type_selector": "10",
+        "initial_value6": "000000000000",
+        "part_number": "1K0937049S",
+        "proof": "Decoded from GetVagCanEcuInfoCommand::processEcuInfo: after stripping the positive 5A9B response prefix, rawAddress4 is payload[0x0c:0x10], the coding selector is payload[0x10], type-2/type-4 tails are payload[0x11:0x14], and the stored 6-byte coding value is payload[0x14:0x1a].",
+        "raw_address4": "B0373034",
+        "response": "5A9B314B30393337303439532020B037303410000000000000000000426F72646E65747A2D534720312E302048333020",
+        "stripped_payload": "314B30393337303439532020B037303410000000000000000000426F72646E65747A2D534720312E302048333020",
+        "suffix": "0301FF",
+        "tail": ""
+      },
+      "identity": "1A9B=Z.1K0937049S  .704..........Bordnetz-SG 1.0 H30 ; 1A91=Z..1K0937049S *.063.26.; 22F187=.\".; 22F191=.\".; 22F197=.\".",
+      "long_coding_source": "1A9A -> 5A9A000000000000B03730341012EC8F8F2600041800001400001400000000FF",
+      "notes": "has positive 1A9B ECU-info coding metadata; has KWP-style 1A9A long-coding sample; has 31B80000 compact coding-address list",
+      "profile_index": 2,
+      "records": [
+        {
+          "command": "1A9B",
+          "file_offset": "0x008E5303",
+          "response": "5A9B314B30393337303439532020B037303410000000000000000000426F72646E65747A2D534720312E302048333020"
+        },
+        {
+          "command": "1A91",
+          "file_offset": "0x008E53E1",
+          "response": "5A910D314B3039333730343953202A04303633033236FF"
+        },
+        {
+          "command": "1A9A",
+          "file_offset": "0x008E5423",
+          "response": "5A9A000000000000B03730341012EC8F8F2600041800001400001400000000FF"
+        },
+        {
+          "command": "1A86",
+          "file_offset": "0x008E5477",
+          "response": "5A860F3030303030303031313032373039204256422D39303632322E30392E303430304833303030303037303431343031FF"
+        },
+        {
+          "command": "31B80000",
+          "file_offset": "0x008E54EF",
+          "response": "71B8010301040106010801020107"
+        },
+        {
+          "command": "22F17E",
+          "file_offset": "0x008E5523",
+          "response": "7F2211"
+        },
+        {
+          "command": "22F187",
+          "file_offset": "0x008E553F",
+          "response": "7F2211"
+        },
+        {
+          "command": "22F189",
+          "file_offset": "0x008E555B",
+          "response": "7F2211"
+        },
+        {
+          "command": "22F18C",
+          "file_offset": "0x008E5577",
+          "response": "7F2211"
+        },
+        {
+          "command": "22F191",
+          "file_offset": "0x008E5593",
+          "response": "7F2211"
+        },
+        {
+          "command": "22F197",
+          "file_offset": "0x008E55AF",
+          "response": "7F2211"
+        },
+        {
+          "command": "22F198",
+          "file_offset": "0x008E55CB",
+          "response": "7F2211"
+        },
+        {
+          "command": "22F199",
+          "file_offset": "0x008E55E7",
+          "response": "7F2211"
+        },
+        {
+          "command": "22F19E",
+          "file_offset": "0x008E5603",
+          "response": "7F2211"
+        },
+        {
+          "command": "22F1A2",
+          "file_offset": "0x008E561F",
+          "response": "7F2211"
+        },
+        {
+          "command": "22F1A3",
+          "file_offset": "0x008E563B",
+          "response": "7F2211"
+        },
+        {
+          "command": "22F1A5",
+          "file_offset": "0x008E5657",
+          "response": "7F2211"
+        },
+        {
+          "command": "22F1AA",
+          "file_offset": "0x008E5673",
+          "response": "7F2211"
+        },
+        {
+          "command": "22F1DF",
+          "file_offset": "0x008E568F",
+          "response": "7F2211"
+        },
+        {
+          "command": "220600",
+          "file_offset": "0x008E56AB",
+          "response": "7F2211"
+        },
+        {
+          "command": "220601",
+          "file_offset": "0x008E56C7",
+          "response": "7F2211"
+        },
+        {
+          "command": "220606",
+          "file_offset": "0x008E56E3",
+          "response": "7F2211"
+        },
+        {
+          "command": "220607",
+          "file_offset": "0x008E56FF",
+          "response": "7F2211"
+        },
+        {
+          "command": "220610",
+          "file_offset": "0x008E571B",
+          "response": "7F2211"
+        },
+        {
+          "command": "220670",
+          "file_offset": "0x008E5737",
+          "response": "7F2211"
+        },
+        {
+          "command": "2206A0",
+          "file_offset": "0x008E5753",
+          "response": "7F2211"
+        },
+        {
+          "command": "2206D0",
+          "file_offset": "0x008E576F",
+          "response": "7F2211"
+        },
+        {
+          "command": "220640",
+          "file_offset": "0x008E578B",
+          "response": "7F2211"
+        },
+        {
+          "command": "220730",
+          "file_offset": "0x008E57A7",
+          "response": "7F2211"
+        }
+      ]
+    },
+    {
+      "coding_address_shorts": [],
+      "ecu_info_metadata": null,
+      "identity": "",
+      "long_coding_source": "",
+      "notes": "",
+      "profile_index": 3,
+      "records": [
+        {
+          "command": "1A9B",
+          "file_offset": "0x009F7947",
+          "response": "-5"
+        }
+      ]
+    },
+    {
+      "coding_address_shorts": [],
+      "ecu_info_metadata": null,
+      "identity": "",
+      "long_coding_source": "",
+      "notes": "",
+      "profile_index": 4,
+      "records": [
+        {
+          "command": "1A9B",
+          "file_offset": "0x00BA4872",
+          "response": "-5"
+        }
+      ]
+    },
+    {
+      "coding_address_shorts": [],
+      "ecu_info_metadata": null,
+      "identity": "1A91=...",
+      "long_coding_source": "",
+      "notes": "",
+      "profile_index": 5,
+      "records": [
+        {
+          "command": "1802FF00",
+          "file_offset": "0x00C57EA0",
+          "response": "5800"
+        },
+        {
+          "command": "1A86",
+          "file_offset": "0x00C57EBC",
+          "response": "7F1A11"
+        },
+        {
+          "command": "1A91",
+          "file_offset": "0x00C57ED6",
+          "response": "7F1A11"
+        },
+        {
+          "command": "1A9A",
+          "file_offset": "0x00C57EF0",
+          "response": "7F1A11"
+        }
+      ]
+    },
+    {
+      "coding_address_shorts": [
+        "0106",
+        "0102",
+        "0103",
+        "0107",
+        "0108",
+        "0114"
+      ],
+      "ecu_info_metadata": null,
+      "identity": "1A9B=...; 22F187=b..5C0937087E ; 22F191=b..5C0937087A ; 22F197=b..BCM25 JLB H3 ",
+      "long_coding_source": "220600 -> 6206007B994BB808AB0B0000382000240884CD00C2502E60000000300000000000",
+      "notes": "has direct UDS-style 220600 coding sample; has 31B80000 compact coding-address list",
+      "profile_index": 6,
+      "records": [
+        {
+          "command": "1A9B",
+          "file_offset": "0x00C57F0A",
+          "response": "7F1A11"
+        },
+        {
+          "command": "220174",
+          "file_offset": "0x00C57F24",
+          "response": "7F2231"
+        },
+        {
+          "command": "220600",
+          "file_offset": "0x00C57F40",
+          "response": "6206007B994BB808AB0B0000382000240884CD00C2502E60000000300000000000"
+        },
+        {
+          "command": "220601",
+          "file_offset": "0x00C57F98",
+          "response": "6206011E"
+        },
+        {
+          "command": "220606",
+          "file_offset": "0x00C57FB6",
+          "response": "620606001800038000"
+        },
+        {
+          "command": "220607",
+          "file_offset": "0x00C57FDE",
+          "response": "7F2231"
+        },
+        {
+          "command": "220608",
+          "file_offset": "0x00C57FFA",
+          "response": "7F2231"
+        },
+        {
+          "command": "220670",
+          "file_offset": "0x00C58016",
+          "response": "7F2231"
+        },
+        {
+          "command": "2206A0",
+          "file_offset": "0x00C58032",
+          "response": "7F2231"
+        },
+        {
+          "command": "2206D0",
+          "file_offset": "0x00C5804E",
+          "response": "7F2231"
+        },
+        {
+          "command": "223C0E",
+          "file_offset": "0x00C5806A",
+          "response": "7F2231"
+        },
+        {
+          "command": "22F17E",
+          "file_offset": "0x00C58086",
+          "response": "62F17E4232303636303031"
+        },
+        {
+          "command": "22F187",
+          "file_offset": "0x00C580B2",
+          "response": "62F1873543303933373038374520"
+        },
+        {
+          "command": "22F189",
+          "file_offset": "0x00C580E4",
+          "response": "62F18930323531"
+        },
+        {
+          "command": "22F18C",
+          "file_offset": "0x00C58108",
+          "response": "62F18C3034333731313830313130373935"
+        },
+        {
+          "command": "22F191",
+          "file_offset": "0x00C58140",
+          "response": "62F1913543303933373038374120"
+        },
+        {
+          "command": "22F197",
+          "file_offset": "0x00C58172",
+          "response": "62F19742434D3235204A4C4220483320"
+        },
+        {
+          "command": "22F198",
+          "file_offset": "0x00C581A8",
+          "response": "7F2231"
+        },
+        {
+          "command": "22F199",
+          "file_offset": "0x00C581C4",
+          "response": "7F2231"
+        },
+        {
+          "command": "22F19E",
+          "file_offset": "0x00C581E0",
+          "response": "7F2231"
+        },
+        {
+          "command": "22F1A2",
+          "file_offset": "0x00C581FC",
+          "response": "7F2231"
+        },
+        {
+          "command": "22F1A3",
+          "file_offset": "0x00C58218",
+          "response": "62F1A3483636"
+        },
+        {
+          "command": "22F1A5",
+          "file_offset": "0x00C5823A",
+          "response": "62F1A5000000000042"
+        },
+        {
+          "command": "22F1AA",
+          "file_offset": "0x00C58262",
+          "response": "62F1AA4A35313920"
+        },
+        {
+          "command": "22F1DF",
+          "file_offset": "0x00C58288",
+          "response": "62F1DF40"
+        },
+        {
+          "command": "31B80000",
+          "file_offset": "0x00C582A6",
+          "response": "71B8010601020103010701080114"
+        },
+        {
+          "command": "ADAPT01",
+          "file_offset": "0x00C582DA",
+          "response": "0000"
+        },
+        {
+          "command": "ADAPT02",
+          "file_offset": "0x00C582F5",
+          "response": "-32"
+        },
+        {
+          "command": "ADAPT03",
+          "file_offset": "0x00C5830F",
+          "response": "0001"
+        },
+        {
+          "command": "ADAPT04",
+          "file_offset": "0x00C5832A",
+          "response": "0001"
+        },
+        {
+          "command": "ADAPT05",
+          "file_offset": "0x00C58345",
+          "response": "0001"
+        },
+        {
+          "command": "ADAPT06",
+          "file_offset": "0x00C58360",
+          "response": "0001"
+        },
+        {
+          "command": "ADAPT07",
+          "file_offset": "0x00C5837B",
+          "response": "0001"
+        },
+        {
+          "command": "ADAPT08",
+          "file_offset": "0x00C58396",
+          "response": "0001"
+        },
+        {
+          "command": "ADAPT09",
+          "file_offset": "0x00C583B1",
+          "response": "0000"
+        },
+        {
+          "command": "ADAPT0B",
+          "file_offset": "0x00C583CC",
+          "response": "0001"
+        },
+        {
+          "command": "ADAPT0C",
+          "file_offset": "0x00C583E7",
+          "response": "0001"
+        },
+        {
+          "command": "ADAPT0D",
+          "file_offset": "0x00C58402",
+          "response": "0000"
+        },
+        {
+          "command": "ADAPT11",
+          "file_offset": "0x00C5841D",
+          "response": "-32"
+        },
+        {
+          "command": "ADAPT13",
+          "file_offset": "0x00C58437",
+          "response": "-32"
+        },
+        {
+          "command": "ADAPT14",
+          "file_offset": "0x00C58451",
+          "response": "0001"
+        },
+        {
+          "command": "ADAPT16",
+          "file_offset": "0x00C5846C",
+          "response": "0000"
+        },
+        {
+          "command": "ADAPT17",
+          "file_offset": "0x00C58487",
+          "response": "0001"
+        },
+        {
+          "command": "ADAPT18",
+          "file_offset": "0x00C584A2",
+          "response": "0000"
+        },
+        {
+          "command": "ADAPT19",
+          "file_offset": "0x00C584BD",
+          "response": "0000"
+        },
+        {
+          "command": "ADAPT1A",
+          "file_offset": "0x00C584D8",
+          "response": "-32"
+        },
+        {
+          "command": "ADAPT1B",
+          "file_offset": "0x00C584F2",
+          "response": "0000"
+        },
+        {
+          "command": "ADAPT1C",
+          "file_offset": "0x00C5850D",
+          "response": "0000"
+        },
+        {
+          "command": "ADAPT1F",
+          "file_offset": "0x00C58528",
+          "response": "0000"
+        },
+        {
+          "command": "ADAPT22",
+          "file_offset": "0x00C58543",
+          "response": "001E"
+        },
+        {
+          "command": "ADAPT25",
+          "file_offset": "0x00C5855E",
+          "response": "0050"
+        },
+        {
+          "command": "ADAPT2B",
+          "file_offset": "0x00C58579",
+          "response": "0003"
+        },
+        {
+          "command": "ADAPT2F",
+          "file_offset": "0x00C58594",
+          "response": "000F"
+        },
+        {
+          "command": "ADAPT30",
+          "file_offset": "0x00C585AF",
+          "response": "000F"
+        },
+        {
+          "command": "ADAPT34",
+          "file_offset": "0x00C585CA",
+          "response": "0000"
+        },
+        {
+          "command": "ADAPT3F",
+          "file_offset": "0x00C585E5",
+          "response": "-32"
+        },
+        {
+          "command": "ADAPT40",
+          "file_offset": "0x00C585FF",
+          "response": "-32"
+        },
+        {
+          "command": "ADAPT41",
+          "file_offset": "0x00C58619",
+          "response": "-32"
+        },
+        {
+          "command": "ADAPT42",
+          "file_offset": "0x00C58633",
+          "response": "-32"
+        }
+      ]
+    }
+  ],
+  "symbol_findings": [
+    {
+      "address": "0x00CF8230",
+      "finding": "ECU-info request literal resolves to 1A9B; this is the command whose positive 5A9B response carries the rawAddress4/coding selector fields.",
+      "size": 20,
+      "symbol": "_ZNK23GetVagCanEcuInfoCommand10getRequestEv"
+    },
+    {
+      "address": "0x00CF8654",
+      "finding": "ECU-info parser strips the positive response prefix, reads rawAddress4 at payload offset 0x0c, coding selector at 0x10, optional tail at 0x11, and the stored 6-byte coding value at 0x14.",
+      "size": 888,
+      "symbol": "_ZNK23GetVagCanEcuInfoCommand14processEcuInfoERKNSt6__ndk16vectorIhNS0_9allocatorIhEEEE"
+    },
+    {
+      "address": "0x00D032BC",
+      "finding": "Request builder serializes 3B9A + 6-byte value + 4-byte rawAddress4 + coding-type-dependent suffix.",
+      "size": 300,
+      "symbol": "_ZNK21WriteVagCodingCommand10getRequestEv"
+    },
+    {
+      "address": "0x012327D4",
+      "finding": "Generic formatter returns low32=(ecu_address << 16) | raw_short and carries setting/raw type in the second return register.",
+      "size": 24,
+      "symbol": "_ZN17OperationDelegate13getRawAddressEhP3Ecut"
+    },
+    {
+      "address": "0x012620EC",
+      "finding": "VAG setting address path returns Ecu* plus a raw-address word; setting types 9/5 and 4 use special branches, ordinary long-coding settings use the base coding-address path.",
+      "size": 204,
+      "symbol": "_ZN20VagOperationDelegate20getSettingRawAddressERKNSt6__ndk110shared_ptrI7SettingEE"
+    },
+    {
+      "address": "0x0125BE08",
+      "finding": "VAG coding raw-address path queries ECU-info metadata, distinguishes coding families 2/3, and can fall back to alternate formatting paths.",
+      "size": 492,
+      "symbol": "_ZN20VagOperationDelegate19getCodingRawAddressEP3Ecut"
+    },
+    {
+      "address": "0x01263CEC",
+      "finding": "Writer receives Ecu* + raw-address word + value vector, normalizes non-type-2 coding to type 3, has a sentinel type-5 path, then builds WriteVagCodingCommand.",
+      "size": 324,
+      "symbol": "_ZN20VagOperationDelegate22writeVagCanCodingValueEyRKNSt6__ndk16vectorIhNS0_9allocatorIhEEEE"
+    }
+  ],
+  "tuple_hypotheses": [
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0106; 4-byte big-endian short with leading zeros; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "base-fog",
+      "raw_address4": "00000106",
+      "raw_address_short": "0106",
+      "request": "3B9A6C680ED000C8000001060301FF",
+      "tail": "",
+      "value6": "6C680ED000C8"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0106; 4-byte big-endian short with leading zeros; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "turn-signal",
+      "raw_address4": "00000106",
+      "raw_address_short": "0106",
+      "request": "3B9A412F60A60000000001060301FF",
+      "tail": "",
+      "value6": "412F60A60000"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0106; generic raw key low32 shape: unit/address byte shifted above the 16-bit short; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "base-fog",
+      "raw_address4": "00200106",
+      "raw_address_short": "0106",
+      "request": "3B9A6C680ED000C8002001060301FF",
+      "tail": "",
+      "value6": "6C680ED000C8"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0106; generic raw key low32 shape: unit/address byte shifted above the 16-bit short; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "turn-signal",
+      "raw_address4": "00200106",
+      "raw_address_short": "0106",
+      "request": "3B9A412F60A60000002001060301FF",
+      "tail": "",
+      "value6": "412F60A60000"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0106; alternate byte order check only; not preferred; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "base-fog",
+      "raw_address4": "01062000",
+      "raw_address_short": "0106",
+      "request": "3B9A6C680ED000C8010620000301FF",
+      "tail": "",
+      "value6": "6C680ED000C8"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0106; alternate byte order check only; not preferred; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "turn-signal",
+      "raw_address4": "01062000",
+      "raw_address_short": "0106",
+      "request": "3B9A412F60A60000010620000301FF",
+      "tail": "",
+      "value6": "412F60A60000"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0102; 4-byte big-endian short with leading zeros; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "base-fog",
+      "raw_address4": "00000102",
+      "raw_address_short": "0102",
+      "request": "3B9A6C680ED000C8000001020301FF",
+      "tail": "",
+      "value6": "6C680ED000C8"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0102; 4-byte big-endian short with leading zeros; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "turn-signal",
+      "raw_address4": "00000102",
+      "raw_address_short": "0102",
+      "request": "3B9A412F60A60000000001020301FF",
+      "tail": "",
+      "value6": "412F60A60000"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0102; generic raw key low32 shape: unit/address byte shifted above the 16-bit short; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "base-fog",
+      "raw_address4": "00200102",
+      "raw_address_short": "0102",
+      "request": "3B9A6C680ED000C8002001020301FF",
+      "tail": "",
+      "value6": "6C680ED000C8"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0102; generic raw key low32 shape: unit/address byte shifted above the 16-bit short; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "turn-signal",
+      "raw_address4": "00200102",
+      "raw_address_short": "0102",
+      "request": "3B9A412F60A60000002001020301FF",
+      "tail": "",
+      "value6": "412F60A60000"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0102; alternate byte order check only; not preferred; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "base-fog",
+      "raw_address4": "01022000",
+      "raw_address_short": "0102",
+      "request": "3B9A6C680ED000C8010220000301FF",
+      "tail": "",
+      "value6": "6C680ED000C8"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0102; alternate byte order check only; not preferred; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "turn-signal",
+      "raw_address4": "01022000",
+      "raw_address_short": "0102",
+      "request": "3B9A412F60A60000010220000301FF",
+      "tail": "",
+      "value6": "412F60A60000"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0103; 4-byte big-endian short with leading zeros; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "base-fog",
+      "raw_address4": "00000103",
+      "raw_address_short": "0103",
+      "request": "3B9A6C680ED000C8000001030301FF",
+      "tail": "",
+      "value6": "6C680ED000C8"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0103; 4-byte big-endian short with leading zeros; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "turn-signal",
+      "raw_address4": "00000103",
+      "raw_address_short": "0103",
+      "request": "3B9A412F60A60000000001030301FF",
+      "tail": "",
+      "value6": "412F60A60000"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0103; generic raw key low32 shape: unit/address byte shifted above the 16-bit short; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "base-fog",
+      "raw_address4": "00200103",
+      "raw_address_short": "0103",
+      "request": "3B9A6C680ED000C8002001030301FF",
+      "tail": "",
+      "value6": "6C680ED000C8"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0103; generic raw key low32 shape: unit/address byte shifted above the 16-bit short; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "turn-signal",
+      "raw_address4": "00200103",
+      "raw_address_short": "0103",
+      "request": "3B9A412F60A60000002001030301FF",
+      "tail": "",
+      "value6": "412F60A60000"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0103; alternate byte order check only; not preferred; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "base-fog",
+      "raw_address4": "01032000",
+      "raw_address_short": "0103",
+      "request": "3B9A6C680ED000C8010320000301FF",
+      "tail": "",
+      "value6": "6C680ED000C8"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0103; alternate byte order check only; not preferred; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "turn-signal",
+      "raw_address4": "01032000",
+      "raw_address_short": "0103",
+      "request": "3B9A412F60A60000010320000301FF",
+      "tail": "",
+      "value6": "412F60A60000"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0107; 4-byte big-endian short with leading zeros; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "base-fog",
+      "raw_address4": "00000107",
+      "raw_address_short": "0107",
+      "request": "3B9A6C680ED000C8000001070301FF",
+      "tail": "",
+      "value6": "6C680ED000C8"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0107; 4-byte big-endian short with leading zeros; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "turn-signal",
+      "raw_address4": "00000107",
+      "raw_address_short": "0107",
+      "request": "3B9A412F60A60000000001070301FF",
+      "tail": "",
+      "value6": "412F60A60000"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0107; generic raw key low32 shape: unit/address byte shifted above the 16-bit short; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "base-fog",
+      "raw_address4": "00200107",
+      "raw_address_short": "0107",
+      "request": "3B9A6C680ED000C8002001070301FF",
+      "tail": "",
+      "value6": "6C680ED000C8"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0107; generic raw key low32 shape: unit/address byte shifted above the 16-bit short; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "turn-signal",
+      "raw_address4": "00200107",
+      "raw_address_short": "0107",
+      "request": "3B9A412F60A60000002001070301FF",
+      "tail": "",
+      "value6": "412F60A60000"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0107; alternate byte order check only; not preferred; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "base-fog",
+      "raw_address4": "01072000",
+      "raw_address_short": "0107",
+      "request": "3B9A6C680ED000C8010720000301FF",
+      "tail": "",
+      "value6": "6C680ED000C8"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0107; alternate byte order check only; not preferred; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "turn-signal",
+      "raw_address4": "01072000",
+      "raw_address_short": "0107",
+      "request": "3B9A412F60A60000010720000301FF",
+      "tail": "",
+      "value6": "412F60A60000"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0108; 4-byte big-endian short with leading zeros; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "base-fog",
+      "raw_address4": "00000108",
+      "raw_address_short": "0108",
+      "request": "3B9A6C680ED000C8000001080301FF",
+      "tail": "",
+      "value6": "6C680ED000C8"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0108; 4-byte big-endian short with leading zeros; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "turn-signal",
+      "raw_address4": "00000108",
+      "raw_address_short": "0108",
+      "request": "3B9A412F60A60000000001080301FF",
+      "tail": "",
+      "value6": "412F60A60000"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0108; generic raw key low32 shape: unit/address byte shifted above the 16-bit short; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "base-fog",
+      "raw_address4": "00200108",
+      "raw_address_short": "0108",
+      "request": "3B9A6C680ED000C8002001080301FF",
+      "tail": "",
+      "value6": "6C680ED000C8"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0108; generic raw key low32 shape: unit/address byte shifted above the 16-bit short; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "turn-signal",
+      "raw_address4": "00200108",
+      "raw_address_short": "0108",
+      "request": "3B9A412F60A60000002001080301FF",
+      "tail": "",
+      "value6": "412F60A60000"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0108; alternate byte order check only; not preferred; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "base-fog",
+      "raw_address4": "01082000",
+      "raw_address_short": "0108",
+      "request": "3B9A6C680ED000C8010820000301FF",
+      "tail": "",
+      "value6": "6C680ED000C8"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0108; alternate byte order check only; not preferred; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "turn-signal",
+      "raw_address4": "01082000",
+      "raw_address_short": "0108",
+      "request": "3B9A412F60A60000010820000301FF",
+      "tail": "",
+      "value6": "412F60A60000"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0114; 4-byte big-endian short with leading zeros; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "base-fog",
+      "raw_address4": "00000114",
+      "raw_address_short": "0114",
+      "request": "3B9A6C680ED000C8000001140301FF",
+      "tail": "",
+      "value6": "6C680ED000C8"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0114; 4-byte big-endian short with leading zeros; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "turn-signal",
+      "raw_address4": "00000114",
+      "raw_address_short": "0114",
+      "request": "3B9A412F60A60000000001140301FF",
+      "tail": "",
+      "value6": "412F60A60000"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0114; generic raw key low32 shape: unit/address byte shifted above the 16-bit short; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "base-fog",
+      "raw_address4": "00200114",
+      "raw_address_short": "0114",
+      "request": "3B9A6C680ED000C8002001140301FF",
+      "tail": "",
+      "value6": "6C680ED000C8"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0114; generic raw key low32 shape: unit/address byte shifted above the 16-bit short; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "turn-signal",
+      "raw_address4": "00200114",
+      "raw_address_short": "0114",
+      "request": "3B9A412F60A60000002001140301FF",
+      "tail": "",
+      "value6": "412F60A60000"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0114; alternate byte order check only; not preferred; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "base-fog",
+      "raw_address4": "01142000",
+      "raw_address_short": "0114",
+      "request": "3B9A6C680ED000C8011420000301FF",
+      "tail": "",
+      "value6": "6C680ED000C8"
+    },
+    {
+      "basis": "From closest embedded VAGCAN20 BCM25 simulator profile, 31B80000 lists 0114; alternate byte order check only; not preferred; coding type 3 empty-tail suffix follows WriteVagCodingCommand rules. The later parser proof shows 31B8 shorts are not the same thing as the 4-byte rawAddress4 vector consumed by WriteVagCodingCommand, so this remains an address-family clue rather than a proven tuple.",
+      "coding_type": 3,
+      "confidence": "unproven",
+      "label": "turn-signal",
+      "raw_address4": "01142000",
+      "raw_address_short": "0114",
+      "request": "3B9A412F60A60000011420000301FF",
+      "tail": "",
+      "value6": "412F60A60000"
+    }
+  ]
+}
