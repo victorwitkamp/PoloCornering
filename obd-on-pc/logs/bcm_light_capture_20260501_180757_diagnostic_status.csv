@@ -1,0 +1,27 @@
+source,command,label,state,status,payload_bytes,observations,payload
+logs\bcm_light_capture_20260501_180757_bcm_light_capture.json,1802FF00,read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 58020C9820038B20,baseline_off,no_response,,1,
+logs\bcm_light_capture_20260501_180757_bcm_light_capture.json,1802FF00,read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 58020C9820038B20,left_turn,no_response,,1,
+logs\bcm_light_capture_20260501_180757_bcm_light_capture.json,1802FF00,read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 58020C9820038B20,lowbeam_fog_on,no_response,,1,
+logs\bcm_light_capture_20260501_180757_bcm_light_capture.json,1902FF,read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 7F1911,baseline_off,no_response,,1,
+logs\bcm_light_capture_20260501_180757_bcm_light_capture.json,1902FF,read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 7F1911,left_turn,no_response,,1,
+logs\bcm_light_capture_20260501_180757_bcm_light_capture.json,1902FF,read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 7F1911,lowbeam_fog_on,no_response,,1,
+logs\bcm_light_capture_20260501_180757_bcm_light_capture.json,1A91,Carista VAGCAN20 simulator identity/coding-related block,baseline_off,no_response,,1,
+logs\bcm_light_capture_20260501_180757_bcm_light_capture.json,1A91,Carista VAGCAN20 simulator identity/coding-related block,left_turn,no_response,,1,
+logs\bcm_light_capture_20260501_180757_bcm_light_capture.json,1A91,Carista VAGCAN20 simulator identity/coding-related block,lowbeam_fog_on,no_response,,1,
+logs\bcm_light_capture_20260501_180757_bcm_light_capture.json,1A9A,ReadVagCanLongCodingCommand_getRequest / long coding,baseline_off,no_response,,1,
+logs\bcm_light_capture_20260501_180757_bcm_light_capture.json,1A9A,ReadVagCanLongCodingCommand_getRequest / long coding,left_turn,no_response,,1,
+logs\bcm_light_capture_20260501_180757_bcm_light_capture.json,1A9A,ReadVagCanLongCodingCommand_getRequest / long coding,lowbeam_fog_on,no_response,,1,
+logs\bcm_light_capture_20260501_180757_bcm_light_capture.json,220600,direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding,baseline_off,no_response,,1,
+logs\bcm_light_capture_20260501_180757_bcm_light_capture.json,220600,direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding,left_turn,no_response,,1,
+logs\bcm_light_capture_20260501_180757_bcm_light_capture.json,220600,direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding,lowbeam_fog_off,positive,33,1,6206003AB02BBF08A10000003008006D2B0CD000C0412F60860000200000000000
+logs\bcm_light_capture_20260501_180757_bcm_light_capture.json,220600,direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding,lowbeam_fog_on,no_response,,1,
+logs\bcm_light_capture_20260501_180757_bcm_light_capture.json,220600,direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding,parking_fog_off,positive,33,1,6206003AB02BBF08A10000003008006D2B0CD000C0412F60860000200000000000
+logs\bcm_light_capture_20260501_180757_bcm_light_capture.json,220600,direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding,parking_fog_on,positive,33,1,6206003AB02BBF08A10000003008006D2B0CD000C0412F60860000200000000000
+logs\bcm_light_capture_20260501_180757_bcm_light_capture.json,220600,direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding,right_turn,positive,33,1,6206003AB02BBF08A10000003008006D2B0CD000C0412F60860000200000000000
+logs\bcm_light_capture_20260501_180757_bcm_light_capture.json,220606,Carista-shaped UDS companion DID; previous live response was 620606001800018000,baseline_off,no_response,,1,
+logs\bcm_light_capture_20260501_180757_bcm_light_capture.json,220606,Carista-shaped UDS companion DID; previous live response was 620606001800018000,left_turn,no_response,,1,
+logs\bcm_light_capture_20260501_180757_bcm_light_capture.json,220606,Carista-shaped UDS companion DID; previous live response was 620606001800018000,lowbeam_fog_off,disconnect,,1,
+logs\bcm_light_capture_20260501_180757_bcm_light_capture.json,220606,Carista-shaped UDS companion DID; previous live response was 620606001800018000,lowbeam_fog_on,no_response,,1,
+logs\bcm_light_capture_20260501_180757_bcm_light_capture.json,220606,Carista-shaped UDS companion DID; previous live response was 620606001800018000,parking_fog_off,disconnect,,1,
+logs\bcm_light_capture_20260501_180757_bcm_light_capture.json,220606,Carista-shaped UDS companion DID; previous live response was 620606001800018000,parking_fog_on,disconnect,,1,
+logs\bcm_light_capture_20260501_180757_bcm_light_capture.json,220606,Carista-shaped UDS companion DID; previous live response was 620606001800018000,right_turn,disconnect,,1,

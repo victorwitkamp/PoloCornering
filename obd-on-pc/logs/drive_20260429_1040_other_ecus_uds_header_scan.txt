@@ -1,0 +1,4 @@
+VAG UDS read-only header scan
+Started: 2026-04-29T10:42:30
+Blocked services: 27, 2E, 31, 3B
+

@@ -1,0 +1,442 @@
+[
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F187",
+    "status": "positive",
+    "payload": "62F187365230",
+    "raw": "77E100E62F187365230"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "220600",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "220601",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "220602",
+    "status": "negative",
+    "payload": "7F2231",
+    "raw": "77E037F2231"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "220603",
+    "status": "negative",
+    "payload": "7F2231",
+    "raw": "77E037F2231"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "220604",
+    "status": "negative",
+    "payload": "7F2231",
+    "raw": "77E037F2231"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "220605",
+    "status": "negative",
+    "payload": "7F2231",
+    "raw": "77E037F2231"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "220606",
+    "status": "negative",
+    "payload": "7F2231",
+    "raw": "77E037F2231"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "220607",
+    "status": "negative",
+    "payload": "7F2231",
+    "raw": "77E037F2231"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "220608",
+    "status": "negative",
+    "payload": "7F2231",
+    "raw": "77E037F2231"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "220609",
+    "status": "negative",
+    "payload": "7F2231",
+    "raw": "77E037F2231"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22060A",
+    "status": "negative",
+    "payload": "7F2231",
+    "raw": "77E037F2231"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22060B",
+    "status": "negative",
+    "payload": "7F2231",
+    "raw": "77E037F2231"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22060C",
+    "status": "negative",
+    "payload": "7F2231",
+    "raw": "77E037F2231"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22060D",
+    "status": "negative",
+    "payload": "7F2231",
+    "raw": "77E037F2231"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22060E",
+    "status": "negative",
+    "payload": "7F2231",
+    "raw": "77E037F2231"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22060F",
+    "status": "negative",
+    "payload": "7F2231",
+    "raw": "77E037F2231"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F17E",
+    "status": "negative",
+    "payload": "7F2231",
+    "raw": "77E037F2231"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F180",
+    "status": "negative",
+    "payload": "7F2231",
+    "raw": "77E037F2231"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F181",
+    "status": "positive",
+    "payload": "62F181090314",
+    "raw": "77E100B62F181090314"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F182",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F183",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F184",
+    "status": "negative",
+    "payload": "7F2231",
+    "raw": "77E037F2231"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F185",
+    "status": "negative",
+    "payload": "7F2231",
+    "raw": "77E037F2231"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F186",
+    "status": "positive",
+    "payload": "62F18601",
+    "raw": "77E0462F18601"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F188",
+    "status": "negative",
+    "payload": "7F2231",
+    "raw": "77E037F2231"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F189",
+    "status": "positive",
+    "payload": "62F18930353035",
+    "raw": "77E0762F18930353035"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F18A",
+    "status": "negative",
+    "payload": "7F2231",
+    "raw": "77E037F2231"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F18B",
+    "status": "positive",
+    "payload": "62F18B120229",
+    "raw": "77E0662F18B120229"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F18C",
+    "status": "positive",
+    "payload": "62F18C303030",
+    "raw": "77E101162F18C303030"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F18D",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F18E",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F18F",
+    "status": "negative",
+    "payload": "7F2231",
+    "raw": "77E037F2231"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F190",
+    "status": "positive",
+    "payload": "62F190575657",
+    "raw": "77E101462F190575657"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F191",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F192",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F193",
+    "status": "negative",
+    "payload": "7F2231",
+    "raw": "77E037F2231"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F194",
+    "status": "positive",
+    "payload": "62F194101864",
+    "raw": "77E101662F194101864"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F195",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F196",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F197",
+    "status": "positive",
+    "payload": "62F1974B4F4D",
+    "raw": "77E101062F1974B4F4D"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F198",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F199",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F19A",
+    "status": "positive",
+    "payload": "62F19A163826",
+    "raw": "77E100962F19A163826"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F1A0",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F1A1",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F1A2",
+    "status": "positive",
+    "payload": "62F1A2413034",
+    "raw": "77E100962F1A2413034"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F1A3",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F1A4",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F1A5",
+    "status": "positive",
+    "payload": "62F1A50007FD",
+    "raw": "77E100962F1A50007FD"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F1A6",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F1A7",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F1A8",
+    "status": "negative",
+    "payload": "7F2231",
+    "raw": "77E037F2231"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F1A9",
+    "status": "negative",
+    "payload": "7F2231",
+    "raw": "77E037F2231"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F1AA",
+    "status": "positive",
+    "payload": "62F1AA4A3238",
+    "raw": "77E100862F1AA4A3238"
+  }
+]

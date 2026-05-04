@@ -1,0 +1,209 @@
+VW Polo 6R Vehicle Information for Coding Review
+Generated: 2026-05-01
+Restored live coding: 2026-05-01 17:58, verified by 220600 readback
+Post-restart live read: 2026-05-02 19:00-19:01, verified by repeated 220600 readback
+Post-rewrite restart read: 2026-05-03 13:49, verified by 220600 readback
+
+Vehicle identity
+----------------
+VIN:                         WVWZZZ6RZCY230414
+Manufacturer / WMI:          WVW - Volkswagen passenger car
+Chassis / platform code:     6R
+Model family:                Polo 6R / PQ25
+Model year code:             C - 2012 model year code
+Plant code:                  Y
+Serial number:               230414
+
+
+Current BCM / central electronics
+---------------------------------
+Module:                       09 - Central electronics / BCM / J519
+Part number:                  6R0937087K
+Component:                    BCM PQ25 H+4
+Software version:             0254
+ASAM/ODX identifier:          none reported
+Coding length:                30 bytes
+Current coding:               3AB02BBF08A10000003008006D2B0CD000C0412F60860000200000000000
+Immediate post-restore coding: 3AB02BBF08A10000003008006D2B0CD000C0412F60860000200000000000
+Previous pre-restore coding:  3AB82B9F08A10000003008006C680ED000C8410F60860000200000000000
+
+
+Historical backup coding
+------------------------
+Source: Backup supplied by the previous coder who coded the car a long time ago.
+Status: Restored live and verified by 220600 readback on 2026-05-01; re-written with the Carista-shaped guarded writer and verified again on 2026-05-03.
+Post-restart note: Repeated 220600 reads on 2026-05-02 returned byte 13 as 6B, not the immediate post-restore 2B. After the 2026-05-03 guarded rewrite, the post-restart 220600 read returned byte 13 as 2B.
+
+Backup coding:                3AB02BBF08A10000003008006D2B0CD000C0412F60860000200000000000
+Coding length:                30 bytes
+
+
+Immediate post-restore coding vs restart reads
+----------------------------------------------
+Byte numbering is zero-based for the 30-byte coding. The analyzer reports this as response byte 16 because 220600 payloads include the three-byte 62 06 00 prefix.
+
+Byte  Immediate post-restore  2026-05-02 restart  2026-05-03 rewrite restart  Changed bits vs immediate
+----  ----------------------  ------------------  --------------------------  -------------------------
+13    2B                      6B                  2B                          none after rewrite restart
+
+Repeated evidence:
+- 2026-05-02 confirmed fault state: 3AB02BBF08A10000003008006D6B0CD000C0412F60860000200000000000
+- 2026-05-02 repeated same fault state: 3AB02BBF08A10000003008006D6B0CD000C0412F60860000200000000000
+- 2026-05-02 parking lights/no fog state: 3AB02BBF08A10000003008006D6B0CD000C0412F60860000200000000000
+- 2026-05-03 guarded rewrite: final 2E0600 returned 6E0600 and writer verification returned 3AB02BBF08A10000003008006D2B0CD000C0412F60860000200000000000
+- 2026-05-03 independent post-write read: 3AB02BBF08A10000003008006D2B0CD000C0412F60860000200000000000
+- 2026-05-03 post-restart read: 3AB02BBF08A10000003008006D2B0CD000C0412F60860000200000000000
+- 2026-05-03 physical test after multiple car restarts: fog lights are still always on with the persisted D2B coding, so byte 13 bit 6 / coming-home-leaving-home variant is behavior-ruled-out for the reported symptom.
+- Raw ATMA monitor windows retained 0 frames with this ELM327 clone, so passive CAN monitor evidence was not captured.
+
+
+Read-only status/fault evidence
+-------------------------------
+Captured in the confirmed visible fault state on 2026-05-02.
+
+Command   Response    Note
+-------   --------    ----
+1802FF00  58010C9820  Same stable payload seen in earlier 2026-04-29 diagnostic collection; not a new fog-specific clue by itself.
+1902FF    7F1911      Negative response / unsupported service variant on this path.
+
+
+Pre-restore coding vs restored historical backup
+------------------------------------------------
+Byte numbering is zero-based, VCDS/LCode-style.
+
+Byte  Pre-restore  Restored  Changed bits
+----  -----------  --------  ------------
+01    B8       B0      3
+03    9F       BF      5
+12    6C       6D      0
+13    68       2B      0, 1, 6
+14    0E       0C      1
+17    C8       C0      3
+19    0F       2F      5
+
+
+Known/interpreted label differences vs restored historical backup
+-----------------------------------------------------------------
+These are only the changed bits for which a current working label is available.
+
+Byte  Bit  Pre-restore      Restored         Label / interpretation
+----  ---  ---------------  ---------------  -------------------------------------------------------------
+13    0    Clear / inactive Set / active     Parking lights ON only without ignition ON possible
+13    1    Clear / inactive Set / active     Parking lights function active
+13    6    Set / active     Clear / inactive Coming-home/leaving-home variant
+19    5    Clear / inactive Set / active     Lamp diagnostics for fog/cornering/turn lights active
+
+
+Offline Carista fog-role evidence recovered after D2B test
+----------------------------------------------------------
+The persisted D2B coding did not change the physical symptom, so do not keep
+testing long-coding bits blindly. Focus moved to Carista's related VAG UDS
+adaptation setting objects:
+
+Setting key                                  ECU  Raw/DID  Offset  Mask  Recovered enum
+-------------------------------------------  ---  -------  ------  ----  ---------------------------------------------
+car_setting_cornering_lights_via_fogs_left   BCM  055C     5       FF    00=off, 16=on, 1E=coming/leaving-home enabled
+car_setting_cornering_lights_via_fogs_right  BCM  055D     5       FF    00=off, 16=on, 1E=coming/leaving-home enabled
+
+These are blocked read-first candidates. Native dispatch for raw type 7 goes
+through readVagUdsValue / ReadRawDataByIdentifierCommand, i.e. 22055C and
+22055D. Those exact direct reads were rejected live, so a positive current raw
+payload and byte length are still unknown and must be proven before any
+2E055C/2E055D write is considered.
+
+Important nuance: 1E is not automatically "wrong" by itself. Carista names it
+as the coming-home/leaving-home enabled choice, so if byte 5 reads as 1E the
+next proof step is to check the surrounding coming/leaving-home combination,
+not immediately write 16. Historical BCM reads also repeatedly returned
+220601 -> 6206011E, which may be a related one-byte Carista companion value.
+The evidence-backed hypothesis becomes: prove whether the car is configured
+for fogs as a coming/leaving-home output, then decide whether the correct
+repair is changing the per-side fog role from 1E to 16, changing a separate
+coming/leaving-home output setting, or changing both as a matched Carista
+combination.
+
+2026-05-03 in-car read-only follow-up:
+- Preflight 220600 read succeeded with answered TP2.0 parameters
+	A10F8AFF4FFF and confirmed the current coding is still
+	3AB02BBF08A10000003008006D2B0CD000C0412F60860000200000000000.
+- 220601 returned 6206011E for switch-left, switch-middle, switch-right,
+	right-position pulled once, right-position pulled twice, and
+	middle-position with right turn signal. It did not change with the light
+	switch, fog pull, or captured turn-signal states, so treat 0601=1E as a
+	stored/config/status clue, not a live switch-position byte.
+- Direct 22055C and 22055D reads both reached the BCM but returned 7F2231.
+	Therefore 055C/055D are not readable as simple UDS DIDs on this BCM/session.
+- Offline native follow-up recovered the VAG CAN adaptation routine path:
+	31B8 + basic id, 31BA + basic id, 31B9 + basic id + channel, 31BA + basic id,
+	then 32B8 + basic id. Basic id 0103 is short adaptation data and 010A is long
+	adaptation data. This path is proven native but belongs to raw types 0/1;
+	raw type 7 VagUdsAdaptationSetting dispatch still goes to direct UDS RDBI.
+	Do not attempt 2E055C/2E055D writes unless a real positive raw-payload read is
+	found for these specific settings.
+
+
+ECU inventory
+-------------
+System                    Part number    Component        Software  ASAM/ODX identifier           Coding                                                            Fault codes
+------------------------  -------------  ---------------  --------  ----------------------------  ----------------------------------------------------------------  -----------
+CAN network gateway       6N0909901      GW-K-CAN TP20    0254      none                          002200                                                            none reported
+Engine                    03F906070GD    SIMOS10.22A      5466      EV_ECM12TFS02103F906070GD     001100D6202400080000                                                none reported
+Airbags                   6R0959655K     VW10Airbag022    0020      EV_AirbaVW10BPAVW250          003232                                                            none reported
+Instrument cluster        6R0920860H     KOMBI            0505      EV_Kombi_UDS_VDD_RM09         140801                                                            none reported
+Immobilizer               5K0953234      IMMO             0505      EV_Immo_UDS_VDD_RM09          000000                                                            none reported
+Heater & air conditioning 6R0820045N     Man AC           0202      none                          none                                                              none reported
+Central electronics       6R0937087K     BCM PQ25 H+4     0254      none                          3AB02BBF08A10000003008006D2B0CD000C0412F60860000200000000000        none reported
+
+
+Current BCM coding by byte
+--------------------------
+Byte  Hex  Binary    Set bits
+----  ---  --------  --------
+00    3A   00111010  1, 3, 4, 5
+01    B0   10110000  4, 5, 7
+02    2B   00101011  0, 1, 3, 5
+03    BF   10111111  0, 1, 2, 3, 4, 5, 7
+04    08   00001000  3
+05    A1   10100001  0, 5, 7
+06    00   00000000  none
+07    00   00000000  none
+08    00   00000000  none
+09    30   00110000  4, 5
+10    08   00001000  3
+11    00   00000000  none
+12    6D   01101101  0, 2, 3, 5, 6
+13    2B   00101011  0, 1, 3, 5
+14    0C   00001100  2, 3
+15    D0   11010000  4, 6, 7
+16    00   00000000  none
+17    C0   11000000  6, 7
+18    41   01000001  0, 6
+19    2F   00101111  0, 1, 2, 3, 5
+20    60   01100000  5, 6
+21    86   10000110  1, 2, 7
+22    00   00000000  none
+23    00   00000000  none
+24    20   00100000  5
+25    00   00000000  none
+26    00   00000000  none
+27    00   00000000  none
+28    00   00000000  none
+29    00   00000000  none
+
+
+Current interpreted BCM settings
+--------------------------------
+Byte  Bit  Current state    Current byte  Label / interpretation
+----  ---  ---------------  ------------  -------------------------------------------------------------
+12    6    Set / active     6D            Turn/Cornering lights installed/active
+13    0    Set / active     2B            Parking lights ON only without ignition ON possible
+13    1    Set / active     2B            Parking lights function active
+13    3    Set / active     2B            Brake light activation via BCM
+13    5    Set / active     2B            Interior light enabling via rear lid
+13    6    Clear / inactive 2B            Coming-home/leaving-home variant
+16    5    Clear / inactive 00            Rear fog lamp diagnostics active
+19    5    Set / active     2F            Lamp diagnostics for fog/cornering/turn lights active
+21    2    Set / active     86            Cornering/turn lights via turn signal active
+21    5    Clear / inactive 86            Fog lights inactive with high beams active
+21    7    Set / active     86            Front fog lights with turn/cornering lights installed
+22    5    Clear / inactive 00            Assistant Driving Light candidate

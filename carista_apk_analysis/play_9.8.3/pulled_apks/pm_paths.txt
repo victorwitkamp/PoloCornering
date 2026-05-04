@@ -1,0 +1,3 @@
+/data/app/com.prizmos.carista-bjJRcayNw-R7eVKDVTgxOg==/base.apk
+/data/app/com.prizmos.carista-bjJRcayNw-R7eVKDVTgxOg==/split_config.x86.apk
+/data/app/com.prizmos.carista-bjJRcayNw-R7eVKDVTgxOg==/split_config.xxhdpi.apk

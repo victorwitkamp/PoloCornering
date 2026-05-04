@@ -10,7 +10,6 @@ tools/
 carista_apk_analysis/extracted/
 carista_apk_analysis/ghidra_project/
 carista_apk_analysis/ghidra_android_project/
-carista_apk_analysis/ghidra_exports/
 carista_apk_analysis/ghidra_android_exports/
 carista_apk_analysis/gadget_patch_out/
 carista_apk_analysis/keys/carista-gadget-debug.jks

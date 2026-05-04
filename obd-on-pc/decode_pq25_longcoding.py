@@ -293,7 +293,7 @@ def format_report(
             [
                 f"Reference:    {reference}",
                 "",
-                "Deltas versus known-good cornering-enabled reference:",
+                "Deltas versus supplied/reference cornering-enabled coding:",
                 *[f"  {line}" for line in format_deltas(values, reference_values, candidates_by_bit)],
             ]
         )

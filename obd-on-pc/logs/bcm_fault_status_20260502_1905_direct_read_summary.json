@@ -1,0 +1,154 @@
+[
+  {
+    "attempt_id": "direct_ctr0_1802FF00",
+    "mode": "direct_read",
+    "started": "2026-05-02T19:06:41.831",
+    "log_file": "logs\\bcm_fault_status_20260502_1905_direct_read_direct_ctr0_1802FF00.txt",
+    "unit": "20",
+    "ecu_scan_status": "",
+    "scan_probe": "",
+    "scan_native_builder": "",
+    "scan_purpose": "",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "all",
+    "channel_parameter_status": "answered",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 138,
+      "T2": 255,
+      "T3": 79,
+      "T4": 255
+    },
+    "session_command": "",
+    "session_command_label": "",
+    "session_counter": "",
+    "session_status": "",
+    "session_result": "",
+    "pre_read_sequence": "",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": "",
+    "read_counter": "0",
+    "read_command": "1802FF00",
+    "read_command_label": "read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 58020C9820038B20",
+    "read_status": "other",
+    "read_result": "58010C9820",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-05-02T19:06:49.089",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-05-02T19:06:50.394",
+        "source": "A00F8AFF32FF",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-05-02T19:06:50.394",
+        "source": "A00F8AFF32FF",
+        "header": "300",
+        "payload": "A10F8AFF4FFF",
+        "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+      },
+      {
+        "timestamp": "2026-05-02T19:06:51.553",
+        "source": "1000041802FF00",
+        "header": "300",
+        "payload": "B1",
+        "tp20_label": "TP2.0 ACK/control frame"
+      },
+      {
+        "timestamp": "2026-05-02T19:06:51.553",
+        "source": "1000041802FF00",
+        "header": "300",
+        "payload": "10000558010C9820",
+        "tp20_label": "TP2.0 application first frame seq=0 len=5"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "direct_ctr0_1902FF",
+    "mode": "direct_read",
+    "started": "2026-05-02T19:06:52.470",
+    "log_file": "logs\\bcm_fault_status_20260502_1905_direct_read_direct_ctr0_1902FF.txt",
+    "unit": "20",
+    "ecu_scan_status": "",
+    "scan_probe": "",
+    "scan_native_builder": "",
+    "scan_purpose": "",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "all",
+    "channel_parameter_status": "answered",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 138,
+      "T2": 255,
+      "T3": 79,
+      "T4": 255
+    },
+    "session_command": "",
+    "session_command_label": "",
+    "session_counter": "",
+    "session_status": "",
+    "session_result": "",
+    "pre_read_sequence": "",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": "",
+    "read_counter": "0",
+    "read_command": "1902FF",
+    "read_command_label": "read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 7F1911",
+    "read_status": "negative",
+    "read_result": "7F1911",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-05-02T19:06:58.004",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-05-02T19:06:59.308",
+        "source": "A00F8AFF32FF",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-05-02T19:06:59.308",
+        "source": "A00F8AFF32FF",
+        "header": "300",
+        "payload": "A10F8AFF4FFF",
+        "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+      },
+      {
+        "timestamp": "2026-05-02T19:07:00.467",
+        "source": "1000031902FF",
+        "header": "300",
+        "payload": "B1",
+        "tp20_label": "TP2.0 ACK/control frame"
+      },
+      {
+        "timestamp": "2026-05-02T19:07:00.467",
+        "source": "1000031902FF",
+        "header": "300",
+        "payload": "1000037F1911",
+        "tp20_label": "TP2.0 application first frame seq=0 len=3"
+      }
+    ],
+    "error": ""
+  }
+]

@@ -1,0 +1,5 @@
+    primaryCpuAbi=x86
+    versionCode=983099 minSdk=28 targetSdk=35
+    versionName=9.8.3
+    lastUpdateTime=2026-05-04 04:58:27
+    installerPackageName=com.android.vending

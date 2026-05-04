@@ -36,7 +36,7 @@ Carista exact channel-parameter setup found from the native code:
 A00194FF82FF
 ```
 
-Known-good minimal setup for this Polo remains:
+Live-proven minimal setup for this Polo remains:
 
 ```text
 A00F8AFF32FF
@@ -296,14 +296,17 @@ Setting/catalog entry and ECU metadata.
 
 ## PQ25 Cornering Setting Map
 
-Offline static mapping was added here:
+The older one-off static cornering map was replaced by the broader exact-car
+catalog:
 
 ```text
-docs/carista_apk_analysis/carista_pq25_cornering_static_map.md
-carista_apk_analysis/carista_pq25_cornering_static_map.json
+docs/carista_apk_analysis/pq25_carista_setting_catalog.md
+carista_apk_analysis/pq25_carista_setting_catalog.json
+carista_apk_analysis/pq25_carista_settings_catalog.csv
+carista_apk_analysis/pq25_carista_longcoding_bits.csv
 ```
 
-The mapper confirms that the relevant Carista labels exist in both decoded
+The catalog confirms that the relevant Carista labels exist in both decoded
 resources and `libCarista.so`, including:
 
 ```text
@@ -323,8 +326,9 @@ byte 12 bit 6 = Carista fog-light cornering / use fogs for cornering
 byte 21 bit 2 = Carista turn-signal cornering trigger
 ```
 
-Current live coding has both bits clear. The known-good cornering-enabled coding
-has both bits set.
+Current baseline coding has both bits clear. The supplied/reference coding has
+both bits set, but live tests showed those two bit changes do not visibly fix
+the current symptom.
 
 Additional native symbol extraction from the reacquired `libCarista.so` kept
 the same conclusion and tightened the next reverse-engineering target:
@@ -365,111 +369,32 @@ Practical Carista-first conclusion:
 4. Any future scripted write attempt should start from a 6-byte value + 4-byte raw-address model, not a 30-byte model.
 ```
 
-## Offline 31B8 Simulator Metadata Pass
+## Retired Compact 3B9A Evidence
 
-The no-phone static pass added a repeatable analyzer for Carista's embedded
-VAGCAN20 simulator records:
+Carista does contain a compact `3B9A` VAG-CAN write model, but this path is not
+the active writer for this BCM. Static simulator records and adapter-only
+`1A9B` attempts did not prove the `rawAddress4`, coding selector, or tail bytes
+needed for `6R0937087K`.
 
-```text
-carista_apk_analysis/analyze_carista_offline_tuple_candidates.py
-carista_offline_tuple_candidate_report.md
-carista_apk_analysis/carista_offline_tuple_candidate_report.json
-```
-
-That analyzer reads `libCarista.so` from the extracted split path, the ARM split
-APK, or the XAPK, then parses the embedded `ECU VAGCAN20 ...` records.
-
-The two useful `31B80000` metadata responses are:
-
-```text
-1K0937049S-style profile: 71B8010301040106010801020107
-    decoded shorts: 0103 0104 0106 0108 0102 0107
-
-BCM25/5C0937087E profile: 71B8010601020103010701080114
-    decoded shorts: 0106 0102 0103 0107 0108 0114
-```
-
-The BCM25 profile is the closest embedded analogue because it also contains a
-direct `220600` long-coding sample and identifies as central electrics:
-
-```text
-22F187 -> 5C0937087E
-22F191 -> 5C0937087A
-22F197 -> BCM25 JLB H3
-220600 -> 30-byte coding sample
-```
-
-Updated interpretation after the deeper parser pass:
+Retained facts:
 
 ```text
 31B80000 / 71B8 exposes compact ECU-list coding-address shorts.
 It does not directly populate the 4-byte rawAddress4 consumed by WriteVagCodingCommand.
 The final rawAddress4/coding selector/tail come from positive 1A9B / 5A9B ECU-info parsing.
+Adapter-only 1A9B attempts on COM10 did not produce a positive 5A9B for this BCM.
 ```
 
-The recovered `GetVagCanEcuInfoCommand::processEcuInfo` offsets, after
-stripping the positive `5A9B` prefix, are:
-
-```text
-payload[0x0c:0x10] -> rawAddress4
-payload[0x10]      -> coding selector
-payload[0x11:0x14] -> tail for type-2/type-4 selector branches
-payload[0x14:0x1a] -> stored 6-byte coding value
-```
-
-The embedded 1K0937049S-style simulator proves that parser with a real positive
-`1A9B` response: rawAddress4 `B0373034`, selector `10`, Carista coding type
-`3`, empty tail, and writer suffix `0301FF`.
-
-The closest BCM25 profile has direct `220600` data and the `0106` short in
-`31B8`, but its `1A9B` response is negative. That means `00200106` is no longer
-a defensible rawAddress4 proof; keep the generated examples only as rejected
-proof attempts, not write candidates.
-
-For the actual `6R0937087K` evidence in this workspace, the proven final pieces
-remain only:
+For the actual `6R0937087K` evidence in this workspace, the proven compact
+pieces remain only:
 
 ```text
 base fog value6:     6C680ED000C8
 turn-signal value6:  412F60A60000
 ```
 
-The complete tuple still requires a positive `1A9B` for this ECU, or a native
-catalog/data-flow equivalent that proves those same metadata bytes.
-
-## In-Car Tuple-Proof Read Attempt - 2026-04-28
-
-The prepared no-phone tuple-proof workflow was run read-only against the car on
-`COM10`.
-
-Fresh direct `220600` still showed the known broken coding:
-
-```text
-3AB82B9F08A10000003008002C680ED000C8412F60A20000200000000000
-```
-
-The proof target, positive `5A9B`, was not captured:
-
-```text
-direct 1A9B: 7F1A11 on one run, no response on another
-1089 + pre-read 1A9B variants: no 5A9B
-fallback session-counter variants: no 5A9B
-skip-parameters 1089/read_sweep 1A9B: no 5A9B
-direct carista_kwp profile: 1A9F/1A9A no response; 1A91/1A86 7F1A11
-```
-
-Evidence files:
-
-```text
-docs/obd-on-pc/logs/pq25_tuple_proof_read_report.md
-obd-on-pc/logs/pq25_tuple_proof_read_report.json
-obd-on-pc/logs/pq25_tuple_proof_direct_carista_kwp_direct_read_summary.json
-```
-
-This is negative evidence for the current adapter-only `1A9B` sequencing path,
-not proof of a complete tuple. The missing metadata must now come from a new
-offline sequencing hypothesis, native catalog/data-flow recovery, or a future
-phone/Carista trace.
+Those are retained as historical proof boundaries, not write candidates. The
+working writer is the Carista-shaped UDS DID `0600` sequence documented above.
 
 ## Adaptation/Routine Clues
 
@@ -482,5 +407,17 @@ PreReadVagCanAdaptationDataCommand::getRequest  -> 31BA + 16-bit id
 ReadVagCanAdaptationDataCommand::getRequest     -> 31BA + 16-bit id
 SetVagCanAdaptationChannelCommand::getRequest   -> 31B9 + 16-bit id + 1 byte
 ```
+
+The focused Ghidra byte-literal probe confirmed the native prefixes directly:
+`31BA` at `00ab28b1`, `31B9` at `00b93cf1`, `31B8` at `00c4a6a3`,
+`32B8` at `00805157`, and write-data prefix `31BB` at `007481eb`.
+
+`VagOperationDelegate::readVagCanAdaptationValueInternal` uses short basic id
+`0103` and long basic id `010A`, then runs start routine, pre-read, set channel,
+data read, and stop routine. `VagOperationDelegate::readRawValue` dispatches raw
+types `0/1` into this VAG CAN adaptation path. Raw type `7` dispatches instead
+to `readVagUdsValue` / `ReadRawDataByIdentifierCommand`, which is why the
+recovered `055C` / `055D` `VagUdsAdaptationSetting` objects map to direct
+`22055C` / `22055D`; those direct reads returned `7F2231` live on the BCM.
 
 These remain blocked in read-only scripts.

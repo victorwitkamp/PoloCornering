@@ -11,8 +11,8 @@ c:/Users/victo/Downloads/PoloCornering/.venv/Scripts/python.exe carista_apk_anal
 
 This extracts the base APK, both DEX files, the ARMv7 split APK, and
 `libCarista.so` under the ignored `carista_apk_analysis/extracted/android/`
-tree. It also writes `carista_android_bridge_report.md` and JSON with the
-recovered Java bridge class descriptors.
+tree. It can also write a docs bridge report and an extracted-tree JSON sidecar
+with the recovered Java bridge class descriptors.
 
 ## Ghidra UI Import
 
@@ -87,7 +87,7 @@ Important boundary: DEX-native methods such as
 `ReadValuesOperation.getAvailableItems()`, and
 `ReadValuesOperation.getSettingValue(...)` are declarations only. Their DEX
 constructors/call sites are exported, but the implementations live in
-`libCarista.so`; follow those through `ghidra_exports_exact_flow/`.
+`libCarista.so`; follow those through `ghidra_exports/`.
 
 ## Native Export Improvements
 

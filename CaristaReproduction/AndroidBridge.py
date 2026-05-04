@@ -65,8 +65,13 @@ def recovered_android_bridge_classes() -> tuple[AndroidBridgeClass, ...]:
             java_name="com.prizmos.carista.library.operation.ReadValuesOperation",
             dex_file="classes2.dex",
             methods=(
-                AndroidBridgeMethod("getAvailableItems", "()Ljava/util/Map;"),
-                AndroidBridgeMethod("getSettingValue", "(Lcom/prizmos/carista/library/model/Setting;)[B"),
+                AndroidBridgeMethod("getAvailableItems", "()Ljava/util/Map;", access_flags="public native", is_native=True),
+                AndroidBridgeMethod(
+                    "getSettingValue",
+                    "(Lcom/prizmos/carista/library/model/Setting;)[B",
+                    access_flags="public native",
+                    is_native=True,
+                ),
             ),
         ),
         AndroidBridgeClass(
@@ -74,8 +79,13 @@ def recovered_android_bridge_classes() -> tuple[AndroidBridgeClass, ...]:
             java_name="com.prizmos.carista.library.operation.ChangeSettingOperation",
             dex_file="classes2.dex",
             methods=(
-                AndroidBridgeMethod("<init>", "(Lcom/prizmos/carista/library/model/Setting; [B Lcom/prizmos/carista/library/operation/ReadValuesOperation;)V"),
-                AndroidBridgeMethod("initNative", "(Lcom/prizmos/carista/library/model/Setting; [B Lcom/prizmos/carista/library/operation/ReadValuesOperation;)J"),
+                AndroidBridgeMethod("<init>", "(Lcom/prizmos/carista/library/model/Setting;[BLcom/prizmos/carista/library/operation/ReadValuesOperation;)V"),
+                AndroidBridgeMethod(
+                    "initNative",
+                    "(Lcom/prizmos/carista/library/model/Setting;[BLcom/prizmos/carista/library/operation/ReadValuesOperation;)J",
+                    access_flags="private native",
+                    is_native=True,
+                ),
             ),
         ),
         AndroidBridgeClass(
@@ -84,7 +94,7 @@ def recovered_android_bridge_classes() -> tuple[AndroidBridgeClass, ...]:
             dex_file="classes2.dex",
             methods=(
                 AndroidBridgeMethod("<init>", "(Lcom/prizmos/carista/library/operation/Operation;)V"),
-                AndroidBridgeMethod("initNative", "(Lcom/prizmos/carista/library/operation/Operation;)J"),
+                AndroidBridgeMethod("initNative", "(Lcom/prizmos/carista/library/operation/Operation;)J", access_flags="private native", is_native=True),
             ),
         ),
         AndroidBridgeClass(
@@ -92,15 +102,15 @@ def recovered_android_bridge_classes() -> tuple[AndroidBridgeClass, ...]:
             java_name="com.prizmos.carista.library.operation.GetEcuInfoOperation",
             dex_file="classes2.dex",
             methods=(
-                AndroidBridgeMethod("<init>", "(Lcom/prizmos/carista/library/model/Ecu; Lcom/prizmos/carista/library/operation/Operation;)V"),
-                AndroidBridgeMethod("initNative", "(Lcom/prizmos/carista/library/model/Ecu; Lcom/prizmos/carista/library/operation/Operation;)J"),
-                AndroidBridgeMethod("getCodingRawAddress", "(S)J"),
-                AndroidBridgeMethod("getAdaptationRawAddress", "(S)J"),
-                AndroidBridgeMethod("supportsSingleCoding", "()Z"),
-                AndroidBridgeMethod("supportsMultiCoding", "()Z"),
-                AndroidBridgeMethod("supportsAdaptation", "()Z"),
-                AndroidBridgeMethod("supportsDiagnostics", "()Z"),
-                AndroidBridgeMethod("isValueInterpretedAsDecimal", "(J)Z"),
+                AndroidBridgeMethod("<init>", "(Lcom/prizmos/carista/library/model/Ecu;Lcom/prizmos/carista/library/operation/Operation;)V"),
+                AndroidBridgeMethod("initNative", "(Lcom/prizmos/carista/library/model/Ecu;Lcom/prizmos/carista/library/operation/Operation;)J", access_flags="private native", is_native=True),
+                AndroidBridgeMethod("getCodingRawAddress", "(S)J", access_flags="public native", is_native=True),
+                AndroidBridgeMethod("getAdaptationRawAddress", "(S)J", access_flags="public native", is_native=True),
+                AndroidBridgeMethod("supportsSingleCoding", "()Z", access_flags="public native", is_native=True),
+                AndroidBridgeMethod("supportsMultiCoding", "()Z", access_flags="public native", is_native=True),
+                AndroidBridgeMethod("supportsAdaptation", "()Z", access_flags="public native", is_native=True),
+                AndroidBridgeMethod("supportsDiagnostics", "()Z", access_flags="public native", is_native=True),
+                AndroidBridgeMethod("isValueInterpretedAsDecimal", "(J)Z", access_flags="public native", is_native=True),
             ),
         ),
     )

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import IntEnum
+from typing import Iterable
 
 from .ByteUtils import clean_hex
 from .Types import HexString
@@ -11,6 +12,8 @@ CARISTA_NON_FINAL_FRAME_ST = "ATST04"
 CARISTA_FINAL_FRAME_ST = "ATST20"
 CARISTA_TX_ACK_RETRIES = 2
 CARISTA_TX_ACK_RETRY_DELAY_SECONDS = 0.05
+CARISTA_NATIVE_T3_MS = 0x82
+CARISTA_CHANNEL_REOPEN_DELAY_MS = 1000
 
 
 class VagCanCommunicator:
@@ -43,6 +46,22 @@ class VagCanCommunicator:
     @staticmethod
     def expectedTransmitAck(next_counter: int) -> HexString:
         return expectedTransmitAck(next_counter)
+
+    @staticmethod
+    def ackForReceivedPacket(raw_packet: HexString) -> HexString | None:
+        return ackForReceivedPacket(raw_packet)
+
+    @staticmethod
+    def isTransmitAck(raw_packet: HexString) -> bool:
+        return isTransmitAck(raw_packet)
+
+    @staticmethod
+    def findTransmitAcks(raw_packets: Iterable[HexString]) -> list[HexString]:
+        return findTransmitAcks(raw_packets)
+
+    @staticmethod
+    def interFramePauseSeconds(t3_ms: int | None, minimum_ms: int) -> float:
+        return interFramePauseSeconds(t3_ms, minimum_ms)
 
 
 def generateOutgoingPackets(counter: int, request: HexString) -> list[VagCanCommunicator.VagCanPacket]:
@@ -89,5 +108,39 @@ def next_counter_after_packets(counter: int, packets: list[VagCanCommunicator.Va
     return nextSeqNum(counter, len(packets))
 
 
+def next_counter_after_request(counter: int, request: HexString) -> int:
+    return next_counter_after_packets(counter, generateOutgoingPackets(counter, request))
+
+
 def expectedTransmitAck(next_counter: int) -> HexString:
     return f"B{next_counter & 0xF:X}"
+
+
+def ackForReceivedPacket(raw_packet: HexString) -> HexString | None:
+    packet = clean_hex(raw_packet, "VagCanPacket")
+    if len(packet) < 2:
+        return None
+    frame_type = packet[0]
+    if frame_type not in {"0", "1"}:
+        return None
+    try:
+        sequence = int(packet[1], 16)
+    except ValueError:
+        return None
+    return f"B{(sequence + 1) & 0xF:X}"
+
+
+def isTransmitAck(raw_packet: HexString) -> bool:
+    packet = clean_hex(raw_packet, "VagCanPacket")
+    return len(packet) == 2 and packet[0] == "B" and packet[1] in "0123456789ABCDEF"
+
+
+def findTransmitAcks(raw_packets: Iterable[HexString]) -> list[HexString]:
+    return [clean_hex(packet, "VagCanPacket") for packet in raw_packets if isTransmitAck(packet)]
+
+
+def interFramePauseSeconds(t3_ms: int | None, minimum_ms: int) -> float:
+    candidates = [minimum_ms]
+    if t3_ms is not None and 0 < t3_ms < 0xFF:
+        candidates.append(t3_ms)
+    return max(candidates) / 1000.0

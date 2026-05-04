@@ -1,0 +1,180 @@
+# Data Target `014f6fbc`
+
+## Symbols
+- `Label` `VagWhitelists::CENTRAL_ELEC_6R_EXCEPT_6RU`
+- `Label` `_ZN13VagWhitelists26CENTRAL_ELEC_6R_EXCEPT_6RUE`
+
+## Memory Bytes
+<unreadable: MemoryAccessException: Unable to read bytes at ram:014f6fbc>
+
+## Direct References To This Address
+- `EXTERNAL` from `Entry Point` in `<no function>`
+- `DATA` from `014de8b0` in `<no function>`
+- `READ` from `01094c76` in `FUN_01093448 @ 01093448`
+- `PARAM` from `01168698` in `_INIT_138 @ 01156090`
+- `PARAM` from `011686bc` in `_INIT_138 @ 01156090`
+- `READ` from `011686c8` in `_INIT_138 @ 01156090`
+
+## Instructions At Direct Reference Sites
+- `01094c76`: `ldrd r1,r0,[r0,#0x0]`
+- `01168698`: `mov r0,r5`
+- `011686bc`: `mov r1,r5`
+- `011686c8`: `ldrd r1,r0,[r5,#0x0]`
+
+## Local Instruction Windows
+### Around `01094c76`
+- `01094c50`: `movs r2,#0x0`
+- `01094c52`: `ldr.w r1,[sp,#0xc54]`
+- `01094c56`: `ldr.w r0,[sp,#0xc50]`
+- `01094c5a`: `str.w r2,[sp,#0xc54]`
+- `01094c5e`: `add r3,sp,#0x10`
+- `01094c60`: `add.w r3,r3,#0xc400`
+- `01094c64`: `str.w r2,[sp,#0xc50]`
+- `01094c68`: `str.w r0,[r3,#0x938]`
+- `01094c6c`: `str.w r1,[r3,#0x93c]`
+- `01094c70`: `ldr r0,[0x01094c88]` refs: `READ -> 01094c88`
+- `01094c72`: `add r0,pc`
+- `01094c74`: `ldr r0,[r0,#0x0]` refs: `READ -> 014de8b0`
+- `01094c76`: `ldrd r1,r0,[r0,#0x0]` refs: `READ -> 014f6fbc` `READ -> 014f6fc0`
+- `01094c7a`: `str.w r1,[r3,#0x860]`
+- `01094c7e`: `str.w r0,[r3,#0x864]`
+- `01094c82`: `cbz r0,0x01094c9c` refs: `CONDITIONAL_JUMP -> 01094c9c`
+- `01094c84`: `b 0x01094c8c` refs: `UNCONDITIONAL_JUMP -> 01094c8c`
+- `01094c8c`: `adds r0,#0x4`
+- `01094c8e`: `ldrex r1,[r0,#0x0]`
+- `01094c92`: `adds r1,#0x1`
+- `01094c94`: `strex r2,r1,[r0,#0x0]`
+- `01094c98`: `cmp r2,#0x0`
+- `01094c9a`: `bne 0x01094c8e` refs: `CONDITIONAL_JUMP -> 01094c8e`
+- `01094c9c`: `ldr r0,[0x01094cb8]` refs: `READ -> 01094cb8`
+- `01094c9e`: `add r0,pc`
+- `01094ca0`: `ldr r0,[r0,#0x0]` refs: `READ -> 014de8b4`
+- `01094ca2`: `ldrd r1,r0,[r0,#0x0]` refs: `READ -> 014f6fa4` `READ -> 014f6fa8`
+- `01094ca6`: `add r2,sp,#0x10`
+- `01094ca8`: `add.w r2,r2,#0xc400`
+- `01094cac`: `str.w r1,[r2,#0x868]`
+- `01094cb0`: `str.w r0,[r2,#0x86c]`
+- `01094cb4`: `cbz r0,0x01094ccc` refs: `CONDITIONAL_JUMP -> 01094ccc`
+- `01094cb6`: `b 0x01094cbc` refs: `UNCONDITIONAL_JUMP -> 01094cbc`
+- `01094cbc`: `adds r0,#0x4`
+- `01094cbe`: `ldrex r1,[r0,#0x0]`
+- `01094cc2`: `adds r1,#0x1`
+- `01094cc4`: `strex r2,r1,[r0,#0x0]`
+- `01094cc8`: `cmp r2,#0x0`
+### Around `01168698`
+- `0116867c`: `movs r2,#0x2`
+- `0116867e`: `mov r1,r6`
+- `01168680`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
+- `01168684`: `movs r4,#0x1`
+- `01168686`: `add r1,sp,#0x48`
+- `01168688`: `mov r0,r8`
+- `0116868a`: `blx 0x014086e0` refs: `UNCONDITIONAL_CALL -> 014086e0`
+- `0116868e`: `movs r4,#0x0`
+- `01168690`: `ldr r0,[0x011686a0]` refs: `READ -> 011686a0`
+- `01168692`: `mov r1,r8`
+- `01168694`: `add r0,pc`
+- `01168696`: `ldr r5,[r0,#0x0]` refs: `READ -> 014de8b0`
+- `01168698`: `mov r0,r5` refs: `PARAM -> 014f6fbc`
+- `0116869a`: `blx 0x0140be90` refs: `UNCONDITIONAL_CALL -> 0140be90`
+- `0116869e`: `b 0x011686a4` refs: `UNCONDITIONAL_JUMP -> 011686a4`
+- `011686a4`: `add r0,sp,#0x48`
+- `011686a6`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
+- `011686aa`: `movs r4,#0xc`
+- `011686ac`: `adds r0,r6,r4`
+- `011686ae`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
+- `011686b2`: `subs r4,#0xc`
+- `011686b4`: `adds.w r0,r4,#0xc`
+- `011686b8`: `bne 0x011686ac` refs: `CONDITIONAL_JUMP -> 011686ac`
+- `011686ba`: `ldr r0,[0x011686d4]` refs: `READ -> 011686d4`
+- `011686bc`: `mov r1,r5` refs: `PARAM -> 014f6fbc`
+- `011686be`: `ldr r2,[0x011686d8]` refs: `READ -> 011686d8`
+- `011686c0`: `add r0,pc` refs: `PARAM -> 00d5d495`
+- `011686c2`: `add r2,pc` refs: `PARAM -> 014371d0`
+- `011686c4`: `blx 0x013fa330` refs: `UNCONDITIONAL_CALL -> 013fa330`
+- `011686c8`: `ldrd r1,r0,[r5,#0x0]` refs: `READ -> 014f6fbc` `READ -> 014f6fc0`
+- `011686cc`: `strd r1,r0,[sp,#0x174]` refs: `WRITE -> Stack[-0xf14]`
+- `011686d0`: `cbz r0,0x011686ec` refs: `CONDITIONAL_JUMP -> 011686ec`
+- `011686d2`: `b 0x011686dc` refs: `UNCONDITIONAL_JUMP -> 011686dc`
+- `011686dc`: `adds r0,#0x4`
+- `011686de`: `ldrex r1,[r0,#0x0]`
+- `011686e2`: `adds r1,#0x1`
+- `011686e4`: `strex r2,r1,[r0,#0x0]`
+- `011686e8`: `cmp r2,#0x0`
+### Around `011686bc`
+- `01168698`: `mov r0,r5` refs: `PARAM -> 014f6fbc`
+- `0116869a`: `blx 0x0140be90` refs: `UNCONDITIONAL_CALL -> 0140be90`
+- `0116869e`: `b 0x011686a4` refs: `UNCONDITIONAL_JUMP -> 011686a4`
+- `011686a4`: `add r0,sp,#0x48`
+- `011686a6`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
+- `011686aa`: `movs r4,#0xc`
+- `011686ac`: `adds r0,r6,r4`
+- `011686ae`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
+- `011686b2`: `subs r4,#0xc`
+- `011686b4`: `adds.w r0,r4,#0xc`
+- `011686b8`: `bne 0x011686ac` refs: `CONDITIONAL_JUMP -> 011686ac`
+- `011686ba`: `ldr r0,[0x011686d4]` refs: `READ -> 011686d4`
+- `011686bc`: `mov r1,r5` refs: `PARAM -> 014f6fbc`
+- `011686be`: `ldr r2,[0x011686d8]` refs: `READ -> 011686d8`
+- `011686c0`: `add r0,pc` refs: `PARAM -> 00d5d495`
+- `011686c2`: `add r2,pc` refs: `PARAM -> 014371d0`
+- `011686c4`: `blx 0x013fa330` refs: `UNCONDITIONAL_CALL -> 013fa330`
+- `011686c8`: `ldrd r1,r0,[r5,#0x0]` refs: `READ -> 014f6fbc` `READ -> 014f6fc0`
+- `011686cc`: `strd r1,r0,[sp,#0x174]` refs: `WRITE -> Stack[-0xf14]`
+- `011686d0`: `cbz r0,0x011686ec` refs: `CONDITIONAL_JUMP -> 011686ec`
+- `011686d2`: `b 0x011686dc` refs: `UNCONDITIONAL_JUMP -> 011686dc`
+- `011686dc`: `adds r0,#0x4`
+- `011686de`: `ldrex r1,[r0,#0x0]`
+- `011686e2`: `adds r1,#0x1`
+- `011686e4`: `strex r2,r1,[r0,#0x0]`
+- `011686e8`: `cmp r2,#0x0`
+- `011686ea`: `bne 0x011686de` refs: `CONDITIONAL_JUMP -> 011686de`
+- `011686ec`: `ldrd r1,r0,[r9,#0x0]` refs: `READ -> 014f6fb4` `READ -> 014f6fb8`
+- `011686f0`: `strd r1,r0,[sp,#0x17c]` refs: `WRITE -> Stack[-0xf0c]`
+- `011686f4`: `cbz r0,0x01168706` refs: `CONDITIONAL_JUMP -> 01168706`
+- `011686f6`: `adds r0,#0x4`
+- `011686f8`: `ldrex r1,[r0,#0x0]`
+- `011686fc`: `adds r1,#0x1`
+- `011686fe`: `strex r2,r1,[r0,#0x0]`
+- `01168702`: `cmp r2,#0x0`
+- `01168704`: `bne 0x011686f8` refs: `CONDITIONAL_JUMP -> 011686f8`
+- `01168706`: `ldr r0,[0x0116871c]` refs: `READ -> 0116871c`
+- `01168708`: `add r4,sp,#0x174`
+### Around `011686c8`
+- `011686aa`: `movs r4,#0xc`
+- `011686ac`: `adds r0,r6,r4`
+- `011686ae`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
+- `011686b2`: `subs r4,#0xc`
+- `011686b4`: `adds.w r0,r4,#0xc`
+- `011686b8`: `bne 0x011686ac` refs: `CONDITIONAL_JUMP -> 011686ac`
+- `011686ba`: `ldr r0,[0x011686d4]` refs: `READ -> 011686d4`
+- `011686bc`: `mov r1,r5` refs: `PARAM -> 014f6fbc`
+- `011686be`: `ldr r2,[0x011686d8]` refs: `READ -> 011686d8`
+- `011686c0`: `add r0,pc` refs: `PARAM -> 00d5d495`
+- `011686c2`: `add r2,pc` refs: `PARAM -> 014371d0`
+- `011686c4`: `blx 0x013fa330` refs: `UNCONDITIONAL_CALL -> 013fa330`
+- `011686c8`: `ldrd r1,r0,[r5,#0x0]` refs: `READ -> 014f6fbc` `READ -> 014f6fc0`
+- `011686cc`: `strd r1,r0,[sp,#0x174]` refs: `WRITE -> Stack[-0xf14]`
+- `011686d0`: `cbz r0,0x011686ec` refs: `CONDITIONAL_JUMP -> 011686ec`
+- `011686d2`: `b 0x011686dc` refs: `UNCONDITIONAL_JUMP -> 011686dc`
+- `011686dc`: `adds r0,#0x4`
+- `011686de`: `ldrex r1,[r0,#0x0]`
+- `011686e2`: `adds r1,#0x1`
+- `011686e4`: `strex r2,r1,[r0,#0x0]`
+- `011686e8`: `cmp r2,#0x0`
+- `011686ea`: `bne 0x011686de` refs: `CONDITIONAL_JUMP -> 011686de`
+- `011686ec`: `ldrd r1,r0,[r9,#0x0]` refs: `READ -> 014f6fb4` `READ -> 014f6fb8`
+- `011686f0`: `strd r1,r0,[sp,#0x17c]` refs: `WRITE -> Stack[-0xf0c]`
+- `011686f4`: `cbz r0,0x01168706` refs: `CONDITIONAL_JUMP -> 01168706`
+- `011686f6`: `adds r0,#0x4`
+- `011686f8`: `ldrex r1,[r0,#0x0]`
+- `011686fc`: `adds r1,#0x1`
+- `011686fe`: `strex r2,r1,[r0,#0x0]`
+- `01168702`: `cmp r2,#0x0`
+- `01168704`: `bne 0x011686f8` refs: `CONDITIONAL_JUMP -> 011686f8`
+- `01168706`: `ldr r0,[0x0116871c]` refs: `READ -> 0116871c`
+- `01168708`: `add r4,sp,#0x174`
+- `0116870a`: `movs r2,#0x2`
+- `0116870c`: `add r0,pc`
+- `0116870e`: `mov r1,r4`
+- `01168710`: `ldr.w r8,[r0,#0x0]` refs: `READ -> 014df244`
+- `01168714`: `mov r0,r8` refs: `PARAM -> 014f6fc4`

@@ -4,6 +4,7 @@ import argparse
 import csv
 import json
 import re
+import sys
 import time
 from dataclasses import dataclass
 from datetime import datetime
@@ -11,6 +12,19 @@ from pathlib import Path
 from typing import Callable, Literal, TypeAlias, TypedDict
 
 import serial
+
+WORKSPACE_ROOT = Path(__file__).resolve().parents[1]
+if str(WORKSPACE_ROOT) not in sys.path:
+    sys.path.insert(0, str(WORKSPACE_ROOT))
+
+from CaristaReproduction.CaristaReadValuesOperation import (
+    CARISTA_EXACT_CHANNEL_PARAMETER_REQUEST,
+    POLO_LIVE_PROVEN_CHANNEL_PARAMETER_REQUEST,
+    CaristaReadValuesOperation_commandLabels,
+    CaristaReadValuesOperation_pq25BcmRequests,
+)
+from CaristaReproduction.VagCanEcu import VagCanEcu_buildPq25ScanPlan
+from CaristaReproduction.VagCanSettings import VagCanSettings_commandLabels, VagCanSettings_readOnlyDidRequests
 
 
 DEFAULT_PORT = "COM10"
@@ -38,10 +52,16 @@ CARISTA_UDS_READS = (
     "22F1AA",
     "22F1DF",
 )
+VAG_CAN_SETTINGS_LIGHTING_UDS_READS = VagCanSettings_readOnlyDidRequests()
+CARISTA_READ_VALUES_READS = CaristaReadValuesOperation_pq25BcmRequests(include_live_companions=True)
+BCM_LIGHT_DEBUG_READS = CARISTA_READ_VALUES_READS + CARISTA_UDS_READS + ("1802FF00", "1902FF")
 READ_PROFILES = {
     "carista_kwp": CARISTA_KWP_READS,
     "carista_uds": CARISTA_UDS_READS,
     "carista_all": CARISTA_KWP_READS + CARISTA_UDS_READS,
+    "carista_read_values": CARISTA_READ_VALUES_READS,
+    "vag_can_settings_lighting": VAG_CAN_SETTINGS_LIGHTING_UDS_READS,
+    "bcm_light_debug": BCM_LIGHT_DEBUG_READS,
     "legacy": LEGACY_KWP_READS,
 }
 MAX_AUTO_ACK_ROUNDS = 8
@@ -64,16 +84,21 @@ ApplicationStatus: TypeAlias = Literal[
     "raw_frames",
     "no_response",
 ]
-ChannelParameterStatus: TypeAlias = Literal["answered", "defaulted", "skipped"]
+ChannelParameterStatus: TypeAlias = Literal["answered", "defaulted", "disconnect", "skipped"]
 
 CARISTA_COMMAND_LABELS: dict[HexString, str] = {
     "1089": "diagnostic session observed by Carista/PQ25 flow; positive response is 5089",
     "220600": "direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding",
+    "220601": "Carista-shaped UDS companion DID from the current BCM identity/status sweep",
+    "220606": "Carista-shaped UDS companion DID; previous live response was 620606001800018000",
+    "22F1A5": "GetVagUdsEcuWorkshopCodeCommand / workshop-code read used by the Carista UDS write gate",
     "1A9B": "GetVagCanEcuInfoCommand_getRequest / ECU component identity",
     "1A9F": "GetVagCanEcuListCommand / ECU list/info",
     "1A91": "Carista VAGCAN20 simulator identity/coding-related block",
     "1A9A": "ReadVagCanLongCodingCommand_getRequest / long coding",
     "1A86": "Carista VAGCAN20 simulator software/version dataset block",
+    "1802FF00": "read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 58020C9820038B20",
+    "1902FF": "read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 7F1911",
     "A00194FF82FF": "Carista exact TP2.0 channel parameter setup from libCarista.so",
     "A00F8AFF32FF": "known-good minimal TP2.0 channel parameter request for this Polo",
     "A3": "TP2.0 keep-alive; Carista ignores it",
@@ -86,6 +111,8 @@ CARISTA_COMMAND_LABELS: dict[HexString, str] = {
     "31B9": "SetVagCanAdaptationChannelCommand; blocked in read-only probe",
     "32B8": "StopReadVagCanRoutineCommand; blocked in read-only probe",
 }
+CARISTA_COMMAND_LABELS.update(CaristaReadValuesOperation_commandLabels())
+CARISTA_COMMAND_LABELS.update(VagCanSettings_commandLabels())
 
 SUMMARY_FIELDS = (
     "attempt_id",
@@ -93,6 +120,10 @@ SUMMARY_FIELDS = (
     "started",
     "log_file",
     "unit",
+    "ecu_scan_status",
+    "scan_probe",
+    "scan_native_builder",
+    "scan_purpose",
     "send_header",
     "listen_header",
     "channel_parameter_profile",
@@ -566,23 +597,25 @@ def get_channel_parameters(
     profile: str,
 ) -> tuple[int, int, int, int, int, list[CanFrame], ChannelParameterStatus]:
     minimal_attempts = (
-        ("minimal-fast", listen_header, ("ATST32", f"ATSH{send_header}"), "A00F8AFF32FF"),
+        ("minimal-fast", listen_header, ("ATST32", f"ATSH{send_header}"), POLO_LIVE_PROVEN_CHANNEL_PARAMETER_REQUEST),
     )
     legacy_attempts = minimal_attempts + (
-        ("automatic-receive", listen_header, ("ATST32", f"ATSH{send_header}", "ATAR"), "A00F8AFF32FF"),
-        ("normal", listen_header, ("ATST32", f"ATSH{send_header}", f"ATCRA{listen_header}"), "A00F8AFF32FF"),
-        ("car-scanner-short-timeout", listen_header, ("ATST18", f"ATSH{send_header}", f"ATCRA{listen_header}"), "A00F8AFF32FF"),
-        ("reversed-test", send_header, ("ATST32", f"ATSH{listen_header}", f"ATCRA{send_header}"), "A00F8AFF32FF"),
+        ("automatic-receive", listen_header, ("ATST32", f"ATSH{send_header}", "ATAR"), POLO_LIVE_PROVEN_CHANNEL_PARAMETER_REQUEST),
+        ("normal", listen_header, ("ATST32", f"ATSH{send_header}", f"ATCRA{listen_header}"), POLO_LIVE_PROVEN_CHANNEL_PARAMETER_REQUEST),
+        ("car-scanner-short-timeout", listen_header, ("ATST18", f"ATSH{send_header}", f"ATCRA{listen_header}"), POLO_LIVE_PROVEN_CHANNEL_PARAMETER_REQUEST),
+        ("reversed-test", send_header, ("ATST32", f"ATSH{listen_header}", f"ATCRA{send_header}"), POLO_LIVE_PROVEN_CHANNEL_PARAMETER_REQUEST),
     )
     carista_attempts = (
         # Decompiled Carista 9.8.2 builds this exact TP2.0 channel parameter setup.
-        ("carista-exact", listen_header, ("ATST32", f"ATSH{send_header}", f"ATCRA{listen_header}"), "A00194FF82FF"),
-        ("carista-exact-automatic-receive", listen_header, ("ATST32", f"ATSH{send_header}", "ATAR"), "A00194FF82FF"),
+        ("carista-exact", listen_header, ("ATST32", f"ATSH{send_header}", f"ATCRA{listen_header}"), CARISTA_EXACT_CHANNEL_PARAMETER_REQUEST),
+        ("carista-exact-automatic-receive", listen_header, ("ATST32", f"ATSH{send_header}", "ATAR"), CARISTA_EXACT_CHANNEL_PARAMETER_REQUEST),
     )
     attempts = {
         "minimal": minimal_attempts,
         "legacy": legacy_attempts,
         "carista": carista_attempts,
+        "carista_exact": carista_attempts,
+        "carista_then_minimal": carista_attempts + minimal_attempts,
         "all": legacy_attempts + carista_attempts,
     }[profile]
 
@@ -593,6 +626,9 @@ def get_channel_parameters(
             send(ser, logger, command, timeout, pause=0.2)
         result = send(ser, logger, payload, timeout=3.0, pause=0.9)
         all_frames.extend(result.frames)
+        if has_disconnect_frame(result.frames, expected_response):
+            logger.write("TP2.0 parameter setup received A8 disconnect; channel must be reopened.")
+            return 15, 255, 255, 255, 255, all_frames, "disconnect"
         for frame in result.frames:
             data = bytes.fromhex(frame.payload)
             if frame.header == expected_response and len(data) >= 6 and data[0] == 0xA1:
@@ -783,6 +819,10 @@ def base_row(args: argparse.Namespace, mode: str, attempt_id: str, log_file: Pat
         "started": now(),
         "log_file": str(log_file),
         "unit": args.unit,
+        "ecu_scan_status": "",
+        "scan_probe": "",
+        "scan_native_builder": "",
+        "scan_purpose": "",
         "send_header": "",
         "listen_header": "",
         "channel_parameter_profile": args.parameter_profile,
@@ -971,7 +1011,10 @@ def run_direct_sequence(args: argparse.Namespace) -> list[dict[str, object]]:
     sequence_rows: list[dict[str, object]] = []
     read_commands = selected_read_commands(args)
     start_counter = args.read_counter if args.read_counter is not None else 0
-    attempt_id = f"sequence_ctr{start_counter:X}_{'_'.join(read_commands)}"
+    sequence_name = args.read_profile if args.read_commands is None else "_".join(read_commands)
+    if len(sequence_name) > 80:
+        sequence_name = f"custom_{len(read_commands)}_commands"
+    attempt_id = f"sequence_ctr{start_counter:X}_{sequence_name}"
 
     def operation(
         ser: serial.Serial,
@@ -1010,6 +1053,64 @@ def run_direct_sequence(args: argparse.Namespace) -> list[dict[str, object]]:
 
     base_result = run_isolated_attempt(args, "direct_sequence", attempt_id, operation)
     return sequence_rows if sequence_rows else [base_result]
+
+
+def run_carista_ecu_scan(args: argparse.Namespace) -> list[dict[str, object]]:
+    scan_rows: list[dict[str, object]] = []
+    plan = VagCanEcu_buildPq25ScanPlan()
+    probe = plan.probes[0]
+    start_counter = args.read_counter if args.read_counter is not None else 0
+    attempt_id = f"{probe.ecu.ecu_id}_unit{args.unit}_ctr{start_counter:X}"
+
+    def operation(
+        ser: serial.Serial,
+        logger: Logger,
+        row: dict[str, object],
+        _send_header: str,
+        listen_header: str,
+    ) -> None:
+        logger.section(f"Carista ECU scan: {probe.ecu.ecu_id} / {probe.ecu.name}")
+        logger.write(f"Expected part: {probe.ecu.expected_part_number or '<unknown>'}")
+        logger.write(f"Expected component: {probe.ecu.expected_component or '<unknown>'}")
+        logger.write("This mode is read-only and uses recovered Carista request builders where available.")
+        row["ecu_scan_status"] = "tp20_opened"
+        row["scan_probe"] = probe.ecu.ecu_id
+        row["read_profile"] = "carista_ecu_scan"
+
+        counter = start_counter
+        for command_model in probe.commands:
+            scan_row = clone_sequence_row(row, f"scan_ctr{counter:X}_{command_model.request}")
+            scan_row["ecu_scan_status"] = "tp20_opened"
+            scan_row["scan_probe"] = probe.ecu.ecu_id
+            scan_row["scan_native_builder"] = command_model.native_builder
+            scan_row["scan_purpose"] = command_model.purpose
+            scan_row["read_counter"] = f"{counter:X}"
+            set_read_command(scan_row, command_model.request)
+
+            logger.section(f"Carista scan read: counter={counter:X}, request={command_model.request}")
+            logger.write(f"Native builder: {command_model.native_builder}")
+            logger.write(f"Purpose: {command_model.purpose}")
+            read_status, read_payload, read_frames, counter = send_tp20_application_request(
+                ser,
+                logger,
+                command_model.request,
+                counter=counter,
+                listen_header=listen_header,
+                timeout=args.timeout,
+                auto_ack=True,
+            )
+            scan_row["read_status"] = read_status
+            scan_row["read_result"] = read_payload
+            append_frames(scan_row, read_frames)
+            scan_rows.append(scan_row)
+
+            if read_status == "disconnect":
+                scan_row["stopped_early"] = "true"
+                logger.write("Stopping Carista ECU scan after TP2.0 disconnect.")
+                break
+
+    base_result = run_isolated_attempt(args, "carista_ecu_scan", attempt_id, operation)
+    return scan_rows if scan_rows else [base_result]
 
 
 def run_ack_sweep(args: argparse.Namespace) -> list[dict[str, object]]:
@@ -1375,6 +1476,7 @@ def build_parser() -> argparse.ArgumentParser:
 Examples:
   python vw_tp20_readonly_probe.py --mode direct_read --port COM10 --read-commands 220600
     python vw_tp20_readonly_probe.py --mode direct_sequence --port COM10 --read-commands 220600,1A9B,1A9A
+    python vw_tp20_readonly_probe.py --mode direct_sequence --port COM10 --parameter-profile carista_then_minimal --read-profile carista_read_values
   python vw_tp20_readonly_probe.py --mode session_sweep --port COM10
   python vw_tp20_readonly_probe.py --mode passive_sniff --port COM10 --session 1089
   python vw_tp20_readonly_probe.py --mode ack_sweep --port COM10 --session 1089 --read-command 1A9B
@@ -1383,7 +1485,8 @@ Examples:
   python vw_tp20_readonly_probe.py --mode read_sweep --port COM10 --session 1089 --ack none --delay-ms 100
     python vw_tp20_readonly_probe.py --mode read_sweep --port COM10 --session 1089 --ack none --delay-ms 100 --read-counter 3 --read-commands 1A9B
     python vw_tp20_readonly_probe.py --mode read_sweep --port COM10 --session 1089 --ack none --delay-ms 100 --preserve-input-before-read --read-commands 1A9B
-  python vw_tp20_readonly_probe.py --mode read_sweep --port COM10 --read-profile carista_all
+    python vw_tp20_readonly_probe.py --mode read_sweep --port COM10 --read-profile carista_all
+    python vw_tp20_readonly_probe.py --mode direct_sequence --port COM10 --parameter-profile carista_then_minimal --read-profile bcm_light_debug --run-id pq25_bcm_light_debug_baseline
   python vw_tp20_readonly_probe.py --mode read_sweep --port COM10 --skip-channel-parameters --read-commands 1A9A
 """,
     )
@@ -1392,6 +1495,7 @@ Examples:
         choices=(
             "direct_read",
             "direct_sequence",
+            "carista_ecu_scan",
             "session_sweep",
             "ack_sweep",
             "counter_sweep",
@@ -1407,9 +1511,9 @@ Examples:
     parser.add_argument("--unit", default=DEFAULT_UNIT, type=lambda value: validate_hex(value, "unit"))
     parser.add_argument(
         "--parameter-profile",
-        choices=("minimal", "legacy", "carista", "all"),
+        choices=("minimal", "legacy", "carista", "carista_exact", "carista_then_minimal", "all"),
         default="minimal",
-        help="TP2.0 channel parameter attempts. minimal sends only the proven A00F8AFF32FF request.",
+        help="TP2.0 channel parameter attempts. carista_then_minimal tries Carista's A00194FF82FF before the Polo-proven A00F8AFF32FF fallback.",
     )
     parser.add_argument(
         "--skip-channel-parameters",
@@ -1449,8 +1553,8 @@ Examples:
         "--read-profile",
         type=parse_read_profile,
         choices=tuple(READ_PROFILES),
-        default="carista_kwp",
-        help="Named read list: carista_kwp, carista_uds, carista_all, or legacy.",
+        default="carista_read_values",
+        help="Named read list. Defaults to the CaristaReproduction ReadValuesOperation PQ25 BCM plan.",
     )
     parser.add_argument("--read-commands", type=parse_commands, default=None, help="Comma-separated read commands; overrides --read-profile.")
     parser.add_argument("--sniff-ms", type=int, default=1000)
@@ -1465,6 +1569,7 @@ def main() -> int:
     runners: dict[str, Callable[[argparse.Namespace], list[dict[str, object]]]] = {
         "direct_read": run_direct_read,
         "direct_sequence": run_direct_sequence,
+        "carista_ecu_scan": run_carista_ecu_scan,
         "session_sweep": run_session_sweep,
         "ack_sweep": run_ack_sweep,
         "counter_sweep": run_counter_sweep,

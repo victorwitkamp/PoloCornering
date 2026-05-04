@@ -1,0 +1,13 @@
+/* _ZNSt6__ndk110shared_ptrI31FullByteVagUdsAdaptationSettingE18__enable_weak_thisB8ne190000I7SettingS1_TnNS_9enable_ifIXsr14is_convertibleIPT0_PKNS_23enable_shared_from_thisIT_EEEE5valueEiE4typeELi0EEEvSC_S7_ @ 014171c0 */
+
+
+void _ZNSt6__ndk110shared_ptrI31FullByteVagUdsAdaptationSettingE18__enable_weak_thisB8ne190000I7SettingS1_TnNS_9enable_ifIXsr14is_convertibleIPT0_PKNS_23enable_shared_from_thisIT_EEEE5valueEiE4typeELi0EEEvSC_S7_
+               (void)
+
+{
+  _ZNSt6__ndk110shared_ptrI31FullByteVagUdsAdaptationSettingE18__enable_weak_thisB8ne190000I7SettingS1_TnNS_9enable_ifIXsr14is_convertibleIPT0_PKNS_23enable_shared_from_thisIT_EEEE5valueEiE4typeELi0EEEvSC_S7_
+            ();
+  return;
+}
+
+

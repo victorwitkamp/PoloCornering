@@ -1,0 +1,194 @@
+# coming_home_duration_ref
+Target address: 0107813e
+Function: FUN_0105f6c0 @ 0105f6c0
+
+01078010      movs r1,#0x2d
+01078012      str.w r1,[r2,#0xb64]
+01078016      movs r1,#0x28
+01078018      str.w r1,[r2,#0xb54]
+0107801c      movs r1,#0x23
+0107801e      str.w r1,[r2,#0xb44]
+01078022      movs r1,#0x1e
+01078024      str.w r1,[r2,#0xb34]
+01078028      movs r1,#0x19
+0107802a      str.w r1,[r2,#0xb24]
+0107802e      movs r1,#0x14
+01078030      str.w r1,[r2,#0xb14]
+01078034      movs r1,#0xf
+01078036      str.w r0,[r2,#0xb98]
+0107803a      str.w r0,[r2,#0xb88]
+0107803e      str.w r0,[r2,#0xb78]
+01078042      str.w r0,[r2,#0xb68]
+01078046      str.w r0,[r2,#0xb58]
+0107804a      str.w r0,[r2,#0xb48]
+0107804e      str.w r0,[r2,#0xb38]
+01078052      str.w r0,[r2,#0xb28]
+01078056      str.w r0,[r2,#0xb18]
+0107805a      str.w r0,[r2,#0xb08]
+0107805e      str.w r0,[r2,#0xaf8]
+01078062      movs r0,#0xa
+01078064      str.w r1,[r2,#0xb04]
+01078068      str.w r0,[r2,#0xaf4]
+0107806c      ldr r0,[0x010780fc]  ; refs: READ->010780fc[undefined4=-0x4f54ba]
+0107806e      add r0,pc
+01078070      str r0,[sp,#0x1b0]  ; refs: DATA->00b82bb8[string=car_setting_time_60sec] WRITE->Stack[0x1b0]
+01078072      str.w r0,[r2,#0xb9c]  ; refs: DATA->00b82bb8[string=car_setting_time_60sec]
+01078076      ldr r0,[0x01078100]  ; refs: READ->01078100[undefined4=-0x9c0686]
+01078078      add r0,pc
+0107807a      str r0,[sp,#0xe8]  ; refs: DATA->006b79f6[string=car_setting_time_55sec] WRITE->Stack[0xe8]
+0107807c      str.w r0,[r2,#0xb8c]  ; refs: DATA->006b79f6[string=car_setting_time_55sec]
+01078080      ldr r0,[0x01078104]  ; refs: READ->01078104[undefined4=-0x769c0d]
+01078082      add r0,pc
+01078084      str r0,[sp,#0x198]  ; refs: DATA->0090e479[string=car_setting_time_50sec] WRITE->Stack[0x198]
+01078086      str.w r0,[r2,#0xb7c]  ; refs: DATA->0090e479[string=car_setting_time_50sec]
+0107808a      ldr r0,[0x01078108]  ; refs: READ->01078108[undefined4=-0x99c2ac]
+0107808c      add r0,pc
+0107808e      str r0,[sp,#0xd0]  ; refs: DATA->006dbde4[string=car_setting_time_45sec] WRITE->Stack[0xd0]
+01078090      str.w r0,[r2,#0xb6c]  ; refs: DATA->006dbde4[string=car_setting_time_45sec]
+01078094      ldr r0,[0x0107810c]  ; refs: READ->0107810c[undefined4=-0x608258]
+01078096      add r0,pc
+01078098      str r0,[sp,#0x194]  ; refs: DATA->00a6fe42[string=car_setting_time_40sec] WRITE->Stack[0x194]
+0107809a      str.w r0,[r2,#0xb5c]  ; refs: DATA->00a6fe42[string=car_setting_time_40sec]
+0107809e      ldr r0,[0x01078110]  ; refs: READ->01078110[undefined4=-0x693307]
+010780a0      add r0,pc
+010780a2      str r0,[sp,#0xcc]  ; refs: DATA->009e4d9d[string=car_setting_time_35sec] WRITE->Stack[0xcc]
+010780a4      str.w r0,[r2,#0xb4c]  ; refs: DATA->009e4d9d[string=car_setting_time_35sec]
+010780a8      ldr r0,[0x01078114]  ; refs: READ->01078114[undefined4=-0x842916]
+010780aa      add r0,pc
+010780ac      str r0,[sp,#0x128]  ; refs: DATA->00835798[string=car_setting_time_30sec] WRITE->Stack[0x128]
+010780ae      str.w r0,[r2,#0xb3c]  ; refs: DATA->00835798[string=car_setting_time_30sec]
+010780b2      ldr r0,[0x01078118]  ; refs: READ->01078118[undefined4=-0x693332]
+010780b4      add r0,pc
+010780b6      str r0,[sp,#0x68]  ; refs: DATA->009e4d86[string=car_setting_time_25sec] WRITE->Stack[0x68]
+010780b8      str.w r0,[r2,#0xb2c]  ; refs: DATA->009e4d86[string=car_setting_time_25sec]
+010780bc      ldr r0,[0x0107811c]  ; refs: READ->0107811c[undefined4=-0x4ccf85]
+010780be      add r0,pc
+010780c0      str r0,[sp,#0x110]  ; refs: DATA->00bab13d[string=car_setting_time_20sec] WRITE->Stack[0x110]
+010780c2      str.w r0,[r2,#0xb1c]  ; refs: DATA->00bab13d[string=car_setting_time_20sec]
+010780c6      ldr r0,[0x01078120]  ; refs: READ->01078120[undefined4=-0x6108d3]
+010780c8      add r0,pc
+010780ca      str r0,[sp,#0xf4]  ; refs: DATA->00a677f9[string=car_setting_time_15sec] WRITE->Stack[0xf4]
+010780cc      str.w r0,[r2,#0xb0c]  ; refs: DATA->00a677f9[string=car_setting_time_15sec]
+010780d0      ldr r0,[0x01078124]  ; refs: READ->01078124[undefined4=-0x6d9439]
+010780d2      add r0,pc
+010780d4      str r0,[sp,#0x10c]  ; refs: DATA->0099ec9d[string=car_setting_time_10sec] WRITE->Stack[0x10c]
+010780d6      str.w r0,[r2,#0xafc]  ; refs: DATA->0099ec9d[string=car_setting_time_10sec]
+010780da      add r0,sp,#0x138
+010780dc      add.w r0,r0,#0x11600
+010780e0      add.w r0,r0,#0x140
+010780e4      str r0,[sp,#0x20c]  ; refs: WRITE->Stack[0x20c]
+010780e6      add r0,sp,#0xc
+010780e8      add r1,sp,#0x98
+010780ea      add.w r0,r0,#0x7600
+010780ee      add.w r1,r1,#0x11200
+010780f2      movs r2,#0xb
+010780f4      bl 0x00cea35c  ; refs: UNCONDITIONAL_CALL->00cea35c
+010780f8      b 0x01078128  ; refs: UNCONDITIONAL_JUMP->01078128
+01078128      add r0,sp,#0x18
+0107812a      add.w r4,r0,#0x7600
+0107812e      add r0,sp,#0xc
+01078130      add.w r1,r0,#0x7600
+01078134      mov r0,r4
+01078136      bl 0x00cea328  ; refs: UNCONDITIONAL_CALL->00cea328
+0107813a      ldr r6,[0x01078158]  ; refs: READ->01078158[undefined4=-0x40733f]
+0107813c      add r6,pc
+0107813e  =>  strd r6,r4,[sp,#0x0]  ; refs: DATA->00c70e01[string=car_setting_coming_home_duration] WRITE->Stack[0x0]
+01078142      add r0,sp,#0x24
+01078144      add r1,sp,#0x20
+01078146      add.w r3,r1,#0x7600
+0107814a      ldr r1,[sp,#0x240]  ; refs: PARAM->014f638c[undefined4=null] READ->Stack[0x240]
+0107814c      ldr r2,[sp,#0x1c8]  ; refs: PARAM->014f6fec[undefined8=null] READ->Stack[0x1c8]
+0107814e      add.w r0,r0,#0x7600
+01078152      bl 0x010b704c  ; refs: UNCONDITIONAL_CALL->010b704c
+01078156      b 0x0107815c  ; refs: UNCONDITIONAL_JUMP->0107815c
+0107815c      add.w r2,sp,#0x11000
+01078160      ldrd r0,r1,[r11,#0x2b4]
+01078164      movs r3,#0xff
+01078166      vstr.64 d8,[r11,#0x260]
+0107816a      str.w r0,[r2,#0x878]
+0107816e      add.w r2,sp,#0x11000
+01078172      movs r0,#0x0
+01078174      str.w r1,[r2,#0x87c]
+01078178      movw r1,#0xa57
+0107817c      movs r2,#0x3
+0107817e      str.w r1,[r11,#0x290]
+01078182      strd r3,r2,[r11,#0x288]
+01078186      movs r1,#0x5a
+01078188      movs r2,#0xa
+0107818a      strd r0,r0,[r11,#0x2b4]
+0107818e      strd r2,r1,[r11,#0x274]
+01078192      str.w r0,[r11,#0x27c]
+01078196      strd r0,r0,[r11,#0x268]
+0107819a      add r0,sp,#0x138
+0107819c      add.w r0,r0,#0x11600
+010781a0      add.w r0,r0,#0x148
+010781a4      str r0,[sp,#0x20c]  ; refs: WRITE->Stack[0x20c]
+010781a6      add r0,sp,#0x50
+010781a8      add r1,sp,#0x58
+010781aa      add.w r1,r1,#0x7580
+010781ae      add.w r0,r0,#0x7580
+010781b2      ldr r2,[sp,#0x178]  ; refs: READ->Stack[0x178]
+010781b4      strd r2,r1,[sp,#0x0]  ; refs: DATA->014f220c[undefined4=null] WRITE->Stack[0x0]
+010781b8      str r0,[sp,#0x8]  ; refs: WRITE->Stack[0x8]
+010781ba      add r0,sp,#0x70
+010781bc      add.w r4,r0,#0x7580
+010781c0      add r0,sp,#0x6c
+010781c2      add.w r1,r0,#0x7580
+010781c6      add r0,sp,#0x68
+010781c8      add.w r2,r0,#0x7580
+010781cc      add r0,sp,#0x64
+010781ce      add.w r3,r0,#0x7580
+010781d2      mov r0,r4
+010781d4      bl 0x00cea1a4  ; refs: UNCONDITIONAL_CALL->00cea1a4
+010781d8      add r0,sp,#0x78
+010781da      add r1,sp,#0x7c
+010781dc      add.w r0,r0,#0x7580
+010781e0      add.w r1,r1,#0x7580
+010781e4      strd r6,r4,[sp,#0x8]  ; refs: DATA->00c70e01[string=car_setting_coming_home_duration] WRITE->Stack[0x8]
+010781e8      add.w r3,sp,#0x7600
+010781ec      strd r1,r0,[sp,#0x0]  ; refs: WRITE->Stack[0x0]
+010781f0      ldr r0,[sp,#0x248]  ; refs: READ->Stack[0x248]
+010781f2      str r0,[sp,#0x10]  ; refs: DATA->014f61a0[undefined8=null] WRITE->Stack[0x10]
+010781f4      add r0,sp,#0x4
+010781f6      ldr r1,[sp,#0x250]  ; refs: PARAM->014f7ad8[undefined4=null] READ->Stack[0x250]
+010781f8      add.w r0,r0,#0x7600
+010781fc      ldr r2,[sp,#0x188]  ; refs: PARAM->014f702c[undefined8=null] READ->Stack[0x188]
+010781fe      bl 0x010b7094  ; refs: UNCONDITIONAL_CALL->010b7094
+01078202      add.w r2,sp,#0x11000
+01078206      ldrd r0,r1,[r11,#0x294]
+0107820a      str.w r0,[r2,#0x880]
+0107820e      add.w r2,sp,#0x11000
+01078212      movs r0,#0x0
+01078214      str.w r1,[r2,#0x884]
+01078218      movs r1,#0x1
+0107821a      strd r0,r0,[r11,#0x294]
+0107821e      str.w r1,[r11,#0x254]
+01078222      add r1,sp,#0x1a4
+01078224      add.w r2,r1,#0x10600
+01078228      movs r1,#0x3c
+0107822a      str.w r1,[r2,#0xae4]
+0107822e      movs r1,#0x32
+01078230      str.w r1,[r2,#0xad4]
+01078234      movs r1,#0x28
+01078236      str.w r1,[r2,#0xac4]
+0107823a      movs r1,#0x1e
+0107823c      str.w r1,[r2,#0xab4]
+01078240      movs r1,#0x14
+01078242      str.w r1,[r2,#0xaa4]
+01078246      movs r1,#0xf
+01078248      str.w r1,[r2,#0xa94]
+0107824c      movs r1,#0xa
+0107824e      str.w r1,[r2,#0xa84]
+01078252      movs r1,#0x5
+01078254      str.w r1,[r2,#0xa74]
+01078258      ldr r1,[sp,#0x1b0]  ; refs: READ->Stack[0x1b0]
+0107825a      str.w r1,[r2,#0xaec]  ; refs: DATA->00b82bb8[string=car_setting_time_60sec]
+0107825e      ldr r1,[sp,#0x198]  ; refs: READ->Stack[0x198]
+01078260      str.w r1,[r2,#0xadc]  ; refs: DATA->0090e479[string=car_setting_time_50sec]
+01078264      ldr r1,[sp,#0x194]  ; refs: READ->Stack[0x194]
+01078266      str.w r1,[r2,#0xacc]  ; refs: DATA->00a6fe42[string=car_setting_time_40sec]
+0107826a      ldr r1,[sp,#0x128]  ; refs: READ->Stack[0x128]
+0107826c      str.w r1,[r2,#0xabc]  ; refs: DATA->00835798[string=car_setting_time_30sec]
+01078270      ldr r1,[sp,#0x110]  ; refs: READ->Stack[0x110]
+01078272      str.w r1,[r2,#0xaac]  ; refs: DATA->00bab13d[string=car_setting_time_20sec]
+01078276      ldr r1,[sp,#0xf4]  ; refs: READ->Stack[0xf4]

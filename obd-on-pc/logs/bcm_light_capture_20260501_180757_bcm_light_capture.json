@@ -1,0 +1,1202 @@
+{
+  "metadata": {
+    "started": "2026-05-01T18:07:57.489",
+    "last_updated": "2026-05-01T18:14:01.735",
+    "run_id": "bcm_light_capture_20260501_180757",
+    "port": "COM10",
+    "baud": 38400,
+    "unit": "20",
+    "read_profile": "bcm_light_fast",
+    "read_commands": [
+      "220600",
+      "220606",
+      "1A9A",
+      "1A91",
+      "1802FF00",
+      "1902FF"
+    ],
+    "states": [
+      "baseline_off",
+      "parking_fog_off",
+      "parking_fog_on",
+      "lowbeam_fog_off",
+      "lowbeam_fog_on",
+      "left_turn",
+      "right_turn"
+    ],
+    "repeats": 1,
+    "raw_can_ms": 5000,
+    "raw_can_filter": "",
+    "raw_headers": [
+      "390",
+      "392",
+      "0D0",
+      "0C2",
+      "1A0",
+      "288",
+      "320",
+      "470"
+    ],
+    "raw_can_reference": {
+      "source": "openDBC vw_pq.dbc downloaded under reference/opendbc/ with LICENSE",
+      "light_context_headers": [
+        "390",
+        "392",
+        "0D0",
+        "0C2",
+        "1A0",
+        "288",
+        "320",
+        "470"
+      ],
+      "presets": {
+        "pq25_light_context": [
+          "390",
+          "392",
+          "0D0",
+          "0C2",
+          "1A0",
+          "288",
+          "320",
+          "470"
+        ],
+        "light_context": [
+          "390",
+          "392",
+          "0D0",
+          "0C2",
+          "1A0",
+          "288",
+          "320",
+          "470"
+        ],
+        "tp20": [
+          "300",
+          "338"
+        ]
+      }
+    },
+    "completed": true,
+    "interrupted": false,
+    "ended_early": false,
+    "skipped_states": [],
+    "safety": "read-only; blocks 27, 2E, 31, and 3B service prefixes"
+  },
+  "captures": [
+    {
+      "state": "baseline_off",
+      "repeat": 1,
+      "command": "220600",
+      "command_label": "direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "payload/status changed",
+      "error": "",
+      "log_file": "logs\\bcm_light_capture_20260501_180757_baseline_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-01T18:08:24.490",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "baseline_off",
+      "repeat": 1,
+      "command": "220606",
+      "command_label": "Carista-shaped UDS companion DID; previous live response was 620606001800018000",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\bcm_light_capture_20260501_180757_baseline_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-01T18:08:24.490",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "baseline_off",
+      "repeat": 1,
+      "command": "1A9A",
+      "command_label": "ReadVagCanLongCodingCommand_getRequest / long coding",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\bcm_light_capture_20260501_180757_baseline_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-01T18:08:24.490",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "baseline_off",
+      "repeat": 1,
+      "command": "1A91",
+      "command_label": "Carista VAGCAN20 simulator identity/coding-related block",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\bcm_light_capture_20260501_180757_baseline_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-01T18:08:24.490",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "baseline_off",
+      "repeat": 1,
+      "command": "1802FF00",
+      "command_label": "read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 58020C9820038B20",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\bcm_light_capture_20260501_180757_baseline_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-01T18:08:24.490",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "baseline_off",
+      "repeat": 1,
+      "command": "1902FF",
+      "command_label": "read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 7F1911",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\bcm_light_capture_20260501_180757_baseline_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-01T18:08:24.490",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "parking_fog_off",
+      "repeat": 1,
+      "command": "220600",
+      "command_label": "direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding",
+      "status": "positive",
+      "payload": "6206003AB02BBF08A10000003008006D2B0CD000C0412F60860000200000000000",
+      "payload_bytes": "33",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\bcm_light_capture_20260501_180757_parking_fog_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "answered",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 138,
+        "T2": 255,
+        "T3": 79,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-01T18:09:22.995",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-01T18:09:24.302",
+          "source": "A00F8AFF32FF",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-01T18:09:24.302",
+          "source": "A00F8AFF32FF",
+          "header": "300",
+          "payload": "A10F8AFF4FFF",
+          "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+        },
+        {
+          "timestamp": "2026-05-01T18:09:25.501",
+          "source": "100003220600",
+          "header": "300",
+          "payload": "B1",
+          "tp20_label": "TP2.0 ACK/control frame"
+        },
+        {
+          "timestamp": "2026-05-01T18:09:25.501",
+          "source": "100003220600",
+          "header": "300",
+          "payload": "2000216206003AB0",
+          "tp20_label": "TP2.0 application continuation frame seq=0"
+        },
+        {
+          "timestamp": "2026-05-01T18:09:25.501",
+          "source": "100003220600",
+          "header": "300",
+          "payload": "212BBF08A1000000",
+          "tp20_label": "TP2.0 application continuation frame seq=1"
+        },
+        {
+          "timestamp": "2026-05-01T18:09:25.501",
+          "source": "100003220600",
+          "header": "300",
+          "payload": "223008006D2B0CD0",
+          "tp20_label": "TP2.0 application continuation frame seq=2"
+        },
+        {
+          "timestamp": "2026-05-01T18:09:25.501",
+          "source": "100003220600",
+          "header": "300",
+          "payload": "2300C0412F608600",
+          "tp20_label": "TP2.0 application continuation frame seq=3"
+        },
+        {
+          "timestamp": "2026-05-01T18:09:25.501",
+          "source": "100003220600",
+          "header": "300",
+          "payload": "1400200000000000",
+          "tp20_label": "TP2.0 application first frame seq=4 len=32"
+        }
+      ]
+    },
+    {
+      "state": "parking_fog_off",
+      "repeat": 1,
+      "command": "220606",
+      "command_label": "Carista-shaped UDS companion DID; previous live response was 620606001800018000",
+      "status": "disconnect",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\bcm_light_capture_20260501_180757_parking_fog_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "answered",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 138,
+        "T2": 255,
+        "T3": 79,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-01T18:09:22.995",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-01T18:09:24.302",
+          "source": "A00F8AFF32FF",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-01T18:09:24.302",
+          "source": "A00F8AFF32FF",
+          "header": "300",
+          "payload": "A10F8AFF4FFF",
+          "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+        },
+        {
+          "timestamp": "2026-05-01T18:09:26.304",
+          "source": "110003220606",
+          "header": "300",
+          "payload": "A8",
+          "tp20_label": "TP2.0 disconnect/close frame"
+        }
+      ]
+    },
+    {
+      "state": "parking_fog_on",
+      "repeat": 1,
+      "command": "220600",
+      "command_label": "direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding",
+      "status": "positive",
+      "payload": "6206003AB02BBF08A10000003008006D2B0CD000C0412F60860000200000000000",
+      "payload_bytes": "33",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\bcm_light_capture_20260501_180757_parking_fog_on_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "answered",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 138,
+        "T2": 255,
+        "T3": 79,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-01T18:10:05.195",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-01T18:10:06.500",
+          "source": "A00F8AFF32FF",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-01T18:10:06.500",
+          "source": "A00F8AFF32FF",
+          "header": "300",
+          "payload": "A10F8AFF4FFF",
+          "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+        },
+        {
+          "timestamp": "2026-05-01T18:10:07.660",
+          "source": "100003220600",
+          "header": "300",
+          "payload": "B1",
+          "tp20_label": "TP2.0 ACK/control frame"
+        },
+        {
+          "timestamp": "2026-05-01T18:10:07.660",
+          "source": "100003220600",
+          "header": "300",
+          "payload": "2000216206003AB0",
+          "tp20_label": "TP2.0 application continuation frame seq=0"
+        },
+        {
+          "timestamp": "2026-05-01T18:10:07.660",
+          "source": "100003220600",
+          "header": "300",
+          "payload": "212BBF08A1000000",
+          "tp20_label": "TP2.0 application continuation frame seq=1"
+        },
+        {
+          "timestamp": "2026-05-01T18:10:07.660",
+          "source": "100003220600",
+          "header": "300",
+          "payload": "223008006D2B0CD0",
+          "tp20_label": "TP2.0 application continuation frame seq=2"
+        },
+        {
+          "timestamp": "2026-05-01T18:10:07.660",
+          "source": "100003220600",
+          "header": "300",
+          "payload": "2300C0412F608600",
+          "tp20_label": "TP2.0 application continuation frame seq=3"
+        },
+        {
+          "timestamp": "2026-05-01T18:10:07.660",
+          "source": "100003220600",
+          "header": "300",
+          "payload": "1400200000000000",
+          "tp20_label": "TP2.0 application first frame seq=4 len=32"
+        }
+      ]
+    },
+    {
+      "state": "parking_fog_on",
+      "repeat": 1,
+      "command": "220606",
+      "command_label": "Carista-shaped UDS companion DID; previous live response was 620606001800018000",
+      "status": "disconnect",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\bcm_light_capture_20260501_180757_parking_fog_on_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "answered",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 138,
+        "T2": 255,
+        "T3": 79,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-01T18:10:05.195",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-01T18:10:06.500",
+          "source": "A00F8AFF32FF",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-01T18:10:06.500",
+          "source": "A00F8AFF32FF",
+          "header": "300",
+          "payload": "A10F8AFF4FFF",
+          "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+        },
+        {
+          "timestamp": "2026-05-01T18:10:08.464",
+          "source": "110003220606",
+          "header": "300",
+          "payload": "A8",
+          "tp20_label": "TP2.0 disconnect/close frame"
+        }
+      ]
+    },
+    {
+      "state": "lowbeam_fog_off",
+      "repeat": 1,
+      "command": "220600",
+      "command_label": "direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding",
+      "status": "positive",
+      "payload": "6206003AB02BBF08A10000003008006D2B0CD000C0412F60860000200000000000",
+      "payload_bytes": "33",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\bcm_light_capture_20260501_180757_lowbeam_fog_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "answered",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 138,
+        "T2": 255,
+        "T3": 79,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-01T18:10:50.179",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-01T18:10:51.484",
+          "source": "A00F8AFF32FF",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-01T18:10:51.484",
+          "source": "A00F8AFF32FF",
+          "header": "300",
+          "payload": "A10F8AFF4FFF",
+          "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+        },
+        {
+          "timestamp": "2026-05-01T18:10:52.642",
+          "source": "100003220600",
+          "header": "300",
+          "payload": "B1",
+          "tp20_label": "TP2.0 ACK/control frame"
+        },
+        {
+          "timestamp": "2026-05-01T18:10:52.642",
+          "source": "100003220600",
+          "header": "300",
+          "payload": "2000216206003AB0",
+          "tp20_label": "TP2.0 application continuation frame seq=0"
+        },
+        {
+          "timestamp": "2026-05-01T18:10:52.642",
+          "source": "100003220600",
+          "header": "300",
+          "payload": "212BBF08A1000000",
+          "tp20_label": "TP2.0 application continuation frame seq=1"
+        },
+        {
+          "timestamp": "2026-05-01T18:10:52.642",
+          "source": "100003220600",
+          "header": "300",
+          "payload": "223008006D2B0CD0",
+          "tp20_label": "TP2.0 application continuation frame seq=2"
+        },
+        {
+          "timestamp": "2026-05-01T18:10:52.642",
+          "source": "100003220600",
+          "header": "300",
+          "payload": "2300C0412F608600",
+          "tp20_label": "TP2.0 application continuation frame seq=3"
+        },
+        {
+          "timestamp": "2026-05-01T18:10:52.642",
+          "source": "100003220600",
+          "header": "300",
+          "payload": "1400200000000000",
+          "tp20_label": "TP2.0 application first frame seq=4 len=32"
+        }
+      ]
+    },
+    {
+      "state": "lowbeam_fog_off",
+      "repeat": 1,
+      "command": "220606",
+      "command_label": "Carista-shaped UDS companion DID; previous live response was 620606001800018000",
+      "status": "disconnect",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\bcm_light_capture_20260501_180757_lowbeam_fog_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "answered",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 138,
+        "T2": 255,
+        "T3": 79,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-01T18:10:50.179",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-01T18:10:51.484",
+          "source": "A00F8AFF32FF",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-01T18:10:51.484",
+          "source": "A00F8AFF32FF",
+          "header": "300",
+          "payload": "A10F8AFF4FFF",
+          "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+        },
+        {
+          "timestamp": "2026-05-01T18:10:53.447",
+          "source": "110003220606",
+          "header": "300",
+          "payload": "A8",
+          "tp20_label": "TP2.0 disconnect/close frame"
+        }
+      ]
+    },
+    {
+      "state": "lowbeam_fog_on",
+      "repeat": 1,
+      "command": "220600",
+      "command_label": "direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "payload/status changed",
+      "error": "",
+      "log_file": "logs\\bcm_light_capture_20260501_180757_lowbeam_fog_on_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-01T18:11:24.341",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "lowbeam_fog_on",
+      "repeat": 1,
+      "command": "220606",
+      "command_label": "Carista-shaped UDS companion DID; previous live response was 620606001800018000",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\bcm_light_capture_20260501_180757_lowbeam_fog_on_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-01T18:11:24.341",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "lowbeam_fog_on",
+      "repeat": 1,
+      "command": "1A9A",
+      "command_label": "ReadVagCanLongCodingCommand_getRequest / long coding",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\bcm_light_capture_20260501_180757_lowbeam_fog_on_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-01T18:11:24.341",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "lowbeam_fog_on",
+      "repeat": 1,
+      "command": "1A91",
+      "command_label": "Carista VAGCAN20 simulator identity/coding-related block",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\bcm_light_capture_20260501_180757_lowbeam_fog_on_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-01T18:11:24.341",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "lowbeam_fog_on",
+      "repeat": 1,
+      "command": "1802FF00",
+      "command_label": "read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 58020C9820038B20",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\bcm_light_capture_20260501_180757_lowbeam_fog_on_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-01T18:11:24.341",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "lowbeam_fog_on",
+      "repeat": 1,
+      "command": "1902FF",
+      "command_label": "read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 7F1911",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\bcm_light_capture_20260501_180757_lowbeam_fog_on_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-01T18:11:24.341",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "left_turn",
+      "repeat": 1,
+      "command": "220600",
+      "command_label": "direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "payload/status changed",
+      "error": "",
+      "log_file": "logs\\bcm_light_capture_20260501_180757_left_turn_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-01T18:12:33.886",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "left_turn",
+      "repeat": 1,
+      "command": "220606",
+      "command_label": "Carista-shaped UDS companion DID; previous live response was 620606001800018000",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\bcm_light_capture_20260501_180757_left_turn_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-01T18:12:33.886",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "left_turn",
+      "repeat": 1,
+      "command": "1A9A",
+      "command_label": "ReadVagCanLongCodingCommand_getRequest / long coding",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\bcm_light_capture_20260501_180757_left_turn_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-01T18:12:33.886",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "left_turn",
+      "repeat": 1,
+      "command": "1A91",
+      "command_label": "Carista VAGCAN20 simulator identity/coding-related block",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\bcm_light_capture_20260501_180757_left_turn_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-01T18:12:33.886",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "left_turn",
+      "repeat": 1,
+      "command": "1802FF00",
+      "command_label": "read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 58020C9820038B20",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\bcm_light_capture_20260501_180757_left_turn_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-01T18:12:33.886",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "left_turn",
+      "repeat": 1,
+      "command": "1902FF",
+      "command_label": "read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 7F1911",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\bcm_light_capture_20260501_180757_left_turn_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-01T18:12:33.886",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "right_turn",
+      "repeat": 1,
+      "command": "220600",
+      "command_label": "direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding",
+      "status": "positive",
+      "payload": "6206003AB02BBF08A10000003008006D2B0CD000C0412F60860000200000000000",
+      "payload_bytes": "33",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\bcm_light_capture_20260501_180757_right_turn_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "answered",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 138,
+        "T2": 255,
+        "T3": 79,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-01T18:13:57.542",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-01T18:13:58.848",
+          "source": "A00F8AFF32FF",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-01T18:13:58.848",
+          "source": "A00F8AFF32FF",
+          "header": "300",
+          "payload": "A10F8AFF4FFF",
+          "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+        },
+        {
+          "timestamp": "2026-05-01T18:14:00.008",
+          "source": "100003220600",
+          "header": "300",
+          "payload": "B1",
+          "tp20_label": "TP2.0 ACK/control frame"
+        },
+        {
+          "timestamp": "2026-05-01T18:14:00.008",
+          "source": "100003220600",
+          "header": "300",
+          "payload": "2000216206003AB0",
+          "tp20_label": "TP2.0 application continuation frame seq=0"
+        },
+        {
+          "timestamp": "2026-05-01T18:14:00.008",
+          "source": "100003220600",
+          "header": "300",
+          "payload": "212BBF08A1000000",
+          "tp20_label": "TP2.0 application continuation frame seq=1"
+        },
+        {
+          "timestamp": "2026-05-01T18:14:00.008",
+          "source": "100003220600",
+          "header": "300",
+          "payload": "223008006D2B0CD0",
+          "tp20_label": "TP2.0 application continuation frame seq=2"
+        },
+        {
+          "timestamp": "2026-05-01T18:14:00.008",
+          "source": "100003220600",
+          "header": "300",
+          "payload": "2300C0412F608600",
+          "tp20_label": "TP2.0 application continuation frame seq=3"
+        },
+        {
+          "timestamp": "2026-05-01T18:14:00.008",
+          "source": "100003220600",
+          "header": "300",
+          "payload": "1400200000000000",
+          "tp20_label": "TP2.0 application first frame seq=4 len=32"
+        }
+      ]
+    },
+    {
+      "state": "right_turn",
+      "repeat": 1,
+      "command": "220606",
+      "command_label": "Carista-shaped UDS companion DID; previous live response was 620606001800018000",
+      "status": "disconnect",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\bcm_light_capture_20260501_180757_right_turn_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "answered",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 138,
+        "T2": 255,
+        "T3": 79,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-01T18:13:57.542",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-01T18:13:58.848",
+          "source": "A00F8AFF32FF",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-01T18:13:58.848",
+          "source": "A00F8AFF32FF",
+          "header": "300",
+          "payload": "A10F8AFF4FFF",
+          "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+        },
+        {
+          "timestamp": "2026-05-01T18:14:00.812",
+          "source": "110003220606",
+          "header": "300",
+          "payload": "A8",
+          "tp20_label": "TP2.0 disconnect/close frame"
+        }
+      ]
+    }
+  ],
+  "raw_can_frames": []
+}

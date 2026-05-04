@@ -1,0 +1,15 @@
+/* VagOperationDelegate::failedFatallyOrWhenRequired<UInt16SetModel> @ 01428360 */
+
+
+bool __thiscall
+VagOperationDelegate::failedFatallyOrWhenRequired<UInt16SetModel>
+          (VagOperationDelegate *this,Result *param_1,uint param_2,uint param_3)
+
+{
+  bool bVar1;
+  
+  bVar1 = failedFatallyOrWhenRequired<UInt16SetModel>(this,param_1,param_2,param_3);
+  return bVar1;
+}
+
+

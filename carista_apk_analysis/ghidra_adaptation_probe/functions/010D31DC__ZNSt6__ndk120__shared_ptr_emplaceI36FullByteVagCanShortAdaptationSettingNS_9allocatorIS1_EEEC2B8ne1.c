@@ -1,0 +1,27 @@
+/* _ZNSt6__ndk120__shared_ptr_emplaceI36FullByteVagCanShortAdaptationSettingNS_9allocatorIS1_EEEC2B8ne190000IJRP9VagCanEcuRKNS_10shared_ptrI15StringWhitelistEEiRA29_KcRKNS9_I28MultipleChoiceInterpretationEEES3_TnNS_9enable_ifIXntsr7is_sameINT0_10value_typeENS_19__for_overwrite_tagEEE5valueEiE4typeELi0EEES3_DpOT_ @ 010d31dc */
+
+
+void _ZNSt6__ndk120__shared_ptr_emplaceI36FullByteVagCanShortAdaptationSettingNS_9allocatorIS1_EEEC2B8ne190000IJRP9VagCanEcuRKNS_10shared_ptrI15StringWhitelistEEiRA29_KcRKNS9_I28MultipleChoiceInterpretationEEES3_TnNS_9enable_ifIXntsr7is_sameINT0_10value_typeENS_19__for_overwrite_tagEEE5valueEiE4typeELi0EEES3_DpOT_
+               (undefined4 *param_1,VagCanEcu **param_2,shared_ptr *param_3,int *param_4,
+               char *param_5,shared_ptr *param_6)
+
+{
+  allocator<FullByteVagCanShortAdaptationSetting> aStack_15;
+  int local_14;
+  
+  local_14 = __stack_chk_guard;
+  param_1[2] = 0;
+  *param_1 = &PTR____shared_ptr_emplace_014b4d94;
+  param_1[1] = 0;
+  std::__ndk1::allocator<FullByteVagCanShortAdaptationSetting>::
+  construct_abi_ne190000_<FullByteVagCanShortAdaptationSetting,VagCanEcu*&,std::__ndk1::shared_ptr<StringWhitelist>const&,int,char_const(&)[29],std::__ndk1::shared_ptr<MultipleChoiceInterpretation>const&>
+            (&aStack_15,(FullByteVagCanShortAdaptationSetting *)(param_1 + 4),param_2,param_3,
+             param_4,param_5,param_6);
+  if (__stack_chk_guard != local_14) {
+                    /* WARNING: Subroutine does not return */
+    __stack_chk_fail(local_14);
+  }
+  return;
+}
+
+

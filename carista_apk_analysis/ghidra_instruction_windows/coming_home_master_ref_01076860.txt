@@ -1,0 +1,194 @@
+# coming_home_master_ref
+Target address: 01076860
+Function: FUN_0105f6c0 @ 0105f6c0
+
+0107674c      movs r0,#0x80
+0107674e      str.w r1,[r3,#0xf98]
+01076752      str.w r2,[r11,#0x80c]
+01076756      str.w r2,[r11,#0x810]
+0107675a      str.w r0,[r11,#0x7f0]
+0107675e      str.w r2,[r11,#0x7f4]
+01076762      add r0,sp,#0x138
+01076764      add.w r0,r0,#0x11600
+01076768      add.w r5,r0,#0x8
+0107676c      add r0,sp,#0x60
+0107676e      add.w r0,r0,#0x7b00
+01076772      strd r0,r8,[sp,#0x0]  ; refs: DATA->0081c9c6[string=car_setting_coming_home_req_rls] WRITE->Stack[0x0]
+01076776      ldr r0,[sp,#0x24c]  ; refs: READ->Stack[0x24c]
+01076778      str r0,[sp,#0x8]  ; refs: DATA->014f1ff0[undefined8=null] WRITE->Stack[0x8]
+0107677a      ldr r0,[0x01076798]  ; refs: READ->01076798[undefined4=0x467f78]
+0107677c      add r0,pc
+0107677e      ldr r2,[r0,#0x0]  ; refs: READ->014de6f8[pointer=014f6f44] PARAM->014f6f44[undefined8=null]
+01076780      add r0,sp,#0x68
+01076782      add r1,sp,#0x64
+01076784      add.w r0,r0,#0x7b00
+01076788      add.w r3,r1,#0x7b00
+0107678c      ldr r1,[sp,#0x240]  ; refs: PARAM->014f638c[undefined4=null] READ->Stack[0x240]
+0107678e      str r2,[sp,#0xb4]  ; refs: DATA->014f6f44[undefined8=null] WRITE->Stack[0xb4]
+01076790      bl 0x010b6b90  ; refs: UNCONDITIONAL_CALL->010b6b90
+01076794      b 0x0107679c  ; refs: UNCONDITIONAL_JUMP->0107679c
+0107679c      ldr.w r4,[r11,#0x7f8]
+010767a0      add r0,sp,#0x54
+010767a2      ldr r1,[0x010767b0]  ; refs: READ->010767b0[undefined4=-0x677c5e]
+010767a4      add.w r0,r0,#0x7b00
+010767a8      add r1,pc  ; refs: PARAM->009feb4e[string=car_setting_instruction_requires_mfd]
+010767aa      bl 0x00cb4d44  ; refs: UNCONDITIONAL_CALL->00cb4d44
+010767ae      b 0x010767b4  ; refs: UNCONDITIONAL_JUMP->010767b4
+010767b4      ldr r0,[r4,#0x0]
+010767b6      ldr r3,[r0,#0x28]
+010767b8      add r0,sp,#0x54
+010767ba      mov r1,r4
+010767bc      add.w r2,r0,#0x7b00
+010767c0      mov r0,r5
+010767c2      blx r3
+010767c4      movs r0,#0x11
+010767c6      movs r1,#0x20
+010767c8      str.w r1,[r11,#0x7d4]
+010767cc      str.w r0,[r11,#0x7d8]
+010767d0      add r0,sp,#0x138
+010767d2      add.w r0,r0,#0x11600
+010767d6      add.w r5,r0,#0x10
+010767da      add r0,sp,#0x44
+010767dc      add.w r0,r0,#0x7b00
+010767e0      strd r0,r8,[sp,#0x0]  ; refs: DATA->0081c9c6[string=car_setting_coming_home_req_rls] WRITE->Stack[0x0]
+010767e4      ldr r0,[sp,#0x24c]  ; refs: READ->Stack[0x24c]
+010767e6      str r0,[sp,#0x8]  ; refs: DATA->014f1ff0[undefined8=null] WRITE->Stack[0x8]
+010767e8      ldr r0,[0x01076804]  ; refs: READ->01076804[undefined4=0x467f0e]
+010767ea      add r0,pc
+010767ec      ldr r2,[r0,#0x0]  ; refs: READ->014de6fc[pointer=014f70bc] PARAM->014f70bc[undefined8=null]
+010767ee      add r0,sp,#0x4c
+010767f0      add r1,sp,#0x48
+010767f2      add.w r0,r0,#0x7b00
+010767f6      add.w r3,r1,#0x7b00
+010767fa      ldr r1,[sp,#0x240]  ; refs: PARAM->014f638c[undefined4=null] READ->Stack[0x240]
+010767fc      str r2,[sp,#0x1b4]  ; refs: DATA->014f70bc[undefined8=null] WRITE->Stack[0x1b4]
+010767fe      bl 0x010b0d5c  ; refs: UNCONDITIONAL_CALL->010b0d5c
+01076802      b 0x01076808  ; refs: UNCONDITIONAL_JUMP->01076808
+01076808      ldr.w r0,[r11,#0x7dc]
+0107680c      movs r6,#0x0
+0107680e      ldr.w r1,[r11,#0x7e0]
+01076812      add r2,sp,#0x1a4
+01076814      add.w r2,r2,#0x10600
+01076818      str.w r6,[r11,#0x7dc]
+0107681c      str.w r6,[r11,#0x7e0]
+01076820      str.w r0,[r2,#0xfa4]
+01076824      movw r0,#0xa57
+01076828      str.w r1,[r2,#0xfa8]
+0107682c      movs r1,#0x4
+0107682e      movs r2,#0x40
+01076830      str.w r1,[r11,#0x7c4]
+01076834      str.w r2,[r11,#0x7c0]
+01076838      str.w r0,[r11,#0x7c8]
+0107683c      add r0,sp,#0x138
+0107683e      add.w r0,r0,#0x11600
+01076842      add.w r5,r0,#0x18
+01076846      ldr r4,[0x0107687c]  ; refs: READ->0107687c[undefined4=-0x723290]
+01076848      add r0,sp,#0x30
+0107684a      add.w r0,r0,#0x7b00
+0107684e      add r1,sp,#0x34
+01076850      add.w r1,r1,#0x7b00
+01076854      add r4,pc
+01076856      strd r1,r0,[sp,#0x0]  ; refs: WRITE->Stack[0x0]
+0107685a      ldr r0,[sp,#0x24c]  ; refs: READ->Stack[0x24c]
+0107685c      str r0,[sp,#0xc]  ; refs: DATA->014f1ff0[undefined8=null] WRITE->Stack[0xc]
+0107685e      ldr r0,[sp,#0x248]  ; refs: READ->Stack[0x248]
+01076860  =>  str r4,[sp,#0x8]  ; refs: DATA->009535c8[string=car_setting_coming_home] WRITE->Stack[0x8]
+01076862      str r0,[sp,#0x10]  ; refs: DATA->014f61a0[undefined8=null] WRITE->Stack[0x10]
+01076864      add r0,sp,#0x3c
+01076866      add r1,sp,#0x38
+01076868      ldr r2,[sp,#0x200]  ; refs: PARAM->014f7014[undefined8=null] READ->Stack[0x200]
+0107686a      add.w r3,r1,#0x7b00
+0107686e      ldr r1,[sp,#0x250]  ; refs: PARAM->014f7ad8[undefined4=null] READ->Stack[0x250]
+01076870      add.w r0,r0,#0x7b00
+01076874      bl 0x010b6bdc  ; refs: UNCONDITIONAL_CALL->010b6bdc
+01076878      b 0x01076880  ; refs: UNCONDITIONAL_JUMP->01076880
+01076880      ldr.w r0,[r11,#0x7cc]
+01076884      ldr.w r1,[r11,#0x7d0]
+01076888      add r2,sp,#0x1a4
+0107688a      add.w r2,r2,#0x10600
+0107688e      str.w r6,[r11,#0x7cc]
+01076892      str.w r6,[r11,#0x7d0]
+01076896      str.w r0,[r2,#0xfac]
+0107689a      movs r0,#0x6
+0107689c      str.w r1,[r2,#0xfb0]
+010768a0      movs r1,#0x2
+010768a2      str.w r1,[r11,#0x7b0]
+010768a6      str.w r0,[r11,#0x7b4]
+010768aa      add r0,sp,#0x138
+010768ac      add.w r0,r0,#0x11600
+010768b0      add.w r5,r0,#0x20
+010768b4      add r0,sp,#0x20
+010768b6      add.w r0,r0,#0x7b00
+010768ba      strd r0,r4,[sp,#0x0]  ; refs: DATA->009535c8[string=car_setting_coming_home] WRITE->Stack[0x0]
+010768be      ldr r0,[sp,#0x24c]  ; refs: READ->Stack[0x24c]
+010768c0      str r0,[sp,#0x8]  ; refs: DATA->014f1ff0[undefined8=null] WRITE->Stack[0x8]
+010768c2      add r0,sp,#0x28
+010768c4      add r1,sp,#0x24
+010768c6      ldr r2,[sp,#0x224]  ; refs: PARAM->014f70cc[undefined8=null] READ->Stack[0x224]
+010768c8      add.w r3,r1,#0x7b00
+010768cc      ldr r1,[sp,#0x240]  ; refs: PARAM->014f638c[undefined4=null] READ->Stack[0x240]
+010768ce      add.w r0,r0,#0x7b00
+010768d2      bl 0x010b2040  ; refs: UNCONDITIONAL_CALL->010b2040
+010768d6      ldr.w r0,[r11,#0x7b8]
+010768da      ldr.w r1,[r11,#0x7bc]
+010768de      add r2,sp,#0x1a4
+010768e0      add.w r2,r2,#0x10600
+010768e4      str.w r6,[r11,#0x7b8]
+010768e8      str.w r6,[r11,#0x7bc]
+010768ec      str.w r0,[r2,#0xfb4]
+010768f0      movs r0,#0x7
+010768f2      str.w r1,[r2,#0xfb8]
+010768f6      movs r1,#0x1
+010768f8      str.w r1,[r11,#0x7a0]
+010768fc      str.w r0,[r11,#0x7a4]
+01076900      add r0,sp,#0x138
+01076902      add.w r0,r0,#0x11600
+01076906      add.w r5,r0,#0x28
+0107690a      add r0,sp,#0x10
+0107690c      add.w r0,r0,#0x7b00
+01076910      strd r0,r4,[sp,#0x0]  ; refs: DATA->009535c8[string=car_setting_coming_home] WRITE->Stack[0x0]
+01076914      ldr r0,[sp,#0x24c]  ; refs: READ->Stack[0x24c]
+01076916      str r0,[sp,#0x8]  ; refs: DATA->014f1ff0[undefined8=null] WRITE->Stack[0x8]
+01076918      add r0,sp,#0x18
+0107691a      add r1,sp,#0x14
+0107691c      ldr r2,[sp,#0x1c0]  ; refs: PARAM->014f70d4[undefined8=null] READ->Stack[0x1c0]
+0107691e      add.w r3,r1,#0x7b00
+01076922      ldr r1,[sp,#0x250]  ; refs: PARAM->014f7ad8[undefined4=null] READ->Stack[0x250]
+01076924      add.w r0,r0,#0x7b00
+01076928      bl 0x010b3af0  ; refs: UNCONDITIONAL_CALL->010b3af0
+0107692c      ldr.w r0,[r11,#0x7a8]
+01076930      ldr.w r1,[r11,#0x7ac]
+01076934      add r2,sp,#0x1a4
+01076936      add.w r2,r2,#0x10600
+0107693a      str.w r6,[r11,#0x7a8]
+0107693e      str.w r6,[r11,#0x7ac]
+01076942      movs r6,#0x4
+01076944      str.w r0,[r2,#0xfbc]
+01076948      movs r0,#0xa
+0107694a      str.w r1,[r2,#0xfc0]
+0107694e      str.w r6,[r11,#0x790]
+01076952      str.w r0,[r11,#0x794]
+01076956      add r0,sp,#0x138
+01076958      add.w r0,r0,#0x11600
+0107695c      add.w r5,r0,#0x30
+01076960      add.w r0,sp,#0x7b00
+01076964      strd r0,r8,[sp,#0x0]  ; refs: DATA->0081c9c6[string=car_setting_coming_home_req_rls] WRITE->Stack[0x0]
+01076968      ldr r0,[sp,#0x24c]  ; refs: READ->Stack[0x24c]
+0107696a      str r0,[sp,#0x8]  ; refs: DATA->014f1ff0[undefined8=null] WRITE->Stack[0x8]
+0107696c      ldr r0,[0x01076988]  ; refs: READ->01076988[undefined4=0x467d8e]
+0107696e      add r0,pc
+01076970      ldr r2,[r0,#0x0]  ; refs: READ->014de700[pointer=014f7004] PARAM->014f7004[undefined8=null]
+01076972      add r0,sp,#0x8
+01076974      add r1,sp,#0x4
+01076976      add.w r0,r0,#0x7b00
+0107697a      add.w r3,r1,#0x7b00
+0107697e      ldr r1,[sp,#0x240]  ; refs: PARAM->014f638c[undefined4=null] READ->Stack[0x240]
+01076980      str r2,[sp,#0x180]  ; refs: DATA->014f7004[undefined8=null] WRITE->Stack[0x180]
+01076982      bl 0x010b0d5c  ; refs: UNCONDITIONAL_CALL->010b0d5c
+01076986      b 0x0107698c  ; refs: UNCONDITIONAL_JUMP->0107698c
+0107698c      ldr.w r0,[r11,#0x798]
+01076990      movs r4,#0x0
+01076992      ldr.w r1,[r11,#0x79c]
+01076996      add r2,sp,#0x1a4
+01076998      add.w r2,r2,#0x10600
+0107699c      str.w r4,[r11,#0x798]

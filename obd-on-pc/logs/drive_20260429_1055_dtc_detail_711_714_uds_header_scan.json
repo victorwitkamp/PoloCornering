@@ -1,0 +1,98 @@
+[
+  {
+    "request_header": "711",
+    "response_header": "77B",
+    "command": "1901FF",
+    "status": "negative",
+    "payload": "7F1912",
+    "raw": "77B037F1912"
+  },
+  {
+    "request_header": "711",
+    "response_header": "77B",
+    "command": "1902FF",
+    "status": "other",
+    "payload": "590299D20000",
+    "raw": "77B100B590299D20000"
+  },
+  {
+    "request_header": "711",
+    "response_header": "77B",
+    "command": "1906D20000FF",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "711",
+    "response_header": "77B",
+    "command": "1904D20000FF",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "711",
+    "response_header": "77B",
+    "command": "1906C40100FF",
+    "status": "negative",
+    "payload": "7F1931",
+    "raw": "77B037F1931"
+  },
+  {
+    "request_header": "711",
+    "response_header": "77B",
+    "command": "1904C40100FF",
+    "status": "negative",
+    "payload": "7F1912",
+    "raw": "77B037F1912"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "1901FF",
+    "status": "negative",
+    "payload": "7F1912",
+    "raw": "77E037F1912"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "1902FF",
+    "status": "other",
+    "payload": "590299C4010008",
+    "raw": "77E07590299C4010008"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "1906D20000FF",
+    "status": "negative",
+    "payload": "7F1931",
+    "raw": "77E037F1931"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "1904D20000FF",
+    "status": "negative",
+    "payload": "7F1912",
+    "raw": "77E037F1912"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "1906C40100FF",
+    "status": "other",
+    "payload": "5906C4010008",
+    "raw": "77E10145906C4010008"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "1904C40100FF",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  }
+]

@@ -1,0 +1,178 @@
+[
+  {
+    "request_header": "7E0",
+    "response_header": "7E8",
+    "command": "220600",
+    "status": "positive",
+    "payload": "620600001100D6202400080000",
+    "raw": "7E8100D620600001100\r7E821D6202400080000"
+  },
+  {
+    "request_header": "7E0",
+    "response_header": "7E8",
+    "command": "22F190",
+    "status": "positive",
+    "payload": "62F1905756575A5A5A36525A4359323330343134",
+    "raw": "7E8101462F190575657\r7E8215A5A5A36525A43\r7E82259323330343134"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "220600",
+    "status": "positive",
+    "payload": "620600140801",
+    "raw": "77E06620600140801"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F190",
+    "status": "positive",
+    "payload": "62F190575657",
+    "raw": "77E101462F190575657"
+  },
+  {
+    "request_header": "711",
+    "response_header": "77B",
+    "command": "220600",
+    "status": "negative",
+    "payload": "7F2221",
+    "raw": "77B037F2221"
+  },
+  {
+    "request_header": "711",
+    "response_header": "77B",
+    "command": "22F190",
+    "status": "positive",
+    "payload": "62F190575657",
+    "raw": "77B101462F190575657"
+  },
+  {
+    "request_header": "715",
+    "response_header": "77F",
+    "command": "220600",
+    "status": "positive",
+    "payload": "620600003232",
+    "raw": "77F06620600003232"
+  },
+  {
+    "request_header": "715",
+    "response_header": "77F",
+    "command": "22F190",
+    "status": "positive",
+    "payload": "62F190575657",
+    "raw": "77F101462F190575657"
+  },
+  {
+    "request_header": "70E",
+    "response_header": "778",
+    "command": "220600",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "70E",
+    "response_header": "778",
+    "command": "22F190",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "711",
+    "response_header": "77B",
+    "command": "22F187",
+    "status": "positive",
+    "payload": "62F187354B30",
+    "raw": "77B100E62F187354B30"
+  },
+  {
+    "request_header": "711",
+    "response_header": "77B",
+    "command": "22F189",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "711",
+    "response_header": "77B",
+    "command": "22F197",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F187",
+    "status": "positive",
+    "payload": "62F187365230",
+    "raw": "77E100E62F187365230"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F189",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F197",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "715",
+    "response_header": "77F",
+    "command": "22F187",
+    "status": "positive",
+    "payload": "62F187365230",
+    "raw": "77F100E62F187365230"
+  },
+  {
+    "request_header": "715",
+    "response_header": "77F",
+    "command": "22F189",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "715",
+    "response_header": "77F",
+    "command": "22F197",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "7E0",
+    "response_header": "7E8",
+    "command": "22F187",
+    "status": "positive",
+    "payload": "62F1873033463930363037304744",
+    "raw": "7E8100E62F187303346\r7E82139303630373047\r7E82244AAAAAAAAAAAA"
+  },
+  {
+    "request_header": "7E0",
+    "response_header": "7E8",
+    "command": "22F189",
+    "status": "positive",
+    "payload": "62F18935343636",
+    "raw": "7E80762F18935343636"
+  },
+  {
+    "request_header": "7E0",
+    "response_header": "7E8",
+    "command": "22F197",
+    "status": "positive",
+    "payload": "62F19753494D4F5331302E3232410000",
+    "raw": "7E8101062F19753494D\r7E8214F5331302E3232\r7E822410000AAAAAAAA"
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "ecu": "INSTRUMENT_CLUSTER",
+    "raw_address": 8866,
+    "value_offset": 0,
+    "value_mask": "FF",
+    "key": "car_setting_instr_needle_sweep",
+    "setting_type": 7
+  },
+  {
+    "ecu": "INSTRUMENT_CLUSTER",
+    "raw_address": 8866,
+    "value_offset": 0,
+    "value_mask": "FF",
+    "key": "car_setting_instr_needle_sweep_method_b",
+    "setting_type": 7
+  }
+]

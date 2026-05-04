@@ -1,0 +1,258 @@
+[
+  {
+    "request_header": "7E0",
+    "response_header": "7E8",
+    "command": "1902FF",
+    "status": "negative",
+    "payload": "7F1978",
+    "raw": "7E8037F1978\r7E810FF5902FF001994\r7E82150001995500018\r7E822185000191D4000\r7E82319015000190250\r7E824001839500017F6\r7E825500019EA500017\r7E8268250002E125000\r7E82717C8500017C950\r7E82800363150003632\r7E829500017AA500017\r7E82AAB500017AC5000\r7E82B17AD500017BE50\r7E82C0017BF500017AE\r7E82D500017AF500\rBUFFER FULL"
+  },
+  {
+    "request_header": "7E0",
+    "response_header": "7E8",
+    "command": "1802FF00",
+    "status": "other",
+    "payload": "001C1C50AAAAAA",
+    "raw": "7E824001C1C50AAAAAA\r7E8037F1811"
+  },
+  {
+    "request_header": "7E0",
+    "response_header": "7E8",
+    "command": "22F18C",
+    "status": "positive",
+    "payload": "62F18C2020202020202020202020202020",
+    "raw": "7E8101162F18C202020\r7E82120202020202020\r7E82220202020AAAAAA"
+  },
+  {
+    "request_header": "711",
+    "response_header": "77B",
+    "command": "1902FF",
+    "status": "other",
+    "payload": "590299D20000",
+    "raw": "77B100B590299D20000"
+  },
+  {
+    "request_header": "711",
+    "response_header": "77B",
+    "command": "1802FF00",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "711",
+    "response_header": "77B",
+    "command": "22F18C",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "1902FF",
+    "status": "other",
+    "payload": "590299C4010008",
+    "raw": "77E07590299C4010008"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "1802FF00",
+    "status": "negative",
+    "payload": "7F1811",
+    "raw": "77E037F1811"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F18C",
+    "status": "positive",
+    "payload": "62F18C303030",
+    "raw": "77E101162F18C303030"
+  },
+  {
+    "request_header": "715",
+    "response_header": "77F",
+    "command": "1902FF",
+    "status": "negative",
+    "payload": "7F1978",
+    "raw": "77F037F1978\r77F037F1978\r77F037F1978\r77F037F1978\r77F037F1978\r77F037F1978\r77F110F590299000000"
+  },
+  {
+    "request_header": "715",
+    "response_header": "77F",
+    "command": "1802FF00",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "715",
+    "response_header": "77F",
+    "command": "22F18C",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "711",
+    "response_header": "77B",
+    "command": "22F17E",
+    "status": "negative",
+    "payload": "7F2231",
+    "raw": "77B037F2231"
+  },
+  {
+    "request_header": "711",
+    "response_header": "77B",
+    "command": "22F191",
+    "status": "positive",
+    "payload": "62F191354B30",
+    "raw": "77B100E62F191354B30"
+  },
+  {
+    "request_header": "711",
+    "response_header": "77B",
+    "command": "22F1A3",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "711",
+    "response_header": "77B",
+    "command": "22F1AA",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "711",
+    "response_header": "77B",
+    "command": "22F1DF",
+    "status": "positive",
+    "payload": "62F1DF40",
+    "raw": "77B0462F1DF40"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F17E",
+    "status": "negative",
+    "payload": "7F2231",
+    "raw": "77E037F2231"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F191",
+    "status": "positive",
+    "payload": "62F191365230",
+    "raw": "77E100E62F191365230"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F1A3",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F1AA",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "714",
+    "response_header": "77E",
+    "command": "22F1DF",
+    "status": "positive",
+    "payload": "62F1DF40",
+    "raw": "77E0462F1DF40"
+  },
+  {
+    "request_header": "715",
+    "response_header": "77F",
+    "command": "22F17E",
+    "status": "positive",
+    "payload": "62F17E2D2D2D",
+    "raw": "77F100B62F17E2D2D2D"
+  },
+  {
+    "request_header": "715",
+    "response_header": "77F",
+    "command": "22F191",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "715",
+    "response_header": "77F",
+    "command": "22F1A3",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "715",
+    "response_header": "77F",
+    "command": "22F1AA",
+    "status": "positive",
+    "payload": "62F1AA4A3233",
+    "raw": "77F100862F1AA4A3233"
+  },
+  {
+    "request_header": "715",
+    "response_header": "77F",
+    "command": "22F1DF",
+    "status": "no_response",
+    "payload": "",
+    "raw": "NO DATA"
+  },
+  {
+    "request_header": "7E0",
+    "response_header": "7E8",
+    "command": "22F17E",
+    "status": "positive",
+    "payload": "62F17E2D2D4831302D2D2D",
+    "raw": "7E8100B62F17E2D2D48\r7E82131302D2D2DAAAA"
+  },
+  {
+    "request_header": "7E0",
+    "response_header": "7E8",
+    "command": "22F191",
+    "status": "positive",
+    "payload": "62F191303346393037333039414A",
+    "raw": "7E8100E62F191303346\r7E82139303733303941\r7E8224AAAAAAAAAAAAA"
+  },
+  {
+    "request_header": "7E0",
+    "response_header": "7E8",
+    "command": "22F1A3",
+    "status": "positive",
+    "payload": "62F1A3483130",
+    "raw": "7E80662F1A3483130"
+  },
+  {
+    "request_header": "7E0",
+    "response_header": "7E8",
+    "command": "22F1AA",
+    "status": "positive",
+    "payload": "62F1AA4A36323320",
+    "raw": "7E8100862F1AA4A3632\r7E8213320AAAAAAAAAA"
+  },
+  {
+    "request_header": "7E0",
+    "response_header": "7E8",
+    "command": "22F1DF",
+    "status": "positive",
+    "payload": "62F1DF40",
+    "raw": "7E80462F1DF40"
+  }
+]

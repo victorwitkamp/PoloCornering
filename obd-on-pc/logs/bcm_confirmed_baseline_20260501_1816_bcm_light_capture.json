@@ -1,0 +1,155 @@
+{
+  "metadata": {
+    "started": "2026-05-01T18:15:53.130",
+    "last_updated": "2026-05-01T18:16:18.289",
+    "run_id": "bcm_confirmed_baseline_20260501_1816",
+    "port": "COM10",
+    "baud": 38400,
+    "unit": "20",
+    "read_profile": "bcm_light_debug",
+    "read_commands": [
+      "220600"
+    ],
+    "states": [
+      "clean_baseline_off"
+    ],
+    "repeats": 1,
+    "raw_can_ms": 10000,
+    "raw_can_filter": "",
+    "raw_headers": [],
+    "raw_can_reference": {
+      "source": "openDBC vw_pq.dbc downloaded under reference/opendbc/ with LICENSE",
+      "light_context_headers": [
+        "390",
+        "392",
+        "0D0",
+        "0C2",
+        "1A0",
+        "288",
+        "320",
+        "470"
+      ],
+      "presets": {
+        "pq25_light_context": [
+          "390",
+          "392",
+          "0D0",
+          "0C2",
+          "1A0",
+          "288",
+          "320",
+          "470"
+        ],
+        "light_context": [
+          "390",
+          "392",
+          "0D0",
+          "0C2",
+          "1A0",
+          "288",
+          "320",
+          "470"
+        ],
+        "tp20": [
+          "300",
+          "338"
+        ]
+      }
+    },
+    "completed": true,
+    "interrupted": false,
+    "ended_early": false,
+    "skipped_states": [],
+    "safety": "read-only; blocks 27, 2E, 31, and 3B service prefixes"
+  },
+  "captures": [
+    {
+      "state": "clean_baseline_off",
+      "repeat": 1,
+      "command": "220600",
+      "command_label": "direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding",
+      "status": "positive",
+      "payload": "6206003AB02BBF08A10000003008006D2B0CD000C0412F60860000200000000000",
+      "payload_bytes": "33",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\bcm_confirmed_baseline_20260501_1816_clean_baseline_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "answered",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 138,
+        "T2": 255,
+        "T3": 79,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-01T18:16:14.798",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-01T18:16:16.104",
+          "source": "A00F8AFF32FF",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-01T18:16:16.104",
+          "source": "A00F8AFF32FF",
+          "header": "300",
+          "payload": "A10F8AFF4FFF",
+          "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+        },
+        {
+          "timestamp": "2026-05-01T18:16:17.262",
+          "source": "100003220600",
+          "header": "300",
+          "payload": "B1",
+          "tp20_label": "TP2.0 ACK/control frame"
+        },
+        {
+          "timestamp": "2026-05-01T18:16:17.262",
+          "source": "100003220600",
+          "header": "300",
+          "payload": "2000216206003AB0",
+          "tp20_label": "TP2.0 application continuation frame seq=0"
+        },
+        {
+          "timestamp": "2026-05-01T18:16:17.262",
+          "source": "100003220600",
+          "header": "300",
+          "payload": "212BBF08A1000000",
+          "tp20_label": "TP2.0 application continuation frame seq=1"
+        },
+        {
+          "timestamp": "2026-05-01T18:16:17.262",
+          "source": "100003220600",
+          "header": "300",
+          "payload": "223008006D2B0CD0",
+          "tp20_label": "TP2.0 application continuation frame seq=2"
+        },
+        {
+          "timestamp": "2026-05-01T18:16:17.262",
+          "source": "100003220600",
+          "header": "300",
+          "payload": "2300C0412F608600",
+          "tp20_label": "TP2.0 application continuation frame seq=3"
+        },
+        {
+          "timestamp": "2026-05-01T18:16:17.262",
+          "source": "100003220600",
+          "header": "300",
+          "payload": "1400200000000000",
+          "tp20_label": "TP2.0 application first frame seq=4 len=32"
+        }
+      ]
+    }
+  ],
+  "raw_can_frames": []
+}

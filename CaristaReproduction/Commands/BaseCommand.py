@@ -17,9 +17,9 @@ _NRC_TO_STATE: dict[int, int] = {
     0x13: State.OBD2_INCORRECT_MESSAGE_LENGTH_OR_FORMAT,
     0x21: State.OBD2_BUSY_REPEAT_REQUEST,
     0x22: State.OBD2_CONDITIONS_NOT_CORRECT,
-    0x24: State.OBD2_SECURITY_ACCESS_DENIED,
+    0x24: State.OBD2_REQUEST_SEQUENCE_ERROR,
     0x31: State.OBD2_REQUEST_OUT_OF_RANGE,
-    0x33: State.OBD2_REQUEST_SEQUENCE_ERROR,
+    0x33: State.OBD2_SECURITY_ACCESS_DENIED,
     0x35: State.OBD2_INVALID_KEY,
     0x36: State.OBD2_EXCEEDED_NUMBER_OF_ATTEMPTS,
     0x37: State.OBD2_REQUIRED_TIME_DELAY_NOT_EXPIRED,
@@ -31,6 +31,26 @@ _NRC_TO_STATE: dict[int, int] = {
     0x83: -29,
     0x84: State.OBD2_RESPONSE_TOO_LONG,
     0x88: -30,
+}
+
+_NRC_TO_NAME: dict[int, str] = {
+    0x10: "generalReject",
+    0x11: "serviceNotSupported",
+    0x12: "subFunctionNotSupported",
+    0x13: "incorrectMessageLengthOrInvalidFormat",
+    0x21: "busyRepeatRequest",
+    0x22: "conditionsNotCorrect",
+    0x24: "requestSequenceError",
+    0x31: "requestOutOfRange",
+    0x33: "securityAccessDenied",
+    0x35: "invalidKey",
+    0x36: "exceededNumberOfAttempts",
+    0x37: "requiredTimeDelayNotExpired",
+    0x78: "responsePending",
+    0x7E: "subFunctionNotSupportedInActiveSession",
+    0x7F: "subFunctionNotSupportedInActiveSession",
+    0x80: "uploadDownloadNotAccepted",
+    0x84: "responseTooLong",
 }
 
 
@@ -49,9 +69,19 @@ def response_marker(command: HexString) -> HexString:
 def BaseCommand_extractState(payload: HexString) -> int:
     payload = clean_hex(payload, "response payload")
     raw = bytes.fromhex(payload)
-    if len(raw) != 3 or raw[0] != 0x7F:
+    if len(raw) < 3 or raw[0] != 0x7F:
         return State.DONE
     return _NRC_TO_STATE.get(raw[2], -10)
+
+
+def BaseCommand_describeNegativePayload(payload: HexString) -> str:
+    payload = clean_hex(payload, "response payload")
+    if not payload.startswith("7F") or len(payload) < 6:
+        return payload
+    service = payload[2:4]
+    code = int(payload[4:6], 16)
+    code_text = _NRC_TO_NAME.get(code, "unknownNegativeResponse")
+    return f"{payload} service=0x{service} nrc=0x{code:02X} ({code_text})"
 
 
 def BaseCommand_filterOutErrors(payloads: list[HexString]) -> Result[list[HexString]]:

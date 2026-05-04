@@ -29,6 +29,26 @@ class ReadValuesVtableSlot:
 
 
 @dataclass(frozen=True)
+class JniOperationFlowStep:
+    order: int
+    source: str
+    proven_call: str
+    evidence: str
+    unresolved: str = ""
+
+
+@dataclass(frozen=True)
+class ReadValuesNativeFlowStep:
+    order: int
+    native_method: str
+    ghidra_address: str
+    export_file: str
+    required_evidence: tuple[str, ...]
+    recovered_behavior: tuple[str, ...]
+    unresolved: str = ""
+
+
+@dataclass(frozen=True)
 class JniExportValidation:
     label: str
     export_file: str
@@ -41,4 +61,7 @@ class JniExportValidation:
 class JniBridgeSummary:
     functions: tuple[JniBridgeFunction, ...]
     read_values_slots: tuple[ReadValuesVtableSlot, ...]
+    read_values_native_flow: tuple[ReadValuesNativeFlowStep, ...]
+    operation_flow: tuple[JniOperationFlowStep, ...]
     validations: tuple[JniExportValidation, ...]
+    read_values_native_flow_validations: tuple[JniExportValidation, ...]

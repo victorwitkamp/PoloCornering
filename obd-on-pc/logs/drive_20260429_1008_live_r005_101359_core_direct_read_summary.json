@@ -1,0 +1,659 @@
+[
+  {
+    "attempt_id": "direct_ctr0_220601",
+    "mode": "direct_read",
+    "started": "2026-04-29T10:14:09.202",
+    "log_file": "logs\\drive_20260429_1008_live_r005_101359_core_direct_read_direct_ctr0_220601.txt",
+    "unit": "20",
+    "ecu_scan_status": "",
+    "scan_probe": "",
+    "scan_native_builder": "",
+    "scan_purpose": "",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "answered",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 138,
+      "T2": 255,
+      "T3": 79,
+      "T4": 255
+    },
+    "session_command": "",
+    "session_command_label": "",
+    "session_counter": "",
+    "session_status": "",
+    "session_result": "",
+    "pre_read_sequence": "",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": "",
+    "read_counter": "0",
+    "read_command": "220601",
+    "read_command_label": "Carista-shaped UDS companion DID from the current BCM identity/status sweep",
+    "read_status": "positive",
+    "read_result": "6206011E",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-29T10:14:14.852",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-29T10:14:16.159",
+        "source": "A00F8AFF32FF",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-29T10:14:16.159",
+        "source": "A00F8AFF32FF",
+        "header": "300",
+        "payload": "A10F8AFF4FFF",
+        "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+      },
+      {
+        "timestamp": "2026-04-29T10:14:17.346",
+        "source": "100003220601",
+        "header": "300",
+        "payload": "B1",
+        "tp20_label": "TP2.0 ACK/control frame"
+      },
+      {
+        "timestamp": "2026-04-29T10:14:17.346",
+        "source": "100003220601",
+        "header": "300",
+        "payload": "1000046206011E",
+        "tp20_label": "TP2.0 application first frame seq=0 len=4"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "direct_ctr0_22F187",
+    "mode": "direct_read",
+    "started": "2026-04-29T10:14:18.251",
+    "log_file": "logs\\drive_20260429_1008_live_r005_101359_core_direct_read_direct_ctr0_22F187.txt",
+    "unit": "20",
+    "ecu_scan_status": "",
+    "scan_probe": "",
+    "scan_native_builder": "",
+    "scan_purpose": "",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "answered",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 138,
+      "T2": 255,
+      "T3": 79,
+      "T4": 255
+    },
+    "session_command": "",
+    "session_command_label": "",
+    "session_counter": "",
+    "session_status": "",
+    "session_result": "",
+    "pre_read_sequence": "",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": "",
+    "read_counter": "0",
+    "read_command": "22F187",
+    "read_command_label": "",
+    "read_status": "positive",
+    "read_result": "62F1873652303933373038374B20",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-29T10:14:23.834",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-29T10:14:25.137",
+        "source": "A00F8AFF32FF",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-29T10:14:25.137",
+        "source": "A00F8AFF32FF",
+        "header": "300",
+        "payload": "A10F8AFF4FFF",
+        "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+      },
+      {
+        "timestamp": "2026-04-29T10:14:26.290",
+        "source": "10000322F187",
+        "header": "300",
+        "payload": "B1",
+        "tp20_label": "TP2.0 ACK/control frame"
+      },
+      {
+        "timestamp": "2026-04-29T10:14:26.290",
+        "source": "10000322F187",
+        "header": "300",
+        "payload": "20000E62F1873652",
+        "tp20_label": "TP2.0 application continuation frame seq=0"
+      },
+      {
+        "timestamp": "2026-04-29T10:14:26.290",
+        "source": "10000322F187",
+        "header": "300",
+        "payload": "2130393337303837",
+        "tp20_label": "TP2.0 application continuation frame seq=1"
+      },
+      {
+        "timestamp": "2026-04-29T10:14:26.290",
+        "source": "10000322F187",
+        "header": "300",
+        "payload": "124B20",
+        "tp20_label": "TP2.0 application first frame seq=2 len=19232"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "direct_ctr0_22F189",
+    "mode": "direct_read",
+    "started": "2026-04-29T10:14:27.196",
+    "log_file": "logs\\drive_20260429_1008_live_r005_101359_core_direct_read_direct_ctr0_22F189.txt",
+    "unit": "20",
+    "ecu_scan_status": "",
+    "scan_probe": "",
+    "scan_native_builder": "",
+    "scan_purpose": "",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "answered",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 138,
+      "T2": 255,
+      "T3": 79,
+      "T4": 255
+    },
+    "session_command": "",
+    "session_command_label": "",
+    "session_counter": "",
+    "session_status": "",
+    "session_result": "",
+    "pre_read_sequence": "",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": "",
+    "read_counter": "0",
+    "read_command": "22F189",
+    "read_command_label": "",
+    "read_status": "positive",
+    "read_result": "62F18930323534",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-29T10:14:32.843",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-29T10:14:34.145",
+        "source": "A00F8AFF32FF",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-29T10:14:34.145",
+        "source": "A00F8AFF32FF",
+        "header": "300",
+        "payload": "A10F8AFF4FFF",
+        "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+      },
+      {
+        "timestamp": "2026-04-29T10:14:35.300",
+        "source": "10000322F189",
+        "header": "300",
+        "payload": "B1",
+        "tp20_label": "TP2.0 ACK/control frame"
+      },
+      {
+        "timestamp": "2026-04-29T10:14:35.300",
+        "source": "10000322F189",
+        "header": "300",
+        "payload": "20000762F1893032",
+        "tp20_label": "TP2.0 application continuation frame seq=0"
+      },
+      {
+        "timestamp": "2026-04-29T10:14:35.300",
+        "source": "10000322F189",
+        "header": "300",
+        "payload": "113534",
+        "tp20_label": "TP2.0 application first frame seq=1 len=13620"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "direct_ctr0_22F197",
+    "mode": "direct_read",
+    "started": "2026-04-29T10:14:36.206",
+    "log_file": "logs\\drive_20260429_1008_live_r005_101359_core_direct_read_direct_ctr0_22F197.txt",
+    "unit": "20",
+    "ecu_scan_status": "",
+    "scan_probe": "",
+    "scan_native_builder": "",
+    "scan_purpose": "",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "answered",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 138,
+      "T2": 255,
+      "T3": 79,
+      "T4": 255
+    },
+    "session_command": "",
+    "session_command_label": "",
+    "session_counter": "",
+    "session_status": "",
+    "session_result": "",
+    "pre_read_sequence": "",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": "",
+    "read_counter": "0",
+    "read_command": "22F197",
+    "read_command_label": "",
+    "read_status": "positive",
+    "read_result": "62F19742434D205051323520482B3420",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-29T10:14:41.712",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-29T10:14:43.014",
+        "source": "A00F8AFF32FF",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-29T10:14:43.014",
+        "source": "A00F8AFF32FF",
+        "header": "300",
+        "payload": "A10F8AFF4FFF",
+        "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+      },
+      {
+        "timestamp": "2026-04-29T10:14:44.168",
+        "source": "10000322F197",
+        "header": "300",
+        "payload": "B1",
+        "tp20_label": "TP2.0 ACK/control frame"
+      },
+      {
+        "timestamp": "2026-04-29T10:14:44.168",
+        "source": "10000322F197",
+        "header": "300",
+        "payload": "20001062F1974243",
+        "tp20_label": "TP2.0 application continuation frame seq=0"
+      },
+      {
+        "timestamp": "2026-04-29T10:14:44.168",
+        "source": "10000322F197",
+        "header": "300",
+        "payload": "214D205051323520",
+        "tp20_label": "TP2.0 application continuation frame seq=1"
+      },
+      {
+        "timestamp": "2026-04-29T10:14:44.168",
+        "source": "10000322F197",
+        "header": "300",
+        "payload": "12482B3420",
+        "tp20_label": "TP2.0 application first frame seq=2 len=18475"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "direct_ctr0_22F1A3",
+    "mode": "direct_read",
+    "started": "2026-04-29T10:14:45.144",
+    "log_file": "logs\\drive_20260429_1008_live_r005_101359_core_direct_read_direct_ctr0_22F1A3.txt",
+    "unit": "20",
+    "ecu_scan_status": "",
+    "scan_probe": "",
+    "scan_native_builder": "",
+    "scan_purpose": "",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "answered",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 138,
+      "T2": 255,
+      "T3": 79,
+      "T4": 255
+    },
+    "session_command": "",
+    "session_command_label": "",
+    "session_counter": "",
+    "session_status": "",
+    "session_result": "",
+    "pre_read_sequence": "",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": "",
+    "read_counter": "0",
+    "read_command": "22F1A3",
+    "read_command_label": "",
+    "read_status": "positive",
+    "read_result": "62F1A3483436",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-29T10:14:50.650",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-29T10:14:51.952",
+        "source": "A00F8AFF32FF",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-29T10:14:51.952",
+        "source": "A00F8AFF32FF",
+        "header": "300",
+        "payload": "A10F8AFF4FFF",
+        "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+      },
+      {
+        "timestamp": "2026-04-29T10:14:53.107",
+        "source": "10000322F1A3",
+        "header": "300",
+        "payload": "B1",
+        "tp20_label": "TP2.0 ACK/control frame"
+      },
+      {
+        "timestamp": "2026-04-29T10:14:53.107",
+        "source": "10000322F1A3",
+        "header": "300",
+        "payload": "20000662F1A34834",
+        "tp20_label": "TP2.0 application continuation frame seq=0"
+      },
+      {
+        "timestamp": "2026-04-29T10:14:53.107",
+        "source": "10000322F1A3",
+        "header": "300",
+        "payload": "1136",
+        "tp20_label": "TP2.0 application/control frame type=1 seq=1"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "direct_ctr0_22F1AA",
+    "mode": "direct_read",
+    "started": "2026-04-29T10:14:54.049",
+    "log_file": "logs\\drive_20260429_1008_live_r005_101359_core_direct_read_direct_ctr0_22F1AA.txt",
+    "unit": "20",
+    "ecu_scan_status": "",
+    "scan_probe": "",
+    "scan_native_builder": "",
+    "scan_purpose": "",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "answered",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 138,
+      "T2": 255,
+      "T3": 79,
+      "T4": 255
+    },
+    "session_command": "",
+    "session_command_label": "",
+    "session_counter": "",
+    "session_status": "",
+    "session_result": "",
+    "pre_read_sequence": "",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": "",
+    "read_counter": "0",
+    "read_command": "22F1AA",
+    "read_command_label": "",
+    "read_status": "positive",
+    "read_result": "62F1AA4A35313920",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-29T10:14:59.680",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-29T10:15:00.982",
+        "source": "A00F8AFF32FF",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-29T10:15:00.982",
+        "source": "A00F8AFF32FF",
+        "header": "300",
+        "payload": "A10F8AFF4FFF",
+        "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+      },
+      {
+        "timestamp": "2026-04-29T10:15:02.136",
+        "source": "10000322F1AA",
+        "header": "300",
+        "payload": "B1",
+        "tp20_label": "TP2.0 ACK/control frame"
+      },
+      {
+        "timestamp": "2026-04-29T10:15:02.136",
+        "source": "10000322F1AA",
+        "header": "300",
+        "payload": "20000862F1AA4A35",
+        "tp20_label": "TP2.0 application continuation frame seq=0"
+      },
+      {
+        "timestamp": "2026-04-29T10:15:02.136",
+        "source": "10000322F1AA",
+        "header": "300",
+        "payload": "11313920",
+        "tp20_label": "TP2.0 application first frame seq=1 len=12601"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "direct_ctr0_1802FF00",
+    "mode": "direct_read",
+    "started": "2026-04-29T10:15:03.042",
+    "log_file": "logs\\drive_20260429_1008_live_r005_101359_core_direct_read_direct_ctr0_1802FF00.txt",
+    "unit": "20",
+    "ecu_scan_status": "",
+    "scan_probe": "",
+    "scan_native_builder": "",
+    "scan_purpose": "",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "answered",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 138,
+      "T2": 255,
+      "T3": 79,
+      "T4": 255
+    },
+    "session_command": "",
+    "session_command_label": "",
+    "session_counter": "",
+    "session_status": "",
+    "session_result": "",
+    "pre_read_sequence": "",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": "",
+    "read_counter": "0",
+    "read_command": "1802FF00",
+    "read_command_label": "read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 58020C9820038B20",
+    "read_status": "other",
+    "read_result": "58010C9820",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-29T10:15:08.609",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-29T10:15:09.911",
+        "source": "A00F8AFF32FF",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-29T10:15:09.911",
+        "source": "A00F8AFF32FF",
+        "header": "300",
+        "payload": "A10F8AFF4FFF",
+        "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+      },
+      {
+        "timestamp": "2026-04-29T10:15:11.065",
+        "source": "1000041802FF00",
+        "header": "300",
+        "payload": "B1",
+        "tp20_label": "TP2.0 ACK/control frame"
+      },
+      {
+        "timestamp": "2026-04-29T10:15:11.065",
+        "source": "1000041802FF00",
+        "header": "300",
+        "payload": "10000558010C9820",
+        "tp20_label": "TP2.0 application first frame seq=0 len=5"
+      }
+    ],
+    "error": ""
+  },
+  {
+    "attempt_id": "direct_ctr0_1902FF",
+    "mode": "direct_read",
+    "started": "2026-04-29T10:15:11.969",
+    "log_file": "logs\\drive_20260429_1008_live_r005_101359_core_direct_read_direct_ctr0_1902FF.txt",
+    "unit": "20",
+    "ecu_scan_status": "",
+    "scan_probe": "",
+    "scan_native_builder": "",
+    "scan_purpose": "",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "answered",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 138,
+      "T2": 255,
+      "T3": 79,
+      "T4": 255
+    },
+    "session_command": "",
+    "session_command_label": "",
+    "session_counter": "",
+    "session_status": "",
+    "session_result": "",
+    "pre_read_sequence": "",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_kwp",
+    "ack_variant": "",
+    "delay_ms": "",
+    "read_counter": "0",
+    "read_command": "1902FF",
+    "read_command_label": "read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 7F1911",
+    "read_status": "negative",
+    "read_result": "7F1911",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-04-29T10:15:17.520",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-29T10:15:18.824",
+        "source": "A00F8AFF32FF",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      },
+      {
+        "timestamp": "2026-04-29T10:15:18.824",
+        "source": "A00F8AFF32FF",
+        "header": "300",
+        "payload": "A10F8AFF4FFF",
+        "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+      },
+      {
+        "timestamp": "2026-04-29T10:15:19.978",
+        "source": "1000031902FF",
+        "header": "300",
+        "payload": "B1",
+        "tp20_label": "TP2.0 ACK/control frame"
+      },
+      {
+        "timestamp": "2026-04-29T10:15:19.978",
+        "source": "1000031902FF",
+        "header": "300",
+        "payload": "1000037F1911",
+        "tp20_label": "TP2.0 application first frame seq=0 len=3"
+      }
+    ],
+    "error": ""
+  }
+]

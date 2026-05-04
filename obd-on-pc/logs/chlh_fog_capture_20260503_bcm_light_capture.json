@@ -1,0 +1,2163 @@
+{
+  "metadata": {
+    "started": "2026-05-03T20:41:40.892",
+    "last_updated": "2026-05-03T20:44:21.594",
+    "run_id": "chlh_fog_capture_20260503",
+    "port": "COM10",
+    "baud": 38400,
+    "unit": "20",
+    "read_profile": "bcm_ch_lh_debug",
+    "read_commands": [
+      "220600",
+      "220601",
+      "220606",
+      "22055C",
+      "22055D",
+      "1A9A",
+      "1A91",
+      "1802FF00",
+      "1902FF"
+    ],
+    "states": [
+      "baseline_off",
+      "parking_fog_off",
+      "parking_fog_on",
+      "lowbeam_fog_off",
+      "lowbeam_fog_on",
+      "left_turn",
+      "right_turn"
+    ],
+    "repeats": 1,
+    "raw_can_ms": 0,
+    "raw_can_filter": "",
+    "raw_can_monitor_mode": "atma",
+    "raw_can_per_header_ms": 0,
+    "raw_headers": [],
+    "raw_can_reference": {
+      "source": "openDBC vw_pq.dbc downloaded under reference/opendbc/ with LICENSE",
+      "light_context_headers": [
+        "390",
+        "392",
+        "0D0",
+        "0C2",
+        "1A0",
+        "288",
+        "320",
+        "470"
+      ],
+      "presets": {
+        "pq25_light_context": [
+          "390",
+          "392",
+          "0D0",
+          "0C2",
+          "1A0",
+          "288",
+          "320",
+          "470"
+        ],
+        "light_context": [
+          "390",
+          "392",
+          "0D0",
+          "0C2",
+          "1A0",
+          "288",
+          "320",
+          "470"
+        ],
+        "tp20": [
+          "300",
+          "338"
+        ]
+      }
+    },
+    "completed": true,
+    "interrupted": false,
+    "ended_early": false,
+    "skipped_states": [],
+    "safety": "read-only; blocks 27, 2E, 31, and 3B service prefixes"
+  },
+  "captures": [
+    {
+      "state": "baseline_off",
+      "repeat": 1,
+      "command": "220600",
+      "command_label": "direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_baseline_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:41:53.744",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "baseline_off",
+      "repeat": 1,
+      "command": "220601",
+      "command_label": "Carista-shaped UDS companion DID from the current BCM identity/status sweep",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_baseline_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:41:53.744",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "baseline_off",
+      "repeat": 1,
+      "command": "220606",
+      "command_label": "Carista-shaped UDS companion DID; previous live response was 620606001800018000",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_baseline_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:41:53.744",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "baseline_off",
+      "repeat": 1,
+      "command": "22055C",
+      "command_label": "",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_baseline_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:41:53.744",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "baseline_off",
+      "repeat": 1,
+      "command": "22055D",
+      "command_label": "",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_baseline_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:41:53.744",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "baseline_off",
+      "repeat": 1,
+      "command": "1A9A",
+      "command_label": "ReadVagCanLongCodingCommand_getRequest / long coding",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_baseline_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:41:53.744",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "baseline_off",
+      "repeat": 1,
+      "command": "1A91",
+      "command_label": "Carista VAGCAN20 simulator identity/coding-related block",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_baseline_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:41:53.744",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "baseline_off",
+      "repeat": 1,
+      "command": "1802FF00",
+      "command_label": "read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 58020C9820038B20",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_baseline_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:41:53.744",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "baseline_off",
+      "repeat": 1,
+      "command": "1902FF",
+      "command_label": "read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 7F1911",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_baseline_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:41:53.744",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "parking_fog_off",
+      "repeat": 1,
+      "command": "220600",
+      "command_label": "direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_parking_fog_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:42:14.146",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "parking_fog_off",
+      "repeat": 1,
+      "command": "220601",
+      "command_label": "Carista-shaped UDS companion DID from the current BCM identity/status sweep",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_parking_fog_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:42:14.146",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "parking_fog_off",
+      "repeat": 1,
+      "command": "220606",
+      "command_label": "Carista-shaped UDS companion DID; previous live response was 620606001800018000",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_parking_fog_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:42:14.146",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "parking_fog_off",
+      "repeat": 1,
+      "command": "22055C",
+      "command_label": "",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_parking_fog_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:42:14.146",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "parking_fog_off",
+      "repeat": 1,
+      "command": "22055D",
+      "command_label": "",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_parking_fog_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:42:14.146",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "parking_fog_off",
+      "repeat": 1,
+      "command": "1A9A",
+      "command_label": "ReadVagCanLongCodingCommand_getRequest / long coding",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_parking_fog_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:42:14.146",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "parking_fog_off",
+      "repeat": 1,
+      "command": "1A91",
+      "command_label": "Carista VAGCAN20 simulator identity/coding-related block",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_parking_fog_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:42:14.146",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "parking_fog_off",
+      "repeat": 1,
+      "command": "1802FF00",
+      "command_label": "read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 58020C9820038B20",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_parking_fog_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:42:14.146",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "parking_fog_off",
+      "repeat": 1,
+      "command": "1902FF",
+      "command_label": "read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 7F1911",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_parking_fog_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:42:14.146",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "parking_fog_on",
+      "repeat": 1,
+      "command": "220600",
+      "command_label": "direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_parking_fog_on_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "disconnect",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:42:35.892",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-03T20:42:37.197",
+          "source": "A00F8AFF32FF",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-03T20:42:37.197",
+          "source": "A00F8AFF32FF",
+          "header": "300",
+          "payload": "A8",
+          "tp20_label": "TP2.0 disconnect/close frame"
+        }
+      ]
+    },
+    {
+      "state": "parking_fog_on",
+      "repeat": 1,
+      "command": "220601",
+      "command_label": "Carista-shaped UDS companion DID from the current BCM identity/status sweep",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_parking_fog_on_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "disconnect",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:42:35.892",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-03T20:42:37.197",
+          "source": "A00F8AFF32FF",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-03T20:42:37.197",
+          "source": "A00F8AFF32FF",
+          "header": "300",
+          "payload": "A8",
+          "tp20_label": "TP2.0 disconnect/close frame"
+        }
+      ]
+    },
+    {
+      "state": "parking_fog_on",
+      "repeat": 1,
+      "command": "220606",
+      "command_label": "Carista-shaped UDS companion DID; previous live response was 620606001800018000",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_parking_fog_on_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "disconnect",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:42:35.892",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-03T20:42:37.197",
+          "source": "A00F8AFF32FF",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-03T20:42:37.197",
+          "source": "A00F8AFF32FF",
+          "header": "300",
+          "payload": "A8",
+          "tp20_label": "TP2.0 disconnect/close frame"
+        }
+      ]
+    },
+    {
+      "state": "parking_fog_on",
+      "repeat": 1,
+      "command": "22055C",
+      "command_label": "",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_parking_fog_on_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "disconnect",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:42:35.892",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-03T20:42:37.197",
+          "source": "A00F8AFF32FF",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-03T20:42:37.197",
+          "source": "A00F8AFF32FF",
+          "header": "300",
+          "payload": "A8",
+          "tp20_label": "TP2.0 disconnect/close frame"
+        }
+      ]
+    },
+    {
+      "state": "parking_fog_on",
+      "repeat": 1,
+      "command": "22055D",
+      "command_label": "",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_parking_fog_on_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "disconnect",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:42:35.892",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-03T20:42:37.197",
+          "source": "A00F8AFF32FF",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-03T20:42:37.197",
+          "source": "A00F8AFF32FF",
+          "header": "300",
+          "payload": "A8",
+          "tp20_label": "TP2.0 disconnect/close frame"
+        }
+      ]
+    },
+    {
+      "state": "parking_fog_on",
+      "repeat": 1,
+      "command": "1A9A",
+      "command_label": "ReadVagCanLongCodingCommand_getRequest / long coding",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_parking_fog_on_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "disconnect",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:42:35.892",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-03T20:42:37.197",
+          "source": "A00F8AFF32FF",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-03T20:42:37.197",
+          "source": "A00F8AFF32FF",
+          "header": "300",
+          "payload": "A8",
+          "tp20_label": "TP2.0 disconnect/close frame"
+        }
+      ]
+    },
+    {
+      "state": "parking_fog_on",
+      "repeat": 1,
+      "command": "1A91",
+      "command_label": "Carista VAGCAN20 simulator identity/coding-related block",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_parking_fog_on_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "disconnect",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:42:35.892",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-03T20:42:37.197",
+          "source": "A00F8AFF32FF",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-03T20:42:37.197",
+          "source": "A00F8AFF32FF",
+          "header": "300",
+          "payload": "A8",
+          "tp20_label": "TP2.0 disconnect/close frame"
+        }
+      ]
+    },
+    {
+      "state": "parking_fog_on",
+      "repeat": 1,
+      "command": "1802FF00",
+      "command_label": "read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 58020C9820038B20",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_parking_fog_on_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "disconnect",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:42:35.892",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-03T20:42:37.197",
+          "source": "A00F8AFF32FF",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-03T20:42:37.197",
+          "source": "A00F8AFF32FF",
+          "header": "300",
+          "payload": "A8",
+          "tp20_label": "TP2.0 disconnect/close frame"
+        }
+      ]
+    },
+    {
+      "state": "parking_fog_on",
+      "repeat": 1,
+      "command": "1902FF",
+      "command_label": "read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 7F1911",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_parking_fog_on_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "disconnect",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:42:35.892",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-03T20:42:37.197",
+          "source": "A00F8AFF32FF",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-03T20:42:37.197",
+          "source": "A00F8AFF32FF",
+          "header": "300",
+          "payload": "A8",
+          "tp20_label": "TP2.0 disconnect/close frame"
+        }
+      ]
+    },
+    {
+      "state": "lowbeam_fog_off",
+      "repeat": 1,
+      "command": "220600",
+      "command_label": "direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_lowbeam_fog_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:42:56.306",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "lowbeam_fog_off",
+      "repeat": 1,
+      "command": "220601",
+      "command_label": "Carista-shaped UDS companion DID from the current BCM identity/status sweep",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_lowbeam_fog_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:42:56.306",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "lowbeam_fog_off",
+      "repeat": 1,
+      "command": "220606",
+      "command_label": "Carista-shaped UDS companion DID; previous live response was 620606001800018000",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_lowbeam_fog_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:42:56.306",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "lowbeam_fog_off",
+      "repeat": 1,
+      "command": "22055C",
+      "command_label": "",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_lowbeam_fog_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:42:56.306",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "lowbeam_fog_off",
+      "repeat": 1,
+      "command": "22055D",
+      "command_label": "",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_lowbeam_fog_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:42:56.306",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "lowbeam_fog_off",
+      "repeat": 1,
+      "command": "1A9A",
+      "command_label": "ReadVagCanLongCodingCommand_getRequest / long coding",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_lowbeam_fog_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:42:56.306",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "lowbeam_fog_off",
+      "repeat": 1,
+      "command": "1A91",
+      "command_label": "Carista VAGCAN20 simulator identity/coding-related block",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_lowbeam_fog_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:42:56.306",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "lowbeam_fog_off",
+      "repeat": 1,
+      "command": "1802FF00",
+      "command_label": "read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 58020C9820038B20",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_lowbeam_fog_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:42:56.306",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "lowbeam_fog_off",
+      "repeat": 1,
+      "command": "1902FF",
+      "command_label": "read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 7F1911",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_lowbeam_fog_off_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:42:56.306",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "lowbeam_fog_on",
+      "repeat": 1,
+      "command": "220600",
+      "command_label": "direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_lowbeam_fog_on_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:43:15.342",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "lowbeam_fog_on",
+      "repeat": 1,
+      "command": "220601",
+      "command_label": "Carista-shaped UDS companion DID from the current BCM identity/status sweep",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_lowbeam_fog_on_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:43:15.342",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "lowbeam_fog_on",
+      "repeat": 1,
+      "command": "220606",
+      "command_label": "Carista-shaped UDS companion DID; previous live response was 620606001800018000",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_lowbeam_fog_on_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:43:15.342",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "lowbeam_fog_on",
+      "repeat": 1,
+      "command": "22055C",
+      "command_label": "",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_lowbeam_fog_on_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:43:15.342",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "lowbeam_fog_on",
+      "repeat": 1,
+      "command": "22055D",
+      "command_label": "",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_lowbeam_fog_on_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:43:15.342",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "lowbeam_fog_on",
+      "repeat": 1,
+      "command": "1A9A",
+      "command_label": "ReadVagCanLongCodingCommand_getRequest / long coding",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_lowbeam_fog_on_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:43:15.342",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "lowbeam_fog_on",
+      "repeat": 1,
+      "command": "1A91",
+      "command_label": "Carista VAGCAN20 simulator identity/coding-related block",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_lowbeam_fog_on_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:43:15.342",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "lowbeam_fog_on",
+      "repeat": 1,
+      "command": "1802FF00",
+      "command_label": "read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 58020C9820038B20",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_lowbeam_fog_on_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:43:15.342",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "lowbeam_fog_on",
+      "repeat": 1,
+      "command": "1902FF",
+      "command_label": "read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 7F1911",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_lowbeam_fog_on_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:43:15.342",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "left_turn",
+      "repeat": 1,
+      "command": "220600",
+      "command_label": "direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_left_turn_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:43:49.890",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "left_turn",
+      "repeat": 1,
+      "command": "220601",
+      "command_label": "Carista-shaped UDS companion DID from the current BCM identity/status sweep",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_left_turn_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:43:49.890",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "left_turn",
+      "repeat": 1,
+      "command": "220606",
+      "command_label": "Carista-shaped UDS companion DID; previous live response was 620606001800018000",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_left_turn_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:43:49.890",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "left_turn",
+      "repeat": 1,
+      "command": "22055C",
+      "command_label": "",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_left_turn_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:43:49.890",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "left_turn",
+      "repeat": 1,
+      "command": "22055D",
+      "command_label": "",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_left_turn_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:43:49.890",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "left_turn",
+      "repeat": 1,
+      "command": "1A9A",
+      "command_label": "ReadVagCanLongCodingCommand_getRequest / long coding",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_left_turn_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:43:49.890",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "left_turn",
+      "repeat": 1,
+      "command": "1A91",
+      "command_label": "Carista VAGCAN20 simulator identity/coding-related block",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_left_turn_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:43:49.890",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "left_turn",
+      "repeat": 1,
+      "command": "1802FF00",
+      "command_label": "read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 58020C9820038B20",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_left_turn_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:43:49.890",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "left_turn",
+      "repeat": 1,
+      "command": "1902FF",
+      "command_label": "read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 7F1911",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_left_turn_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:43:49.890",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "right_turn",
+      "repeat": 1,
+      "command": "220600",
+      "command_label": "direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_right_turn_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:44:11.688",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "right_turn",
+      "repeat": 1,
+      "command": "220601",
+      "command_label": "Carista-shaped UDS companion DID from the current BCM identity/status sweep",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_right_turn_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:44:11.688",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "right_turn",
+      "repeat": 1,
+      "command": "220606",
+      "command_label": "Carista-shaped UDS companion DID; previous live response was 620606001800018000",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_right_turn_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:44:11.688",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "right_turn",
+      "repeat": 1,
+      "command": "22055C",
+      "command_label": "",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_right_turn_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:44:11.688",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "right_turn",
+      "repeat": 1,
+      "command": "22055D",
+      "command_label": "",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_right_turn_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:44:11.688",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "right_turn",
+      "repeat": 1,
+      "command": "1A9A",
+      "command_label": "ReadVagCanLongCodingCommand_getRequest / long coding",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_right_turn_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:44:11.688",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "right_turn",
+      "repeat": 1,
+      "command": "1A91",
+      "command_label": "Carista VAGCAN20 simulator identity/coding-related block",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_right_turn_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:44:11.688",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "right_turn",
+      "repeat": 1,
+      "command": "1802FF00",
+      "command_label": "read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 58020C9820038B20",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_right_turn_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:44:11.688",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    },
+    {
+      "state": "right_turn",
+      "repeat": 1,
+      "command": "1902FF",
+      "command_label": "read-only DTC/status read retained for BCM lighting debug snapshots; previous live response was 7F1911",
+      "status": "no_response",
+      "payload": "",
+      "payload_bytes": "",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_fog_capture_20260503_right_turn_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "defaulted",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 255,
+        "T2": 255,
+        "T3": 255,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T20:44:11.688",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        }
+      ]
+    }
+  ],
+  "raw_can_frames": []
+}

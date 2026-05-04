@@ -1,0 +1,13 @@
+/* _ZNSt6__ndk120__shared_ptr_emplaceI28StopReadVagCanRoutineCommandNS_9allocatorIS1_EEEC2B8ne190000IJP9VagCanEcuRtbES3_TnNS_9enable_ifIXntsr7is_sameINT0_10value_typeENS_19__for_overwrite_tagEEE5valueEiE4typeELi0EEES3_DpOT_ @ 0142e5f0 */
+
+
+void _ZNSt6__ndk120__shared_ptr_emplaceI28StopReadVagCanRoutineCommandNS_9allocatorIS1_EEEC2B8ne190000IJP9VagCanEcuRtbES3_TnNS_9enable_ifIXntsr7is_sameINT0_10value_typeENS_19__for_overwrite_tagEEE5valueEiE4typeELi0EEES3_DpOT_
+               (void)
+
+{
+  _ZNSt6__ndk120__shared_ptr_emplaceI28StopReadVagCanRoutineCommandNS_9allocatorIS1_EEEC2B8ne190000IJP9VagCanEcuRtbES3_TnNS_9enable_ifIXntsr7is_sameINT0_10value_typeENS_19__for_overwrite_tagEEE5valueEiE4typeELi0EEES3_DpOT_
+            ();
+  return;
+}
+
+

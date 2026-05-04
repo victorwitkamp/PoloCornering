@@ -1,12 +1,14 @@
 param(
     [switch]$RunHeadless,
     [switch]$ExportTargets,
+    [switch]$ExportAddressTargets,
     [switch]$PrepareAndroidDex,
     [switch]$RunAndroidDexHeadless,
     [switch]$ExportAndroidBridge,
     [switch]$CleanProject,
     [string]$HeadlessMaxMem = "8G",
     [string]$ExportDir = "",
+    [string]$AddressExportDir = "",
     [string]$AndroidExportDir = "",
     [switch]$Force
 )
@@ -33,6 +35,9 @@ $AndroidProjectName = "CaristaAndroid"
 $GhidraScriptsDir = Join-Path $ScriptDir "ghidra_scripts"
 if (-not $ExportDir) {
     $ExportDir = Join-Path $ScriptDir "ghidra_exports"
+}
+if (-not $AddressExportDir) {
+    $AddressExportDir = Join-Path $ScriptDir "ghidra_address_targets"
 }
 if (-not $AndroidExportDir) {
     $AndroidExportDir = Join-Path $ScriptDir "ghidra_android_exports"
@@ -118,7 +123,7 @@ if (-not (Test-Path $XapkPath)) {
     throw "Missing XAPK at $XapkPath"
 }
 
-if ($PrepareAndroidDex -and -not ($RunHeadless -or $ExportTargets -or $RunAndroidDexHeadless -or $ExportAndroidBridge)) {
+if ($PrepareAndroidDex -and -not ($RunHeadless -or $ExportTargets -or $ExportAddressTargets -or $RunAndroidDexHeadless -or $ExportAndroidBridge)) {
     Expand-CaristaAndroidInputs
     return
 }
@@ -225,7 +230,7 @@ if (-not (Test-Path $GhidraRun)) { throw "Missing $GhidraRun" }
 if (-not (Test-Path $AnalyzeHeadless)) { throw "Missing $AnalyzeHeadless" }
 if (-not (Test-Path $LaunchBat)) { throw "Missing $LaunchBat" }
 if (-not (Test-Path $JavaExe)) { throw "Missing $JavaExe" }
-if ($ExportTargets -and -not (Test-Path $GhidraScriptsDir)) { throw "Missing $GhidraScriptsDir" }
+if (($ExportTargets -or $ExportAddressTargets) -and -not (Test-Path $GhidraScriptsDir)) { throw "Missing $GhidraScriptsDir" }
 if ($ExportAndroidBridge -and -not (Test-Path $GhidraScriptsDir)) { throw "Missing $GhidraScriptsDir" }
 
 $env:JAVA_HOME = $JdkDir
@@ -259,6 +264,15 @@ if ($ExportTargets) {
     Ensure-Directory $ExportDir
     Write-Host "Exporting target decompilation to $ExportDir"
     Invoke-GhidraHeadless @($ProjectDir, $ProjectName, "-process", "libCarista.so", "-readOnly", "-noanalysis", "-scriptPath", $GhidraScriptsDir, "-postScript", "ExportCaristaTargets.java", $ExportDir)
+}
+
+if ($ExportAddressTargets) {
+    if (-not (Test-Path $ProjectDir)) {
+        throw "Missing Ghidra project at $ProjectDir. Run with -RunHeadless first."
+    }
+    Ensure-Directory $AddressExportDir
+    Write-Host "Exporting address-target decompilation to $AddressExportDir"
+    Invoke-GhidraHeadless @($ProjectDir, $ProjectName, "-process", "libCarista.so", "-readOnly", "-noanalysis", "-scriptPath", $GhidraScriptsDir, "-postScript", "ExportCaristaAddressTargets.java", $AddressExportDir)
 }
 
 if ($RunAndroidDexHeadless) {

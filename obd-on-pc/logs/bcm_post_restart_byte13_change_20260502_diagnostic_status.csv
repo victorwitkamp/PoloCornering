@@ -1,0 +1,6 @@
+source,command,label,state,status,payload_bytes,observations,payload
+logs\bcm_confirmed_baseline_20260501_1816_bcm_light_capture.json,220600,direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding,clean_baseline_off,positive,33,1,6206003AB02BBF08A10000003008006D2B0CD000C0412F60860000200000000000
+logs\bcm_confirmed_fault_20260502_0001_bcm_light_capture.json,220600,direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding,confirmed_fault_right_fog_on,positive,33,1,6206003AB02BBF08A10000003008006D6B0CD000C0412F60860000200000000000
+logs\bcm_off_after_fault_20260502_0003_bcm_light_capture.json,220600,direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding,off_after_fault,no_response,,1,
+logs\bcm_parking_no_fog_20260502_0004_bcm_light_capture.json,220600,direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding,parking_no_fog_after_fault,positive,33,1,6206003AB02BBF08A10000003008006D6B0CD000C0412F60860000200000000000
+logs\bcm_repeat_fault_20260502_0002_bcm_light_capture.json,220600,direct long-coding read DID; latest live baseline returns 620600 + 30-byte coding,repeat_fault_right_fog_on,positive,33,1,6206003AB02BBF08A10000003008006D6B0CD000C0412F60860000200000000000

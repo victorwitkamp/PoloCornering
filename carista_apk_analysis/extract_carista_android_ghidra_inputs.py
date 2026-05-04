@@ -18,6 +18,8 @@ from androguard.core.dex import DEX
 
 
 ROOT = Path(__file__).resolve().parent
+WORKSPACE_ROOT = ROOT.parent
+DOCS_ROOT = WORKSPACE_ROOT / "docs" / "carista_apk_analysis"
 XAPK_PATH = ROOT / "reacquire_20260424" / "carista_9.8.2.xapk"
 EXTRACT_ROOT = ROOT / "extracted" / "android"
 BASE_APK_NAME = "com.prizmos.carista.apk"
@@ -207,13 +209,15 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Extract Carista APK/DEX inputs and report Java/native bridge descriptors.")
     parser.add_argument("--xapk", type=Path, default=XAPK_PATH)
     parser.add_argument("--extract-root", type=Path, default=EXTRACT_ROOT)
-    parser.add_argument("--output", type=Path, default=ROOT / "carista_android_bridge_report.md")
-    parser.add_argument("--json-output", type=Path, default=ROOT / "carista_android_bridge_report.json")
+    parser.add_argument("--output", type=Path, default=DOCS_ROOT / "carista_android_bridge_report.md")
+    parser.add_argument("--json-output", type=Path, default=EXTRACT_ROOT / "carista_android_bridge_report.json")
     args = parser.parse_args()
 
     artifacts = extract_android_inputs(args.xapk, args.extract_root)
     bridge_classes = scan_bridge_classes(args.extract_root / "dex")
 
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.json_output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(render_report(artifacts, bridge_classes), encoding="utf-8")
     args.json_output.write_text(
         json.dumps(

@@ -22,6 +22,30 @@ run for this audit.
    ELM timeout `0x04`, sends the final packet with timeout `0x20`, then expects
    a TP2.0 transmit ACK `B{next outgoing seq}`. If that ACK is not seen, it
    waits about 50 ms and retransmits the same generated packets once.
+- Native `VagOperationDelegate::writeVagUdsValue` crosses the delegate
+   `getEcuInfo` path after `F199` and before `F198`. The local writer now mirrors
+   that boundary by issuing an inline `22F1A5` workshop-code refresh before
+   building the `F198` write, while retaining the cached/pre-read value as a
+   fallback if the refresh does not answer positively.
+- The local writer now refuses to continue a BCM coding write on a TP2.0 channel
+   where channel-parameter setup returns `A8` or defaults after `NO DATA`. It
+   closes the suspect channel, waits, reopens, and retries before any
+   `F199`/`F198`/`0600` write frame is sent.
+- The Android DEX bridge is now mapped enough to follow the Java-to-native
+   handoff:
+   `ChangeSettingOperation(Setting, byte[], ReadValuesOperation)` calls
+   `initNative(setting, valueBytes, readValuesOperation)`, stores the returned
+   native operation id, then calls `postNativeInit()`.
+- The native JNI bridge exports now have first-class Ghidra exports. The most
+   relevant files are:
+   `JNI_ChangeSettingOperation_initNative_00CC645C.c`,
+   `JNI_ReadValuesOperation_getAvailableItems_00CCDB9C.c`, and
+   `JNI_ReadValuesOperation_getSettingValue_00CCE1DC.c`.
+- `ReadValuesOperation.getAvailableItems()` dispatches through the native
+   `ReadValuesOperation` vtable at offset `0x7c`; `getSettingValue(setting)`
+   dispatches through vtable offset `0x8c` after converting the Java `Setting`
+   back to a native `shared_ptr<Setting>`. This confirms the UI-facing current
+   setting bytes are returned by the native read operation, not computed in Java.
 
 The local writer was corrected during this audit to advance the outgoing TP2.0
 sequence per generated frame, not once per logical UDS request, and to use the
@@ -31,8 +55,9 @@ For write-counter `0`, the dry-run frame shape is now:
 
 ```text
 F199:  2000062EF1992604 / 1128
-F198:  2200092EF1980005 / 13F3C7E719
-0600:  2400212E06003AB8 / 252B9F08A1000000 / 263008006C680ED0 / 2700C8412F60A600 / 1800200000000000
+F1A5:  12000322F1A5
+F198:  2300092EF1980005 / 14F3C7E719
+0600:  2500212E06003AB8 / 262B9F08A1000000 / 273008006C680ED0 / 2800C8412F60A600 / 1900200000000000
 ```
 
 ## Remaining Non-Exact Or Unknown Areas
@@ -42,7 +67,9 @@ F198:  2200092EF1980005 / 13F3C7E719
    `NO DATA` for that payload and then `NO DATA` for `220600` in that channel.
    The practical default remains the Polo parameter request `A00F8AFF32FF`,
    but after the Carista-parameter probe the channel also stopped answering the
-   minimal read until an ignition/adapter reset.
+   minimal read until an ignition/adapter reset. As of 2026-05-02, write tooling
+   treats unanswered/defaulted parameter setup as a pre-write channel failure
+   instead of attempting metadata or coding writes on that channel.
 
 2. ELM initialization is not proven byte-for-byte. Native `postInitialize` calls
    ELM wrapper methods; the local script uses explicit AT commands that match
@@ -55,11 +82,10 @@ F198:  2200092EF1980005 / 13F3C7E719
    response, and did not change coding. This points beyond the now-replicated
    sendRequest ACK/retry loop.
 
-4. Workshop-code timing/cache behavior is not exact. Native `writeVagUdsValue`
-   calls `getEcuInfo` between the F199 date write and the F198 workshop-code
-   write. The local writer can pre-read or receive the `22F1A5` payload before
-   the write sequence. The payload bytes are proven; the on-bus timing and cache
-   behavior are not.
+4. Exact `getEcuInfo` cache semantics are still not fully named. The local
+   writer now includes the `22F1A5` refresh at the native F199/F198 boundary,
+   but native may sometimes satisfy `getEcuInfo` from cache depending on the
+   surrounding operation state.
 
 5. Command retry and timeout policy is not fully replicated. Native
    `Communicator::runCommand` retries selected states, adjusts timeout behavior,
@@ -77,6 +103,11 @@ F198:  2200092EF1980005 / 13F3C7E719
    transmit ACK/retry behavior. It does not yet prove the missing condition that
    makes this BCM ACK and accept final `2E0600`.
 
+8. The JNI bridge shows where Java enters native, but the native class
+   constructors and vtable targets behind `ReadValuesOperation` offsets `0x7c`
+   and `0x8c` are not yet fully named. Those targets are probably the next best
+   static route to the exact supported setting/value map.
+
 ## Highest-Value Next Static Targets
 
 - Export and document `VagCanCommunicator::sendRequest` and
@@ -86,5 +117,8 @@ F198:  2200092EF1980005 / 13F3C7E719
    but the final `BA` still never arrives locally.
 - Map native `postInitialize` ELM wrapper calls to the exact AT command
   transcript, if possible.
-- Determine whether `getEcuInfo` before F198 is cache-only in the relevant flow
-  or causes an on-bus `22F1A5` read after F199.
+- Name the native `getEcuInfo` cache path well enough to prove when it performs
+   an on-bus `22F1A5` read and when it reuses cached ECU info.
+- Name the native `ReadValuesOperation` vtable slots at offsets `0x7c` and
+   `0x8c`, then trace the concrete subclass created by
+   `CheckSettingsOperation.initNative` for VAG settings.

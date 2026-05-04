@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "started": "2026-05-03T21:10:01.651",
+    "last_updated": "2026-05-03T21:10:24.694",
+    "run_id": "chlh_055c_direct_retry_20260503",
+    "port": "COM10",
+    "baud": 38400,
+    "unit": "20",
+    "read_profile": "bcm_light_debug",
+    "read_commands": [
+      "22055C"
+    ],
+    "states": [
+      "switch_middle"
+    ],
+    "repeats": 1,
+    "raw_can_ms": 0,
+    "raw_can_filter": "",
+    "raw_can_monitor_mode": "atma",
+    "raw_can_per_header_ms": 0,
+    "raw_headers": [],
+    "raw_can_reference": {
+      "source": "openDBC vw_pq.dbc downloaded under reference/opendbc/ with LICENSE",
+      "light_context_headers": [
+        "390",
+        "392",
+        "0D0",
+        "0C2",
+        "1A0",
+        "288",
+        "320",
+        "470"
+      ],
+      "presets": {
+        "pq25_light_context": [
+          "390",
+          "392",
+          "0D0",
+          "0C2",
+          "1A0",
+          "288",
+          "320",
+          "470"
+        ],
+        "light_context": [
+          "390",
+          "392",
+          "0D0",
+          "0C2",
+          "1A0",
+          "288",
+          "320",
+          "470"
+        ],
+        "tp20": [
+          "300",
+          "338"
+        ]
+      }
+    },
+    "completed": true,
+    "interrupted": false,
+    "ended_early": false,
+    "skipped_states": [],
+    "safety": "read-only; blocks 27, 2E, 31, and 3B service prefixes"
+  },
+  "captures": [
+    {
+      "state": "switch_middle",
+      "repeat": 1,
+      "command": "22055C",
+      "command_label": "",
+      "status": "negative",
+      "payload": "7F2231",
+      "payload_bytes": "3",
+      "changed_from_baseline": "",
+      "error": "",
+      "log_file": "logs\\chlh_055c_direct_retry_20260503_switch_middle_r01_tp20_snapshot.txt",
+      "send_header": "338",
+      "listen_header": "300",
+      "channel_parameter_status": "answered",
+      "channel_parameters": {
+        "block": 15,
+        "T1": 138,
+        "T2": 255,
+        "T3": 79,
+        "T4": 255
+      },
+      "raw_payloads": [
+        {
+          "timestamp": "2026-05-03T21:10:21.207",
+          "source": "20C00010000301",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-03T21:10:22.513",
+          "source": "A00F8AFF32FF",
+          "header": "220",
+          "payload": "00D00003380301",
+          "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+        },
+        {
+          "timestamp": "2026-05-03T21:10:22.513",
+          "source": "A00F8AFF32FF",
+          "header": "300",
+          "payload": "A10F8AFF4FFF",
+          "tp20_label": "TP2.0 channel parameters block=15 T1=138 T2=255 T3=79 T4=255"
+        },
+        {
+          "timestamp": "2026-05-03T21:10:23.673",
+          "source": "10000322055C",
+          "header": "300",
+          "payload": "B1",
+          "tp20_label": "TP2.0 ACK/control frame"
+        },
+        {
+          "timestamp": "2026-05-03T21:10:23.673",
+          "source": "10000322055C",
+          "header": "300",
+          "payload": "1000037F2231",
+          "tp20_label": "TP2.0 application first frame seq=0 len=3"
+        }
+      ]
+    }
+  ],
+  "raw_can_frames": []
+}

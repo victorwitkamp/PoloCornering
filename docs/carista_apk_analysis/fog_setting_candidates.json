@@ -1,0 +1,46 @@
+[
+  {
+    "ecu": "BCM",
+    "raw_address": 1372,
+    "value_offset": 5,
+    "value_mask": "FF",
+    "key": "car_setting_cornering_lights_via_fogs_left",
+    "setting_type": 7,
+    "choices": [
+      {
+        "key": "car_setting_off",
+        "value": 0
+      },
+      {
+        "key": "car_setting_on",
+        "value": 22
+      },
+      {
+        "key": "car_setting_enabled_coming_home_or_leaving_home",
+        "value": 30
+      }
+    ]
+  },
+  {
+    "ecu": "BCM",
+    "raw_address": 1373,
+    "value_offset": 5,
+    "value_mask": "FF",
+    "key": "car_setting_cornering_lights_via_fogs_right",
+    "setting_type": 7,
+    "choices": [
+      {
+        "key": "car_setting_off",
+        "value": 0
+      },
+      {
+        "key": "car_setting_on",
+        "value": 23
+      },
+      {
+        "key": "car_setting_enabled_coming_home_or_leaving_home",
+        "value": 30
+      }
+    ]
+  }
+]
