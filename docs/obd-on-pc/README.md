@@ -103,15 +103,18 @@ Use the right fog light as...
 ```
 
 The first family maps to the already-tested byte `12` / byte `21` long-coding
-bits. The unresolved settings are now:
+bits. The preferred x86 static pass also proved the direct visible fog-role
+labels are not VW/PQ25 setting objects:
 
 ```text
-car_setting_left_fog_light_as
-car_setting_right_fog_light_as
+car_setting_fog_when               -> FordSettings::getSettings
+car_setting_left_fog_light_as      -> FordSettings::getSettings
+car_setting_right_fog_light_as     -> FordSettings::getSettings
 ```
 
-Do not flip unknown long-coding bits for those settings without a recovered
-Carista setting object, DID/adaptation key, raw tuple, or equivalent proof.
+Do not flip unknown long-coding bits for those labels. The current target is an
+alternate VAG key, availability object, or ReadValuesOperation value path behind
+equivalent fog-role behavior.
 
 ## Read-Only Carista Procedure
 

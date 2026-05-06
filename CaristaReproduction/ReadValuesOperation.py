@@ -66,6 +66,7 @@ CARISTA_LIVE_COMPANION_READS: tuple[ReadValueRequest, ...] = (
         included_by_default=False,
         evidence=(
             "Live BCM reads returned 6206011E across several lamp-switch states.",
+            "Preferred x86 static sweep found no decoded instruction operand immediate 0x0601 in libCarista.so, so no official Play 9.8.3 VAG setting/live-data branch is tied to this DID yet.",
             "The native Setting branch that causes this companion read is not yet recovered, so this is a probe companion rather than a primary Carista read-values request.",
         ),
     ),
@@ -79,6 +80,7 @@ CARISTA_LIVE_COMPANION_READS: tuple[ReadValueRequest, ...] = (
         included_by_default=False,
         evidence=(
             "Previous live BCM read returned 620606001800018000.",
+            "Preferred x86 static sweep found no decoded instruction operand immediate 0x0606 in libCarista.so; the few raw 06060000 byte hits are simulator/data-table artifacts, not recovered VAG/PQ25 setting constructors.",
             "Kept separate from the primary ReadValuesOperation model until the native constructor/availability branch is recovered.",
         ),
     ),
@@ -339,7 +341,7 @@ def ReadValuesOperation_buildPq25BcmPlan() -> ReadValuesOperationPlan:
         requests=tuple(sorted(_core_requests() + _vag_can_settings_requests() + CARISTA_LIVE_COMPANION_READS, key=lambda item: item.order)),
         unresolved=(
             "Runtime availability predicate objects are not fully reconstructed, so mixed settings remain branch-conditional.",
-            "car_setting_left_fog_light_as and car_setting_right_fog_light_as still lack a proven VAG/PQ25 constructor path.",
+            "Official x86 direct refs for car_setting_fog_when, car_setting_left_fog_light_as, and car_setting_right_fog_light_as land in FordSettings::getSettings, not VagCanSettings::getSettings; any VW/PQ25 equivalent must come through another VAG key or ReadValuesOperation value path.",
             "Recovered direct lighting UDS-adaptation candidates are modeled as Carista static branches but excluded from default live probes when this BCM returned 7F2231.",
             "The Polo-proven A00F8AFF32FF channel parameter request is a fallback when the exact Carista A00194FF82FF setup does not answer.",
         ),

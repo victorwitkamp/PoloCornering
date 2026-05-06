@@ -74,6 +74,15 @@ Priority unresolved Carista settings:
 | `car_setting_right_fog_light_as` | unknown | Cornering lights; Use DRL via fog and cornering lights | native Setting object, current-value read method, write bytes |
 | `car_setting_cornering_lights_with_turn_signals_one_touch` | unknown | unknown | native Setting object and value enum |
 
+2026-05-06 x86 follow-up narrows this table: the direct visible labels
+`car_setting_fog_when`, `car_setting_left_fog_light_as`, and
+`car_setting_right_fog_light_as` resolve to `FordSettings::getSettings`, not a
+VAG/PQ25 constructor. The direct one-touch turn-signal label resolves to
+`BmwESettings::getSettings`. Later verified coding snapshots also already have
+the x86-selected fog-cornering and turn-signal-cornering bits set, so the next
+car visit should start with a fresh `220600` confirmation and should not retest
+those bits as standalone fixes.
+
 Carista's own instruction says the cornering setup depends on three choices:
 
 ```text
@@ -138,10 +147,8 @@ That procedure sends the `CaristaReproduction` read-values plan:
 
 ```text
 core Carista reads: 1A9B, 1A9F, 1A9A, 220600
-safe VagCanSettings candidates from ReadValuesOperation:
-  22110E, 22056D, 220550, 220551, 220D01, 220A58, 220A57
 known-rejected static candidates kept out of the default live request set:
-  22055C, 22055D
+  22110E, 22056D, 220550, 220551, 220D01, 220A58, 220A57, 22055C, 22055D
 live companion reads from ReadValuesOperation:
   220601, 220606
 Carista UDS identity/status reads: 22F17E, 22F187, 22F189, 22F18C, 22F191, 22F197, 22F1A3, 22F1A5, 22F1AA, 22F1DF
@@ -176,14 +183,14 @@ Minimum next read set:
 
 ```text
 220600, 220601, 220606, 22F1A5
-22110E, 22056D, 220550, 220551, 220D01, 220A58, 220A57
 ```
 
-Do not send `22055C` / `22055D` again unless a new recovered branch-selection
+Do not send `22055C`, `22055D`, `22110E`, `22056D`, `220550`, `220551`,
+`220D01`, `220A58`, or `220A57` again unless a new recovered branch-selection
 artifact explains why the previous `7F2231` result should change. Do not send
-any `31` adaptation routine during this read pass; the recovered `31B8/31BA/31B9`
-sequence belongs to raw types `0/1`, while the per-side fog-role objects are
-currently recovered as raw type `7`.
+any `31` adaptation routine during this read pass; the recovered
+`31B8/31BA/31B9` sequence belongs to raw types `0/1`, while the per-side
+fog-role objects are currently recovered as raw type `7`.
 
 ## Next Reverse-Engineering Target
 

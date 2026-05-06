@@ -183,16 +183,24 @@ Use the left fog light as...
 Use the right fog light as...
 ```
 
-The first family maps to the already-tested long-coding bits. The highest-value
-unresolved settings are now:
+The preferred x86 static pass now changes how to treat those labels. The direct
+resource keys are not VW/PQ25 setting objects:
 
 ```text
-car_setting_left_fog_light_as
-car_setting_right_fog_light_as
+car_setting_fog_when               -> FordSettings::getSettings / FordCodingSetting
+car_setting_left_fog_light_as      -> FordSettings::getSettings / FordUdsSetting
+car_setting_right_fog_light_as     -> FordSettings::getSettings / FordUdsSetting
+car_setting_use_cornering_lights   -> FordSettings choice label in the same block
+cornering one-touch turn-signal    -> BmwESettings::getSettings / BmwESetting
 ```
 
-Offline Ghidra evidence now gives a concrete related VAG-path target for each
-side:
+So do not chase those exact labels as direct VW write targets. A VW/PQ25
+equivalent, if present, must be reached through a different VAG key,
+availability sub-object, or ReadValuesOperation value path.
+
+Offline Ghidra evidence still gives a related per-side VAG-path target for each
+side, but x86 branch selection now makes it a negative PQ25 clue rather than the
+current write lead:
 
 ```text
 car_setting_cornering_lights_via_fogs_left  -> VagUdsAdaptationSetting DID/raw address 055C, byte offset 5, mask FF
@@ -201,29 +209,30 @@ left choice values:  00=off, 16=on, 1E=enabled coming-home/leaving-home
 right choice values: 00=off, 17=on, 1E=enabled coming-home/leaving-home
 ```
 
-2026-05-06 constructor follow-up strengthened this VAG path rather than
-opening a write path:
+2026-05-06 constructor follow-up strengthened the negative boundary:
 
 ```text
 left variant 1:  01082988 -> 010B90CC -> 010E44E8 -> VagUdsAdaptationSetting
 left variant 2:  01082A4A -> 010B5620 -> 010D2BD0 -> VagUdsAdaptationSetting
 right variant 1: 01082B78 -> 010B8574 -> 010E0DE8 -> VagUdsAdaptationSetting
 right variant 2: 01082C34 -> 010B9120 -> 010E466C -> VagUdsAdaptationSetting
+x86 same-key branches are MQB/MK8 or gateway/MEB scoped, not 6R/PQ25
 ```
 
-The current explanation is therefore: the `0600` long-coding target enabled the
-known Carista-shaped cornering master bits, but the fog outputs still appear to
-be assigned to a steady low-beam / coming-leaving-home role. In that state the
-low-beam/high-beam logic owns the lamps, so turn input cannot produce visible
-left/right cornering behavior.
+The current explanation is therefore narrower: the `0600` long-coding target
+enabled the known Carista-shaped cornering bits, but those bits are already set
+or behavior-disproven. The fog outputs still appear to be assigned to a steady
+low-beam / coming-leaving-home role through a path not yet recovered as a PQ25
+Carista setting.
 
-The likely repair is not another blind cornering-bit write. The likely repair
-is one of these matched Carista-side combinations:
+The likely repair is not another blind cornering-bit write. The remaining
+repair hypothesis is an unrecovered output-role/prerequisite path, not the
+known per-side `055C` / `055D` type-7 branch:
 
 ```text
-change left/right fog role from 1E to 16/17
-change a coming/leaving-home output or master setting so fogs stop being the steady output
-change both, if Carista's runtime branch expects the role and CH/LH output settings to move together
+an alternate VW/PQ25 fog-role key
+a ReadValuesOperation value object that maps visible role labels to another raw value
+a coming/leaving-home output/master branch that makes fogs the steady output
 ```
 
 This is still an explanation and reconstruction target, not a live instruction.
@@ -235,13 +244,13 @@ these raw addresses is exactly `22055C` / `22055D`. Those requests were rejected
 live, so a positive current raw payload and payload length are still missing
 before any `2E055C` / `2E055D` write can be considered.
 
-If a positive read shows byte 5 is `1E`, do not treat that as a standalone
-fault. Carista names `1E` as the coming-home/leaving-home enabled choice, and
-historical reads repeatedly returned `220601 -> 6206011E`. The next proof step
-is to evaluate the matched combination: per-side fog role, coming/leaving-home
-output selection, and any master coming/leaving-home enable state. The repair
-may be `1E -> 16`, a separate coming/leaving-home output change, or both as a
-Carista-consistent combination.
+If a future recovered Carista path produces a positive current value of `1E`,
+do not treat that as a standalone fault. Carista names `1E` as a
+coming-home/leaving-home enabled choice in the rejected per-side tables, and
+historical reads repeatedly returned `220601 -> 6206011E`. The proof step would
+then be to evaluate the matched combination: fog role, coming/leaving-home
+output selection, and any master coming/leaving-home enable state. Until that
+positive path exists, there is no payload seed for `1E -> 16/17`.
 
 2026-05-03 live read-only follow-up proved two more boundaries:
 
@@ -313,11 +322,11 @@ state, or different transport path for that exact constructor branch.
 The next high-value work is offline reconstruction:
 
 ```text
-1. Recover runtime branch selection for 6R0937087K in VagOperationDelegate::getVagSettingAvailabilityForEcu.
-2. Resolve requested-choice encoding for the recovered VagUdsCodingSetting DID 0600 byte/mask variants.
-3. Map VagCanLongCodingSetting variants beside the rejected adaptation DIDs.
-4. Map FullByteVagCanShortAdaptationSetting branches for CH/LH duration/output where present.
-5. Trace the positive companion reads 220601 -> 1E and 220606 -> 001800018000 back to recovered native setting/value branches.
+1. Dump constructor StringWhitelist contents for the AvailBy=2 VAG branches and match them to 6R0937087K.
+2. Resolve the special getVagSettingAvailabilityForEcu vtable +0x3C predicate path.
+3. Find any alternate VW/PQ25 VAG key or ReadValuesOperation value object behind the visible fog-role behavior.
+4. Trace the positive companion reads 220601 -> 1E and 220606 -> 001800018000 back to recovered native setting/value branches.
+5. Keep requested-choice encoding branch-specific; do not promote compact choice values to write payloads without a positive current path.
 ```
 
 If another live read-only session is needed, keep it to positive baseline/context

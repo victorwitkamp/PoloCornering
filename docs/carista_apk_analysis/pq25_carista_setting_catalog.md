@@ -1,6 +1,6 @@
 # PQ25 Carista Setting Catalog
 
-Date: 2026-05-03
+Date: 2026-05-06
 
 This is an offline catalog for the Polo/PQ25 BCM work. It joins Carista app resources/native strings, the current 30-byte long coding, the supplied/reference coding, and the local PQ25 candidate bit map.
 
@@ -27,7 +27,7 @@ docs/carista_apk_analysis/pq25_carista_setting_catalog.md
 ## Current Read/Write Method Boundary
 
 - Long coding read: TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding.
-- Guarded full-coding write: Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding. The former live runner was removed after use.
+- Guarded full-coding write: Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding. The former live runner was removed after use..
 - Native compact Carista setting write: Native Carista setting path appears to build 3B9A + 6-byte value + 4-byte rawAddress4 + tail; rawAddress4/coding type/tail are not recovered for this BCM.
 - Native UDS raw-value setting write: Native Carista type 7/8 raw-value settings dispatch to WriteDataByIdentifier 2E<DID> after F199/F198; 055C/055D type 7 direct reads returned 7F2231 live, so no safe raw payload seed is available for those settings.
 - Native adaptation/routine path: Carista VAG CAN adaptation/routine path is 31B8/31BA/31B9/31BA/32B8 with short id 0103 and long id 010A; native proof applies to raw types 0/1, not the recovered 055C/055D raw type 7 settings.
@@ -38,11 +38,10 @@ These are the settings to recover before more in-car writes.
 
 | Key | Label | Bits | Current | Reference | Status | Priority |
 |---|---|---|---|---|---|---|
-| `car_setting_cornering_lights_via_fogs_left` | Left cornering light (using fog light) | - | - | - | native_vag_uds_adaptation_candidate | high_recovery_target_read_first |
-| `car_setting_cornering_lights_via_fogs_right` | Right cornering light (using fog light) | - | - | - | native_vag_uds_adaptation_candidate | high_recovery_target_read_first |
-| `car_setting_cornering_lights_with_turn_signals_one_touch` | Turn on cornering lights when one-touch turn signal is on | - | - | - | cornering_family_unmapped | medium_recovery_target |
-| `car_setting_left_fog_light_as` | Use the left fog light as… | - | - | - | app_visible_priority_unmapped_for_this_bcm | highest_recovery_target |
-| `car_setting_right_fog_light_as` | Use the right fog light as… | - | - | - | app_visible_priority_unmapped_for_this_bcm | highest_recovery_target |
+| `car_setting_cornering_lights_via_fogs_left` | Left cornering light (using fog light) | - | - | - | native_vag_uds_adaptation_candidate | alternate_vag_path_recovery_target |
+| `car_setting_cornering_lights_via_fogs_right` | Right cornering light (using fog light) | - | - | - | native_vag_uds_adaptation_candidate | alternate_vag_path_recovery_target |
+| `car_setting_left_fog_light_as` | Use the left fog light as… | - | - | - | direct_label_resolved_non_vag_ford | alternate_vag_path_recovery_target |
+| `car_setting_right_fog_light_as` | Use the right fog light as… | - | - | - | direct_label_resolved_non_vag_ford | alternate_vag_path_recovery_target |
 
 ## Settings Mapped To PQ25 Bits
 
@@ -87,6 +86,6 @@ These are the settings to recover before more in-car writes.
 
 ## Interpretation
 
-The two bits that differ from the supplied/reference coding are already live-tested and did not visibly change the reported fog/indicator behavior. The best current lead is therefore not another blind flip of byte 12/21, but recovery of the Carista runtime Setting objects for `car_setting_left_fog_light_as` and `car_setting_right_fog_light_as`.
+The two bits that differ from the supplied/reference coding are already live-tested and did not visibly change the reported fog/indicator behavior. The best current lead is therefore not another blind flip of byte 12/21, nor the direct `left_fog_light_as` / `right_fog_light_as` resource keys now proven Ford-only on x86. The remaining target is an alternate VW/PQ25 VAG key, availability sub-object, or ReadValuesOperation value path behind equivalent fog-role behavior.
 
 For every other long-coding bit, this catalog intentionally says `unknown_long_coding_bit` unless there is a local candidate label or a Carista setting key tied to it. That keeps the map useful without turning resource strings into false proof.

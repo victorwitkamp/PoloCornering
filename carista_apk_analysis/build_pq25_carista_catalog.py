@@ -134,27 +134,27 @@ SETTING_HINTS: dict[str, SettingHint] = {
         mapping_status="mapped_to_same_bit_as_cornering_lights_via_fogs",
         value_model="boolean; clear/off in baseline, set/on in supplied reference; target value6 6C680ED000C8",
         write_method=UDS_FULL_CODING_WRITE_METHOD,
-        proof_status="Carista instruction/label family points at byte 12 bit 6; live behavior ruled out for visible symptom",
+        proof_status="Generic label family points at byte 12 bit 6, but preferred x86 direct ref is a Ford choice label; live behavior ruled out for visible symptom",
         priority="resolved_for_current_symptom",
-        notes="Generic UI label for enabling cornering lights.",
+        notes="Use the recovered VAG car_setting_cornering_lights_via_fogs branch for PQ25 evidence, not this direct label.",
     ),
     "car_setting_cornering_lights_via_fogs_left": SettingHint(
         bit_refs=(),
         mapping_status="native_vag_uds_adaptation_candidate",
         value_model="choice enum recovered: 00=off, 16=on, 1E=enabled coming-home/leaving-home; inserted at byte offset 5 with mask FF",
         write_method="Native type 7 dispatch reads raw address 055C with ReadRawDataByIdentifierCommand (22055C), but live BCM response was 7F2231; no safe write seed is available",
-        proof_status="Ghidra instruction windows show VagUdsAdaptationSetting raw address 055C, offset 5, mask FF, and side-specific enum values 00/16/1E; readRawValue type 7 dispatches to readVagUdsValue; live 22055C returned 7F2231",
-        priority="high_recovery_target_read_first",
-        notes="Related VAG-path key for left fog/cornering role; likely relevant to the user-facing fog-role problem but blocked until a real positive raw-payload read is found.",
+        proof_status="Ghidra windows show the 055C type-7 branch, but preferred x86 branch selection scopes same-key per-side branches to MQB/MK8 or gateway/MEB, not 6R/PQ25; live 22055C returned 7F2231",
+        priority="alternate_vag_path_recovery_target",
+        notes="Keep as negative evidence; do not use as the current PQ25 write lead unless a new positive branch path is recovered.",
     ),
     "car_setting_cornering_lights_via_fogs_right": SettingHint(
         bit_refs=(),
         mapping_status="native_vag_uds_adaptation_candidate",
         value_model="choice enum recovered: 00=off, 17=on, 1E=enabled coming-home/leaving-home; inserted at byte offset 5 with mask FF",
         write_method="Native type 7 dispatch reads raw address 055D with ReadRawDataByIdentifierCommand (22055D), but live BCM response was 7F2231; no safe write seed is available",
-        proof_status="Ghidra instruction windows show VagUdsAdaptationSetting raw address 055D, offset 5, mask FF, and side-specific enum values 00/17/1E; readRawValue type 7 dispatches to readVagUdsValue; live 22055D returned 7F2231",
-        priority="high_recovery_target_read_first",
-        notes="Related VAG-path key for right fog/cornering role; likely relevant to the user-facing fog-role problem but blocked until a real positive raw-payload read is found.",
+        proof_status="Ghidra windows show the 055D type-7 branch, but preferred x86 branch selection scopes same-key per-side branches to MQB/MK8 or gateway/MEB, not 6R/PQ25; live 22055D returned 7F2231",
+        priority="alternate_vag_path_recovery_target",
+        notes="Keep as negative evidence; do not use as the current PQ25 write lead unless a new positive branch path is recovered.",
     ),
     "car_setting_cornerig_lights_with_turn_signal": SettingHint(
         bit_refs=((21, 2),),
@@ -176,12 +176,12 @@ SETTING_HINTS: dict[str, SettingHint] = {
     ),
     "car_setting_cornering_lights_with_turn_signals_one_touch": SettingHint(
         bit_refs=(),
-        mapping_status="cornering_family_unmapped",
-        value_model="unknown; likely a separate choice or condition under the turn-signal cornering family",
-        write_method=COMPACT_CARISTA_WRITE_METHOD,
-        proof_status="Resource/native string exists, but no PQ25 bit or raw-value tuple recovered",
-        priority="medium_recovery_target",
-        notes="Could share infrastructure with byte 21 bit 2, but no proof yet.",
+        mapping_status="direct_label_resolved_non_vag_bmw",
+        value_model="not a recovered PQ25 value; preferred x86 direct ref is BMW-only",
+        write_method="No VW/PQ25 write method recovered; direct x86 path is BmwESetting",
+        proof_status="Official x86 0x00d39204 is in BmwESettings::getSettings with BmwESetting constructor calls, not VagCanSettings::getSettings",
+        priority="resolved_non_pq25_direct_label",
+        notes="Search for an alternate VAG key only if one-touch behavior becomes relevant.",
     ),
     "car_setting_coming_home_via_fogs": SettingHint(
         bit_refs=((13, 6),),
@@ -221,21 +221,21 @@ SETTING_HINTS: dict[str, SettingHint] = {
     ),
     "car_setting_left_fog_light_as": SettingHint(
         bit_refs=(),
-        mapping_status="app_visible_priority_unmapped_for_this_bcm",
-        value_model="choice; Carista instruction says set to Cornering lights or Use DRL via fog and cornering lights",
-        write_method="Unknown until native Setting object/raw key is recovered; likely compact Carista coding or adaptation path",
-        proof_status="Resource/native string exists; raw_value_key/rawAddress4/coding_type/tail unknown",
-        priority="highest_recovery_target",
-        notes="Best current lead for delayed front-fog indicator behavior.",
+        mapping_status="direct_label_resolved_non_vag_ford",
+        value_model="not a recovered PQ25 value; preferred x86 direct ref is Ford-only",
+        write_method="No VW/PQ25 write method recovered; direct x86 path is FordUdsSetting",
+        proof_status="Official x86 0x00e73135 is in FordSettings::getSettings with a FordUdsSetting constructor, not VagCanSettings::getSettings",
+        priority="alternate_vag_path_recovery_target",
+        notes="The visible label still describes the symptom area, but the direct key is not the VW implementation.",
     ),
     "car_setting_right_fog_light_as": SettingHint(
         bit_refs=(),
-        mapping_status="app_visible_priority_unmapped_for_this_bcm",
-        value_model="choice; Carista instruction says set to Cornering lights or Use DRL via fog and cornering lights",
-        write_method="Unknown until native Setting object/raw key is recovered; likely compact Carista coding or adaptation path",
-        proof_status="Resource/native string exists; raw_value_key/rawAddress4/coding_type/tail unknown",
-        priority="highest_recovery_target",
-        notes="Best current lead for delayed front-fog indicator behavior.",
+        mapping_status="direct_label_resolved_non_vag_ford",
+        value_model="not a recovered PQ25 value; preferred x86 direct ref is Ford-only",
+        write_method="No VW/PQ25 write method recovered; direct x86 path is FordUdsSetting",
+        proof_status="Official x86 0x00e7376f is in FordSettings::getSettings with a FordUdsSetting constructor, not VagCanSettings::getSettings",
+        priority="alternate_vag_path_recovery_target",
+        notes="The visible label still describes the symptom area, but the direct key is not the VW implementation.",
     ),
     "car_setting_left_fog_light": SettingHint(
         bit_refs=(),
@@ -521,7 +521,12 @@ def build_report(setting_rows: list[SettingCatalogRow], bit_rows: list[LongCodin
     priority_settings = [
         row
         for row in setting_rows
-        if row.priority in {"highest_recovery_target", "high_recovery_target_read_first", "medium_recovery_target"}
+        if row.priority in {
+            "highest_recovery_target",
+            "high_recovery_target_read_first",
+            "medium_recovery_target",
+            "alternate_vag_path_recovery_target",
+        }
     ]
     lighting_settings = [row for row in setting_rows if row.category.startswith("lighting_")]
     candidate_bits = [row for row in bit_rows if row.candidate_label or row.carista_keys]
@@ -582,7 +587,7 @@ def build_report(setting_rows: list[SettingCatalogRow], bit_rows: list[LongCodin
         "",
         "## Interpretation",
         "",
-        "The two bits that differ from the supplied/reference coding are already live-tested and did not visibly change the reported fog/indicator behavior. The best current lead is therefore not another blind flip of byte 12/21, but recovery of the Carista runtime Setting objects for `car_setting_left_fog_light_as` and `car_setting_right_fog_light_as`.",
+        "The two bits that differ from the supplied/reference coding are already live-tested and did not visibly change the reported fog/indicator behavior. The best current lead is therefore not another blind flip of byte 12/21, nor the direct `left_fog_light_as` / `right_fog_light_as` resource keys now proven Ford-only on x86. The remaining target is an alternate VW/PQ25 VAG key, availability sub-object, or ReadValuesOperation value path behind equivalent fog-role behavior.",
         "",
         "For every other long-coding bit, this catalog intentionally says `unknown_long_coding_bit` unless there is a local candidate label or a Carista setting key tied to it. That keeps the map useful without turning resource strings into false proof.",
         "",

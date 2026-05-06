@@ -61,9 +61,10 @@ car_setting_left_fog_light_as
 car_setting_right_fog_light_as
 ```
 
-Those settings are the current priority. They need a recovered runtime Setting
-object, DID/adaptation key, raw tuple, or other proof-backed read/write method
-before any live write.
+2026-05-06 x86 follow-up shows those exact direct labels resolve in
+`FordSettings::getSettings`, not `VagCanSettings::getSettings`. A VW/PQ25
+equivalent still needs a recovered runtime Setting object, alternate VAG key,
+or ReadValuesOperation value path before any live write.
 
 ## Current Catalog
 

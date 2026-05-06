@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "date": "2026-05-03",
+    "date": "2026-05-06",
     "current_coding": "3AB82B9F08A10000003008002C680ED000C8412F60A20000200000000000",
     "supplied_reference_coding": "3AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000",
     "supported_settings_source": "carista_apk_analysis\\carista_supported_settings_map.json",
@@ -9,7 +9,7 @@
   },
   "methods": {
     "read_long_coding": "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding",
-    "uds_full_coding_write": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py",
+    "uds_full_coding_write": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding. The former live runner was removed after use.",
     "compact_carista_write": "Native Carista setting path appears to build 3B9A + 6-byte value + 4-byte rawAddress4 + tail; rawAddress4/coding type/tail are not recovered for this BCM",
     "uds_raw_value_write": "Native Carista type 7/8 raw-value settings dispatch to WriteDataByIdentifier 2E<DID> after F199/F198; 055C/055D type 7 direct reads returned 7F2231 live, so no safe raw payload seed is available for those settings",
     "adaptation_write": "Carista VAG CAN adaptation/routine path is 31B8/31BA/31B9/31BA/32B8 with short id 0103 and long id 010A; native proof applies to raw types 0/1, not the recovered 055C/055D raw type 7 settings"
@@ -5273,7 +5273,7 @@
       "mapping_status": "mapped_to_external_pq25_candidate",
       "value_model": "boolean; baseline and supplied reference are clear",
       "read_method": "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding",
-      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py",
+      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding. The former live runner was removed after use.",
       "proof_status": "Candidate-only ADL mapping; not changed by supplied reference",
       "priority": "low_context",
       "notes": "Assistant Driving Light / ADL candidate."
@@ -18972,7 +18972,7 @@
       "mapping_status": "mapped_to_external_pq25_candidate",
       "value_model": "boolean/choice; external labels say 0=fog lights, 1=low beam; baseline and supplied reference are set",
       "read_method": "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding",
-      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py",
+      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding. The former live runner was removed after use.",
       "proof_status": "Public PQ25 label evidence; not central to current cornering symptom",
       "priority": "low_context",
       "notes": "Coming/leaving-home output selector, not front-fog command timing."
@@ -18991,7 +18991,7 @@
       "mapping_status": "mapped_to_external_pq25_candidate",
       "value_model": "boolean/choice; external labels say 0=fog lights, 1=low beam; baseline and supplied reference are set",
       "read_method": "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding",
-      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py",
+      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding. The former live runner was removed after use.",
       "proof_status": "Public PQ25 label evidence; not central to current cornering symptom",
       "priority": "low_context",
       "notes": "Same candidate bit as coming-home via fogs, interpreted as the alternate choice."
@@ -19124,7 +19124,7 @@
       "mapping_status": "mapped_to_external_pq25_candidate",
       "value_model": "choice setting; exact Carista value enum unresolved",
       "read_method": "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding",
-      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py",
+      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding. The former live runner was removed after use.",
       "proof_status": "Public PQ25 label evidence; not central to current cornering symptom",
       "priority": "low_context",
       "notes": "Coming/leaving-home output selector."
@@ -19599,7 +19599,7 @@
       "mapping_status": "mapped_to_long_coding_candidate_but_live_behavior_ruled_out",
       "value_model": "boolean; clear/off in baseline, set/on in supplied reference; target value6 412F60A60000",
       "read_method": "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding",
-      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py",
+      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding. The former live runner was removed after use.",
       "proof_status": "Typo-preserved Carista string/native resource plus supplied-reference delta; live writes showed no visible behavior change",
       "priority": "resolved_for_current_symptom",
       "notes": "Turn-signal-triggered cornering family."
@@ -19941,7 +19941,7 @@
       "mapping_status": "mapped_to_long_coding_candidate_but_live_behavior_ruled_out",
       "value_model": "boolean; clear/off in baseline, set/on in supplied reference; target value6 6C680ED000C8",
       "read_method": "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding",
-      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py",
+      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding. The former live runner was removed after use.",
       "proof_status": "Carista string/native resource plus supplied-reference delta; live writes showed no visible behavior change",
       "priority": "resolved_for_current_symptom",
       "notes": "Base fog/cornering enable family. It alone does not explain the delayed front-fog indicator behavior."
@@ -19960,7 +19960,7 @@
       "mapping_status": "mapped_to_same_bit_as_cornering_lights_via_fogs",
       "value_model": "boolean; clear/off in baseline, set/on in supplied reference; target value6 6C680ED000C8",
       "read_method": "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding",
-      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py",
+      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding. The former live runner was removed after use.",
       "proof_status": "Resource alias for the base fog/cornering setting; live behavior ruled out for visible symptom",
       "priority": "resolved_for_current_symptom",
       "notes": "Older/experimental label for the same base fog-cornering function."
@@ -19980,9 +19980,9 @@
       "value_model": "choice enum recovered: 00=off, 16=on, 1E=enabled coming-home/leaving-home; inserted at byte offset 5 with mask FF",
       "read_method": "Runtime ReadValuesOperation support/value method not recovered offline",
       "write_method": "Native type 7 dispatch reads raw address 055C with ReadRawDataByIdentifierCommand (22055C), but live BCM response was 7F2231; no safe write seed is available",
-      "proof_status": "Ghidra instruction windows show VagUdsAdaptationSetting raw address 055C, offset 5, mask FF, and side-specific enum values 00/16/1E; readRawValue type 7 dispatches to readVagUdsValue; live 22055C returned 7F2231",
-      "priority": "high_recovery_target_read_first",
-      "notes": "Related VAG-path key for left fog/cornering role; likely relevant to the user-facing fog-role problem but blocked until a real positive raw-payload read is found."
+      "proof_status": "Ghidra windows show the 055C type-7 branch, but preferred x86 branch selection scopes same-key per-side branches to MQB/MK8 or gateway/MEB, not 6R/PQ25; live 22055C returned 7F2231",
+      "priority": "alternate_vag_path_recovery_target",
+      "notes": "Keep as negative evidence; do not use as the current PQ25 write lead unless a new positive branch path is recovered."
     },
     {
       "key": "car_setting_cornering_lights_via_fogs_right",
@@ -19999,9 +19999,9 @@
       "value_model": "choice enum recovered: 00=off, 17=on, 1E=enabled coming-home/leaving-home; inserted at byte offset 5 with mask FF",
       "read_method": "Runtime ReadValuesOperation support/value method not recovered offline",
       "write_method": "Native type 7 dispatch reads raw address 055D with ReadRawDataByIdentifierCommand (22055D), but live BCM response was 7F2231; no safe write seed is available",
-      "proof_status": "Ghidra instruction windows show VagUdsAdaptationSetting raw address 055D, offset 5, mask FF, and side-specific enum values 00/17/1E; readRawValue type 7 dispatches to readVagUdsValue; live 22055D returned 7F2231",
-      "priority": "high_recovery_target_read_first",
-      "notes": "Related VAG-path key for right fog/cornering role; likely relevant to the user-facing fog-role problem but blocked until a real positive raw-payload read is found."
+      "proof_status": "Ghidra windows show the 055D type-7 branch, but preferred x86 branch selection scopes same-key per-side branches to MQB/MK8 or gateway/MEB, not 6R/PQ25; live 22055D returned 7F2231",
+      "priority": "alternate_vag_path_recovery_target",
+      "notes": "Keep as negative evidence; do not use as the current PQ25 write lead unless a new positive branch path is recovered."
     },
     {
       "key": "car_setting_cornering_lights_with_ahl",
@@ -20055,7 +20055,7 @@
       "mapping_status": "mapped_to_same_bit_as_turn_signal_cornering",
       "value_model": "boolean; clear/off in baseline, set/on in supplied reference; target value6 412F60A60000",
       "read_method": "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding",
-      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py",
+      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding. The former live runner was removed after use.",
       "proof_status": "Carista string/native resource plus supplied-reference delta; live behavior ruled out for visible symptom",
       "priority": "resolved_for_current_symptom",
       "notes": "Turn-signal-triggered cornering family."
@@ -20071,13 +20071,13 @@
       "pq25_bits": "",
       "current_value": "",
       "supplied_reference_value": "",
-      "mapping_status": "cornering_family_unmapped",
-      "value_model": "unknown; likely a separate choice or condition under the turn-signal cornering family",
+      "mapping_status": "direct_label_resolved_non_vag_bmw",
+      "value_model": "not a recovered PQ25 value; preferred x86 direct ref is BMW-only",
       "read_method": "Runtime ReadValuesOperation support/value method not recovered offline",
-      "write_method": "Native Carista setting path appears to build 3B9A + 6-byte value + 4-byte rawAddress4 + tail; rawAddress4/coding type/tail are not recovered for this BCM",
-      "proof_status": "Resource/native string exists, but no PQ25 bit or raw-value tuple recovered",
-      "priority": "medium_recovery_target",
-      "notes": "Could share infrastructure with byte 21 bit 2, but no proof yet."
+      "write_method": "No VW/PQ25 write method recovered; direct x86 path is BmwESetting",
+      "proof_status": "Official x86 0x00d39204 is in BmwESettings::getSettings with BmwESetting constructor calls, not VagCanSettings::getSettings",
+      "priority": "resolved_non_pq25_direct_label",
+      "notes": "Search for an alternate VAG key only if one-touch behavior becomes relevant."
     },
     {
       "key": "car_setting_counter_clockwise",
@@ -40914,13 +40914,13 @@
       "pq25_bits": "",
       "current_value": "",
       "supplied_reference_value": "",
-      "mapping_status": "app_visible_priority_unmapped_for_this_bcm",
-      "value_model": "choice; Carista instruction says set to Cornering lights or Use DRL via fog and cornering lights",
+      "mapping_status": "direct_label_resolved_non_vag_ford",
+      "value_model": "not a recovered PQ25 value; preferred x86 direct ref is Ford-only",
       "read_method": "Runtime ReadValuesOperation support/value method not recovered offline",
-      "write_method": "Unknown until native Setting object/raw key is recovered; likely compact Carista coding or adaptation path",
-      "proof_status": "Resource/native string exists; raw_value_key/rawAddress4/coding_type/tail unknown",
-      "priority": "highest_recovery_target",
-      "notes": "Best current lead for delayed front-fog indicator behavior."
+      "write_method": "No VW/PQ25 write method recovered; direct x86 path is FordUdsSetting",
+      "proof_status": "Official x86 0x00e73135 is in FordSettings::getSettings with a FordUdsSetting constructor, not VagCanSettings::getSettings",
+      "priority": "alternate_vag_path_recovery_target",
+      "notes": "The visible label still describes the symptom area, but the direct key is not the VW implementation."
     },
     {
       "key": "car_setting_left_fog_with_high_beams_brightness",
@@ -54518,13 +54518,13 @@
       "pq25_bits": "",
       "current_value": "",
       "supplied_reference_value": "",
-      "mapping_status": "app_visible_priority_unmapped_for_this_bcm",
-      "value_model": "choice; Carista instruction says set to Cornering lights or Use DRL via fog and cornering lights",
+      "mapping_status": "direct_label_resolved_non_vag_ford",
+      "value_model": "not a recovered PQ25 value; preferred x86 direct ref is Ford-only",
       "read_method": "Runtime ReadValuesOperation support/value method not recovered offline",
-      "write_method": "Unknown until native Setting object/raw key is recovered; likely compact Carista coding or adaptation path",
-      "proof_status": "Resource/native string exists; raw_value_key/rawAddress4/coding_type/tail unknown",
-      "priority": "highest_recovery_target",
-      "notes": "Best current lead for delayed front-fog indicator behavior."
+      "write_method": "No VW/PQ25 write method recovered; direct x86 path is FordUdsSetting",
+      "proof_status": "Official x86 0x00e7376f is in FordSettings::getSettings with a FordUdsSetting constructor, not VagCanSettings::getSettings",
+      "priority": "alternate_vag_path_recovery_target",
+      "notes": "The visible label still describes the symptom area, but the direct key is not the VW implementation."
     },
     {
       "key": "car_setting_right_fog_with_high_beams_brightness",
@@ -67289,10 +67289,10 @@
       "mapping_status": "mapped_to_same_bit_as_cornering_lights_via_fogs",
       "value_model": "boolean; clear/off in baseline, set/on in supplied reference; target value6 6C680ED000C8",
       "read_method": "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding",
-      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py",
-      "proof_status": "Carista instruction/label family points at byte 12 bit 6; live behavior ruled out for visible symptom",
+      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding. The former live runner was removed after use.",
+      "proof_status": "Generic label family points at byte 12 bit 6, but preferred x86 direct ref is a Ford choice label; live behavior ruled out for visible symptom",
       "priority": "resolved_for_current_symptom",
-      "notes": "Generic UI label for enabling cornering lights."
+      "notes": "Use the recovered VAG car_setting_cornering_lights_via_fogs branch for PQ25 evidence, not this direct label."
     },
     {
       "key": "car_setting_use_drl",
@@ -69743,7 +69743,7 @@
       "carista_labels": "",
       "mapping_status": "long_coding_candidate_without_recovered_carista_setting",
       "read_method": "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding",
-      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py",
+      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding. The former live runner was removed after use.",
       "tested_status": "not live-isolated",
       "notes": "Candidate label exists, but no exact Carista Setting object/key is recovered."
     },
@@ -71681,9 +71681,9 @@
       "carista_labels": "Cornering lights (using fog lights); Cornering lights (using fog lights) (experimental); Use cornering lights…",
       "mapping_status": "mapped_to_long_coding_candidate_but_live_behavior_ruled_out; mapped_to_same_bit_as_cornering_lights_via_fogs",
       "read_method": "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding",
-      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py",
+      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding. The former live runner was removed after use.",
       "tested_status": "live written both ways and behavior unchanged; do not retest blindly",
-      "notes": "Base fog/cornering enable family. It alone does not explain the delayed front-fog indicator behavior.; Generic UI label for enabling cornering lights.; Older/experimental label for the same base fog-cornering function."
+      "notes": "Base fog/cornering enable family. It alone does not explain the delayed front-fog indicator behavior.; Older/experimental label for the same base fog-cornering function.; Use the recovered VAG car_setting_cornering_lights_via_fogs branch for PQ25 evidence, not this direct label."
     },
     {
       "byte_index": 12,
@@ -71719,7 +71719,7 @@
       "carista_labels": "",
       "mapping_status": "long_coding_candidate_without_recovered_carista_setting",
       "read_method": "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding",
-      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py",
+      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding. The former live runner was removed after use.",
       "tested_status": "not live-isolated",
       "notes": "Candidate label exists, but no exact Carista Setting object/key is recovered."
     },
@@ -71738,7 +71738,7 @@
       "carista_labels": "",
       "mapping_status": "long_coding_candidate_without_recovered_carista_setting",
       "read_method": "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding",
-      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py",
+      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding. The former live runner was removed after use.",
       "tested_status": "not live-isolated",
       "notes": "Candidate label exists, but no exact Carista Setting object/key is recovered."
     },
@@ -71776,7 +71776,7 @@
       "carista_labels": "",
       "mapping_status": "long_coding_candidate_without_recovered_carista_setting",
       "read_method": "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding",
-      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py",
+      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding. The former live runner was removed after use.",
       "tested_status": "not live-isolated",
       "notes": "Candidate label exists, but no exact Carista Setting object/key is recovered."
     },
@@ -71814,7 +71814,7 @@
       "carista_labels": "",
       "mapping_status": "long_coding_candidate_without_recovered_carista_setting",
       "read_method": "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding",
-      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py",
+      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding. The former live runner was removed after use.",
       "tested_status": "not live-isolated",
       "notes": "Candidate label exists, but no exact Carista Setting object/key is recovered."
     },
@@ -71833,7 +71833,7 @@
       "carista_labels": "Use fog lights as coming-home lights; Use low beams as coming-home lights; Coming/leaving-home lights use…",
       "mapping_status": "mapped_to_external_pq25_candidate",
       "read_method": "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding",
-      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py",
+      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding. The former live runner was removed after use.",
       "tested_status": "not live-isolated",
       "notes": "Coming/leaving-home output selector, not front-fog command timing.; Coming/leaving-home output selector.; Same candidate bit as coming-home via fogs, interpreted as the alternate choice."
     },
@@ -72270,7 +72270,7 @@
       "carista_labels": "",
       "mapping_status": "long_coding_candidate_without_recovered_carista_setting",
       "read_method": "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding",
-      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py",
+      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding. The former live runner was removed after use.",
       "tested_status": "not live-isolated",
       "notes": "Candidate label exists, but no exact Carista Setting object/key is recovered."
     },
@@ -72517,7 +72517,7 @@
       "carista_labels": "",
       "mapping_status": "long_coding_candidate_without_recovered_carista_setting",
       "read_method": "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding",
-      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py",
+      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding. The former live runner was removed after use.",
       "tested_status": "not live-isolated",
       "notes": "Candidate label exists, but no exact Carista Setting object/key is recovered."
     },
@@ -72536,7 +72536,7 @@
       "carista_labels": "",
       "mapping_status": "long_coding_candidate_without_recovered_carista_setting",
       "read_method": "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding",
-      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py",
+      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding. The former live runner was removed after use.",
       "tested_status": "not live-isolated",
       "notes": "Candidate label exists, but no exact Carista Setting object/key is recovered."
     },
@@ -72726,7 +72726,7 @@
       "carista_labels": "",
       "mapping_status": "long_coding_candidate_without_recovered_carista_setting",
       "read_method": "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding",
-      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py",
+      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding. The former live runner was removed after use.",
       "tested_status": "not live-isolated",
       "notes": "Candidate label exists, but no exact Carista Setting object/key is recovered."
     },
@@ -72973,7 +72973,7 @@
       "carista_labels": "Activate cornering lights with turn signal; Turn on cornering lights when turn signal is on",
       "mapping_status": "mapped_to_long_coding_candidate_but_live_behavior_ruled_out; mapped_to_same_bit_as_turn_signal_cornering",
       "read_method": "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding",
-      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py",
+      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding. The former live runner was removed after use.",
       "tested_status": "live written both ways and behavior unchanged; do not retest blindly",
       "notes": "Turn-signal-triggered cornering family."
     },
@@ -73030,7 +73030,7 @@
       "carista_labels": "",
       "mapping_status": "long_coding_candidate_without_recovered_carista_setting",
       "read_method": "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding",
-      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py",
+      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding. The former live runner was removed after use.",
       "tested_status": "not live-isolated",
       "notes": "Candidate label exists, but no exact Carista Setting object/key is recovered."
     },
@@ -73068,7 +73068,7 @@
       "carista_labels": "",
       "mapping_status": "long_coding_candidate_without_recovered_carista_setting",
       "read_method": "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding",
-      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py",
+      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding. The former live runner was removed after use.",
       "tested_status": "not live-isolated",
       "notes": "Candidate label exists, but no exact Carista Setting object/key is recovered."
     },
@@ -73182,7 +73182,7 @@
       "carista_labels": "Assistant Driving Light (ADL)",
       "mapping_status": "mapped_to_external_pq25_candidate",
       "read_method": "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding",
-      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py",
+      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding. The former live runner was removed after use.",
       "tested_status": "not live-isolated",
       "notes": "Assistant Driving Light / ADL candidate."
     },

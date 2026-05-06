@@ -310,13 +310,25 @@ Focused exports now prove the runtime availability/value route:
   branch-selection choke point: it uses the setting type byte, VIN-derived PDX
   file identifiers, and ECU ASAM/revision data before invoking the setting's
   availability predicate object.
+- Deeper `0127075C` tracing recovered the `AvailBy` switch at
+  `Setting/VagSetting + 0x5C`. The normal `AvailBy=2` route calls the setting's
+  `StringWhitelist::itemMatches` with the ECU tag string from `VagEcuInfo+0x08`;
+  `AvailBy` `0/1/3/4` use ASAM/revision-derived file identifiers, and
+  `AvailBy=5` uses a VIN/PDX-derived identifier. A vtable-slot `+0x3C` special
+  predicate path remains unresolved.
+- Constructor disassembly now proves the normal no-`AvailBy` lighting branches
+  for `VagCanShortAdaptationSetting`, `VagCanLongCodingSetting` via
+  `VagCanCodingSetting`, `VagUdsCodingSetting`, and `VagUdsAdaptationSetting`
+  pass `AvailBy=2`. For those branches, runtime selection depends on the
+  constructor `StringWhitelist` matching the ECU tag, not on the raw DID or raw
+  type alone.
 - `VagOperationDelegate::readRawValue` (`01270A10`) switches by raw type. Type
   `7` routes to `readVagUdsValue`, type `8` to `readVagUdsCodingValue`, and
   types `5/9` to `readVagUdsSubmoduleValue` after submodule-id resolution.
 
 The important remaining gap is no longer the Java vtable slot target; it is the
-per-setting availability predicate/sub-object that selects which mixed native
-constructor branch applies to `6R0937087K`.
+exact constructor whitelist contents or special predicate/sub-object that
+selects which mixed native constructor branch applies to `6R0937087K`.
 
 ## Lighting Recovery Status
 
@@ -324,26 +336,33 @@ Current typed `VagCanSettings` recoveries:
 
 | Setting | Native status | Safety status |
 |---|---|---|
-| `car_setting_cornering_lights_via_fogs_left` | `VagUdsAdaptationSetting`, DID `055C`, offset `5`, mask `FF`, choices `00/16/1E` | `22055C -> 7F2231`; not a write seed. |
-| `car_setting_cornering_lights_via_fogs_right` | `VagUdsAdaptationSetting`, DID `055D`, offset `5`, mask `FF`, choices `00/17/1E` | `22055D -> 7F2231`; not a write seed. |
-| `car_setting_coming_home_req_rls` | Mixed: `010B6B3C -> 010D8FE4 -> VagUdsAdaptationSetting`, `010B6B90 -> 010D917C -> VagCanLongCodingSetting`, plus UDS coding DID `0600` byte/mask `11/20` and `0A/04` | `220A57 -> 7F2231`; coding packing is typed, but branch selection and requested-choice encoding are unresolved. |
-| `car_setting_coming_home` | Mixed: `010B6BDC -> 010D92EC -> VagUdsAdaptationSetting`, `010B2040 -> 010C2700 -> VagUdsCodingSetting` DID `0600` byte/mask `06/02`, `010B3AF0 -> 010CA958 -> VagUdsCodingSetting` DID `0600` byte/mask `07/01` | `220A57 -> 7F2231`; coding packing is typed, but branch selection and requested-choice encoding are unresolved. |
+| `car_setting_cornering_lights_via_fogs_left` | Mixed same-key evidence: x86 short-adaptation + UDS-coding helpers; x86 whitelists are `CENTRAL_ELEC_MQB_ALL + CENTRAL_ELEC_MK8` or `UDS_CAN_GATEWAY_MEB + CAN_GATEWAY`; older ARM type-7 DID `055C`, offset `5`, mask `FF`, choices `00/16/1E` | `22055C -> 7F2231`; no recovered 6R/PQ25 availability guard for any per-side branch. |
+| `car_setting_cornering_lights_via_fogs_right` | Mixed same-key evidence: x86 long-coding + UDS-adaptation helpers; x86 whitelists are `CENTRAL_ELEC_MQB_ALL + CENTRAL_ELEC_MK8` or `UDS_CAN_GATEWAY_MEB + CAN_GATEWAY`; older ARM type-7 DID `055D`, offset `5`, mask `FF`, choices `00/17/1E` | `22055D -> 7F2231`; no recovered 6R/PQ25 availability guard for any per-side branch. |
+| `car_setting_cornering_lights_via_fogs` | Official x86 6R/PQ25 branch: `0x012d9f7b -> 0x01358fd0 FullByteVagCanShortAdaptationSetting`, whitelist `CENTRAL_ELEC_6R_5C_7E_7H`, byte/mask `0C/40`; same key has 1S, MK6/B7, and B8 variants | Current live coding already has byte `0C` mask `40` set; standalone behavior test disproved this as the missing turn-signal-cornering fix. |
+| `car_setting_cornering_lights_via_fogs_experimental` | Official x86 6R/PQ25 branch: `0x012da0f2 -> 0x0135eaf0 VagUdsCodingSetting`, whitelist `CENTRAL_ELEC_6R_5C_7E_7H`, byte/mask `15/80`; `YES_NO` maps no=`00`, yes=`01` | Current live coding byte `15` is `86`, so mask `80` is already set while behavior is absent. |
+| `car_setting_cornering_lights_with_turn_signals` | Official x86 explicit turn-signal key: `0x012da761 -> 0x0135e920 VagUdsCodingSetting`, whitelist `CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S`, byte/mask `15/04`; `YES_NO` maps no=`00`, yes=`01` | Current live coding byte `15` is `86`, so mask `04` is already set while turn-signal cornering is absent. |
+| `car_setting_coming_home_req_rls` | Mixed: `010B6B3C -> 010D8FE4 -> VagUdsAdaptationSetting`, `010B6B90 -> 010D917C -> VagCanLongCodingSetting`, plus UDS coding DID `0600` byte/mask `11/20` and `0A/04`; `ENABLED_DISABLED` maps disabled=`00`, enabled=`01` | `220A57 -> 7F2231`; coding packing and compact choice values are typed, but branch selection is unresolved. |
+| `car_setting_coming_home` | Mixed: `010B6BDC -> 010D92EC -> VagUdsAdaptationSetting`, `010B2040 -> 010C2700 -> VagUdsCodingSetting` DID `0600` byte/mask `06/02`, `010B3AF0 -> 010CA958 -> VagUdsCodingSetting` DID `0600` byte/mask `07/01`; `ENABLED_DISABLED` maps disabled=`00`, enabled=`01` | `220A57 -> 7F2231`; coding packing and compact choice values are typed, but branch selection is unresolved. |
 | `car_setting_coming_home_mode` | Mixed: `010B6C30 -> 010D9484 -> VagUdsAdaptationSetting`, `010B6C84 -> 010D9608 -> VagCanLongCodingSetting`; adaptation table uses DID `0A57`, offset `2`, mask/count `03` | Runtime branch unresolved. |
 | `car_setting_coming_home_duration` | Mixed: `010B704C -> 010DA7BC -> FullByteVagCanShortAdaptationSetting`, `010B7094 -> 010DA910 -> VagUdsAdaptationSetting`; duration values include `0A` through `3C` seconds table | Runtime branch unresolved; do not infer a write path. |
-| `car_setting_coming_leaving_home_output` | Mixed: `010B1930 -> 010C0418 -> VagUdsAdaptationSetting`, DID `110E`, offset `2`, mask `01`; second path `010B4218 -> 010CCBC8 -> VagUdsCodingSetting`, DID `0600`, byte/mask `0D/40` and `11/08` | `22110E -> 7F2231`; coding path packing is typed, but branch selection and requested-choice encoding are unresolved. |
-| `car_setting_coming_home_via_low_beams` | `010B5A98 -> 010D4140 -> VagUdsCodingSetting`, DID `0600`, byte/mask `06/10` | Constructor and packing typed; branch selection unresolved. |
-| `car_setting_coming_home_via_fogs` | `010B19D0 -> 010C0708 -> VagUdsCodingSetting`, DID `0600`, byte/mask `06/20` | Constructor and packing typed; branch selection unresolved. |
-| `car_setting_leaving_home_req_rls` | Mixed: `010B7184 -> 010DAD6C -> VagCanLongCodingSetting` byte/mask `00/20`, plus `010B19D0 -> 010C0708 -> VagUdsCodingSetting` DID `0600` byte/mask `0A/02` | Branch selection and requested-choice encoding unresolved. |
-| `car_setting_leaving_home` | `010B71D0 -> 010DAEDC -> VagUdsCodingSetting` DID `0600` byte/mask `06/04`, `010B0C78 -> 010BC404 -> VagUdsCodingSetting` DID `0600` byte/mask `07/08` | Constructor and packing typed; branch selection unresolved. |
+| `car_setting_coming_leaving_home_output` | Official x86 direct branches are `CENTRAL_ELEC_MK8` or `UDS_CAN_GATEWAY_MEB`, not 6R/PQ25; older ARM branches include rejected DID `110E` and DID `0600` byte/mask `0D/40` and `11/08`, with inverted fogs/low-beams compact values | `22110E -> 7F2231`; no recovered official x86 6R/PQ25 branch yet. |
+| `car_setting_coming_home_via_low_beams` | Official x86 direct branch is B8-scoped `FullByteVagCanShortAdaptationSetting`, byte/mask `06/10`; older ARM fallback shows DID `0600` byte/mask `06/10`; `YES_NO` maps no=`00`, yes=`01` | No recovered official x86 6R/PQ25 branch yet. |
+| `car_setting_coming_home_via_fogs` | Official x86 direct branch is B8-scoped, byte/mask `06/20`; older ARM fallback shows DID `0600` byte/mask `06/20`; nearby adaptation reads `056D/0550/0551` rejected | No recovered official x86 6R/PQ25 branch yet. |
+| `car_setting_leaving_home_req_rls` | Mixed: `010B7184 -> 010DAD6C -> VagCanLongCodingSetting` byte/mask `00/20`, plus `010B19D0 -> 010C0708 -> VagUdsCodingSetting` DID `0600` byte/mask `0A/02`; `ENABLED_DISABLED` maps disabled=`00`, enabled=`01` | Branch selection unresolved. |
+| `car_setting_leaving_home` | `010B71D0 -> 010DAEDC -> VagUdsCodingSetting` DID `0600` byte/mask `06/04`, `010B0C78 -> 010BC404 -> VagUdsCodingSetting` DID `0600` byte/mask `07/08`; `ENABLED_DISABLED` maps disabled=`00`, enabled=`01` | Constructor and packing typed; branch selection unresolved. |
 | `car_setting_leaving_home_duration` | Mixed: `010B1708 -> 010BF9DC -> FullByteVagCanShortAdaptationSetting`; `010B72C4/010B7318/010B7368` lead to UDS adaptation constructors; DID `0A57`, offset `5`, mask `FF` appears in one branch | Runtime branch unresolved; do not infer a write path. |
-| `car_setting_drl_via_fogs` | Mixed: UDS coding, long-coding, and `055C` offset-6 adaptation branch (`00/14`) | Runtime branch unknown; `055C` branch blocked by `22055C -> 7F2231`. |
-| `car_setting_turn_off_fogs_with_high_beam` | Mixed: UDS coding DID `0600` byte/mask `15/20`, `0E/04`, `04/02`; long-coding `11/20`; adaptation branches at `0D01` / `0A58` | `220D01` / `220A58 -> 7F2231`; coding packing is typed, but branch selection and requested-choice encoding are unresolved. |
-| `car_setting_assist_dr_lights` | `010B74A0 -> 010DBC4C -> VagUdsCodingSetting`, DID `0600`, byte/mask `16/20` | Constructor and packing typed; not a write plan. |
+| `car_setting_drl_via_fogs` | Official x86 6R/PQ25 branch: `0x012cdeb6 -> 0x01361520 VagCanLongCodingSetting`, whitelist `CENTRAL_ELEC_6R_5C_7E_7H`, byte/mask `17/04`; other variants are MK5/MK6/B8 or rejected `055C` adaptation | Current live coding has byte `17` mask `04` clear; DRL/fog clue, not turn-signal-cornering fix. |
+| `car_setting_turn_off_fogs_with_high_beam` | Official x86 6R/PQ25 branch: `0x012d4dea -> 0x0135e580 VagUdsCodingSetting`, whitelist `CENTRAL_ELEC_6R_5C_7E_7H`, byte/mask `15/20`; `YES_NO` maps no=`00`, yes=`01` | Current live coding byte `15` mask `20` is clear while physical high-beam shutoff is already present; not a likely missing fix. |
+| `car_setting_assist_dr_lights` | Official x86 6R/PQ25 branch: `0x012d9bad -> 0x013625a0 VagCanLongCodingSetting`, whitelist `CENTRAL_ELEC_6R_5C_7E_7H`, byte/mask `16/20`; `ENABLED_DISABLED` maps disabled=`00`, enabled=`01` | Current live coding has byte `16` mask `20` clear; lower-priority ADL clue. |
 
 Recovered direct refs that are not VAG/PQ25 write paths:
 
 | Setting | Native status | Safety status |
 |---|---|---|
+| `car_setting_fog_when` | Official x86 direct ref `0x00e72b62` in `FordSettings::getSettings`; `0x00e72bc1 -> 0x00ee30b0 -> FordCodingSetting`; `car_setting_use_cornering_lights` appears as a Ford choice label at `0x00e72ab3` | Ford-only direct path; no PQ25 read/write method recovered for this label. |
+| `car_setting_left_fog_light_as` | Official x86 direct ref `0x00e73135` in `FordSettings::getSettings`; `0x00e73194 -> 0x00ee03b0 -> FordUdsSetting`; typo label `car_setting_cornerig_lights_with_turn_signal` appears as a Ford choice label at `0x00e73334` | Ford-only direct path; no PQ25 read/write method recovered for this label. |
+| `car_setting_right_fog_light_as` | Official x86 direct ref `0x00e7376f` in `FordSettings::getSettings`; `0x00e737ce -> 0x00ee59f0 -> FordUdsSetting` / `NumericalInterpretation` | Ford-only direct path; no PQ25 read/write method recovered for this label. |
+| `car_setting_cornering_lights_with_turn_signals_one_touch` | Official x86 direct ref `0x00d39204` in `BmwESettings::getSettings`; `0x00d39240` / `0x00d392ba -> 0x00d7eec0 -> BmwESetting` | BMW-only direct path; no PQ25 read/write method recovered for this label. |
 | `car_setting_front_fogs_with_low_beams` | `FUN_00E314FE`; `00E82930 -> 00E8FBE4 -> FordUdsSetting`; visible choice label `car_setting_low_beams` | Ford-only direct path; no PQ25 read/write method recovered. |
 | `car_setting_fogs_with_high_beam_restriction` | `FUN_00E314FE`; `00E820A8 -> 00E8D43C -> FordCodingSetting` | Ford-only direct path; use the separate VAG `turn_off_fogs_with_high_beam` recovery instead. |
 | `car_setting_turn_on_fogs_with_high_beam` | `FUN_00E314FE`; `00E820A8 -> 00E8D43C -> FordCodingSetting` | Ford-only direct path; no PQ25 read/write method recovered. |
@@ -351,16 +370,15 @@ Recovered direct refs that are not VAG/PQ25 write paths:
 Catalog-only unresolved VAG/PQ25 lighting keys:
 
 ```text
-car_setting_left_fog_light_as
-car_setting_right_fog_light_as
 car_setting_pl_via_front_fog_lights
 ```
 
-The first direct string refs for `left_fog_light_as` and `right_fog_light_as`
-land in the non-VAG/Ford constructor zone (`FUN_00E314FE`), not the VAG
-`FUN_0105F6C0` path. The VW/PQ25 implementation must be reached through a
-different path, likely availability/read-value objects or a sub-object behind
-`ReadValuesOperation`.
+The direct x86 label refs for `fog_when`, `left_fog_light_as`,
+`right_fog_light_as`, `use_cornering_lights`, and the typo turn-signal label
+land in `FordSettings::getSettings`, not `VagCanSettings::getSettings`. The
+one-touch turn-signal label lands in `BmwESettings::getSettings`. If VW/PQ25
+has equivalent visible behavior, it must be reached through a different VAG key,
+availability/read-value object, or sub-object behind `ReadValuesOperation`.
 
 ## Dynamic Emulator Status
 
@@ -411,25 +429,28 @@ becomes available.
   `validateVagCanEcuInfo`, and exact coding/submodule packing are not fully
   modeled.
 - Android bridge modules are descriptors, not an executable Java VM model.
-- The runtime branch selection for mixed lighting keys is unresolved.
+- The runtime branch selection for mixed lighting keys is unresolved because the
+  constructor `StringWhitelist` contents and special availability predicate path
+  are not fully recovered.
 
 ## Open RE Actions
 
 Highest-value static actions:
 
-1. Runtime-select the active branches for mixed CH/LH keys on `6R0937087K`,
-  especially `coming_home`, `coming_home_mode`, `coming_home_duration`,
-  `leaving_home_duration`, and `coming_leaving_home_output`.
-2. Resolve requested-choice encoding and runtime branch selection for the typed
-  DID `0600` coding variants, especially `coming_leaving_home_output`,
-  `coming_home_via_fogs`, and `turn_off_fogs_with_high_beam`.
-3. Resolve the concrete availability predicate/sub-object behind mixed PQ25
-  lighting settings in `VagOperationDelegate::getVagSettingAvailabilityForEcu`.
-4. Trace how `car_setting_left_fog_light_as` and `car_setting_right_fog_light_as`
-   become available on VW/PQ25, since direct key refs only found the non-VAG
-   constructor path.
-5. Runtime-select the active branches for mixed keys (`drl_via_fogs`,
-   `turn_off_fogs_with_high_beam`) before any live plan.
+1. Dump the constructor `StringWhitelist` contents for the normal `AvailBy=2`
+  branches, then match them against the `6R0937087K` ECU tag path used by
+  `VagOperationDelegate::getVagSettingAvailabilityForEcu`.
+2. Finish branch-specific requested-choice encoding where the same visible key
+  has multiple coding branches. `YES_NO` and `ENABLED_DISABLED` compact values
+  are recovered; `coming_leaving_home_output` now has proven inverted values
+  across its two DID `0600` byte/mask variants.
+3. Resolve the special vtable-slot `+0x3C` predicate path in
+  `VagOperationDelegate::getVagSettingAvailabilityForEcu`.
+4. Trace whether VW/PQ25 reaches fog-role behavior through a different VAG key
+   or `ReadValuesOperation` value object, since the direct `fog_when`,
+   `left_fog_light_as`, and `right_fog_light_as` refs are Ford-only.
+5. Use the recovered availability route to runtime-select the active branches
+   for mixed CH/LH and fog/high-beam keys before any live plan.
 6. Do not repeat the known-rejected direct reads (`220A57`, `22110E`, `220D01`,
   `220A58`, `22055C`, `22055D`, `22056D`, `220550`, `220551`) unless a recovered
   Carista precondition changes the read path.

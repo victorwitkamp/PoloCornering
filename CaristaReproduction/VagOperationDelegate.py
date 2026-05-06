@@ -83,6 +83,24 @@ class VagOperationDelegateRawValueDispatchCase:
 
 
 @dataclass(frozen=True)
+class VagOperationDelegateAvailabilityRoute:
+    avail_by_values: tuple[int, ...] | None
+    native_route: str
+    predicate_input: str
+    availability_result: str
+    evidence: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class VagOperationDelegateConstructorAvailabilityDefault:
+    constructor_family: str
+    recovered_avail_by: int
+    native_source: str
+    impact: str
+    evidence: tuple[str, ...]
+
+
+@dataclass(frozen=True)
 class VagCanAdaptationReadStep:
     command_class: str
     native_builder: str
@@ -205,6 +223,99 @@ def VagOperationDelegate_readRawValueDispatchCases() -> tuple[VagOperationDelega
             native_method="no native read command",
             evidence=("target_01270A10.c returns state -10 for raw type 10.",),
             write_seed_policy="never a write seed",
+        ),
+    )
+
+
+def VagOperationDelegate_getVagSettingAvailabilityForEcuRoutes() -> tuple[VagOperationDelegateAvailabilityRoute, ...]:
+    return (
+        VagOperationDelegateAvailabilityRoute(
+            avail_by_values=None,
+            native_route="setting vtable slot +0x3c nonzero -> LAB_01427fe0 thunk",
+            predicate_input="unresolved special per-setting predicate",
+            availability_result="unresolved; runs before the AvailBy switch",
+            evidence=(
+                "target_0127075C.c checks the setting vtable slot +0x3C before the AvailBy byte switch.",
+                "The nonzero branch calls LAB_01427fe0; its predicate semantics remain unrecovered.",
+            ),
+        ),
+        VagOperationDelegateAvailabilityRoute(
+            avail_by_values=(2,),
+            native_route="fallback/tag whitelist route",
+            predicate_input="ECU tag string from VagEcuInfo + 0x08",
+            availability_result="StringWhitelist::itemMatches result; getSettingAvailability treats value 2 as available",
+            evidence=(
+                "target_0127075C.c reads the AvailBy byte from Setting/VagSetting + 0x5C.",
+                "AvailBy 2, and the invalid/default route for values outside the recovered switch, calls the setting StringWhitelist itemMatches with the ECU tag string at VagEcuInfo + 0x08.",
+                "target_012703D0.c logs 'is available for ECU w/ tag %s' when getVagSettingAvailabilityForEcu returns 2.",
+            ),
+        ),
+        VagOperationDelegateAvailabilityRoute(
+            avail_by_values=(0, 1, 3, 4),
+            native_route="ASAM/revision file-identifier whitelist route",
+            predicate_input="VagVin::getVagFileIdentifier built from ECU ASAM and revision; AvailBy 4 first maps VIN/PDX",
+            availability_result="StringWhitelist::itemMatches result after ECU type gate VagEcuInfo + 0x04 == 2",
+            evidence=(
+                "target_0127075C.c routes AvailBy values in bitmask 0x1B through the ASAM/revision identifier path after checking VagEcuInfo + 0x04 == 2.",
+                "The delegate slot 0x194 supplies ECU ASAM/revision data for VagVin::getVagFileIdentifier.",
+                "AvailBy 1 and 4 use request mask 0xC0; AvailBy 0 and 3 use request mask 0x40.",
+                "AvailBy 4 also obtains VIN/PDX, runs the recovered PDX mapping helper, and logs 'Vehicle missing from PDX mapping' when no mapping exists.",
+            ),
+        ),
+        VagOperationDelegateAvailabilityRoute(
+            avail_by_values=(5,),
+            native_route="VIN/PDX-only file-identifier whitelist route",
+            predicate_input="VagVin::getVagFileIdentifier built from VIN-derived PDX with no ASAM/revision strings",
+            availability_result="StringWhitelist::itemMatches result",
+            evidence=(
+                "target_0127075C.c handles AvailBy 5 by obtaining VIN, deriving PDX, and building a file identifier without ECU ASAM/revision strings.",
+                "The resulting identifier is checked through the setting StringWhitelist itemMatches call.",
+            ),
+        ),
+    )
+
+
+def VagOperationDelegate_recoveredConstructorAvailabilityDefaults() -> tuple[VagOperationDelegateConstructorAvailabilityDefault, ...]:
+    return (
+        VagOperationDelegateConstructorAvailabilityDefault(
+            constructor_family="VagCanShortAdaptationSetting",
+            recovered_avail_by=2,
+            native_source="target_01100110.c / target_01100074.c / target_01100218.c / target_011003D0.c",
+            impact="short-adaptation branches normally use the ECU-tag StringWhitelist route unless an explicit AvailBy overload is recovered",
+            evidence=(
+                "The named VagCanShortAdaptationSetting constructors call VagSetting with AvailBy argument 2.",
+                "FullByteVagCanShortAdaptationSetting wraps the same short-adaptation constructor family.",
+            ),
+        ),
+        VagOperationDelegateConstructorAvailabilityDefault(
+            constructor_family="VagCanLongCodingSetting via VagCanCodingSetting",
+            recovered_avail_by=2,
+            native_source="VagCanCodingSetting constructor at 01058240 plus VagCanLongCodingSetting wrappers 0105F484/0105F500",
+            impact="long-coding branches normally use the ECU-tag StringWhitelist route",
+            evidence=(
+                "Capstone disassembly of the VagCanCodingSetting constructor shows movs r4,#2 before the VagSetting constructor call.",
+                "VagCanLongCodingSetting constructors at 0105F484/0105F500 delegate through VagCanCodingSetting.",
+            ),
+        ),
+        VagOperationDelegateConstructorAvailabilityDefault(
+            constructor_family="VagUdsCodingSetting no-AvailBy VagCanEcu make_shared",
+            recovered_avail_by=2,
+            native_source="construct body 010BC94C for the VagCanEcu/StringWhitelist/int/int/key/MultipleChoiceInterpretation instantiation",
+            impact="the recovered DID 0600 UDS-coding lighting branches normally use the ECU-tag StringWhitelist route",
+            evidence=(
+                "The make_shared construct body at 010BC94C stores AvailBy 2 before calling the VagUdsCodingSetting constructor thunk.",
+                "This proves the no-AvailBy VagCanEcu constructor path does not select branches by raw DID or raw type.",
+            ),
+        ),
+        VagOperationDelegateConstructorAvailabilityDefault(
+            constructor_family="VagUdsAdaptationSetting no-AvailBy make_shared",
+            recovered_avail_by=2,
+            native_source="representative construct bodies 010E0EE4, 010D29D8, 010D4EE0, 010C5440, 010DD1FC",
+            impact="normal no-AvailBy UDS-adaptation branches use the ECU-tag StringWhitelist route; explicit AvailBy overloads remain separately recoverable",
+            evidence=(
+                "The sampled no-AvailBy VagUdsAdaptationSetting make_shared construct bodies store AvailBy 2 before the constructor call.",
+                "This covers the ordinary constructor family only; branches with an explicit AvailBy argument must be traced independently.",
+            ),
         ),
     )
 
