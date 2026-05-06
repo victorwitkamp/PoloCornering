@@ -1,0 +1,55 @@
+{
+  "baud": 38400,
+  "current_coding": "3AB02BBF08A10000003008006C6A0CD000C0412F60860000200000000000",
+  "finished": "2026-05-05T13:19:05.818",
+  "port": "COM10",
+  "results": [
+    {
+      "counter_after": "1",
+      "counter_before": "0",
+      "ecu_ack_sent": "B5",
+      "expected_transmit_ack": "B1",
+      "frames": [
+        {
+          "header": "300",
+          "payload": "B1"
+        },
+        {
+          "header": "300",
+          "payload": "2000216206003AB0"
+        },
+        {
+          "header": "300",
+          "payload": "212BBF08A1000000"
+        },
+        {
+          "header": "300",
+          "payload": "223008006C6A0CD0"
+        },
+        {
+          "header": "300",
+          "payload": "2300C0412F608600"
+        },
+        {
+          "header": "300",
+          "payload": "1400200000000000"
+        },
+        {
+          "header": "300",
+          "payload": "A3"
+        },
+        {
+          "header": "300",
+          "payload": "1400200000000000"
+        }
+      ],
+      "label": "current 220600",
+      "payload": "6206003AB02BBF08A10000003008006C6A0CD000C0412F60860000200000000000",
+      "request": "220600",
+      "status": "positive",
+      "transmit_ack": "B1"
+    }
+  ],
+  "started": "2026-05-05T13:18:57.623",
+  "target_coding": "3AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000"
+}

@@ -1,6 +1,6 @@
 # PQ25 Last Known Settings And Light Debug Plan
 
-Date: 2026-04-29
+Date: 2026-05-04
 
 ## Scope
 
@@ -43,9 +43,9 @@ Only two bits differ between those strings:
 | 12 | `2C` | `6C` | bit 6 clear -> set | Carista cornering/fog family, live-tested, not the visible fix by itself |
 | 21 | `A2` | `A6` | bit 2 clear -> set | Carista turn-signal cornering family, live-tested, not the visible fix by itself |
 
-Both bits were successfully changed and verified with
-`obd-on-pc/write_carista_uds_coding.py`. The visible cornering/fog behavior did
-not change, so these are no longer the main fix candidates.
+Both bits were successfully changed and verified with the former live long-coding
+runner, which has since been removed. The visible cornering/fog behavior did not
+change, so these are no longer the main fix candidates.
 
 ## Current Carista Settings View
 
@@ -53,6 +53,7 @@ Generated detailed JSON:
 
 ```text
 docs/obd-on-pc/pq25_last_known_settings_carista_scan.json
+docs/obd-on-pc/pq25_read_values_plan.json
 ```
 
 Current evidence-backed settings from long coding:
@@ -104,27 +105,16 @@ debug path should stay Carista-adapter based.
 
 ## Adapter-Only Live Debug Plan
 
-Use the guided capture wrapper for the next in-car diagnostic session:
+The old guided capture wrapper was removed. Any future live debug procedure must
+be a temporary thin `obd-on-pc` wrapper around recovered `CaristaReproduction`
+symbols, and that wrapper must be removed after the session.
+
+The current persistent Carista reproduction command is offline evidence output:
 
 ```powershell
-cd C:\Users\victo\Downloads\PoloCornering\obd-on-pc
-.\run_bcm_light_capture.ps1 -Port COM10 -PreflightOnly -RunId bcm_light_preflight
+cd C:\Users\victo\Downloads\PoloCornering
+python -m CaristaReproduction --read-values-plan
 ```
-
-If preflight opens TP2.0 and returns a diagnostic read, run the stable-state
-matrix with raw CAN windows:
-
-```powershell
-cd C:\Users\victo\Downloads\PoloCornering\obd-on-pc
-.\run_bcm_light_capture.ps1 -Port COM10 -RawCanSeconds 5
-```
-
-That wrapper prompts through a repeatable lamp/switch matrix, runs the
-Carista-shaped read-only BCM profile for each state, optionally captures a short
-raw CAN monitor window, and writes JSON/CSV/Markdown delta reports under
-`obd-on-pc/logs/`. The prompt supports Enter to capture, `s` to skip unsafe
-states such as reverse, and `q` to finish early. Aggregate outputs are rewritten
-after each completed state, so partial sessions are preserved.
 
 After the drive, analyze the generated capture JSON:
 
@@ -139,60 +129,21 @@ are state-specific. The analyzer now also annotates known VW PQ raw CAN headers
 from the downloaded openDBC `vw_pq.dbc` reference and writes a signal-level
 `_raw_signal_deltas.csv` report for decoded raw CAN changes.
 
-For a shorter targeted pass:
-
-```powershell
-cd C:\Users\victo\Downloads\PoloCornering\obd-on-pc
-.\run_bcm_light_capture.ps1 -Port COM10 -States "baseline_off,left_turn,right_turn,lowbeam_fog_on" -RawCanSeconds 5
-```
-
-For transient turn/cornering behavior, use the faster local capture profile and
-repeat each state:
-
-```powershell
-cd C:\Users\victo\Downloads\PoloCornering\obd-on-pc
-.\run_bcm_light_capture.ps1 -Port COM10 -ReadProfile bcm_light_fast -States "baseline_off,left_turn,right_turn,lowbeam_fog_on" -RawCanSeconds 5 -Repeats 2
-```
-
-For the strongest raw-CAN context pass, use the PQ25 light-context preset. It
-keeps `Gate_Komf_1`/`Gate_Komf_2`, steering, speed/brake, and cluster telltale
-headers, and the analyzer decodes known bits such as `GK1_Blinker_li`,
-`GK1_Blinker_re`, `GK1_Abblendlicht`, `GK1_Fernlicht`, `GK1_Nebel_ein`, and
-`GK1_Rueckfahr`:
-
-```powershell
-cd C:\Users\victo\Downloads\PoloCornering\obd-on-pc
-.\run_bcm_light_capture.ps1 -Port COM10 -ReadProfile bcm_light_fast -States "baseline_off,left_turn,right_turn,lowbeam_fog_on,highbeam,reverse" -RawCanSeconds 5 -RawHeaders pq25_light_context -Repeats 2
-```
-
-After analyzing that run, inspect `_raw_signal_deltas.csv` first. Proof that the
+For historical raw-CAN captures, inspect `_raw_signal_deltas.csv` first. Proof that the
 BCM sees the physical inputs should show up as DBC-decoded signal changes such
 as `GK1_Blinker_li`, `GK1_Blinker_re`, `GK1_Abblendlicht`, `GK1_Fernlicht`,
 `GK1_Nebel_ein`, `LH3_BLW`, or `LW1_LRW` moving away from `baseline_off`.
 
-The lower-level Carista-shaped scan remains available when a single snapshot is
-enough:
-
-The current Carista-shaped read-values scan is:
-
-```powershell
-cd C:\Users\victo\Downloads\PoloCornering\obd-on-pc
-python .\vw_tp20_readonly_probe.py --mode direct_sequence --port COM10 --parameter-profile carista_then_minimal --read-profile carista_read_values --timeout 2.5 --run-id pq25_carista_read_values
-```
-
-For light-state snapshots, use the new read-only profile:
-
-```powershell
-cd C:\Users\victo\Downloads\PoloCornering\obd-on-pc
-python .\vw_tp20_readonly_probe.py --mode direct_sequence --port COM10 --parameter-profile carista_then_minimal --read-profile bcm_light_debug --timeout 2.5 --run-id pq25_light_debug_baseline
-```
-
-That profile sends the `CaristaReproduction` read-values plan plus read-only
-status/DTC reads:
+That procedure sends the `CaristaReproduction` read-values plan:
 
 ```text
 core Carista reads: 1A9B, 1A9F, 1A9A, 220600
-safe VagCanSettings candidates and live companion reads from CaristaReadValuesOperation
+safe VagCanSettings candidates from ReadValuesOperation:
+  22110E, 22056D, 220550, 220551, 220D01, 220A58, 220A57
+known-rejected static candidates kept out of the default live request set:
+  22055C, 22055D
+live companion reads from ReadValuesOperation:
+  220601, 220606
 Carista UDS identity/status reads: 22F17E, 22F187, 22F189, 22F18C, 22F191, 22F197, 22F1A3, 22F1A5, 22F1AA, 22F1DF
 1802FF00, 1902FF
 ```
@@ -215,6 +166,24 @@ high beam state, compare those payload deltas bit-by-bit before any write. If
 nothing changes, the live-data reason path is probably behind Carista's
 unrecovered `ReadValuesOperation` setting/value implementation rather than the
 currently known read commands.
+
+For the next focused car session, prefer fresh-channel single reads over one
+long same-channel sequence. Positive 2026-05-04 evidence came from direct reads
+after a fresh TP2.0 open, while same-channel follow-ups often disconnected after
+the first multi-frame response.
+
+Minimum next read set:
+
+```text
+220600, 220601, 220606, 22F1A5
+22110E, 22056D, 220550, 220551, 220D01, 220A58, 220A57
+```
+
+Do not send `22055C` / `22055D` again unless a new recovered branch-selection
+artifact explains why the previous `7F2231` result should change. Do not send
+any `31` adaptation routine during this read pass; the recovered `31B8/31BA/31B9`
+sequence belongs to raw types `0/1`, while the per-side fog-role objects are
+currently recovered as raw type `7`.
 
 ## Next Reverse-Engineering Target
 

@@ -172,6 +172,26 @@
 
 ## Local Instruction Windows
 ### Around `00ee880c`
+- `00ee87b2`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
+- `00ee87b6`: `movs r4,#0x1`
+- `00ee87b8`: `sub.w r1,r7,#0x30`
+- `00ee87bc`: `mov r0,r8`
+- `00ee87be`: `blx 0x014086e0` refs: `UNCONDITIONAL_CALL -> 014086e0`
+- `00ee87c2`: `movs r4,#0x0`
+- `00ee87c4`: `ldr r0,[0x00ee87d4]` refs: `READ -> 00ee87d4`
+- `00ee87c6`: `mov r1,r8`
+- `00ee87c8`: `add r0,pc`
+- `00ee87ca`: `ldr r5,[r0,#0x0]` refs: `READ -> 014dd250`
+- `00ee87cc`: `mov r0,r5` refs: `PARAM -> 014f49b8`
+- `00ee87ce`: `blx 0x0140be90` refs: `UNCONDITIONAL_CALL -> 0140be90`
+- `00ee87d2`: `b 0x00ee87d8` refs: `UNCONDITIONAL_JUMP -> 00ee87d8`
+- `00ee87d8`: `sub.w r0,r7,#0x30`
+- `00ee87dc`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
+- `00ee87e0`: `movs r4,#0x3c`
+- `00ee87e2`: `adds r0,r6,r4`
+- `00ee87e4`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
+- `00ee87e8`: `subs r4,#0xc`
+- `00ee87ea`: `adds.w r0,r4,#0xc`
 - `00ee87ee`: `bne 0x00ee87e2` refs: `CONDITIONAL_JUMP -> 00ee87e2`
 - `00ee87f0`: `ldr r0,[0x00ee8814]` refs: `READ -> 00ee8814`
 - `00ee87f2`: `mov r1,r5` refs: `PARAM -> 014f49b8`
@@ -190,27 +210,27 @@
 - `00ee8820`: `add r0,sp,#0x3c8`
 - `00ee8822`: `sub.w r1,r7,#0x30`
 - `00ee8826`: `movs r2,#0x1`
-- `00ee8828`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `00ee882c`: `movs r4,#0x1`
-- `00ee882e`: `add r1,sp,#0x3c8`
-- `00ee8830`: `mov r0,r8`
-- `00ee8832`: `blx 0x014086e0` refs: `UNCONDITIONAL_CALL -> 014086e0`
-- `00ee8836`: `movs r4,#0x0`
-- `00ee8838`: `ldr r0,[0x00ee884c]` refs: `READ -> 00ee884c`
-- `00ee883a`: `mov r1,r8`
-- `00ee883c`: `mov r2,r5` refs: `PARAM -> 014f49b8`
-- `00ee883e`: `add r0,pc`
-- `00ee8840`: `ldr r6,[r0,#0x0]` refs: `READ -> 014dc918`
-- `00ee8842`: `mov r0,r6` refs: `PARAM -> 014f49c0`
-- `00ee8844`: `blx 0x014085a0` refs: `UNCONDITIONAL_CALL -> 014085a0`
-- `00ee8848`: `b 0x00ee8850` refs: `UNCONDITIONAL_JUMP -> 00ee8850`
-- `00ee8850`: `add r0,sp,#0x3c8`
-- `00ee8852`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
-- `00ee8856`: `sub.w r0,r7,#0x30`
-- `00ee885a`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
-- `00ee885e`: `ldr r0,[0x00ee8884]` refs: `READ -> 00ee8884`
-- `00ee8860`: `mov r1,r6` refs: `PARAM -> 014f49c0`
 ### Around `00e9d09a`
+- `00e9d04a`: `ldr r0,[sp,#0x24]` refs: `READ -> Stack[-0x1c]`
+- `00e9d04c`: `ldr r1,[0x00e9d074]` refs: `READ -> 00e9d074`
+- `00e9d04e`: `add r1,pc`
+- `00e9d050`: `ldr r1,[r1,#0x0]` refs: `READ -> 014da87c`
+- `00e9d052`: `ldr r1,[r1,#0x0]` refs: `READ -> 015a7014`
+- `00e9d054`: `cmp r1,r0`
+- `00e9d056`: `itttt eq`
+- `00e9d058`: `mov.eq r0,r4`
+- `00e9d05a`: `add.eq sp,#0x28`
+- `00e9d05c`: `pop.eq.w r8`
+- `00e9d060`: `pop.eq {r4,r5,r6,r7,pc}`
+- `00e9d062`: `blx 0x013fa400` refs: `UNCONDITIONAL_CALL -> 013fa400`
+- `00e9d070`: `bhi 0x00e9d144` refs: `CONDITIONAL_JUMP -> 00e9d144`
+- `00e9d072`: `lsls r3,r4,#0x1`
+- `00e9d074`: `bhi 0x00e9d0cc` refs: `CONDITIONAL_JUMP -> 00e9d0cc`
+- `00e9d076`: `lsls r3,r4,#0x1`
+- `00e9d078`: `push {r4,r5,r6,r7,lr}`
+- `00e9d07a`: `add r7,sp,#0xc`
+- `00e9d07c`: `push {r8,r9,r11}`
+- `00e9d080`: `sub sp,#0x78`
 - `00e9d082`: `mov r4,r0`
 - `00e9d084`: `ldr r0,[0x00e9d148]` refs: `READ -> 00e9d148`
 - `00e9d086`: `mov r9,r1`
@@ -229,29 +249,46 @@
 - `00e9d0a2`: `mov r1,r6`
 - `00e9d0a4`: `movs r2,#0x1`
 - `00e9d0a6`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `00e9d0aa`: `add r0,sp,#0x2c`
-- `00e9d0ac`: `add r1,sp,#0x20`
-- `00e9d0ae`: `blx 0x014086e0` refs: `UNCONDITIONAL_CALL -> 014086e0`
-- `00e9d0b2`: `add r0,sp,#0x5c`
-- `00e9d0b4`: `add r1,sp,#0x2c`
-- `00e9d0b6`: `bl 0x00e9d154` refs: `UNCONDITIONAL_CALL -> 00e9d154`
-- `00e9d0ba`: `ldr r0,[r7,#0x8]` refs: `READ -> Stack[0x0]`
-- `00e9d0bc`: `strb.w r0,[r7,#-0x29]`
-- `00e9d0c0`: `add r0,sp,#0x14`
-- `00e9d0c2`: `sub.w r1,r7,#0x29`
-- `00e9d0c6`: `movs r2,#0x1`
-- `00e9d0c8`: `bl 0x00cdb87c` refs: `UNCONDITIONAL_CALL -> 00cdb87c`
-- `00e9d0cc`: `ldrd r2,r1,[r7,#0xc]` refs: `READ -> Stack[0x4]`
-- `00e9d0d0`: `mov r3,r8`
-- `00e9d0d2`: `strd r5,r0,[sp,#0x0]` refs: `WRITE -> Stack[-0x98]`
-- `00e9d0d6`: `mov r0,r4`
-- `00e9d0d8`: `strd r2,r1,[sp,#0x8]` refs: `WRITE -> Stack[-0x90]`
-- `00e9d0dc`: `add r1,sp,#0x5c`
-- `00e9d0de`: `mov r2,r9`
-- `00e9d0e0`: `blx 0x01410680` refs: `UNCONDITIONAL_CALL -> 01410680`
 ### Around `00d5d04e`
+- `00d5d000`: `push {r4,r5,r6,r7,lr}`
+- `00d5d002`: `add r7,sp,#0xc`
+- `00d5d004`: `push.w r11`
+- `00d5d008`: `ldrd r5,r6,[r1,#0x0]`
+- `00d5d00c`: `mov r4,r0`
+- `00d5d00e`: `cmp r5,r6`
+- `00d5d010`: `beq 0x00d5d02a` refs: `CONDITIONAL_JUMP -> 00d5d02a`
+- `00d5d012`: `ldrd r0,r1,[r4,#0x0]`
+- `00d5d016`: `mov r2,r5`
+- `00d5d018`: `bl 0x00d5dbc0` refs: `UNCONDITIONAL_CALL -> 00d5dbc0`
+- `00d5d01c`: `ldr r2,[r4,#0x4]`
+- `00d5d01e`: `mov r1,r0`
+- `00d5d020`: `mov r0,r4`
+- `00d5d022`: `bl 0x00d5db9c` refs: `UNCONDITIONAL_CALL -> 00d5db9c`
+- `00d5d026`: `adds r5,#0xc`
+- `00d5d028`: `b 0x00d5d00e` refs: `UNCONDITIONAL_JUMP -> 00d5d00e`
+- `00d5d02a`: `pop.w r11`
+- `00d5d02e`: `pop {r4,r5,r6,r7,pc}`
+- `00d5d030`: `push {r4,r5,r6,r7,lr}`
+- `00d5d032`: `add r7,sp,#0xc`
 - `00d5d034`: `push.w r11`
 - `00d5d038`: `sub sp,#0x10`
+- `00d5d03a`: `ldr r0,[0x00d5d158]` refs: `READ -> 00d5d158`
+- `00d5d03c`: `mov r5,r1`
+- `00d5d03e`: `mov r6,sp`
+- `00d5d040`: `mov r4,r2`
+- `00d5d042`: `add r0,pc`
+- `00d5d044`: `ldr r0,[r0,#0x0]` refs: `READ -> 014da87c`
+- `00d5d046`: `ldr r0,[r0,#0x0]` refs: `READ -> 015a7014`
+- `00d5d048`: `str r0,[sp,#0xc]` refs: `WRITE -> Stack[-0x1c]`
+- `00d5d04a`: `mov r0,r6`
+- `00d5d04c`: `ldr r1,[0x00d5d15c]` refs: `READ -> 00d5d15c`
+- `00d5d04e`: `add r1,pc` refs: `PARAM -> 00ad5a21`
+- `00d5d050`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
+- `00d5d054`: `mov r0,r5`
+- `00d5d056`: `mov r1,r6`
+- `00d5d058`: `blx 0x01402d30` refs: `UNCONDITIONAL_CALL -> 01402d30`
+- `00d5d05c`: `mov r6,r0`
+### Around `00d5d086`
 - `00d5d03a`: `ldr r0,[0x00d5d158]` refs: `READ -> 00d5d158`
 - `00d5d03c`: `mov r5,r1`
 - `00d5d03e`: `mov r6,sp`
@@ -288,46 +325,29 @@
 - `00d5d088`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
 - `00d5d08c`: `mov r0,r5`
 - `00d5d08e`: `mov r1,r6`
-### Around `00d5d086`
-- `00d5d068`: `mov r1,r5`
-- `00d5d06a`: `mov r0,r6`
-- `00d5d06c`: `movs r2,#0x1`
-- `00d5d06e`: `mov.w r3,#0xffffffff`
-- `00d5d072`: `bl 0x00cfe458` refs: `UNCONDITIONAL_CALL -> 00cfe458`
-- `00d5d076`: `mov r0,r4`
-- `00d5d078`: `mov r1,r6`
-- `00d5d07a`: `blx 0x01402d80` refs: `UNCONDITIONAL_CALL -> 01402d80`
-- `00d5d07e`: `b 0x00d5d0be` refs: `UNCONDITIONAL_JUMP -> 00d5d0be`
-- `00d5d080`: `ldr r1,[0x00d5d160]` refs: `READ -> 00d5d160`
-- `00d5d082`: `mov r6,sp`
-- `00d5d084`: `mov r0,r6`
-- `00d5d086`: `add r1,pc` refs: `PARAM -> 00ad5a21`
-- `00d5d088`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
-- `00d5d08c`: `mov r0,r5`
-- `00d5d08e`: `mov r1,r6`
 - `00d5d090`: `blx 0x01402d80` refs: `UNCONDITIONAL_CALL -> 01402d80`
 - `00d5d094`: `mov r6,r0`
-- `00d5d096`: `mov r0,sp`
-- `00d5d098`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
-- `00d5d09c`: `cbz r6,0x00d5d0e2` refs: `CONDITIONAL_JUMP -> 00d5d0e2`
-- `00d5d09e`: `ldrb r1,[r5,#0x0]`
-- `00d5d0a0`: `mov r6,sp`
-- `00d5d0a2`: `ldr r0,[r5,#0x4]`
-- `00d5d0a4`: `lsls r2,r1,#0x1f`
-- `00d5d0a6`: `it eq`
-- `00d5d0a8`: `lsr.eq r0,r1,#0x1`
-- `00d5d0aa`: `subs r3,r0,#0x1`
-- `00d5d0ac`: `mov r0,r6`
-- `00d5d0ae`: `mov r1,r5`
-- `00d5d0b0`: `movs r2,#0x0`
-- `00d5d0b2`: `bl 0x00cfe458` refs: `UNCONDITIONAL_CALL -> 00cfe458`
-- `00d5d0b6`: `mov r0,r4`
-- `00d5d0b8`: `mov r1,r6`
-- `00d5d0ba`: `blx 0x01402d30` refs: `UNCONDITIONAL_CALL -> 01402d30`
-- `00d5d0be`: `mov r4,r0`
-- `00d5d0c0`: `mov r0,sp`
-- `00d5d0c2`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
 ### Around `00e9d1aa`
+- `00e9d15a`: `ldr r1,[0x00e9d180]` refs: `READ -> 00e9d180`
+- `00e9d15c`: `add r1,pc`
+- `00e9d15e`: `ldr r1,[r1,#0x0]` refs: `READ -> 014da87c`
+- `00e9d160`: `ldr r1,[r1,#0x0]` refs: `READ -> 015a7014`
+- `00e9d162`: `str r1,[sp,#0x4]` refs: `WRITE -> Stack[-0xc]`
+- `00e9d164`: `subs r1,r7,#0x5`
+- `00e9d166`: `bl 0x00e9d468` refs: `UNCONDITIONAL_CALL -> 00e9d468`
+- `00e9d16a`: `ldr r0,[sp,#0x4]` refs: `READ -> Stack[-0xc]`
+- `00e9d16c`: `ldr r1,[0x00e9d184]` refs: `READ -> 00e9d184`
+- `00e9d16e`: `add r1,pc`
+- `00e9d170`: `ldr r1,[r1,#0x0]` refs: `READ -> 014da87c`
+- `00e9d172`: `ldr r1,[r1,#0x0]` refs: `READ -> 015a7014`
+- `00e9d174`: `cmp r1,r0`
+- `00e9d176`: `it eq`
+- `00e9d178`: `pop.eq {r2,r3,r7,pc}`
+- `00e9d17a`: `blx 0x013fa400` refs: `UNCONDITIONAL_CALL -> 013fa400`
+- `00e9d188`: `push {r4,r5,r6,r7,lr}`
+- `00e9d18a`: `add r7,sp,#0xc`
+- `00e9d18c`: `push {r8,r9,r11}`
+- `00e9d190`: `sub sp,#0x68`
 - `00e9d192`: `mov r4,r0`
 - `00e9d194`: `ldr r0,[0x00e9d23c]` refs: `READ -> 00e9d23c`
 - `00e9d196`: `mov r9,r1`
@@ -346,27 +366,27 @@
 - `00e9d1b2`: `mov r1,r6`
 - `00e9d1b4`: `movs r2,#0x1`
 - `00e9d1b6`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `00e9d1ba`: `add r0,sp,#0x20`
-- `00e9d1bc`: `add r1,sp,#0x14`
-- `00e9d1be`: `blx 0x014086e0` refs: `UNCONDITIONAL_CALL -> 014086e0`
-- `00e9d1c2`: `add r0,sp,#0x50`
-- `00e9d1c4`: `add r1,sp,#0x20`
-- `00e9d1c6`: `bl 0x00e9d154` refs: `UNCONDITIONAL_CALL -> 00e9d154`
-- `00e9d1ca`: `ldrd r2,r1,[r7,#0x8]` refs: `READ -> Stack[0x0]`
-- `00e9d1ce`: `mov r3,r8`
-- `00e9d1d0`: `ldr r0,[r7,#0x10]` refs: `READ -> Stack[0x8]`
-- `00e9d1d2`: `strd r5,r2,[sp,#0x0]` refs: `WRITE -> Stack[-0x88]`
-- `00e9d1d6`: `mov r2,r9`
-- `00e9d1d8`: `strd r1,r0,[sp,#0x8]` refs: `WRITE -> Stack[-0x80]`
-- `00e9d1dc`: `add r1,sp,#0x50`
-- `00e9d1de`: `mov r0,r4`
-- `00e9d1e0`: `blx 0x01410680` refs: `UNCONDITIONAL_CALL -> 01410680`
-- `00e9d1e4`: `add r0,sp,#0x50`
-- `00e9d1e6`: `bl 0x00d5d494` refs: `UNCONDITIONAL_CALL -> 00d5d494`
-- `00e9d1ea`: `add r0,sp,#0x20`
-- `00e9d1ec`: `blx 0x01408560` refs: `UNCONDITIONAL_CALL -> 01408560`
-- `00e9d1f0`: `add r0,sp,#0x14`
 ### Around `00f11208`
+- `00f1119a`: `ldr.w lr,[r2,#0x0]`
+- `00f1119e`: `movs r2,#0x0`
+- `00f111a0`: `strd r2,r2,[r5,#0x0]`
+- `00f111a4`: `add r2,sp,#0x14`
+- `00f111a6`: `str r2,[sp,#0xc]` refs: `WRITE -> Stack[-0x2c]`
+- `00f111a8`: `ldr r2,[r7,#0x14]` refs: `READ -> Stack[0xc]`
+- `00f111aa`: `str r2,[sp,#0x8]` refs: `WRITE -> Stack[-0x30]`
+- `00f111ac`: `ldr r2,[r7,#0x10]` refs: `READ -> Stack[0x8]`
+- `00f111ae`: `strd lr,r2,[sp,#0x0]` refs: `WRITE -> Stack[-0x38]`
+- `00f111b2`: `mov r2,r12`
+- `00f111b4`: `blx 0x01411ab0` refs: `UNCONDITIONAL_CALL -> 01411ab0`
+- `00f111b8`: `add r0,sp,#0x14`
+- `00f111ba`: `bl 0x00cd2748` refs: `UNCONDITIONAL_CALL -> 00cd2748`
+- `00f111d8`: `add r0,sp,#0x14`
+- `00f111da`: `bl 0x00cd2748` refs: `UNCONDITIONAL_CALL -> 00cd2748`
+- `00f111e2`: `nop`
+- `00f111e4`: `str r6,[sp,#0x3d8]`
+- `00f111e6`: `lsls r4,r3,#0x1`
+- `00f111e8`: `str r6,[sp,#0x2d8]`
+- `00f111ea`: `lsls r4,r3,#0x1`
 - `00f111ec`: `push {r4,r5,r6,r7,lr}`
 - `00f111ee`: `add r7,sp,#0xc`
 - `00f111f0`: `push {r8,r9,r10,r11}`
@@ -385,10 +405,7 @@
 - `00f11210`: `mov r1,r4`
 - `00f11212`: `movs r2,#0x1`
 - `00f11214`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `00f11218`: `b 0x00f11220` refs: `UNCONDITIONAL_JUMP -> 00f11220`
-- `00f11220`: `ldr r2,[0x00f11244]` refs: `READ -> 00f11244`
-- `00f11222`: `add r1,sp,#0x10`
-- `00f11224`: `movs r0,#0xd`
+### Around `00f11284`
 - `00f11226`: `add r2,pc`
 - `00f11228`: `mov r3,r1`
 - `00f1122a`: `vld1.64 {d16,d17},[r2],r0` refs: `READ -> 00c94988` `READ -> 00c94990`
@@ -405,7 +422,10 @@
 - `00f1124e`: `add r0,pc`
 - `00f11250`: `ldr r4,[r0,#0x0]` refs: `READ -> 014dd8a0`
 - `00f11252`: `mov r0,r4` refs: `PARAM -> 014f53d0`
-### Around `00f11284`
+- `00f11254`: `blx 0x01411ed0` refs: `UNCONDITIONAL_CALL -> 01411ed0`
+- `00f11258`: `b 0x00f11260` refs: `UNCONDITIONAL_JUMP -> 00f11260`
+- `00f11260`: `add r0,sp,#0x34`
+- `00f11262`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 - `00f11266`: `add r0,sp,#0x4c`
 - `00f11268`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f1126c`: `add r0,sp,#0x40`
@@ -422,6 +442,9 @@
 - `00f11286`: `mov r0,r4`
 - `00f11288`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
 - `00f1128c`: `add r0,sp,#0x10`
+- `00f1128e`: `mov r1,r4`
+- `00f11290`: `movs r2,#0x1`
+### Around `00f112f0`
 - `00f1128e`: `mov r1,r4`
 - `00f11290`: `movs r2,#0x1`
 - `00f11292`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
@@ -444,9 +467,6 @@
 - `00f112ce`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 - `00f112d2`: `add r0,sp,#0x10`
 - `00f112d4`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
-### Around `00f112f0`
-- `00f112d2`: `add r0,sp,#0x10`
-- `00f112d4`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f112d8`: `add r0,sp,#0x4c`
 - `00f112da`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
 - `00f112de`: `ldr r0,[0x00f11304]` refs: `READ -> 00f11304`
@@ -461,6 +481,9 @@
 - `00f112f2`: `mov r0,r4`
 - `00f112f4`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
 - `00f112f8`: `add r0,sp,#0x10`
+- `00f112fa`: `mov r1,r4`
+- `00f112fc`: `movs r2,#0x1`
+### Around `00f1135c`
 - `00f112fa`: `mov r1,r4`
 - `00f112fc`: `movs r2,#0x1`
 - `00f112fe`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
@@ -483,9 +506,6 @@
 - `00f1133a`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 - `00f1133e`: `add r0,sp,#0x10`
 - `00f11340`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
-### Around `00f1135c`
-- `00f1133e`: `add r0,sp,#0x10`
-- `00f11340`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f11344`: `add r0,sp,#0x4c`
 - `00f11346`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
 - `00f1134a`: `ldr r0,[0x00f11370]` refs: `READ -> 00f11370`
@@ -501,6 +521,8 @@
 - `00f11360`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
 - `00f11364`: `add r0,sp,#0x10`
 - `00f11366`: `mov r1,r4`
+- `00f11368`: `movs r2,#0x1`
+### Around `00f113ca`
 - `00f11368`: `movs r2,#0x1`
 - `00f1136a`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
 - `00f1136e`: `b 0x00f1137c` refs: `UNCONDITIONAL_JUMP -> 00f1137c`
@@ -522,8 +544,6 @@
 - `00f113a6`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 - `00f113aa`: `add r0,sp,#0x10`
 - `00f113ac`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
-### Around `00f113ca`
-- `00f113ac`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f113b0`: `add r0,sp,#0x4c`
 - `00f113b2`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
 - `00f113b6`: `ldr r0,[0x00f113e0]` refs: `READ -> 00f113e0`
@@ -541,7 +561,7 @@
 - `00f113d2`: `add r0,sp,#0x10`
 - `00f113d4`: `mov r1,r4`
 - `00f113d6`: `movs r2,#0x1`
-- `00f113d8`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
+### Around `00f11444`
 - `00f113dc`: `b 0x00f113ec` refs: `UNCONDITIONAL_JUMP -> 00f113ec`
 - `00f113ec`: `movw r0,#0xd5d4`
 - `00f113f0`: `strh.w r0,[sp,#0x38]` refs: `WRITE -> Stack[-0x48]`
@@ -561,7 +581,7 @@
 - `00f11416`: `blx 0x01411ed0` refs: `UNCONDITIONAL_CALL -> 01411ed0`
 - `00f1141a`: `b 0x00f11420` refs: `UNCONDITIONAL_JUMP -> 00f11420`
 - `00f11420`: `add r0,sp,#0x40`
-### Around `00f11444`
+- `00f11422`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 - `00f11426`: `add r0,sp,#0x10`
 - `00f11428`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f1142c`: `add r0,sp,#0x4c`
@@ -580,6 +600,7 @@
 - `00f1144c`: `add r0,sp,#0x10`
 - `00f1144e`: `mov r1,r4`
 - `00f11450`: `movs r2,#0x1`
+### Around `00f114b8`
 - `00f11452`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
 - `00f11456`: `b 0x00f11464` refs: `UNCONDITIONAL_JUMP -> 00f11464`
 - `00f11464`: `movs r0,#0x46`
@@ -600,7 +621,6 @@
 - `00f1148e`: `b 0x00f11494` refs: `UNCONDITIONAL_JUMP -> 00f11494`
 - `00f11494`: `add r0,sp,#0x40`
 - `00f11496`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
-### Around `00f114b8`
 - `00f1149a`: `add r0,sp,#0x10`
 - `00f1149c`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f114a0`: `add r0,sp,#0x4c`
@@ -618,6 +638,8 @@
 - `00f114bc`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
 - `00f114c0`: `add r0,sp,#0x10`
 - `00f114c2`: `mov r1,r4`
+- `00f114c4`: `movs r2,#0x1`
+### Around `00f11528`
 - `00f114c4`: `movs r2,#0x1`
 - `00f114c6`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
 - `00f114ca`: `b 0x00f114d8` refs: `UNCONDITIONAL_JUMP -> 00f114d8`
@@ -639,8 +661,6 @@
 - `00f11504`: `add r0,sp,#0x40`
 - `00f11506`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 - `00f1150a`: `add r0,sp,#0x10`
-### Around `00f11528`
-- `00f1150a`: `add r0,sp,#0x10`
 - `00f1150c`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f11510`: `add r0,sp,#0x4c`
 - `00f11512`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
@@ -658,27 +678,27 @@
 - `00f11530`: `add r0,sp,#0x10`
 - `00f11532`: `mov r1,r5`
 - `00f11534`: `movs r2,#0x1`
-- `00f11536`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `00f1153a`: `b 0x00f11548` refs: `UNCONDITIONAL_JUMP -> 00f11548`
-- `00f11548`: `movs r0,#0x5`
-- `00f1154a`: `strb.w r0,[sp,#0x36]` refs: `WRITE -> Stack[-0x4a]`
-- `00f1154e`: `movw r0,#0x302`
-- `00f11552`: `strh.w r0,[sp,#0x34]` refs: `WRITE -> Stack[-0x4c]`
-- `00f11556`: `add r0,sp,#0x40`
-- `00f11558`: `add r1,sp,#0x34`
-- `00f1155a`: `movs r2,#0x3`
-- `00f1155c`: `bl 0x00cdb87c` refs: `UNCONDITIONAL_CALL -> 00cdb87c`
-- `00f11560`: `ldr r0,[0x00f11574]` refs: `READ -> 00f11574`
-- `00f11562`: `add r1,sp,#0x10`
-- `00f11564`: `add r2,sp,#0x40`
-- `00f11566`: `add r0,pc`
-- `00f11568`: `ldr r5,[r0,#0x0]` refs: `READ -> 014dd8e8`
-- `00f1156a`: `mov r0,r5` refs: `PARAM -> 014f5408`
-- `00f1156c`: `blx 0x01411ed0` refs: `UNCONDITIONAL_CALL -> 01411ed0`
-- `00f11570`: `b 0x00f11578` refs: `UNCONDITIONAL_JUMP -> 00f11578`
-- `00f11578`: `add r0,sp,#0x40`
-- `00f1157a`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 ### Around `00f11612`
+- `00f115bc`: `ldrd r1,r0,[r5,#0x0]` refs: `READ -> 014f5408` `READ -> 014f540c`
+- `00f115c0`: `strd r1,r0,[sp,#0x18]` refs: `WRITE -> Stack[-0x68]`
+- `00f115c4`: `cbz r0,0x00f115d6` refs: `CONDITIONAL_JUMP -> 00f115d6`
+- `00f115c6`: `adds r0,#0x4`
+- `00f115c8`: `ldrex r1,[r0,#0x0]`
+- `00f115cc`: `adds r1,#0x1`
+- `00f115ce`: `strex r2,r1,[r0,#0x0]`
+- `00f115d2`: `cmp r2,#0x0`
+- `00f115d4`: `bne 0x00f115c8` refs: `CONDITIONAL_JUMP -> 00f115c8`
+- `00f115d6`: `ldr r0,[0x00f115ec]` refs: `READ -> 00f115ec`
+- `00f115d8`: `add r4,sp,#0x10`
+- `00f115da`: `movs r2,#0x2`
+- `00f115dc`: `add r0,pc`
+- `00f115de`: `mov r1,r4`
+- `00f115e0`: `ldr.w r9,[r0,#0x0]` refs: `READ -> 014dd8c4`
+- `00f115e4`: `mov r0,r9` refs: `PARAM -> 014f5410`
+- `00f115e6`: `blx 0x01411a30` refs: `UNCONDITIONAL_CALL -> 01411a30`
+- `00f115ea`: `b 0x00f115f0` refs: `UNCONDITIONAL_JUMP -> 00f115f0`
+- `00f115f0`: `movs r5,#0x8`
+- `00f115f2`: `adds r0,r4,r5`
 - `00f115f4`: `bl 0x00f0a196` refs: `UNCONDITIONAL_CALL -> 00f0a196`
 - `00f115f8`: `subs r5,#0x8`
 - `00f115fa`: `adds.w r0,r5,#0x8`
@@ -695,6 +715,9 @@
 - `00f11614`: `mov r0,r4`
 - `00f11616`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
 - `00f1161a`: `add r0,sp,#0x10`
+- `00f1161c`: `mov r1,r4`
+- `00f1161e`: `movs r2,#0x1`
+### Around `00f11680`
 - `00f1161c`: `mov r1,r4`
 - `00f1161e`: `movs r2,#0x1`
 - `00f11620`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
@@ -717,9 +740,6 @@
 - `00f1165e`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 - `00f11662`: `add r0,sp,#0x10`
 - `00f11664`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
-### Around `00f11680`
-- `00f11662`: `add r0,sp,#0x10`
-- `00f11664`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f11668`: `add r0,sp,#0x4c`
 - `00f1166a`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
 - `00f1166e`: `ldr r0,[0x00f11694]` refs: `READ -> 00f11694`
@@ -734,6 +754,9 @@
 - `00f11682`: `mov r0,r4`
 - `00f11684`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
 - `00f11688`: `add r0,sp,#0x10`
+- `00f1168a`: `mov r1,r4`
+- `00f1168c`: `movs r2,#0x1`
+### Around `00f116ec`
 - `00f1168a`: `mov r1,r4`
 - `00f1168c`: `movs r2,#0x1`
 - `00f1168e`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
@@ -756,9 +779,6 @@
 - `00f116ca`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 - `00f116ce`: `add r0,sp,#0x10`
 - `00f116d0`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
-### Around `00f116ec`
-- `00f116ce`: `add r0,sp,#0x10`
-- `00f116d0`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f116d4`: `add r0,sp,#0x4c`
 - `00f116d6`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
 - `00f116da`: `ldr r0,[0x00f11700]` refs: `READ -> 00f11700`
@@ -775,27 +795,27 @@
 - `00f116f4`: `add r0,sp,#0x10`
 - `00f116f6`: `mov r1,r5`
 - `00f116f8`: `movs r2,#0x1`
-- `00f116fa`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `00f116fe`: `b 0x00f1170c` refs: `UNCONDITIONAL_JUMP -> 00f1170c`
-- `00f1170c`: `movw r0,#0x4431`
-- `00f11710`: `strh.w r0,[sp,#0x34]` refs: `WRITE -> Stack[-0x4c]`
-- `00f11714`: `add r0,sp,#0x40`
-- `00f11716`: `add r1,sp,#0x34`
-- `00f11718`: `movs r2,#0x2`
-- `00f1171a`: `bl 0x00cdb87c` refs: `UNCONDITIONAL_CALL -> 00cdb87c`
-- `00f1171e`: `ldr r0,[0x00f11730]` refs: `READ -> 00f11730`
-- `00f11720`: `add r1,sp,#0x10`
-- `00f11722`: `add r2,sp,#0x40`
-- `00f11724`: `add r0,pc`
-- `00f11726`: `ldr r5,[r0,#0x0]` refs: `READ -> 014dd8f4`
-- `00f11728`: `mov r0,r5` refs: `PARAM -> 014f5428`
-- `00f1172a`: `blx 0x01411ed0` refs: `UNCONDITIONAL_CALL -> 01411ed0`
-- `00f1172e`: `b 0x00f11734` refs: `UNCONDITIONAL_JUMP -> 00f11734`
-- `00f11734`: `add r0,sp,#0x40`
-- `00f11736`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
-- `00f1173a`: `add r0,sp,#0x10`
-- `00f1173c`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 ### Around `00f117e6`
+- `00f11792`: `ldrd r1,r0,[r5,#0x0]` refs: `READ -> 014f5428` `READ -> 014f542c`
+- `00f11796`: `strd r1,r0,[sp,#0x20]` refs: `WRITE -> Stack[-0x60]`
+- `00f1179a`: `cbz r0,0x00f117ac` refs: `CONDITIONAL_JUMP -> 00f117ac`
+- `00f1179c`: `adds r0,#0x4`
+- `00f1179e`: `ldrex r1,[r0,#0x0]`
+- `00f117a2`: `adds r1,#0x1`
+- `00f117a4`: `strex r2,r1,[r0,#0x0]`
+- `00f117a8`: `cmp r2,#0x0`
+- `00f117aa`: `bne 0x00f1179e` refs: `CONDITIONAL_JUMP -> 00f1179e`
+- `00f117ac`: `ldr r0,[0x00f117c0]` refs: `READ -> 00f117c0`
+- `00f117ae`: `add r4,sp,#0x10`
+- `00f117b0`: `movs r2,#0x3`
+- `00f117b2`: `add r0,pc`
+- `00f117b4`: `mov r1,r4`
+- `00f117b6`: `ldr r5,[r0,#0x0]` refs: `READ -> 014dd8f8`
+- `00f117b8`: `mov r0,r5` refs: `PARAM -> 014f5430`
+- `00f117ba`: `blx 0x01411a30` refs: `UNCONDITIONAL_CALL -> 01411a30`
+- `00f117be`: `b 0x00f117c4` refs: `UNCONDITIONAL_JUMP -> 00f117c4`
+- `00f117c4`: `movs r6,#0x10`
+- `00f117c6`: `adds r0,r4,r6`
 - `00f117c8`: `bl 0x00f0a196` refs: `UNCONDITIONAL_CALL -> 00f0a196`
 - `00f117cc`: `subs r6,#0x8`
 - `00f117ce`: `adds.w r0,r6,#0x8`
@@ -812,6 +832,9 @@
 - `00f117e8`: `mov r0,r4`
 - `00f117ea`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
 - `00f117ee`: `add r0,sp,#0x10`
+- `00f117f0`: `mov r1,r4`
+- `00f117f2`: `movs r2,#0x1`
+### Around `00f11854`
 - `00f117f0`: `mov r1,r4`
 - `00f117f2`: `movs r2,#0x1`
 - `00f117f4`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
@@ -834,9 +857,6 @@
 - `00f11832`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 - `00f11836`: `add r0,sp,#0x10`
 - `00f11838`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
-### Around `00f11854`
-- `00f11836`: `add r0,sp,#0x10`
-- `00f11838`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f1183c`: `add r0,sp,#0x4c`
 - `00f1183e`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
 - `00f11842`: `ldr r0,[0x00f11868]` refs: `READ -> 00f11868`
@@ -851,6 +871,9 @@
 - `00f11856`: `mov r0,r4`
 - `00f11858`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
 - `00f1185c`: `add r0,sp,#0x10`
+- `00f1185e`: `mov r1,r4`
+- `00f11860`: `movs r2,#0x1`
+### Around `00f118c0`
 - `00f1185e`: `mov r1,r4`
 - `00f11860`: `movs r2,#0x1`
 - `00f11862`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
@@ -873,9 +896,6 @@
 - `00f1189e`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 - `00f118a2`: `add r0,sp,#0x10`
 - `00f118a4`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
-### Around `00f118c0`
-- `00f118a2`: `add r0,sp,#0x10`
-- `00f118a4`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f118a8`: `add r0,sp,#0x4c`
 - `00f118aa`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
 - `00f118ae`: `ldr r0,[0x00f118d4]` refs: `READ -> 00f118d4`
@@ -892,27 +912,27 @@
 - `00f118c8`: `add r0,sp,#0x10`
 - `00f118ca`: `mov r1,r5`
 - `00f118cc`: `movs r2,#0x1`
-- `00f118ce`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `00f118d2`: `b 0x00f118e0` refs: `UNCONDITIONAL_JUMP -> 00f118e0`
-- `00f118e0`: `movw r0,#0x4f4a`
-- `00f118e4`: `strh.w r0,[sp,#0x34]` refs: `WRITE -> Stack[-0x4c]`
-- `00f118e8`: `add r0,sp,#0x40`
-- `00f118ea`: `add r1,sp,#0x34`
-- `00f118ec`: `movs r2,#0x2`
-- `00f118ee`: `bl 0x00cdb87c` refs: `UNCONDITIONAL_CALL -> 00cdb87c`
-- `00f118f2`: `ldr r0,[0x00f11908]` refs: `READ -> 00f11908`
-- `00f118f4`: `add r1,sp,#0x10`
-- `00f118f6`: `add r2,sp,#0x40`
-- `00f118f8`: `add r0,pc`
-- `00f118fa`: `ldr.w r8,[r0,#0x0]` refs: `READ -> 014dd904`
-- `00f118fe`: `mov r0,r8` refs: `PARAM -> 014f5448`
-- `00f11900`: `blx 0x01411ed0` refs: `UNCONDITIONAL_CALL -> 01411ed0`
-- `00f11904`: `b 0x00f1190c` refs: `UNCONDITIONAL_JUMP -> 00f1190c`
-- `00f1190c`: `add r0,sp,#0x40`
-- `00f1190e`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
-- `00f11912`: `add r0,sp,#0x10`
-- `00f11914`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 ### Around `00f119da`
+- `00f11984`: `ldrd r1,r0,[r8,#0x0]` refs: `READ -> 014f5448` `READ -> 014f544c`
+- `00f11988`: `strd r1,r0,[sp,#0x28]` refs: `WRITE -> Stack[-0x58]`
+- `00f1198c`: `cbz r0,0x00f1199e` refs: `CONDITIONAL_JUMP -> 00f1199e`
+- `00f1198e`: `adds r0,#0x4`
+- `00f11990`: `ldrex r1,[r0,#0x0]`
+- `00f11994`: `adds r1,#0x1`
+- `00f11996`: `strex r2,r1,[r0,#0x0]`
+- `00f1199a`: `cmp r2,#0x0`
+- `00f1199c`: `bne 0x00f11990` refs: `CONDITIONAL_JUMP -> 00f11990`
+- `00f1199e`: `ldr r0,[0x00f119b4]` refs: `READ -> 00f119b4`
+- `00f119a0`: `add r5,sp,#0x10`
+- `00f119a2`: `movs r2,#0x4`
+- `00f119a4`: `add r0,pc`
+- `00f119a6`: `mov r1,r5`
+- `00f119a8`: `ldr.w r8,[r0,#0x0]` refs: `READ -> 014dd908`
+- `00f119ac`: `mov r0,r8` refs: `PARAM -> 014f5450`
+- `00f119ae`: `blx 0x01411a30` refs: `UNCONDITIONAL_CALL -> 01411a30`
+- `00f119b2`: `b 0x00f119b8` refs: `UNCONDITIONAL_JUMP -> 00f119b8`
+- `00f119b8`: `movs r4,#0x18`
+- `00f119ba`: `adds r0,r5,r4`
 - `00f119bc`: `bl 0x00f0a196` refs: `UNCONDITIONAL_CALL -> 00f0a196`
 - `00f119c0`: `subs r4,#0x8`
 - `00f119c2`: `adds.w r0,r4,#0x8`
@@ -931,27 +951,27 @@
 - `00f119e2`: `add r0,sp,#0x10`
 - `00f119e4`: `mov r1,r4`
 - `00f119e6`: `movs r2,#0x1`
-- `00f119e8`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `00f119ec`: `b 0x00f119fc` refs: `UNCONDITIONAL_JUMP -> 00f119fc`
-- `00f119fc`: `movs r0,#0xf2`
-- `00f119fe`: `strb.w r0,[sp,#0x38]` refs: `WRITE -> Stack[-0x48]`
-- `00f11a02`: `ldr r0,[0x00f11a14]` refs: `READ -> 00f11a14`
-- `00f11a04`: `str r0,[sp,#0x34]` refs: `WRITE -> Stack[-0x4c]`
-- `00f11a06`: `add r0,sp,#0x40`
-- `00f11a08`: `add r1,sp,#0x34`
-- `00f11a0a`: `movs r2,#0x5`
-- `00f11a0c`: `bl 0x00cdb87c` refs: `UNCONDITIONAL_CALL -> 00cdb87c`
-- `00f11a10`: `ldr r4,[sp,#0x4]` refs: `READ -> Stack[-0x7c]`
-- `00f11a12`: `b 0x00f11a18` refs: `UNCONDITIONAL_JUMP -> 00f11a18`
-- `00f11a18`: `ldr r0,[0x00f11a2c]` refs: `READ -> 00f11a2c`
-- `00f11a1a`: `add r1,sp,#0x10`
-- `00f11a1c`: `add r2,sp,#0x40`
-- `00f11a1e`: `add r0,pc`
-- `00f11a20`: `ldr.w r11,[r0,#0x0]` refs: `READ -> 014dd90c`
-- `00f11a24`: `mov r0,r11` refs: `PARAM -> 014f5458`
-- `00f11a26`: `blx 0x01411ed0` refs: `UNCONDITIONAL_CALL -> 01411ed0`
-- `00f11a2a`: `b 0x00f11a30` refs: `UNCONDITIONAL_JUMP -> 00f11a30`
 ### Around `00f11b62`
+- `00f11b12`: `bne 0x00f11b06` refs: `CONDITIONAL_JUMP -> 00f11b06`
+- `00f11b14`: `ldrd r1,r0,[r11,#0x0]` refs: `READ -> 014f5458` `READ -> 014f545c`
+- `00f11b18`: `strd r1,r0,[sp,#0x20]` refs: `WRITE -> Stack[-0x60]`
+- `00f11b1c`: `cbz r0,0x00f11b2e` refs: `CONDITIONAL_JUMP -> 00f11b2e`
+- `00f11b1e`: `adds r0,#0x4`
+- `00f11b20`: `ldrex r1,[r0,#0x0]`
+- `00f11b24`: `adds r1,#0x1`
+- `00f11b26`: `strex r2,r1,[r0,#0x0]`
+- `00f11b2a`: `cmp r2,#0x0`
+- `00f11b2c`: `bne 0x00f11b20` refs: `CONDITIONAL_JUMP -> 00f11b20`
+- `00f11b2e`: `ldr r0,[0x00f11eac]` refs: `READ -> 00f11eac`
+- `00f11b30`: `add r4,sp,#0x10`
+- `00f11b32`: `movs r2,#0x3`
+- `00f11b34`: `add r0,pc`
+- `00f11b36`: `mov r1,r4`
+- `00f11b38`: `ldr r5,[r0,#0x0]` refs: `READ -> 014dd8a8`
+- `00f11b3a`: `mov r0,r5` refs: `PARAM -> 014f5468`
+- `00f11b3c`: `blx 0x01411a30` refs: `UNCONDITIONAL_CALL -> 01411a30`
+- `00f11b40`: `movs r6,#0x10`
+- `00f11b42`: `adds r0,r4,r6`
 - `00f11b44`: `bl 0x00f0a196` refs: `UNCONDITIONAL_CALL -> 00f0a196`
 - `00f11b48`: `subs r6,#0x8`
 - `00f11b4a`: `adds.w r0,r6,#0x8`
@@ -970,7 +990,7 @@
 - `00f11b6a`: `add r0,sp,#0x4c`
 - `00f11b6c`: `mov r1,r5`
 - `00f11b6e`: `movs r2,#0x1`
-- `00f11b70`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
+### Around `00f11bc4`
 - `00f11b74`: `ldr r0,[0x00f11ebc]` refs: `READ -> 00f11ebc`
 - `00f11b76`: `movs r1,#0xf2`
 - `00f11b78`: `add r0,pc`
@@ -990,7 +1010,7 @@
 - `00f11b9a`: `mov r0,r5` refs: `PARAM -> 014f5470`
 - `00f11b9c`: `blx 0x01411ed0` refs: `UNCONDITIONAL_CALL -> 01411ed0`
 - `00f11ba0`: `add r0,sp,#0x34`
-### Around `00f11bc4`
+- `00f11ba2`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 - `00f11ba6`: `add r0,sp,#0x4c`
 - `00f11ba8`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f11bac`: `add r0,sp,#0x40`
@@ -1009,8 +1029,7 @@
 - `00f11bcc`: `add r0,sp,#0x4c`
 - `00f11bce`: `mov r1,r5`
 - `00f11bd0`: `movs r2,#0x1`
-- `00f11bd2`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `00f11bd6`: `ldr r1,[0x00f11ed0]` refs: `READ -> 00f11ed0`
+### Around `00f11c2c`
 - `00f11bd8`: `movs r0,#0xc`
 - `00f11bda`: `mov r2,r4`
 - `00f11bdc`: `add r1,pc`
@@ -1029,7 +1048,8 @@
 - `00f11c00`: `ldr r4,[r0,#0x0]` refs: `READ -> 014dd8b4`
 - `00f11c02`: `mov r0,r4` refs: `PARAM -> 014f5478`
 - `00f11c04`: `blx 0x01411ed0` refs: `UNCONDITIONAL_CALL -> 01411ed0`
-### Around `00f11c2c`
+- `00f11c08`: `add r0,sp,#0x34`
+- `00f11c0a`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 - `00f11c0e`: `add r0,sp,#0x4c`
 - `00f11c10`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f11c14`: `add r0,sp,#0x40`
@@ -1046,6 +1066,9 @@
 - `00f11c2e`: `mov r0,r4`
 - `00f11c30`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
 - `00f11c34`: `add r0,sp,#0x10`
+- `00f11c36`: `mov r1,r4`
+- `00f11c38`: `movs r2,#0x1`
+### Around `00f11c86`
 - `00f11c36`: `mov r1,r4`
 - `00f11c38`: `movs r2,#0x1`
 - `00f11c3a`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
@@ -1068,9 +1091,6 @@
 - `00f11c64`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 - `00f11c68`: `add r0,sp,#0x10`
 - `00f11c6a`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
-### Around `00f11c86`
-- `00f11c68`: `add r0,sp,#0x10`
-- `00f11c6a`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f11c6e`: `add r0,sp,#0x4c`
 - `00f11c70`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
 - `00f11c74`: `ldr r0,[0x00f11eec]` refs: `READ -> 00f11eec`
@@ -1087,14 +1107,7 @@
 - `00f11c8e`: `add r0,sp,#0x10`
 - `00f11c90`: `mov r1,r4`
 - `00f11c92`: `movs r2,#0x1`
-- `00f11c94`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `00f11c98`: `movs r0,#0x5b`
-- `00f11c9a`: `strb.w r0,[sp,#0x38]` refs: `WRITE -> Stack[-0x48]`
-- `00f11c9e`: `ldr r0,[0x00f11ef8]` refs: `READ -> 00f11ef8`
-- `00f11ca0`: `str r0,[sp,#0x34]` refs: `WRITE -> Stack[-0x4c]`
-- `00f11ca2`: `add r0,sp,#0x40`
-- `00f11ca4`: `add r1,sp,#0x34`
-- `00f11ca6`: `movs r2,#0x5`
+### Around `00f11cfc`
 - `00f11ca8`: `bl 0x00cdb87c` refs: `UNCONDITIONAL_CALL -> 00cdb87c`
 - `00f11cac`: `ldr r0,[0x00f11efc]` refs: `READ -> 00f11efc`
 - `00f11cae`: `add r1,sp,#0x10`
@@ -1107,7 +1120,14 @@
 - `00f11cbe`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 - `00f11cc2`: `add r4,sp,#0x10`
 - `00f11cc4`: `mov r0,r4`
-### Around `00f11cfc`
+- `00f11cc6`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
+- `00f11cca`: `add r0,sp,#0x4c`
+- `00f11ccc`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
+- `00f11cd0`: `ldr r0,[0x00f11f00]` refs: `READ -> 00f11f00`
+- `00f11cd2`: `mov r1,r5` refs: `PARAM -> 014f5488`
+- `00f11cd4`: `ldr r2,[0x00f11f04]` refs: `READ -> 00f11f04`
+- `00f11cd6`: `add r0,pc` refs: `PARAM -> 00f0a197`
+- `00f11cd8`: `add r2,pc` refs: `PARAM -> 014371d0`
 - `00f11cda`: `blx 0x013fa330` refs: `UNCONDITIONAL_CALL -> 013fa330`
 - `00f11cde`: `ldrd r1,r0,[r5,#0x0]` refs: `READ -> 014f5488` `READ -> 014f548c`
 - `00f11ce2`: `strd r1,r0,[sp,#0x10]` refs: `WRITE -> Stack[-0x70]`
@@ -1126,12 +1146,7 @@
 - `00f11d04`: `add r1,sp,#0x40`
 - `00f11d06`: `movs r2,#0x1`
 - `00f11d08`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `00f11d0c`: `movs r0,#0x56`
-- `00f11d0e`: `strb.w r0,[r7,#-0x69]`
-- `00f11d12`: `add r0,sp,#0x34`
-- `00f11d14`: `sub.w r1,r7,#0x69`
-- `00f11d18`: `movs r2,#0x1`
-- `00f11d1a`: `bl 0x00cdb87c` refs: `UNCONDITIONAL_CALL -> 00cdb87c`
+### Around `00f11d70`
 - `00f11d1e`: `add r1,sp,#0x4c`
 - `00f11d20`: `add.w r0,r4,#0x8`
 - `00f11d24`: `add r2,sp,#0x34`
@@ -1146,7 +1161,12 @@
 - `00f11d38`: `blx 0x01411a30` refs: `UNCONDITIONAL_CALL -> 01411a30`
 - `00f11d3c`: `movs r6,#0x8`
 - `00f11d3e`: `adds r0,r5,r6`
-### Around `00f11d70`
+- `00f11d40`: `bl 0x00f0a196` refs: `UNCONDITIONAL_CALL -> 00f0a196`
+- `00f11d44`: `subs r6,#0x8`
+- `00f11d46`: `adds.w r0,r6,#0x8`
+- `00f11d4a`: `bne 0x00f11d3e` refs: `CONDITIONAL_JUMP -> 00f11d3e`
+- `00f11d4c`: `add r0,sp,#0x34`
+- `00f11d4e`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 - `00f11d52`: `add r0,sp,#0x4c`
 - `00f11d54`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f11d58`: `add r0,sp,#0x40`
@@ -1162,6 +1182,10 @@
 - `00f11d70`: `add r1,pc` refs: `PARAM -> 00ad5a21`
 - `00f11d72`: `mov r0,r4`
 - `00f11d74`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
+- `00f11d78`: `add r0,sp,#0x10`
+- `00f11d7a`: `mov r1,r4`
+- `00f11d7c`: `movs r2,#0x1`
+### Around `00f11dc8`
 - `00f11d78`: `add r0,sp,#0x10`
 - `00f11d7a`: `mov r1,r4`
 - `00f11d7c`: `movs r2,#0x1`
@@ -1185,10 +1209,6 @@
 - `00f11daa`: `mov r0,r4`
 - `00f11dac`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f11db0`: `add r0,sp,#0x4c`
-### Around `00f11dc8`
-- `00f11daa`: `mov r0,r4`
-- `00f11dac`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
-- `00f11db0`: `add r0,sp,#0x4c`
 - `00f11db2`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
 - `00f11db6`: `ldr r0,[0x00f12064]` refs: `READ -> 00f12064`
 - `00f11db8`: `mov r1,r5` refs: `PARAM -> 014f5498`
@@ -1204,7 +1224,7 @@
 - `00f11dd0`: `add r0,sp,#0x4c`
 - `00f11dd2`: `mov r1,r5`
 - `00f11dd4`: `movs r2,#0x1`
-- `00f11dd6`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
+### Around `00f11e2c`
 - `00f11dda`: `ldr r0,[0x00f12070]` refs: `READ -> 00f12070`
 - `00f11ddc`: `movw r1,#0xc3c2`
 - `00f11de0`: `add r0,pc`
@@ -1224,7 +1244,7 @@
 - `00f11e02`: `mov r0,r4` refs: `PARAM -> 014f54a0`
 - `00f11e04`: `blx 0x01411ed0` refs: `UNCONDITIONAL_CALL -> 01411ed0`
 - `00f11e08`: `add r0,sp,#0x34`
-### Around `00f11e2c`
+- `00f11e0a`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 - `00f11e0e`: `add r0,sp,#0x4c`
 - `00f11e10`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f11e14`: `add r0,sp,#0x40`
@@ -1243,27 +1263,27 @@
 - `00f11e34`: `add r0,sp,#0x10`
 - `00f11e36`: `mov r1,r4`
 - `00f11e38`: `movs r2,#0x1`
-- `00f11e3a`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `00f11e3e`: `ldr r0,[0x00f12040]` refs: `READ -> 00f12040`
-- `00f11e40`: `str r0,[sp,#0x38]` refs: `WRITE -> Stack[-0x48]`
-- `00f11e42`: `ldr r0,[0x00f12044]` refs: `READ -> 00f12044`
-- `00f11e44`: `str r0,[sp,#0x34]` refs: `WRITE -> Stack[-0x4c]`
-- `00f11e46`: `add r0,sp,#0x40`
-- `00f11e48`: `add r1,sp,#0x34`
-- `00f11e4a`: `movs r2,#0x8`
-- `00f11e4c`: `bl 0x00cdb87c` refs: `UNCONDITIONAL_CALL -> 00cdb87c`
-- `00f11e50`: `ldr r0,[0x00f12084]` refs: `READ -> 00f12084`
-- `00f11e52`: `add r1,sp,#0x10`
-- `00f11e54`: `add r2,sp,#0x40`
-- `00f11e56`: `add r0,pc`
-- `00f11e58`: `ldr r4,[r0,#0x0]` refs: `READ -> 014dd8cc`
-- `00f11e5a`: `mov r0,r4` refs: `PARAM -> 014f54a8`
-- `00f11e5c`: `blx 0x01411ed0` refs: `UNCONDITIONAL_CALL -> 01411ed0`
-- `00f11e60`: `add r0,sp,#0x40`
-- `00f11e62`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
-- `00f11e66`: `add r0,sp,#0x10`
-- `00f11e68`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 ### Around `01184526`
+- `011844d8`: `add r0,sp,#0x48`
+- `011844da`: `add r5,sp,#0x174`
+- `011844dc`: `movs r2,#0x2`
+- `011844de`: `mov r1,r5`
+- `011844e0`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
+- `011844e4`: `movs r4,#0x1`
+- `011844e6`: `add r1,sp,#0x48`
+- `011844e8`: `mov r0,r8`
+- `011844ea`: `blx 0x014086e0` refs: `UNCONDITIONAL_CALL -> 014086e0`
+- `011844ee`: `movs r4,#0x0`
+- `011844f0`: `ldr r0,[0x0118468c]` refs: `READ -> 0118468c`
+- `011844f2`: `mov r1,r8`
+- `011844f4`: `add r0,pc`
+- `011844f6`: `ldr r6,[r0,#0x0]` refs: `READ -> 014dea10`
+- `011844f8`: `mov r0,r6` refs: `PARAM -> 014f7a6c`
+- `011844fa`: `blx 0x0140be90` refs: `UNCONDITIONAL_CALL -> 0140be90`
+- `011844fe`: `add r0,sp,#0x48`
+- `01184500`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
+- `01184504`: `movs r4,#0xc`
+- `01184506`: `adds r0,r5,r4`
 - `01184508`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
 - `0118450c`: `subs r4,#0xc`
 - `0118450e`: `adds.w r0,r4,#0xc`
@@ -1282,33 +1302,46 @@
 - `0118452e`: `add r0,sp,#0x174`
 - `01184530`: `mov r1,r4`
 - `01184532`: `movs r2,#0x1`
-- `01184534`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `01184538`: `add r0,sp,#0x40`
-- `0118453a`: `add r1,sp,#0x174`
-- `0118453c`: `bl 0x0110bf70` refs: `UNCONDITIONAL_CALL -> 0110bf70`
-- `01184540`: `ldr r5,[sp,#0x40]` refs: `READ -> Stack[0x40]`
-- `01184542`: `ldr r1,[0x0118469c]` refs: `READ -> 0118469c`
-- `01184544`: `sub.w r0,r7,#0x3c`
-- `01184548`: `add r1,pc` refs: `PARAM -> 009a4363`
-- `0118454a`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
-- `0118454e`: `sub.w r0,r7,#0x30`
-- `01184552`: `sub.w r1,r7,#0x3c`
-- `01184556`: `movs r2,#0x1`
-- `01184558`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `0118455c`: `ldr r0,[0x011846a0]` refs: `READ -> 011846a0`
-- `0118455e`: `sub.w r2,r7,#0x30`
-- `01184562`: `mov r1,r5`
-- `01184564`: `add r0,pc`
-- `01184566`: `ldr r4,[r0,#0x0]` refs: `READ -> 014de9dc`
-- `01184568`: `mov r0,r4` refs: `PARAM -> 014f7a74`
-- `0118456a`: `blx 0x01408580` refs: `UNCONDITIONAL_CALL -> 01408580`
 ### Around `011196e6`
+- `01119696`: `str r0,[sp,#0x2e8]` refs: `WRITE -> Stack[-0x128]`
+- `01119698`: `add r0,sp,#0x2b8`
+- `0111969a`: `add r1,sp,#0x2e8`
+- `0111969c`: `movs r2,#0x1`
+- `0111969e`: `bl 0x00d18358` refs: `UNCONDITIONAL_CALL -> 00d18358`
+- `011196a2`: `strd r0,r5,[sp,#0x0]` refs: `DATA -> 014f6598` `WRITE -> Stack[-0x410]`
+- `011196a6`: `add r6,sp,#0x3b8`
+- `011196a8`: `ldr r1,[0x011199c0]` refs: `READ -> 011199c0`
+- `011196aa`: `add r3,sp,#0x2d0`
+- `011196ac`: `ldr r2,[sp,#0x228]` refs: `PARAM -> 014f6610` `READ -> Stack[-0x1e8]`
+- `011196ae`: `mov r0,r6`
+- `011196b0`: `add r1,pc` refs: `PARAM -> 0081cde1`
+- `011196b2`: `bl 0x01119da0` refs: `UNCONDITIONAL_CALL -> 01119da0`
+- `011196b6`: `add.w r8,r6,#0x8`
+- `011196ba`: `movs r0,#0x20`
+- `011196bc`: `str r0,[sp,#0x2e4]` refs: `WRITE -> Stack[-0x12c]`
+- `011196be`: `add r0,sp,#0x2ac`
+- `011196c0`: `add r1,sp,#0x2e4`
+- `011196c2`: `movs r2,#0x1`
+- `011196c4`: `bl 0x00d18358` refs: `UNCONDITIONAL_CALL -> 00d18358`
 - `011196c8`: `strd r0,r9,[sp,#0x0]` refs: `DATA -> 014f65ac` `WRITE -> Stack[-0x410]`
 - `011196cc`: `ldr r0,[0x011199c4]` refs: `READ -> 011199c4`
 - `011196ce`: `ldr r1,[0x011199c8]` refs: `READ -> 011199c8`
 - `011196d0`: `add r0,pc`
 - `011196d2`: `ldr r2,[sp,#0x228]` refs: `PARAM -> 014f6610` `READ -> Stack[-0x1e8]`
 - `011196d4`: `add r1,pc`
+- `011196d6`: `ldr r3,[r0,#0x0]` refs: `READ -> 014defd4` `PARAM -> 014f6908`
+- `011196d8`: `mov r0,r8`
+- `011196da`: `bl 0x01119de8` refs: `UNCONDITIONAL_CALL -> 01119de8`
+- `011196de`: `add.w r8,r6,#0x10`
+- `011196e2`: `add r0,sp,#0x334`
+- `011196e4`: `ldr r1,[0x011199cc]` refs: `READ -> 011199cc`
+- `011196e6`: `add r1,pc` refs: `PARAM -> 00ad5a21`
+- `011196e8`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
+- `011196ec`: `add r0,sp,#0x298`
+- `011196ee`: `add r1,sp,#0x334`
+- `011196f0`: `movs r2,#0x1`
+- `011196f2`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
+### Around `01119728`
 - `011196d6`: `ldr r3,[r0,#0x0]` refs: `READ -> 014defd4` `PARAM -> 014f6908`
 - `011196d8`: `mov r0,r8`
 - `011196da`: `bl 0x01119de8` refs: `UNCONDITIONAL_CALL -> 01119de8`
@@ -1341,13 +1374,13 @@
 - `01119720`: `add.w r8,r6,#0x18`
 - `01119724`: `add r0,sp,#0x328`
 - `01119726`: `ldr r1,[0x011199d4]` refs: `READ -> 011199d4`
-### Around `01119728`
-- `01119708`: `bl 0x00d18358` refs: `UNCONDITIONAL_CALL -> 00d18358`
-- `0111970c`: `ldr r1,[sp,#0xc8]` refs: `READ -> Stack[-0x348]`
-- `0111970e`: `strd r0,r1,[sp,#0x0]` refs: `DATA -> 014f65c0` `WRITE -> Stack[-0x410]`
-- `01119712`: `mov r0,r8`
-- `01119714`: `ldr r1,[0x011199d0]` refs: `READ -> 011199d0`
-- `01119716`: `add r3,sp,#0x2a4`
+- `01119728`: `add r1,pc` refs: `PARAM -> 00ad5a21`
+- `0111972a`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
+- `0111972e`: `add r0,sp,#0x278`
+- `01119730`: `add r1,sp,#0x328`
+- `01119732`: `movs r2,#0x1`
+- `01119734`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
+### Around `0111976a`
 - `01119718`: `ldr r2,[sp,#0x21c]` refs: `PARAM -> 014f66fc` `READ -> Stack[-0x1f4]`
 - `0111971a`: `add r1,pc` refs: `PARAM -> 0081cde8`
 - `0111971c`: `bl 0x01119e30` refs: `UNCONDITIONAL_CALL -> 01119e30`
@@ -1380,46 +1413,33 @@
 - `01119762`: `add.w r8,r6,#0x20`
 - `01119766`: `add r0,sp,#0x31c`
 - `01119768`: `ldr r1,[0x011199dc]` refs: `READ -> 011199dc`
-### Around `0111976a`
-- `0111974a`: `bl 0x00d18358` refs: `UNCONDITIONAL_CALL -> 00d18358`
-- `0111974e`: `ldr r1,[sp,#0xc4]` refs: `READ -> Stack[-0x34c]`
-- `01119750`: `strd r0,r1,[sp,#0x0]` refs: `DATA -> 014f65d4` `WRITE -> Stack[-0x410]`
-- `01119754`: `mov r0,r8`
-- `01119756`: `ldr r1,[0x011199d8]` refs: `READ -> 011199d8`
-- `01119758`: `add r3,sp,#0x284`
-- `0111975a`: `ldr r2,[sp,#0x214]` refs: `PARAM -> 014f6700` `READ -> Stack[-0x1fc]`
-- `0111975c`: `add r1,pc` refs: `PARAM -> 00ac9e18`
-- `0111975e`: `bl 0x01119e78` refs: `UNCONDITIONAL_CALL -> 01119e78`
-- `01119762`: `add.w r8,r6,#0x20`
-- `01119766`: `add r0,sp,#0x31c`
-- `01119768`: `ldr r1,[0x011199dc]` refs: `READ -> 011199dc`
 - `0111976a`: `add r1,pc` refs: `PARAM -> 00ad5a21`
 - `0111976c`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
 - `01119770`: `add r0,sp,#0x258`
 - `01119772`: `add r1,sp,#0x31c`
 - `01119774`: `movs r2,#0x1`
 - `01119776`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `0111977a`: `add r0,sp,#0x264`
-- `0111977c`: `add r1,sp,#0x258`
-- `0111977e`: `bl 0x0110bf70` refs: `UNCONDITIONAL_CALL -> 0110bf70`
-- `01119782`: `movs r0,#0x2`
-- `01119784`: `str r0,[sp,#0x2d8]` refs: `WRITE -> Stack[-0x138]`
-- `01119786`: `add r0,sp,#0x24c`
-- `01119788`: `add r1,sp,#0x2d8`
-- `0111978a`: `movs r2,#0x1`
-- `0111978c`: `bl 0x00d18358` refs: `UNCONDITIONAL_CALL -> 00d18358`
-- `01119790`: `ldr r1,[sp,#0xc0]` refs: `READ -> Stack[-0x350]`
-- `01119792`: `strd r0,r1,[sp,#0x0]` refs: `DATA -> 014f65e8` `WRITE -> Stack[-0x410]`
-- `01119796`: `mov r0,r8`
-- `01119798`: `ldr r1,[0x011199e0]` refs: `READ -> 011199e0`
-- `0111979a`: `add r3,sp,#0x264`
-- `0111979c`: `ldr r2,[sp,#0x218]` refs: `PARAM -> 014f66ec` `READ -> Stack[-0x1f8]`
-- `0111979e`: `add r1,pc` refs: `PARAM -> 00a85a6a`
-- `011197a0`: `bl 0x01119ec0` refs: `UNCONDITIONAL_CALL -> 01119ec0`
-- `011197a4`: `add.w r8,r6,#0x28`
-- `011197a8`: `add r4,sp,#0x2f8`
-- `011197aa`: `ldr r1,[0x011199e4]` refs: `READ -> 011199e4`
 ### Around `0126b4d4`
+- `0126b484`: `ldr r0,[0x0126b5cc]` refs: `READ -> 0126b5cc`
+- `0126b486`: `add r0,pc` refs: `PARAM -> 00b93458`
+- `0126b488`: `blx 0x013fb5b0` refs: `UNCONDITIONAL_CALL -> 013fb5b0`
+- `0126b48c`: `mov r0,r8`
+- `0126b48e`: `mov r1,r4` refs: `PARAM -> 014f8f68`
+- `0126b490`: `mov r2,r5` refs: `PARAM -> 014f8edc`
+- `0126b492`: `mov r3,r9`
+- `0126b494`: `blx 0x014250c0` refs: `UNCONDITIONAL_CALL -> 014250c0`
+- `0126b498`: `mov r4,r0`
+- `0126b49a`: `add r0,sp,#0x50`
+- `0126b49c`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
+- `0126b4a0`: `add r0,sp,#0x10`
+- `0126b4a2`: `blx 0x013fdbf0` refs: `UNCONDITIONAL_CALL -> 013fdbf0`
+- `0126b4a6`: `ldr r0,[sp,#0x5c]` refs: `READ -> Stack[-0x24]`
+- `0126b4a8`: `ldr r1,[0x0126b5d0]` refs: `READ -> 0126b5d0`
+- `0126b4aa`: `add r1,pc`
+- `0126b4ac`: `ldr r1,[r1,#0x0]` refs: `READ -> 014da87c`
+- `0126b4ae`: `ldr r1,[r1,#0x0]` refs: `READ -> 015a7014`
+- `0126b4b0`: `cmp r1,r0`
+- `0126b4b2`: `itttt eq`
 - `0126b4b4`: `mov.eq r0,r4`
 - `0126b4b6`: `add.eq sp,#0x60`
 - `0126b4b8`: `pop.eq.w {r8,r9,r11}`
@@ -1438,27 +1458,27 @@
 - `0126b4dc`: `add r1,sp,#0x50`
 - `0126b4de`: `movs r2,#0x1`
 - `0126b4e0`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `0126b4e4`: `add r0,sp,#0x40`
-- `0126b4e6`: `add r1,sp,#0x10`
-- `0126b4e8`: `bl 0x0110bf70` refs: `UNCONDITIONAL_CALL -> 0110bf70`
-- `0126b4ec`: `movw r0,#0x31d`
-- `0126b4f0`: `movs r5,#0x0`
-- `0126b4f2`: `str r0,[sp,#0x3c]` refs: `WRITE -> Stack[-0x44]`
-- `0126b4f4`: `movs r0,#0x1`
-- `0126b4f6`: `str r5,[sp,#0x38]` refs: `WRITE -> Stack[-0x48]`
-- `0126b4f8`: `str r0,[sp,#0x34]` refs: `WRITE -> Stack[-0x4c]`
-- `0126b4fa`: `ldr r0,[0x0126b5a8]` refs: `READ -> 0126b5a8`
-- `0126b4fc`: `ldr r1,[0x0126b5ac]` refs: `READ -> 0126b5ac`
-- `0126b4fe`: `add r2,sp,#0x34`
-- `0126b500`: `add r0,pc`
-- `0126b502`: `add r3,sp,#0x38`
-- `0126b504`: `add r1,pc`
-- `0126b506`: `strd r3,r2,[sp,#0x0]` refs: `WRITE -> Stack[-0x80]`
-- `0126b50a`: `ldr r0,[r0,#0x0]` refs: `READ -> 014db8dc`
-- `0126b50c`: `strd r1,r0,[sp,#0x8]` refs: `DATA -> 0076168b` `DATA -> 014f2008` `WRITE -> Stack[-0x78]`
-- `0126b510`: `ldr r0,[0x0126b5b0]` refs: `READ -> 0126b5b0`
-- `0126b512`: `add r0,pc`
 ### Around `00f29d20`
+- `00f29c90`: `movs r0,#0x8`
+- `00f29c92`: `blx 0x013fa5d0` refs: `UNCONDITIONAL_CALL -> 013fa5d0`
+- `00f29c96`: `mov r6,r0`
+- `00f29c98`: `ldr r1,[0x00f29ce8]` refs: `READ -> 00f29ce8`
+- `00f29c9a`: `mov r0,sp`
+- `00f29c9c`: `add r1,pc` refs: `PARAM -> 00bc9954`
+- `00f29c9e`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
+- `00f29ca2`: `movs r5,#0x1`
+- `00f29ca4`: `mov r1,sp`
+- `00f29ca6`: `mov r0,r6`
+- `00f29ca8`: `blx 0x013fa5e0` refs: `UNCONDITIONAL_CALL -> 013fa5e0`
+- `00f29cac`: `movs r5,#0x0`
+- `00f29cae`: `ldr r0,[0x00f29cec]` refs: `READ -> 00f29cec`
+- `00f29cb0`: `add r0,pc`
+- `00f29cb2`: `ldr r1,[r0,#0x0]` refs: `READ -> 014da89c` `PARAM -> 01437dc8`
+- `00f29cb4`: `ldr r0,[0x00f29cf0]` refs: `READ -> 00f29cf0`
+- `00f29cb6`: `add r0,pc`
+- `00f29cb8`: `ldr r2,[r0,#0x0]` refs: `READ -> 014da8a0` `PARAM -> 00cdb326`
+- `00f29cba`: `mov r0,r6`
+- `00f29cbc`: `blx 0x013fa5f0` refs: `UNCONDITIONAL_CALL -> 013fa5f0`
 - `00f29d04`: `push {r4,r5,r6,r7,lr}`
 - `00f29d06`: `add r7,sp,#0xc`
 - `00f29d08`: `push {r8,r9,r10}`
@@ -1477,27 +1497,27 @@
 - `00f29d28`: `ldr.w r1,[r10,#0x0]`
 - `00f29d2c`: `cbz r1,0x00f29d36` refs: `CONDITIONAL_JUMP -> 00f29d36`
 - `00f29d2e`: `mov r0,r5`
-- `00f29d30`: `bl 0x00cbc7dc` refs: `UNCONDITIONAL_CALL -> 00cbc7dc`
-- `00f29d34`: `cbnz r0,0x00f29d3a` refs: `CONDITIONAL_JUMP -> 00f29d3a`
-- `00f29d36`: `adds r5,#0xc`
-- `00f29d38`: `b 0x00f29d1a` refs: `UNCONDITIONAL_JUMP -> 00f29d1a`
-- `00f29d3a`: `ldrd r2,r1,[r8,#0xc]`
-- `00f29d3e`: `subs r0,r2,r1`
-- `00f29d40`: `it ne`
-- `00f29d42`: `mov.ne r0,#0x1`
-- `00f29d44`: `cmp r2,r1`
-- `00f29d46`: `itt ne`
-- `00f29d48`: `ldrb.ne.w r3,[r2],#0x1`
-- `00f29d4c`: `cmp.ne r3,r9`
-- `00f29d4e`: `bne 0x00f29d3e` refs: `CONDITIONAL_JUMP -> 00f29d3e`
-- `00f29d50`: `b 0x00f29d54` refs: `UNCONDITIONAL_JUMP -> 00f29d54`
-- `00f29d52`: `movs r0,#0x0`
-- `00f29d54`: `pop.w {r8,r9,r10}`
-- `00f29d58`: `pop {r4,r5,r6,r7,pc}`
-- `00f29d60`: `push {r4,r5,r7,lr}`
-- `00f29d62`: `add r7,sp,#0x8`
-- `00f29d64`: `sub sp,#0x28`
 ### Around `011cf194`
+- `011cf148`: `str r0,[r5,#0x8]`
+- `011cf14a`: `movs r0,#0x0`
+- `011cf14c`: `strd r0,r0,[r4,#0x0]`
+- `011cf150`: `str r0,[r4,#0x8]`
+- `011cf152`: `pop {r4,r5,r7,pc}`
+- `011cf154`: `push {r4,r6,r7,lr}`
+- `011cf156`: `add r7,sp,#0x8`
+- `011cf158`: `mov r4,r0`
+- `011cf15a`: `ldr r0,[r0,#0x0]`
+- `011cf15c`: `cbz r0,0x011cf172` refs: `CONDITIONAL_JUMP -> 011cf172`
+- `011cf15e`: `mov r0,r4`
+- `011cf160`: `bl 0x00d16852` refs: `UNCONDITIONAL_CALL -> 00d16852`
+- `011cf164`: `ldr r0,[r4,#0x0]`
+- `011cf166`: `blx 0x013fa4e0` refs: `UNCONDITIONAL_CALL -> 013fa4e0`
+- `011cf16a`: `movs r0,#0x0`
+- `011cf16c`: `strd r0,r0,[r4,#0x0]`
+- `011cf170`: `str r0,[r4,#0x8]`
+- `011cf172`: `pop {r4,r6,r7,pc}`
+- `011cf174`: `push {r4,r5,r6,r7,lr}`
+- `011cf176`: `add r7,sp,#0xc`
 - `011cf178`: `push.w r11`
 - `011cf17c`: `sub sp,#0x20`
 - `011cf17e`: `ldr r0,[0x011cf19c]` refs: `READ -> 011cf19c`
@@ -1516,27 +1536,27 @@
 - `011cf1a4`: `add r0,sp,#0x4`
 - `011cf1a6`: `add r1,sp,#0x10`
 - `011cf1a8`: `movs r2,#0x1`
-- `011cf1aa`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `011cf1ae`: `movs r6,#0x1`
-- `011cf1b0`: `add r1,sp,#0x4`
-- `011cf1b2`: `mov r0,r4`
-- `011cf1b4`: `blx 0x014086e0` refs: `UNCONDITIONAL_CALL -> 014086e0`
-- `011cf1b8`: `movs r6,#0x0`
-- `011cf1ba`: `ldr r0,[0x011cf1cc]` refs: `READ -> 011cf1cc`
-- `011cf1bc`: `mov r1,r4`
-- `011cf1be`: `add r0,pc`
-- `011cf1c0`: `ldr r5,[r0,#0x0]` refs: `READ -> 014df30c`
-- `011cf1c2`: `mov r0,r5` refs: `PARAM -> 014f7d40`
-- `011cf1c4`: `blx 0x0140be90` refs: `UNCONDITIONAL_CALL -> 0140be90`
-- `011cf1c8`: `b 0x011cf1d0` refs: `UNCONDITIONAL_JUMP -> 011cf1d0`
-- `011cf1d0`: `add r0,sp,#0x4`
-- `011cf1d2`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
-- `011cf1d6`: `add r0,sp,#0x10`
-- `011cf1d8`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
-- `011cf1dc`: `ldr r0,[0x011cf200]` refs: `READ -> 011cf200`
-- `011cf1de`: `mov r1,r5` refs: `PARAM -> 014f7d40`
-- `011cf1e0`: `ldr r2,[0x011cf204]` refs: `READ -> 011cf204`
 ### Around `01103b7a`
+- `01103b10`: `ldr r1,[0x01103b20]` refs: `READ -> 01103b20`
+- `01103b12`: `add.w r0,r0,#0x2640`
+- `01103b16`: `add r1,pc` refs: `PARAM -> 00ad5a21`
+- `01103b18`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
+- `01103b1c`: `b 0x01103b24` refs: `UNCONDITIONAL_JUMP -> 01103b24`
+- `01103b24`: `add r0,sp,#0x18`
+- `01103b26`: `add r1,sp,#0x34`
+- `01103b28`: `add.w r0,r0,#0x14e0`
+- `01103b2c`: `add.w r1,r1,#0x2640`
+- `01103b30`: `movs r2,#0x1`
+- `01103b32`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
+- `01103b36`: `add r0,sp,#0x4`
+- `01103b38`: `add r1,sp,#0x18`
+- `01103b3a`: `add.w r0,r0,#0x1500`
+- `01103b3e`: `add.w r1,r1,#0x14e0`
+- `01103b42`: `bl 0x0110bf70` refs: `UNCONDITIONAL_CALL -> 0110bf70`
+- `01103b46`: `add r0,sp,#0x10`
+- `01103b48`: `ldr r1,[sp,#0xf8]` refs: `PARAM -> 014fa174`
+- `01103b4a`: `add.w r8,r0,#0x14e0`
+- `01103b4e`: `mov r0,r8`
 - `01103b50`: `bl 0x00d5c2f0` refs: `UNCONDITIONAL_CALL -> 00d5c2f0`
 - `01103b54`: `movs r0,#0x0`
 - `01103b56`: `str.w r0,[r4,#0x448]`
@@ -1555,27 +1575,27 @@
 - `01103b88`: `add r0,sp,#0xc`
 - `01103b8a`: `add r1,sp,#0x8`
 - `01103b8c`: `add.w r0,r0,#0x14a0`
-- `01103b90`: `add.w r1,r1,#0x2640`
-- `01103b94`: `movs r2,#0x1`
-- `01103b96`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `01103b9a`: `add r0,sp,#0x18`
-- `01103b9c`: `add r1,sp,#0xc`
-- `01103b9e`: `add.w r0,r0,#0x14a0`
-- `01103ba2`: `add.w r1,r1,#0x14a0`
-- `01103ba6`: `bl 0x0110bf70` refs: `UNCONDITIONAL_CALL -> 0110bf70`
-- `01103baa`: `movs r0,#0xe`
-- `01103bac`: `movs r1,#0x0`
-- `01103bae`: `movs r2,#0xff`
-- `01103bb0`: `str.w r0,[r4,#0x41c]`
-- `01103bb4`: `movs r0,#0x1`
-- `01103bb6`: `str.w r2,[r4,#0x414]`
-- `01103bba`: `str.w r1,[r4,#0x418]`
-- `01103bbe`: `str.w r0,[r4,#0x400]`
-- `01103bc2`: `str.w r2,[r4,#0x404]`
-- `01103bc6`: `str.w r1,[r4,#0x408]`
-- `01103bca`: `strd r1,r1,[r4,#0x3f4]`
-- `01103bce`: `vstr.64 d8,[r4,#0x3ec]`
 ### Around `01103c6e`
+- `01103c04`: `add r1,sp,#0x4`
+- `01103c06`: `add.w r1,r1,#0x14a0`
+- `01103c0a`: `add r0,pc`
+- `01103c0c`: `ldr.w r10,[r0,#0x0]` refs: `READ -> 014de238`
+- `01103c10`: `add.w r0,sp,#0x14a0`
+- `01103c14`: `strd r1,r0,[sp,#0x0]`
+- `01103c18`: `ldr r0,[sp,#0xe4]`
+- `01103c1a`: `add r1,sp,#0x8`
+- `01103c1c`: `stm r1,{r0,r5,r10}` refs: `DATA -> 014f6290` `DATA -> 00b5ee24`
+- `01103c20`: `add r1,sp,#0x18`
+- `01103c22`: `add.w r2,r1,#0x14a0`
+- `01103c26`: `add r1,sp,#0x8`
+- `01103c28`: `add.w r0,sp,#0x14c0`
+- `01103c2c`: `add.w r3,r1,#0x14a0`
+- `01103c30`: `ldr r1,[sp,#0xfc]` refs: `PARAM -> 014f7a7c`
+- `01103c32`: `bl 0x0110c920` refs: `UNCONDITIONAL_CALL -> 0110c920`
+- `01103c36`: `b 0x01103c3c` refs: `UNCONDITIONAL_JUMP -> 01103c3c`
+- `01103c3c`: `add.w r3,sp,#0x17a0`
+- `01103c40`: `ldr.w r0,[r4,#0x434]`
+- `01103c44`: `ldr.w r1,[r4,#0x438]`
 - `01103c48`: `movs r2,#0x0`
 - `01103c4a`: `str.w r0,[r3,#0xeb4]`
 - `01103c4e`: `str.w r1,[r3,#0xeb8]`
@@ -1594,27 +1614,27 @@
 - `01103c7c`: `add r0,sp,#0x1c`
 - `01103c7e`: `add r1,sp,#0x3c`
 - `01103c80`: `add.w r0,r0,#0x1440`
-- `01103c84`: `add.w r1,r1,#0x2600`
-- `01103c88`: `movs r2,#0x1`
-- `01103c8a`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `01103c8e`: `add r0,sp,#0x8`
-- `01103c90`: `add r1,sp,#0x1c`
-- `01103c92`: `add.w r0,r0,#0x1460`
-- `01103c96`: `add.w r1,r1,#0x1440`
-- `01103c9a`: `bl 0x0110bf70` refs: `UNCONDITIONAL_CALL -> 0110bf70`
-- `01103c9e`: `movs r0,#0x1`
-- `01103ca0`: `movs r2,#0xf`
-- `01103ca2`: `add.w r3,sp,#0x17a0`
-- `01103ca6`: `strd r2,r0,[r4,#0x3c4]`
-- `01103caa`: `movs r2,#0x6`
-- `01103cac`: `movs r1,#0xe`
-- `01103cae`: `str.w r2,[r3,#0xe88]`
-- `01103cb2`: `movs r2,#0x5`
-- `01103cb4`: `str.w r2,[r3,#0xe78]`
-- `01103cb8`: `movs r2,#0x4`
-- `01103cba`: `str.w r2,[r3,#0xe68]`
-- `01103cbe`: `movs r2,#0x3`
 ### Around `01103dc6`
+- `01103d62`: `add.w r5,r0,#0x1440`
+- `01103d66`: `add r0,sp,#0x1c`
+- `01103d68`: `add.w r1,r0,#0x1420`
+- `01103d6c`: `mov r0,r5`
+- `01103d6e`: `bl 0x00cea328` refs: `UNCONDITIONAL_CALL -> 00cea328`
+- `01103d72`: `add r0,sp,#0x10`
+- `01103d74`: `add r1,sp,#0x14`
+- `01103d76`: `add.w r0,r0,#0x1440`
+- `01103d7a`: `add.w r1,r1,#0x1440`
+- `01103d7e`: `strd r1,r0,[sp,#0x0]`
+- `01103d82`: `ldr r0,[sp,#0x24]`
+- `01103d84`: `add r1,sp,#0x8`
+- `01103d86`: `stm r1,{r0,r5,r10}` refs: `DATA -> 014f6290` `DATA -> 0082f4b7`
+- `01103d8a`: `add r0,sp,#0x10`
+- `01103d8c`: `add r1,sp,#0x8`
+- `01103d8e`: `add.w r2,r1,#0x1460`
+- `01103d92`: `add r1,sp,#0x18`
+- `01103d94`: `add.w r3,r1,#0x1440`
+- `01103d98`: `ldr r1,[sp,#0xfc]` refs: `PARAM -> 014f7a7c`
+- `01103d9a`: `add.w r0,r0,#0x1460`
 - `01103d9e`: `bl 0x0110c974` refs: `UNCONDITIONAL_CALL -> 0110c974`
 - `01103da2`: `add.w r3,sp,#0x17a0`
 - `01103da6`: `ldrd r0,r1,[r4,#0x3e4]`
@@ -1633,27 +1653,27 @@
 - `01103dd4`: `add r1,sp,#0xc`
 - `01103dd6`: `add.w r0,sp,#0x1420`
 - `01103dda`: `add.w r1,r1,#0x2580`
-- `01103dde`: `movs r2,#0x1`
-- `01103de0`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `01103de4`: `add r0,sp,#0xc`
-- `01103de6`: `add.w r1,sp,#0x1420`
-- `01103dea`: `add.w r0,r0,#0x1420`
-- `01103dee`: `bl 0x0110bf70` refs: `UNCONDITIONAL_CALL -> 0110bf70`
-- `01103df2`: `movs r0,#0xe`
-- `01103df4`: `movs r1,#0x2`
-- `01103df6`: `strd r1,r0,[r4,#0x38c]`
-- `01103dfa`: `add r0,sp,#0xc`
-- `01103dfc`: `ldr r1,[0x01103e10]` refs: `READ -> 01103e10`
-- `01103dfe`: `add.w r5,r0,#0x1400`
-- `01103e02`: `movs r2,#0x1e`
-- `01103e04`: `add r1,pc` refs: `PARAM -> 008f09c5`
-- `01103e06`: `mov r0,r5`
-- `01103e08`: `blx 0x013fd3f0` refs: `UNCONDITIONAL_CALL -> 013fd3f0`
-- `01103e0c`: `b 0x01103e14` refs: `UNCONDITIONAL_JUMP -> 01103e14`
-- `01103e14`: `movs r0,#0xf`
-- `01103e16`: `strd r0,r0,[r4,#0x370]`
-- `01103e1a`: `add r0,sp,#0x4`
 ### Around `01103e90`
+- `01103e30`: `add r0,sp,#0x18`
+- `01103e32`: `add.w r0,r0,#0x1400`
+- `01103e36`: `strd r0,r5,[sp,#0x0]`
+- `01103e3a`: `ldr r0,[sp,#0xf0]`
+- `01103e3c`: `add r1,sp,#0x8`
+- `01103e3e`: `stm r1,{r0,r6,r10}` refs: `DATA -> 014f6290` `DATA -> 0093e0dc`
+- `01103e42`: `add r0,sp,#0x14`
+- `01103e44`: `add r1,sp,#0xc`
+- `01103e46`: `add.w r2,r1,#0x1420`
+- `01103e4a`: `add r1,sp,#0x1c`
+- `01103e4c`: `add.w r3,r1,#0x1400`
+- `01103e50`: `ldr r1,[sp,#0xfc]` refs: `PARAM -> 014f7a7c`
+- `01103e52`: `add.w r0,r0,#0x1420`
+- `01103e56`: `bl 0x0110ca50` refs: `UNCONDITIONAL_CALL -> 0110ca50`
+- `01103e5a`: `ldr.w r5,[r4,#0x3a8]`
+- `01103e5e`: `add r0,sp,#0x10`
+- `01103e60`: `ldr r1,[0x01103e70]` refs: `READ -> 01103e70`
+- `01103e62`: `add.w r0,r0,#0x13e0`
+- `01103e66`: `add r1,pc` refs: `PARAM -> 0093e0fe`
+- `01103e68`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
 - `01103e6c`: `b 0x01103e74` refs: `UNCONDITIONAL_JUMP -> 01103e74`
 - `01103e74`: `ldr r0,[r5,#0x0]`
 - `01103e76`: `ldr r3,[r0,#0x28]`
@@ -1672,27 +1692,27 @@
 - `01103e9c`: `add r0,sp,#0x14`
 - `01103e9e`: `add.w r1,sp,#0x2580`
 - `01103ea2`: `add.w r0,r0,#0x13c0`
-- `01103ea6`: `movs r2,#0x1`
-- `01103ea8`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `01103eac`: `add r1,sp,#0x14`
-- `01103eae`: `add.w r0,sp,#0x13e0`
-- `01103eb2`: `add.w r1,r1,#0x13c0`
-- `01103eb6`: `bl 0x0110bf70` refs: `UNCONDITIONAL_CALL -> 0110bf70`
-- `01103eba`: `movs r0,#0xe`
-- `01103ebc`: `movs r1,#0x11`
-- `01103ebe`: `strd r1,r0,[r4,#0x340]`
-- `01103ec2`: `ldr r1,[0x01103ed4]` refs: `READ -> 01103ed4`
-- `01103ec4`: `add.w r5,sp,#0x13c0`
-- `01103ec8`: `movs r2,#0x16`
-- `01103eca`: `add r1,pc` refs: `PARAM -> 009579ff`
-- `01103ecc`: `mov r0,r5`
-- `01103ece`: `blx 0x013fd3f0` refs: `UNCONDITIONAL_CALL -> 013fd3f0`
-- `01103ed2`: `b 0x01103ed8` refs: `UNCONDITIONAL_JUMP -> 01103ed8`
-- `01103ed8`: `movs r0,#0xb`
-- `01103eda`: `strd r0,r0,[r4,#0x324]`
-- `01103ede`: `add r0,sp,#0x18`
-- `01103ee0`: `add.w r6,r0,#0x13a0`
 ### Around `01103fee`
+- `01103f8a`: `strd r5,r3,[sp,#0x8]`
+- `01103f8e`: `strd r2,r0,[sp,#0x10]`
+- `01103f92`: `str r1,[sp,#0x18]`
+- `01103f94`: `add r0,sp,#0xc`
+- `01103f96`: `ldr r1,[0x01103fb0]` refs: `READ -> 01103fb0`
+- `01103f98`: `add r2,sp,#0x4`
+- `01103f9a`: `add.w r3,r2,#0x1500`
+- `01103f9e`: `ldr r2,[sp,#0xfc]` refs: `PARAM -> 014f7a7c`
+- `01103fa0`: `add.w r0,r0,#0x1500`
+- `01103fa4`: `add r1,pc` refs: `PARAM -> 00928912`
+- `01103fa6`: `bl 0x0110cc44` refs: `UNCONDITIONAL_CALL -> 0110cc44`
+- `01103faa`: `b 0x01103fb4` refs: `UNCONDITIONAL_JUMP -> 01103fb4`
+- `01103fb4`: `ldr.w r5,[r4,#0x480]`
+- `01103fb8`: `add r0,sp,#0xc`
+- `01103fba`: `ldr r1,[0x01103fc8]` refs: `READ -> 01103fc8`
+- `01103fbc`: `add.w r0,r0,#0x1380`
+- `01103fc0`: `add r1,pc` refs: `PARAM -> 00a7002c`
+- `01103fc2`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
+- `01103fc6`: `b 0x01103fcc` refs: `UNCONDITIONAL_JUMP -> 01103fcc`
+- `01103fcc`: `ldr r0,[r5,#0x0]`
 - `01103fce`: `ldr r3,[r0,#0x28]`
 - `01103fd0`: `add r0,sp,#0xc`
 - `01103fd2`: `mov r1,r5`
@@ -1700,6 +1720,18 @@
 - `01103fd8`: `mov r0,r11`
 - `01103fda`: `blx r3`
 - `01103fdc`: `add r0,sp,#0x14`
+- `01103fde`: `add.w r0,r0,#0x2cc0`
+- `01103fe2`: `add.w r11,r0,#0xb8`
+- `01103fe6`: `add r0,sp,#0x34`
+- `01103fe8`: `ldr r1,[0x01103ff8]` refs: `READ -> 01103ff8`
+- `01103fea`: `add.w r0,r0,#0x2540`
+- `01103fee`: `add r1,pc` refs: `PARAM -> 00ad5a21`
+- `01103ff0`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
+- `01103ff4`: `b 0x01103ffc` refs: `UNCONDITIONAL_JUMP -> 01103ffc`
+- `01103ffc`: `add r0,sp,#0x10`
+- `01103ffe`: `add r1,sp,#0x34`
+- `01104000`: `add.w r0,r0,#0x1360`
+### Around `01104046`
 - `01103fde`: `add.w r0,r0,#0x2cc0`
 - `01103fe2`: `add.w r11,r0,#0xb8`
 - `01103fe6`: `add r0,sp,#0x34`
@@ -1731,18 +1763,6 @@
 - `0110403a`: `str.w r0,[r4,#0x2d8]`
 - `0110403e`: `add r0,sp,#0x8`
 - `01104040`: `ldr r1,[0x01104050]` refs: `READ -> 01104050`
-### Around `01104046`
-- `01104020`: `ldr r1,[sp,#0xf8]` refs: `PARAM -> 014fa174`
-- `01104022`: `add.w r8,r0,#0x1360`
-- `01104026`: `mov r0,r8`
-- `01104028`: `bl 0x00d5c2f0` refs: `UNCONDITIONAL_CALL -> 00d5c2f0`
-- `0110402c`: `movs r0,#0x0`
-- `0110402e`: `strd r0,r0,[r4,#0x2c0]`
-- `01104032`: `strd r0,r0,[r4,#0x2c8]`
-- `01104036`: `strd r0,r0,[r4,#0x2d0]`
-- `0110403a`: `str.w r0,[r4,#0x2d8]`
-- `0110403e`: `add r0,sp,#0x8`
-- `01104040`: `ldr r1,[0x01104050]` refs: `READ -> 01104050`
 - `01104042`: `add.w r0,r0,#0x2540`
 - `01104046`: `add r1,pc` refs: `PARAM -> 00ad5a21`
 - `01104048`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
@@ -1750,27 +1770,27 @@
 - `01104054`: `add r0,sp,#0x4`
 - `01104056`: `add r1,sp,#0x8`
 - `01104058`: `add.w r0,r0,#0x1320`
-- `0110405c`: `add.w r1,r1,#0x2540`
-- `01104060`: `movs r2,#0x1`
-- `01104062`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `01104066`: `add r0,sp,#0x10`
-- `01104068`: `add r1,sp,#0x4`
-- `0110406a`: `add.w r0,r0,#0x1320`
-- `0110406e`: `add.w r1,r1,#0x1320`
-- `01104072`: `bl 0x0110bf70` refs: `UNCONDITIONAL_CALL -> 0110bf70`
-- `01104076`: `movs r0,#0x0`
-- `01104078`: `movs r2,#0x1f`
-- `0110407a`: `strd r2,r0,[r4,#0x28c]`
-- `0110407e`: `add.w r2,sp,#0x17a0`
-- `01104082`: `movs r1,#0xd`
-- `01104084`: `str.w r0,[r2,#0xd9c]`
-- `01104088`: `str.w r0,[r2,#0xd8c]`
-- `0110408c`: `str.w r0,[r2,#0xd7c]`
-- `01104090`: `str.w r0,[r2,#0xd6c]`
-- `01104094`: `str.w r0,[r2,#0xd5c]`
-- `01104098`: `str.w r0,[r2,#0xd4c]`
-- `0110409c`: `str.w r0,[r2,#0xd3c]`
 ### Around `01104232`
+- `011041ce`: `add r0,sp,#0x4`
+- `011041d0`: `add.w r1,r0,#0x1300`
+- `011041d4`: `mov r0,r5`
+- `011041d6`: `bl 0x00cea328` refs: `UNCONDITIONAL_CALL -> 00cea328`
+- `011041da`: `add r0,sp,#0x18`
+- `011041dc`: `add r1,sp,#0x1c`
+- `011041de`: `add.w r0,r0,#0x1300`
+- `011041e2`: `add.w r1,r1,#0x1300`
+- `011041e6`: `add.w r3,sp,#0x1320`
+- `011041ea`: `strd r1,r0,[sp,#0x0]`
+- `011041ee`: `ldr r0,[sp,#0xe4]`
+- `011041f0`: `add r1,sp,#0x8`
+- `011041f2`: `stm r1,{r0,r5,r10}` refs: `DATA -> 014f6290` `DATA -> 00b5ee24`
+- `011041f6`: `add r0,sp,#0x18`
+- `011041f8`: `add r1,sp,#0x10`
+- `011041fa`: `add.w r2,r1,#0x1320`
+- `011041fe`: `ldr r1,[sp,#0xfc]` refs: `PARAM -> 014f7a7c`
+- `01104200`: `add.w r0,r0,#0x1320`
+- `01104204`: `bl 0x010b6d1c` refs: `UNCONDITIONAL_CALL -> 010b6d1c`
+- `01104208`: `ldrd r0,r1,[r4,#0x2ac]`
 - `0110420c`: `add.w r3,sp,#0x17a0`
 - `01104210`: `movs r2,#0x0`
 - `01104212`: `str.w r0,[r3,#0xdb4]`
@@ -1789,27 +1809,27 @@
 - `01104240`: `add r0,sp,#0x8`
 - `01104242`: `add r1,sp,#0xc`
 - `01104244`: `add.w r0,r0,#0x12e0`
-- `01104248`: `add.w r1,r1,#0x2400`
-- `0110424c`: `movs r2,#0x1`
-- `0110424e`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `01104252`: `add r0,sp,#0x14`
-- `01104254`: `add r1,sp,#0x8`
-- `01104256`: `add.w r0,r0,#0x12e0`
-- `0110425a`: `add.w r1,r1,#0x12e0`
-- `0110425e`: `bl 0x0110bf70` refs: `UNCONDITIONAL_CALL -> 0110bf70`
-- `01104262`: `movs r0,#0x1`
-- `01104264`: `movs r2,#0xf`
-- `01104266`: `add.w r3,sp,#0x17a0`
-- `0110426a`: `strd r2,r0,[r4,#0x250]`
-- `0110426e`: `movs r2,#0x7`
-- `01104270`: `ldr r5,[sp,#0xe8]`
-- `01104272`: `str.w r2,[r3,#0xc58]`
-- `01104276`: `movs r2,#0x6`
-- `01104278`: `str.w r2,[r3,#0xc48]`
-- `0110427c`: `movs r2,#0x5`
-- `0110427e`: `str.w r2,[r3,#0xc38]`
-- `01104282`: `movs r2,#0x4`
 ### Around `01104368`
+- `01104304`: `add r0,sp,#0x14`
+- `01104306`: `add.w r5,r0,#0x12c0`
+- `0110430a`: `add r0,sp,#0x8`
+- `0110430c`: `add.w r1,r0,#0x12c0`
+- `01104310`: `mov r0,r5`
+- `01104312`: `bl 0x00cea328` refs: `UNCONDITIONAL_CALL -> 00cea328`
+- `01104316`: `add r0,sp,#0x1c`
+- `01104318`: `add.w r1,sp,#0x12e0`
+- `0110431c`: `add.w r0,r0,#0x12c0`
+- `01104320`: `strd r1,r0,[sp,#0x0]`
+- `01104324`: `ldr r0,[sp,#0xec]`
+- `01104326`: `add r1,sp,#0x8`
+- `01104328`: `stm r1,{r0,r5,r10}` refs: `DATA -> 014f6290` `DATA -> 00ac9dca`
+- `0110432c`: `add r0,sp,#0x1c`
+- `0110432e`: `add r1,sp,#0x14`
+- `01104330`: `add.w r2,r1,#0x12e0`
+- `01104334`: `add r1,sp,#0x4`
+- `01104336`: `add.w r3,r1,#0x12e0`
+- `0110433a`: `ldr r1,[sp,#0xfc]` refs: `PARAM -> 014f7a7c`
+- `0110433c`: `add.w r0,r0,#0x12e0`
 - `01104340`: `bl 0x0110caa4` refs: `UNCONDITIONAL_CALL -> 0110caa4`
 - `01104344`: `add.w r3,sp,#0x17a0`
 - `01104348`: `ldrd r0,r1,[r4,#0x270]`
@@ -1828,27 +1848,27 @@
 - `01104374`: `add r0,sp,#0xc`
 - `01104376`: `add r1,sp,#0x3c`
 - `01104378`: `add.w r0,r0,#0x12a0`
-- `0110437c`: `add.w r1,r1,#0x2340`
-- `01104380`: `movs r2,#0x1`
-- `01104382`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `01104386`: `add r0,sp,#0x18`
-- `01104388`: `add r1,sp,#0xc`
-- `0110438a`: `add.w r0,r0,#0x12a0`
-- `0110438e`: `add.w r1,r1,#0x12a0`
-- `01104392`: `bl 0x0110bf70` refs: `UNCONDITIONAL_CALL -> 0110bf70`
-- `01104396`: `movs r0,#0xd`
-- `01104398`: `movs r1,#0x2`
-- `0110439a`: `strd r1,r0,[r4,#0x218]`
-- `0110439e`: `add r0,sp,#0x18`
-- `011043a0`: `ldr r1,[0x011043b4]` refs: `READ -> 011043b4`
-- `011043a2`: `add.w r5,r0,#0x1280`
-- `011043a6`: `movs r2,#0x14`
-- `011043a8`: `add r1,pc` refs: `PARAM -> 00c84ff1`
-- `011043aa`: `mov r0,r5`
-- `011043ac`: `blx 0x013fd3f0` refs: `UNCONDITIONAL_CALL -> 013fd3f0`
-- `011043b0`: `b 0x011043b8` refs: `UNCONDITIONAL_JUMP -> 011043b8`
-- `011043b8`: `movs r0,#0xa`
 ### Around `01104436`
+- `011043d6`: `add r0,sp,#0x4`
+- `011043d8`: `add.w r0,r0,#0x12a0`
+- `011043dc`: `strd r0,r5,[sp,#0x0]`
+- `011043e0`: `ldr r0,[sp,#0xf0]`
+- `011043e2`: `add r1,sp,#0x8`
+- `011043e4`: `stm r1,{r0,r6,r10}` refs: `DATA -> 014f6290` `DATA -> 0093e0dc`
+- `011043e8`: `add r1,sp,#0x18`
+- `011043ea`: `add.w r2,r1,#0x12a0`
+- `011043ee`: `add r1,sp,#0x8`
+- `011043f0`: `add.w r0,sp,#0x12c0`
+- `011043f4`: `add.w r3,r1,#0x12a0`
+- `011043f8`: `ldr r1,[sp,#0xfc]` refs: `PARAM -> 014f7a7c`
+- `011043fa`: `bl 0x0110ca50` refs: `UNCONDITIONAL_CALL -> 0110ca50`
+- `011043fe`: `ldr.w r5,[r4,#0x234]`
+- `01104402`: `add r0,sp,#0x1c`
+- `01104404`: `ldr r1,[0x01104414]` refs: `READ -> 01104414`
+- `01104406`: `add.w r0,r0,#0x1260`
+- `0110440a`: `add r1,pc` refs: `PARAM -> 00b91e8e`
+- `0110440c`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
+- `01104410`: `b 0x01104418` refs: `UNCONDITIONAL_JUMP -> 01104418`
 - `01104418`: `ldr r0,[r5,#0x0]`
 - `0110441a`: `ldr r3,[r0,#0x28]`
 - `0110441c`: `add r0,sp,#0x1c`
@@ -1867,27 +1887,27 @@
 - `01104444`: `add r1,sp,#0x30`
 - `01104446`: `add.w r0,sp,#0x1260`
 - `0110444a`: `add.w r1,r1,#0x2340`
-- `0110444e`: `movs r2,#0x1`
-- `01104450`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `01104454`: `add r0,sp,#0xc`
-- `01104456`: `add.w r1,sp,#0x1260`
-- `0110445a`: `add.w r0,r0,#0x1260`
-- `0110445e`: `bl 0x0110bf70` refs: `UNCONDITIONAL_CALL -> 0110bf70`
-- `01104462`: `movs r0,#0xd`
-- `01104464`: `movs r1,#0xc`
-- `01104466`: `strd r1,r0,[r4,#0x1cc]`
-- `0110446a`: `add r0,sp,#0xc`
-- `0110446c`: `ldr r1,[0x01104480]` refs: `READ -> 01104480`
-- `0110446e`: `add.w r5,r0,#0x1240`
-- `01104472`: `movs r2,#0x16`
-- `01104474`: `add r1,pc` refs: `PARAM -> 009579ff`
-- `01104476`: `mov r0,r5`
-- `01104478`: `blx 0x013fd3f0` refs: `UNCONDITIONAL_CALL -> 013fd3f0`
-- `0110447c`: `b 0x01104484` refs: `UNCONDITIONAL_JUMP -> 01104484`
-- `01104484`: `movs r0,#0xb`
-- `01104486`: `strd r0,r0,[r4,#0x1b0]`
-- `0110448a`: `add r0,sp,#0x4`
 ### Around `01103b16`
+- `01103ab2`: `add r1,sp,#0x14`
+- `01103ab4`: `add r2,sp,#0x14`
+- `01103ab6`: `add r5,sp,#0xc`
+- `01103ab8`: `ldr r6,[0x01103af0]` refs: `READ -> 01103af0`
+- `01103aba`: `add.w r3,sp,#0x15c0`
+- `01103abe`: `add.w r1,r1,#0x1500`
+- `01103ac2`: `add.w r2,r2,#0x15a0`
+- `01103ac6`: `add.w r5,r5,#0x15c0`
+- `01103aca`: `add r6,pc`
+- `01103acc`: `strd r5,r3,[sp,#0x8]`
+- `01103ad0`: `strd r6,r8,[sp,#0x0]` refs: `DATA -> 00845bc9`
+- `01103ad4`: `mov r3,r10` refs: `PARAM -> 014f6ec4`
+- `01103ad6`: `strd r2,r0,[sp,#0x10]`
+- `01103ada`: `str r1,[sp,#0x18]`
+- `01103adc`: `add r0,sp,#0x18`
+- `01103ade`: `ldr r1,[0x01103af4]` refs: `READ -> 01103af4`
+- `01103ae0`: `add.w r0,r0,#0x15c0`
+- `01103ae4`: `ldr r2,[sp,#0xfc]` refs: `PARAM -> 014f7a7c`
+- `01103ae6`: `add r1,pc` refs: `PARAM -> 00928912`
+- `01103ae8`: `bl 0x0110caf8` refs: `UNCONDITIONAL_CALL -> 0110caf8`
 - `01103aec`: `b 0x01103af8` refs: `UNCONDITIONAL_JUMP -> 01103af8`
 - `01103af8`: `ldr.w r1,[r4,#0x54c]`
 - `01103afc`: `ldr r0,[r1,#0x0]`
@@ -1906,27 +1926,27 @@
 - `01103b24`: `add r0,sp,#0x18`
 - `01103b26`: `add r1,sp,#0x34`
 - `01103b28`: `add.w r0,r0,#0x14e0`
-- `01103b2c`: `add.w r1,r1,#0x2640`
-- `01103b30`: `movs r2,#0x1`
-- `01103b32`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `01103b36`: `add r0,sp,#0x4`
-- `01103b38`: `add r1,sp,#0x18`
-- `01103b3a`: `add.w r0,r0,#0x1500`
-- `01103b3e`: `add.w r1,r1,#0x14e0`
-- `01103b42`: `bl 0x0110bf70` refs: `UNCONDITIONAL_CALL -> 0110bf70`
-- `01103b46`: `add r0,sp,#0x10`
-- `01103b48`: `ldr r1,[sp,#0xf8]` refs: `PARAM -> 014fa174`
-- `01103b4a`: `add.w r8,r0,#0x14e0`
-- `01103b4e`: `mov r0,r8`
-- `01103b50`: `bl 0x00d5c2f0` refs: `UNCONDITIONAL_CALL -> 00d5c2f0`
-- `01103b54`: `movs r0,#0x0`
-- `01103b56`: `str.w r0,[r4,#0x448]`
-- `01103b5a`: `str.w r0,[r4,#0x44c]`
-- `01103b5e`: `str.w r0,[r4,#0x450]`
-- `01103b62`: `str.w r0,[r4,#0x454]`
-- `01103b66`: `str.w r0,[r4,#0x458]`
-- `01103b6a`: `str.w r0,[r4,#0x45c]`
 ### Around `0110199e`
+- `0110193e`: `str.w r1,[r3,#0x668]`
+- `01101942`: `str.w r0,[r3,#0x66c]`
+- `01101946`: `ldr r0,[0x0110197c]` refs: `READ -> 0110197c`
+- `01101948`: `add r1,sp,#0x4`
+- `0110194a`: `add.w r1,r1,#0x1e00`
+- `0110194e`: `add r2,sp,#0x8`
+- `01101950`: `add r0,pc`
+- `01101952`: `strd r0,r5,[sp,#0x8]` refs: `DATA -> 00745f9a` `DATA -> 014f1ff0`
+- `01101956`: `ldr r0,[sp,#0x104]`
+- `01101958`: `add.w r2,r2,#0x1e00`
+- `0110195c`: `strd r2,r1,[sp,#0x0]`
+- `01101960`: `str r0,[sp,#0x10]` refs: `DATA -> 014f61f8`
+- `01101962`: `add r0,sp,#0x4`
+- `01101964`: `add r1,sp,#0x1c`
+- `01101966`: `add.w r0,r0,#0x1e20`
+- `0110196a`: `add.w r2,r1,#0x1e00`
+- `0110196e`: `add r1,sp,#0xc`
+- `01101970`: `add.w r3,r1,#0x1e00`
+- `01101974`: `ldr r1,[sp,#0x100]` refs: `PARAM -> 014f7b58`
+- `01101976`: `bl 0x0110c324` refs: `UNCONDITIONAL_CALL -> 0110c324`
 - `0110197a`: `b 0x01101980` refs: `UNCONDITIONAL_JUMP -> 01101980`
 - `01101980`: `add.w r0,sp,#0x17a0`
 - `01101984`: `ldr.w r1,[r0,#0x684]`
@@ -1945,18 +1965,7 @@
 - `011019ac`: `add r0,sp,#0x8`
 - `011019ae`: `add r1,sp,#0x3c`
 - `011019b0`: `add.w r0,r0,#0x1de0`
-- `011019b4`: `add.w r1,r1,#0x2b80`
-- `011019b8`: `movs r2,#0x1`
-- `011019ba`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `011019be`: `add r0,sp,#0x14`
-- `011019c0`: `add r1,sp,#0x8`
-- `011019c2`: `add.w r0,r0,#0x1de0`
-- `011019c6`: `add.w r1,r1,#0x1de0`
-- `011019ca`: `bl 0x0110bf70` refs: `UNCONDITIONAL_CALL -> 0110bf70`
-- `011019ce`: `add.w r3,sp,#0x17a0`
-- `011019d2`: `movw r0,#0x555`
-- `011019d6`: `movs r1,#0x0`
-- `011019d8`: `movs r2,#0x2`
+### Around `01101a3e`
 - `011019da`: `str.w r2,[r3,#0x63c]`
 - `011019de`: `str.w r1,[r3,#0x640]`
 - `011019e2`: `str.w r0,[r3,#0x644]`
@@ -1965,7 +1974,18 @@
 - `011019ea`: `add.w r1,r1,#0x1dc0`
 - `011019ee`: `add.w r2,sp,#0x1de0`
 - `011019f2`: `add r0,pc`
-### Around `01101a3e`
+- `011019f4`: `strd r0,r5,[sp,#0x8]` refs: `DATA -> 00779a69` `DATA -> 014f1ff0`
+- `011019f8`: `ldr r0,[sp,#0x104]`
+- `011019fa`: `strd r2,r1,[sp,#0x0]`
+- `011019fe`: `str r0,[sp,#0x10]` refs: `DATA -> 014f61f8`
+- `01101a00`: `add r0,sp,#0x1c`
+- `01101a02`: `add r1,sp,#0x14`
+- `01101a04`: `add.w r0,r0,#0x1de0`
+- `01101a08`: `add.w r2,r1,#0x1de0`
+- `01101a0c`: `add r1,sp,#0x4`
+- `01101a0e`: `add.w r3,r1,#0x1de0`
+- `01101a12`: `ldr r1,[sp,#0x100]` refs: `PARAM -> 014f7b58`
+- `01101a14`: `bl 0x0110c324` refs: `UNCONDITIONAL_CALL -> 0110c324`
 - `01101a18`: `b 0x01101a20` refs: `UNCONDITIONAL_JUMP -> 01101a20`
 - `01101a20`: `add.w r0,sp,#0x17a0`
 - `01101a24`: `ldr.w r1,[r0,#0x65c]`
@@ -1984,27 +2004,27 @@
 - `01101a4c`: `add r1,sp,#0x30`
 - `01101a4e`: `add.w r0,sp,#0x1dc0`
 - `01101a52`: `add.w r1,r1,#0x2b80`
-- `01101a56`: `movs r2,#0x1`
-- `01101a58`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `01101a5c`: `add r0,sp,#0xc`
-- `01101a5e`: `add.w r1,sp,#0x1dc0`
-- `01101a62`: `add.w r0,r0,#0x1dc0`
-- `01101a66`: `bl 0x0110bf70` refs: `UNCONDITIONAL_CALL -> 0110bf70`
-- `01101a6a`: `add.w r3,sp,#0x17a0`
-- `01101a6e`: `movw r0,#0x555`
-- `01101a72`: `movs r1,#0x0`
-- `01101a74`: `movs r2,#0x1`
-- `01101a76`: `str.w r2,[r3,#0x614]`
-- `01101a7a`: `str.w r1,[r3,#0x618]`
-- `01101a7e`: `str.w r0,[r3,#0x61c]`
-- `01101a82`: `ldr r0,[sp,#0x104]`
-- `01101a84`: `str r0,[sp,#0x10]` refs: `DATA -> 014f61f8`
-- `01101a86`: `ldr r0,[0x01101ac0]` refs: `READ -> 01101ac0`
+### Around `01101ae6`
 - `01101a88`: `add r0,pc`
 - `01101a8a`: `ldr r0,[r0,#0x0]` refs: `READ -> 014db8d4`
 - `01101a8c`: `str r0,[sp,#0xc]` refs: `DATA -> 014f1ff8`
 - `01101a8e`: `ldr r0,[0x01101ac4]` refs: `READ -> 01101ac4`
-### Around `01101ae6`
+- `01101a90`: `add r0,pc`
+- `01101a92`: `str r0,[sp,#0x8]` refs: `DATA -> 00957998`
+- `01101a94`: `add r0,sp,#0x14`
+- `01101a96`: `add.w r0,r0,#0x1da0`
+- `01101a9a`: `str r0,[sp,#0x4]`
+- `01101a9c`: `add r0,sp,#0x18`
+- `01101a9e`: `add.w r0,r0,#0x1da0`
+- `01101aa2`: `str r0,[sp,#0x0]`
+- `01101aa4`: `add r0,sp,#0x14`
+- `01101aa6`: `add r1,sp,#0xc`
+- `01101aa8`: `add.w r2,r1,#0x1dc0`
+- `01101aac`: `add r1,sp,#0x1c`
+- `01101aae`: `add.w r3,r1,#0x1da0`
+- `01101ab2`: `ldr r1,[sp,#0x100]` refs: `PARAM -> 014f7b58`
+- `01101ab4`: `add.w r0,r0,#0x1dc0`
+- `01101ab8`: `bl 0x010b9444` refs: `UNCONDITIONAL_CALL -> 010b9444`
 - `01101abc`: `b 0x01101ac8` refs: `UNCONDITIONAL_JUMP -> 01101ac8`
 - `01101ac8`: `add.w r0,sp,#0x17a0`
 - `01101acc`: `ldr.w r1,[r0,#0x634]`
@@ -2023,27 +2043,27 @@
 - `01101af4`: `add r0,sp,#0x18`
 - `01101af6`: `add r1,sp,#0x24`
 - `01101af8`: `add.w r0,r0,#0x1d80`
-- `01101afc`: `add.w r1,r1,#0x2b80`
-- `01101b00`: `movs r2,#0x1`
-- `01101b02`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `01101b06`: `add r0,sp,#0x4`
-- `01101b08`: `add r1,sp,#0x18`
-- `01101b0a`: `add.w r0,r0,#0x1da0`
-- `01101b0e`: `add.w r1,r1,#0x1d80`
-- `01101b12`: `bl 0x0110bf70` refs: `UNCONDITIONAL_CALL -> 0110bf70`
-- `01101b16`: `add.w r3,sp,#0x17a0`
-- `01101b1a`: `movw r0,#0x555`
-- `01101b1e`: `movs r1,#0x1`
-- `01101b20`: `movs r2,#0xe`
-- `01101b22`: `str.w r2,[r3,#0x5ec]`
-- `01101b26`: `movs r2,#0x2`
-- `01101b28`: `str.w r0,[r3,#0x5f4]`
-- `01101b2c`: `movs r0,#0x0`
-- `01101b2e`: `str.w r1,[r3,#0x5f0]`
-- `01101b32`: `ldr r3,[0x01101b70]` refs: `READ -> 01101b70`
-- `01101b34`: `add r4,sp,#0x30`
-- `01101b36`: `add.w r4,r4,#0x2800`
 ### Around `0110185e`
+- `011017fe`: `str.w r1,[r3,#0x6b8]`
+- `01101802`: `str.w r0,[r3,#0x6bc]`
+- `01101806`: `ldr r0,[0x0110183c]` refs: `READ -> 0110183c`
+- `01101808`: `add r1,sp,#0x14`
+- `0110180a`: `add.w r1,r1,#0x1e40`
+- `0110180e`: `add r2,sp,#0x18`
+- `01101810`: `add r0,pc`
+- `01101812`: `strd r0,r5,[sp,#0x8]` refs: `DATA -> 009e5121` `DATA -> 014f1ff0`
+- `01101816`: `ldr r0,[sp,#0x104]`
+- `01101818`: `add.w r2,r2,#0x1e40`
+- `0110181c`: `strd r2,r1,[sp,#0x0]`
+- `01101820`: `str r0,[sp,#0x10]` refs: `DATA -> 014f61f8`
+- `01101822`: `add r0,sp,#0x14`
+- `01101824`: `add r1,sp,#0xc`
+- `01101826`: `add.w r0,r0,#0x1e60`
+- `0110182a`: `add.w r2,r1,#0x1e60`
+- `0110182e`: `add r1,sp,#0x1c`
+- `01101830`: `add.w r3,r1,#0x1e40`
+- `01101834`: `ldr r1,[sp,#0x100]` refs: `PARAM -> 014f7b58`
+- `01101836`: `bl 0x0110c27c` refs: `UNCONDITIONAL_CALL -> 0110c27c`
 - `0110183a`: `b 0x01101840` refs: `UNCONDITIONAL_JUMP -> 01101840`
 - `01101840`: `add.w r0,sp,#0x17a0`
 - `01101844`: `ldr.w r1,[r0,#0x6d4]`
@@ -2062,19 +2082,7 @@
 - `0110186c`: `add r0,sp,#0x18`
 - `0110186e`: `add r1,sp,#0x14`
 - `01101870`: `add.w r0,r0,#0x1e20`
-- `01101874`: `add.w r1,r1,#0x2bc0`
-- `01101878`: `movs r2,#0x1`
-- `0110187a`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `0110187e`: `add r0,sp,#0x4`
-- `01101880`: `add r1,sp,#0x18`
-- `01101882`: `add.w r0,r0,#0x1e40`
-- `01101886`: `add.w r1,r1,#0x1e20`
-- `0110188a`: `bl 0x0110bf70` refs: `UNCONDITIONAL_CALL -> 0110bf70`
-- `0110188e`: `add.w r3,sp,#0x17a0`
-- `01101892`: `movw r0,#0x555`
-- `01101896`: `movs r1,#0x0`
-- `01101898`: `movs r2,#0x8`
-- `0110189a`: `str.w r2,[r3,#0x68c]`
+### Around `011018fe`
 - `0110189e`: `str.w r1,[r3,#0x690]`
 - `011018a2`: `str.w r0,[r3,#0x694]`
 - `011018a6`: `ldr r0,[0x011018dc]` refs: `READ -> 011018dc`
@@ -2082,7 +2090,19 @@
 - `011018aa`: `add.w r1,r1,#0x1e20`
 - `011018ae`: `add r2,sp,#0x10`
 - `011018b0`: `add r0,pc`
-### Around `011018fe`
+- `011018b2`: `strd r0,r5,[sp,#0x8]` refs: `DATA -> 00aeac4a` `DATA -> 014f1ff0`
+- `011018b6`: `ldr r0,[sp,#0x104]`
+- `011018b8`: `add.w r2,r2,#0x1e20`
+- `011018bc`: `strd r2,r1,[sp,#0x0]`
+- `011018c0`: `str r0,[sp,#0x10]` refs: `DATA -> 014f61f8`
+- `011018c2`: `add r0,sp,#0xc`
+- `011018c4`: `add r1,sp,#0x4`
+- `011018c6`: `add.w r0,r0,#0x1e40`
+- `011018ca`: `add.w r2,r1,#0x1e40`
+- `011018ce`: `add r1,sp,#0x14`
+- `011018d0`: `add.w r3,r1,#0x1e20`
+- `011018d4`: `ldr r1,[sp,#0x100]` refs: `PARAM -> 014f7b58`
+- `011018d6`: `bl 0x0110c2d0` refs: `UNCONDITIONAL_CALL -> 0110c2d0`
 - `011018da`: `b 0x011018e0` refs: `UNCONDITIONAL_JUMP -> 011018e0`
 - `011018e0`: `add.w r0,sp,#0x17a0`
 - `011018e4`: `ldr.w r1,[r0,#0x6ac]`
@@ -2101,27 +2121,27 @@
 - `0110190c`: `add r0,sp,#0x10`
 - `0110190e`: `add r1,sp,#0x8`
 - `01101910`: `add.w r0,r0,#0x1e00`
-- `01101914`: `add.w r1,r1,#0x2bc0`
-- `01101918`: `movs r2,#0x1`
-- `0110191a`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `0110191e`: `add r0,sp,#0x1c`
-- `01101920`: `add r1,sp,#0x10`
-- `01101922`: `add.w r0,r0,#0x1e00`
-- `01101926`: `add.w r1,r1,#0x1e00`
-- `0110192a`: `bl 0x0110bf70` refs: `UNCONDITIONAL_CALL -> 0110bf70`
-- `0110192e`: `add.w r3,sp,#0x17a0`
-- `01101932`: `movw r0,#0x555`
-- `01101936`: `movs r1,#0x0`
-- `01101938`: `movs r2,#0x4`
-- `0110193a`: `str.w r2,[r3,#0x664]`
-- `0110193e`: `str.w r1,[r3,#0x668]`
-- `01101942`: `str.w r0,[r3,#0x66c]`
-- `01101946`: `ldr r0,[0x0110197c]` refs: `READ -> 0110197c`
-- `01101948`: `add r1,sp,#0x4`
-- `0110194a`: `add.w r1,r1,#0x1e00`
-- `0110194e`: `add r2,sp,#0x8`
-- `01101950`: `add r0,pc`
 ### Around `01101718`
+- `011016a0`: `b 0x011016b4` refs: `UNCONDITIONAL_JUMP -> 011016b4`
+- `011016b4`: `add.w r0,sp,#0x17a0`
+- `011016b8`: `ldr.w r1,[r0,#0x778]`
+- `011016bc`: `ldr r0,[r1,#0x0]`
+- `011016be`: `ldr r2,[r0,#0x30]`
+- `011016c0`: `mov r0,r11`
+- `011016c2`: `blx r2`
+- `011016c4`: `add.w r0,sp,#0x17a0`
+- `011016c8`: `movs r5,#0x0`
+- `011016ca`: `str.w r5,[r0,#0x734]`
+- `011016ce`: `add r0,sp,#0x14`
+- `011016d0`: `add.w r0,r0,#0x2cc0`
+- `011016d4`: `add.w r11,r0,#0x48`
+- `011016d8`: `ldr r0,[0x011016ec]` refs: `READ -> 011016ec`
+- `011016da`: `add r0,pc`
+- `011016dc`: `ldr r1,[r0,#0x0]` refs: `READ -> 014de97c` `PARAM -> 014fa490`
+- `011016de`: `add r0,sp,#0xc`
+- `011016e0`: `add.w r8,r0,#0x1ec0`
+- `011016e4`: `mov r0,r8`
+- `011016e6`: `bl 0x00d5c2f0` refs: `UNCONDITIONAL_CALL -> 00d5c2f0`
 - `011016ea`: `b 0x011016f0` refs: `UNCONDITIONAL_JUMP -> 011016f0`
 - `011016f0`: `add.w r0,sp,#0x17a0`
 - `011016f4`: `str.w r5,[r0,#0x710]`
@@ -2140,27 +2160,27 @@
 - `01101724`: `add r0,sp,#0x8`
 - `01101726`: `add r1,sp,#0x2c`
 - `01101728`: `add.w r0,r0,#0x1e80`
-- `0110172c`: `add.w r1,r1,#0x2bc0`
-- `01101730`: `movs r2,#0x1`
-- `01101732`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `01101736`: `add r0,sp,#0x14`
-- `01101738`: `add r1,sp,#0x8`
-- `0110173a`: `add.w r0,r0,#0x1e80`
-- `0110173e`: `add.w r1,r1,#0x1e80`
-- `01101742`: `bl 0x0110bf70` refs: `UNCONDITIONAL_CALL -> 0110bf70`
-- `01101746`: `add.w r3,sp,#0x17a0`
-- `0110174a`: `movw r0,#0x555`
-- `0110174e`: `movs r1,#0x0`
-- `01101750`: `movs r2,#0x80`
-- `01101752`: `str.w r2,[r3,#0x6dc]`
-- `01101756`: `str.w r1,[r3,#0x6e0]`
-- `0110175a`: `str.w r0,[r3,#0x6e4]`
-- `0110175e`: `ldr r0,[sp,#0x104]`
-- `01101760`: `str r0,[sp,#0x10]` refs: `DATA -> 014f61f8`
-- `01101762`: `ldr r0,[0x01101798]` refs: `READ -> 01101798`
-- `01101764`: `add r0,pc`
-- `01101766`: `ldr r5,[r0,#0x0]` refs: `READ -> 014db8d0`
 ### Around `011017c4`
+- `01101766`: `ldr r5,[r0,#0x0]` refs: `READ -> 014db8d0`
+- `01101768`: `str r5,[sp,#0xc]` refs: `DATA -> 014f1ff0`
+- `0110176a`: `ldr r0,[0x0110179c]` refs: `READ -> 0110179c`
+- `0110176c`: `add r0,pc`
+- `0110176e`: `str r0,[sp,#0x8]` refs: `DATA -> 008b0ced`
+- `01101770`: `add r0,sp,#0x1c`
+- `01101772`: `add.w r0,r0,#0x1e60`
+- `01101776`: `str r0,[sp,#0x4]`
+- `01101778`: `add.w r0,sp,#0x1e80`
+- `0110177c`: `str r0,[sp,#0x0]`
+- `0110177e`: `add r0,sp,#0x1c`
+- `01101780`: `add r1,sp,#0x14`
+- `01101782`: `add.w r2,r1,#0x1e80`
+- `01101786`: `add r1,sp,#0x4`
+- `01101788`: `add.w r3,r1,#0x1e80`
+- `0110178c`: `ldr r1,[sp,#0x100]` refs: `PARAM -> 014f7b58`
+- `0110178e`: `add.w r0,r0,#0x1e80`
+- `01101792`: `bl 0x0110c228` refs: `UNCONDITIONAL_CALL -> 0110c228`
+- `01101796`: `b 0x011017a0` refs: `UNCONDITIONAL_JUMP -> 011017a0`
+- `011017a0`: `add.w r0,sp,#0x17a0`
 - `011017a4`: `ldr.w r1,[r0,#0x6fc]`
 - `011017a8`: `ldr r0,[r1,#0x0]`
 - `011017aa`: `ldr r2,[r0,#0x30]`
@@ -2179,27 +2199,27 @@
 - `011017d0`: `add r1,sp,#0x20`
 - `011017d2`: `add.w r0,sp,#0x1e60`
 - `011017d6`: `add.w r1,r1,#0x2bc0`
-- `011017da`: `movs r2,#0x1`
-- `011017dc`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `011017e0`: `add r0,sp,#0xc`
-- `011017e2`: `add.w r1,sp,#0x1e60`
-- `011017e6`: `add.w r0,r0,#0x1e60`
-- `011017ea`: `bl 0x0110bf70` refs: `UNCONDITIONAL_CALL -> 0110bf70`
-- `011017ee`: `add.w r3,sp,#0x17a0`
-- `011017f2`: `movw r0,#0x555`
-- `011017f6`: `movs r1,#0x0`
-- `011017f8`: `movs r2,#0x10`
-- `011017fa`: `str.w r2,[r3,#0x6b4]`
-- `011017fe`: `str.w r1,[r3,#0x6b8]`
-- `01101802`: `str.w r0,[r3,#0x6bc]`
-- `01101806`: `ldr r0,[0x0110183c]` refs: `READ -> 0110183c`
-- `01101808`: `add r1,sp,#0x14`
-- `0110180a`: `add.w r1,r1,#0x1e40`
-- `0110180e`: `add r2,sp,#0x18`
-- `01101810`: `add r0,pc`
-- `01101812`: `strd r0,r5,[sp,#0x8]` refs: `DATA -> 009e5121` `DATA -> 014f1ff0`
-- `01101816`: `ldr r0,[sp,#0x104]`
 ### Around `01100bba`
+- `01100b58`: `add r4,pc`
+- `01100b5a`: `ldrb r0,[r4,#0x0]` refs: `READ -> 014f64ec`
+- `01100b5c`: `dmb #0x1b`
+- `01100b60`: `lsls r0,r0,#0x1f`
+- `01100b62`: `beq 0x01100b9c` refs: `CONDITIONAL_JUMP -> 01100b9c`
+- `01100b64`: `ldr.w r0,[r7,#-0x34]` refs: `DATA -> 00c62549`
+- `01100b68`: `ldr r1,[0x01100b98]` refs: `READ -> 01100b98`
+- `01100b6a`: `add r1,pc`
+- `01100b6c`: `ldr r1,[r1,#0x0]` refs: `READ -> 014da87c`
+- `01100b6e`: `ldr r1,[r1,#0x0]` refs: `READ -> 015a7014`
+- `01100b70`: `cmp r1,r0`
+- `01100b72`: `itttt eq`
+- `01100b74`: `add.eq.w r0,r4,#0x28` refs: `PARAM -> 014f6514`
+- `01100b78`: `add.eq.w sp,sp,#0x2e80`
+- `01100b7c`: `add.eq sp,#0x18`
+- `01100b7e`: `vpop.eq {d8}`
+- `01100b82`: `ittt eq`
+- `01100b84`: `add.eq sp,#0x4`
+- `01100b86`: `pop.eq.w {r8,r9,r10,r11}`
+- `01100b8a`: `pop.eq {r4,r5,r6,r7,pc}`
 - `01100b8c`: `blx 0x013fa400` refs: `UNCONDITIONAL_CALL -> 013fa400`
 - `01100b9c`: `ldr r0,[0x01100bac]` refs: `READ -> 01100bac`
 - `01100b9e`: `add r0,pc` refs: `PARAM -> 014f64ec`
@@ -2218,27 +2238,27 @@
 - `01100bc8`: `add r0,sp,#0x8`
 - `01100bca`: `add r1,sp,#0x8`
 - `01100bcc`: `add.w r0,r0,#0x2200`
-- `01100bd0`: `add.w r1,r1,#0x2cc0`
-- `01100bd4`: `movs r2,#0x1`
-- `01100bd6`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `01100bda`: `add r0,sp,#0x14`
-- `01100bdc`: `add r1,sp,#0x8`
-- `01100bde`: `add.w r0,r0,#0x2200`
-- `01100be2`: `add.w r1,r1,#0x2200`
-- `01100be6`: `bl 0x0110bf70` refs: `UNCONDITIONAL_CALL -> 0110bf70`
-- `01100bea`: `add.w r0,sp,#0x17a0`
-- `01100bee`: `movs r5,#0x0`
-- `01100bf0`: `str.w r5,[r0,#0xa64]` refs: `WRITE -> Stack[-0xcc4]`
-- `01100bf4`: `ldr r0,[0x01100c08]` refs: `READ -> 01100c08`
-- `01100bf6`: `add r0,pc`
-- `01100bf8`: `ldr r1,[r0,#0x0]` refs: `READ -> 014de958` `PARAM -> 014fa1dc`
-- `01100bfa`: `add r0,sp,#0x3c`
-- `01100bfc`: `add.w r8,r0,#0x21c0`
-- `01100c00`: `mov r0,r8`
-- `01100c02`: `bl 0x00d5c2f0` refs: `UNCONDITIONAL_CALL -> 00d5c2f0`
-- `01100c06`: `b 0x01100c0c` refs: `UNCONDITIONAL_JUMP -> 01100c0c`
-- `01100c0c`: `add.w r0,sp,#0x17a0`
 ### Around `00fe6eda`
+- `00fe6e70`: `ldr r2,[r7,#0xc]` refs: `READ -> Stack[0x4]`
+- `00fe6e72`: `ldr.w lr,[r2,#0x0]`
+- `00fe6e76`: `movs r2,#0x0`
+- `00fe6e78`: `strd r2,r2,[r5,#0x0]`
+- `00fe6e7c`: `add r2,sp,#0x14`
+- `00fe6e7e`: `str r2,[sp,#0xc]` refs: `WRITE -> Stack[-0x2c]`
+- `00fe6e80`: `ldr r2,[r7,#0x14]` refs: `READ -> Stack[0xc]`
+- `00fe6e82`: `str r2,[sp,#0x8]` refs: `WRITE -> Stack[-0x30]`
+- `00fe6e84`: `ldr r2,[r7,#0x10]` refs: `READ -> Stack[0x8]`
+- `00fe6e86`: `strd lr,r2,[sp,#0x0]` refs: `WRITE -> Stack[-0x38]`
+- `00fe6e8a`: `mov r2,r12`
+- `00fe6e8c`: `blx 0x01411ab0` refs: `UNCONDITIONAL_CALL -> 01411ab0`
+- `00fe6e90`: `add r0,sp,#0x14`
+- `00fe6e92`: `bl 0x00cd2748` refs: `UNCONDITIONAL_CALL -> 00cd2748`
+- `00fe6eb0`: `add r0,sp,#0x14`
+- `00fe6eb2`: `bl 0x00cd2748` refs: `UNCONDITIONAL_CALL -> 00cd2748`
+- `00fe6eba`: `nop`
+- `00fe6ebc`: `subs r2,#0x1e`
+- `00fe6ebe`: `lsls r7,r1,#0x1`
+- `00fe6ec0`: `subs r1,#0xde`
 - `00fe6ec2`: `lsls r7,r1,#0x1`
 - `00fe6ec4`: `push {r4,r6,r7,lr}`
 - `00fe6ec6`: `add r7,sp,#0x8`
@@ -2257,27 +2277,27 @@
 - `00fe6ee2`: `mov r1,r4`
 - `00fe6ee4`: `movs r2,#0x1`
 - `00fe6ee6`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `00fe6eea`: `mov r0,sp`
-- `00fe6eec`: `mov.w r1,#0x100`
-- `00fe6ef0`: `bl 0x00cbd800` refs: `UNCONDITIONAL_CALL -> 00cbd800`
-- `00fe6ef4`: `ldrd r1,r2,[sp,#0x0]` refs: `READ -> Stack[-0x38]`
-- `00fe6ef8`: `movs r0,#0x0`
-- `00fe6efa`: `adds r3,r1,r0`
-- `00fe6efc`: `cmp r3,r2`
-- `00fe6efe`: `beq 0x00fe6f06` refs: `CONDITIONAL_JUMP -> 00fe6f06`
-- `00fe6f00`: `strb r0,[r3,#0x0]`
-- `00fe6f02`: `adds r0,#0x1`
-- `00fe6f04`: `b 0x00fe6efa` refs: `UNCONDITIONAL_JUMP -> 00fe6efa`
-- `00fe6f06`: `ldr r0,[0x00fe6f70]` refs: `READ -> 00fe6f70`
-- `00fe6f08`: `add r1,sp,#0xc`
-- `00fe6f0a`: `mov r2,sp`
-- `00fe6f0c`: `add r0,pc`
-- `00fe6f0e`: `ldr r4,[r0,#0x0]` refs: `READ -> 014ddddc`
-- `00fe6f10`: `mov r0,r4` refs: `PARAM -> 014f5c50`
-- `00fe6f12`: `blx 0x01411ed0` refs: `UNCONDITIONAL_CALL -> 01411ed0`
-- `00fe6f16`: `mov r0,sp`
-- `00fe6f18`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 ### Around `00f26474`
+- `00f26400`: `ldr r2,[r7,#0xc]` refs: `READ -> Stack[0x4]`
+- `00f26402`: `ldr.w lr,[r2,#0x0]`
+- `00f26406`: `ldrd r2,r5,[r4,#0x0]`
+- `00f2640a`: `strd r6,r6,[r4,#0x0]`
+- `00f2640e`: `strd r2,r5,[sp,#0x14]` refs: `WRITE -> Stack[-0x2c]`
+- `00f26412`: `add r2,sp,#0x14`
+- `00f26414`: `str r2,[sp,#0x10]` refs: `WRITE -> Stack[-0x30]`
+- `00f26416`: `ldr r2,[r7,#0x18]` refs: `READ -> Stack[0x10]`
+- `00f26418`: `strd lr,r8,[sp,#0x0]` refs: `WRITE -> Stack[-0x40]`
+- `00f2641c`: `strd r9,r2,[sp,#0x8]` refs: `WRITE -> Stack[-0x38]`
+- `00f26420`: `mov r2,r12`
+- `00f26422`: `blx 0x014119c0` refs: `UNCONDITIONAL_CALL -> 014119c0`
+- `00f26426`: `add r0,sp,#0x14`
+- `00f26428`: `bl 0x00cd2748` refs: `UNCONDITIONAL_CALL -> 00cd2748`
+- `00f26446`: `add r0,sp,#0x14`
+- `00f26448`: `bl 0x00cd2748` refs: `UNCONDITIONAL_CALL -> 00cd2748`
+- `00f26450`: `add r12,r2`
+- `00f26452`: `lsls r3,r3,#0x1`
+- `00f26454`: `add r0,r9`
+- `00f26456`: `lsls r3,r3,#0x1`
 - `00f26458`: `push {r4,r5,r6,r7,lr}`
 - `00f2645a`: `add r7,sp,#0xc`
 - `00f2645c`: `push {r8,r9,r10,r11}`
@@ -2296,8 +2316,7 @@
 - `00f2647c`: `mov r1,r4`
 - `00f2647e`: `movs r2,#0x1`
 - `00f26480`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `00f26484`: `b 0x00f26490` refs: `UNCONDITIONAL_JUMP -> 00f26490`
-- `00f26490`: `movs r0,#0x10`
+### Around `00f264f4`
 - `00f26492`: `strb.w r0,[r7,#-0x2d]`
 - `00f26496`: `ldr r0,[0x00f264b0]` refs: `READ -> 00f264b0`
 - `00f26498`: `str.w r0,[r7,#-0x31]`
@@ -2316,7 +2335,8 @@
 - `00f264c2`: `mov r0,r4` refs: `PARAM -> 014f54d8`
 - `00f264c4`: `blx 0x01411ed0` refs: `UNCONDITIONAL_CALL -> 01411ed0`
 - `00f264c8`: `b 0x00f264d0` refs: `UNCONDITIONAL_JUMP -> 00f264d0`
-### Around `00f264f4`
+- `00f264d0`: `add r0,sp,#0x20`
+- `00f264d2`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 - `00f264d6`: `add r0,sp,#0x2c`
 - `00f264d8`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f264dc`: `add r0,sp,#0x224`
@@ -2335,9 +2355,7 @@
 - `00f264fc`: `add r0,sp,#0x2c`
 - `00f264fe`: `mov r1,r4`
 - `00f26500`: `movs r2,#0x1`
-- `00f26502`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `00f26506`: `b 0x00f26514` refs: `UNCONDITIONAL_JUMP -> 00f26514`
-- `00f26514`: `movs r0,#0x21`
+### Around `00f26578`
 - `00f26516`: `strb.w r0,[r7,#-0x2d]`
 - `00f2651a`: `ldr r0,[0x00f26534]` refs: `READ -> 00f26534`
 - `00f2651c`: `str.w r0,[r7,#-0x31]`
@@ -2355,7 +2373,9 @@
 - `00f26544`: `ldr r4,[r0,#0x0]` refs: `READ -> 014dd9a8`
 - `00f26546`: `mov r0,r4` refs: `PARAM -> 014f54e0`
 - `00f26548`: `blx 0x01411ed0` refs: `UNCONDITIONAL_CALL -> 01411ed0`
-### Around `00f26578`
+- `00f2654c`: `b 0x00f26554` refs: `UNCONDITIONAL_JUMP -> 00f26554`
+- `00f26554`: `add r0,sp,#0x20`
+- `00f26556`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 - `00f2655a`: `add r0,sp,#0x2c`
 - `00f2655c`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f26560`: `add r0,sp,#0x224`
@@ -2372,6 +2392,9 @@
 - `00f2657a`: `mov r0,r4`
 - `00f2657c`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
 - `00f26580`: `add r0,sp,#0x2c`
+- `00f26582`: `mov r1,r4`
+- `00f26584`: `movs r2,#0x1`
+### Around `00f265e8`
 - `00f26582`: `mov r1,r4`
 - `00f26584`: `movs r2,#0x1`
 - `00f26586`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
@@ -2394,9 +2417,6 @@
 - `00f265c6`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 - `00f265ca`: `add r0,sp,#0x2c`
 - `00f265cc`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
-### Around `00f265e8`
-- `00f265ca`: `add r0,sp,#0x2c`
-- `00f265cc`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f265d0`: `add r0,sp,#0x224`
 - `00f265d2`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
 - `00f265d6`: `ldr r0,[0x00f265fc]` refs: `READ -> 00f265fc`
@@ -2411,6 +2431,9 @@
 - `00f265ea`: `mov r0,r4`
 - `00f265ec`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
 - `00f265f0`: `add r0,sp,#0x2c`
+- `00f265f2`: `mov r1,r4`
+- `00f265f4`: `movs r2,#0x1`
+### Around `00f26654`
 - `00f265f2`: `mov r1,r4`
 - `00f265f4`: `movs r2,#0x1`
 - `00f265f6`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
@@ -2433,9 +2456,6 @@
 - `00f26632`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 - `00f26636`: `add r0,sp,#0x2c`
 - `00f26638`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
-### Around `00f26654`
-- `00f26636`: `add r0,sp,#0x2c`
-- `00f26638`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f2663c`: `add r0,sp,#0x224`
 - `00f2663e`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
 - `00f26642`: `ldr r0,[0x00f26668]` refs: `READ -> 00f26668`
@@ -2450,6 +2470,9 @@
 - `00f26656`: `mov r0,r4`
 - `00f26658`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
 - `00f2665c`: `add r0,sp,#0x2c`
+- `00f2665e`: `mov r1,r4`
+- `00f26660`: `movs r2,#0x1`
+### Around `00f266c0`
 - `00f2665e`: `mov r1,r4`
 - `00f26660`: `movs r2,#0x1`
 - `00f26662`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
@@ -2472,9 +2495,6 @@
 - `00f2669e`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 - `00f266a2`: `add r0,sp,#0x2c`
 - `00f266a4`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
-### Around `00f266c0`
-- `00f266a2`: `add r0,sp,#0x2c`
-- `00f266a4`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f266a8`: `add r0,sp,#0x224`
 - `00f266aa`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
 - `00f266ae`: `ldr r0,[0x00f266d4]` refs: `READ -> 00f266d4`
@@ -2491,27 +2511,27 @@
 - `00f266c8`: `add r0,sp,#0x2c`
 - `00f266ca`: `mov r1,r5`
 - `00f266cc`: `movs r2,#0x1`
-- `00f266ce`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `00f266d2`: `b 0x00f266e0` refs: `UNCONDITIONAL_JUMP -> 00f266e0`
-- `00f266e0`: `movw r0,#0x3330`
-- `00f266e4`: `strh r0,[r7,#-0x35]`
-- `00f266e8`: `add r0,sp,#0x20`
-- `00f266ea`: `sub.w r1,r7,#0x35`
-- `00f266ee`: `movs r2,#0x2`
-- `00f266f0`: `bl 0x00cdb87c` refs: `UNCONDITIONAL_CALL -> 00cdb87c`
-- `00f266f4`: `ldr r0,[0x00f26708]` refs: `READ -> 00f26708`
-- `00f266f6`: `add r1,sp,#0x2c`
-- `00f266f8`: `add r2,sp,#0x20`
-- `00f266fa`: `add r0,pc`
-- `00f266fc`: `ldr r5,[r0,#0x0]` refs: `READ -> 014dd950`
-- `00f266fe`: `mov r0,r5` refs: `PARAM -> 014f5500`
-- `00f26700`: `blx 0x01411ed0` refs: `UNCONDITIONAL_CALL -> 01411ed0`
-- `00f26704`: `b 0x00f2670c` refs: `UNCONDITIONAL_JUMP -> 00f2670c`
-- `00f2670c`: `add r0,sp,#0x20`
-- `00f2670e`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
-- `00f26712`: `add r0,sp,#0x2c`
-- `00f26714`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 ### Around `00f267a6`
+- `00f26750`: `ldrd r1,r0,[r4,#0x0]` refs: `READ -> 014f54f8` `READ -> 014f54fc`
+- `00f26754`: `strd r1,r0,[sp,#0x34]` refs: `WRITE -> Stack[-0x224]`
+- `00f26758`: `cbz r0,0x00f2676a` refs: `CONDITIONAL_JUMP -> 00f2676a`
+- `00f2675a`: `adds r0,#0x4`
+- `00f2675c`: `ldrex r1,[r0,#0x0]`
+- `00f26760`: `adds r1,#0x1`
+- `00f26762`: `strex r2,r1,[r0,#0x0]`
+- `00f26766`: `cmp r2,#0x0`
+- `00f26768`: `bne 0x00f2675c` refs: `CONDITIONAL_JUMP -> 00f2675c`
+- `00f2676a`: `ldr r0,[0x00f26780]` refs: `READ -> 00f26780`
+- `00f2676c`: `add r4,sp,#0x2c`
+- `00f2676e`: `movs r2,#0x2`
+- `00f26770`: `add r0,pc`
+- `00f26772`: `mov r1,r4`
+- `00f26774`: `ldr r6,[r0,#0x0]` refs: `READ -> 014dd944`
+- `00f26776`: `mov r0,r6` refs: `PARAM -> 014f5508`
+- `00f26778`: `blx 0x01411a30` refs: `UNCONDITIONAL_CALL -> 01411a30`
+- `00f2677c`: `b 0x00f26784` refs: `UNCONDITIONAL_JUMP -> 00f26784`
+- `00f26784`: `movs r5,#0x8`
+- `00f26786`: `adds r0,r4,r5`
 - `00f26788`: `bl 0x00f0a196` refs: `UNCONDITIONAL_CALL -> 00f0a196`
 - `00f2678c`: `subs r5,#0x8`
 - `00f2678e`: `adds.w r0,r5,#0x8`
@@ -2530,7 +2550,7 @@
 - `00f267ae`: `add r0,sp,#0x2c`
 - `00f267b0`: `mov r1,r4`
 - `00f267b2`: `movs r2,#0x1`
-- `00f267b4`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
+### Around `00f26824`
 - `00f267b8`: `b 0x00f267c8` refs: `UNCONDITIONAL_JUMP -> 00f267c8`
 - `00f267c8`: `movw r0,#0x4645`
 - `00f267cc`: `strh r0,[r7,#-0x31]`
@@ -2550,7 +2570,7 @@
 - `00f267f4`: `blx 0x01411ed0` refs: `UNCONDITIONAL_CALL -> 01411ed0`
 - `00f267f8`: `b 0x00f26800` refs: `UNCONDITIONAL_JUMP -> 00f26800`
 - `00f26800`: `add r0,sp,#0x20`
-### Around `00f26824`
+- `00f26802`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 - `00f26806`: `add r0,sp,#0x2c`
 - `00f26808`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f2680c`: `add r0,sp,#0x224`
@@ -2569,27 +2589,27 @@
 - `00f2682c`: `add r0,sp,#0x2c`
 - `00f2682e`: `mov r1,r4`
 - `00f26830`: `movs r2,#0x1`
-- `00f26832`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `00f26836`: `b 0x00f26844` refs: `UNCONDITIONAL_JUMP -> 00f26844`
-- `00f26844`: `movw r0,#0x5451`
-- `00f26848`: `strh r0,[r7,#-0x35]`
-- `00f2684c`: `add r0,sp,#0x20`
-- `00f2684e`: `sub.w r1,r7,#0x35`
-- `00f26852`: `movs r2,#0x2`
-- `00f26854`: `bl 0x00cdb87c` refs: `UNCONDITIONAL_CALL -> 00cdb87c`
-- `00f26858`: `str r5,[sp,#0xc]` refs: `DATA -> 014f5510` `WRITE -> Stack[-0x24c]`
-- `00f2685a`: `ldr r0,[0x00f2686c]` refs: `READ -> 00f2686c`
-- `00f2685c`: `add r1,sp,#0x2c`
-- `00f2685e`: `add r2,sp,#0x20`
-- `00f26860`: `add r0,pc`
-- `00f26862`: `ldr r5,[r0,#0x0]` refs: `READ -> 014dd95c`
-- `00f26864`: `mov r0,r5` refs: `PARAM -> 014f5518`
-- `00f26866`: `blx 0x01411ed0` refs: `UNCONDITIONAL_CALL -> 01411ed0`
-- `00f2686a`: `b 0x00f26870` refs: `UNCONDITIONAL_JUMP -> 00f26870`
-- `00f26870`: `add r0,sp,#0x20`
-- `00f26872`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
-- `00f26876`: `add r4,sp,#0x2c`
 ### Around `00f26d9c`
+- `00f26d40`: `movw r0,#0x5451`
+- `00f26d44`: `strh r0,[r7,#-0x35]`
+- `00f26d48`: `add r0,sp,#0x20`
+- `00f26d4a`: `sub.w r1,r7,#0x35`
+- `00f26d4e`: `movs r2,#0x2`
+- `00f26d50`: `bl 0x00cdb87c` refs: `UNCONDITIONAL_CALL -> 00cdb87c`
+- `00f26d54`: `ldr r0,[0x00f26d68]` refs: `READ -> 00f26d68`
+- `00f26d56`: `add r1,sp,#0x224`
+- `00f26d58`: `add r2,sp,#0x20`
+- `00f26d5a`: `add r0,pc`
+- `00f26d5c`: `ldr r5,[r0,#0x0]` refs: `READ -> 014dd934`
+- `00f26d5e`: `mov r0,r5` refs: `PARAM -> 014f5528`
+- `00f26d60`: `blx 0x01411ed0` refs: `UNCONDITIONAL_CALL -> 01411ed0`
+- `00f26d64`: `b 0x00f26d6c` refs: `UNCONDITIONAL_JUMP -> 00f26d6c`
+- `00f26d6c`: `add r0,sp,#0x20`
+- `00f26d6e`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
+- `00f26d72`: `add r0,sp,#0x224`
+- `00f26d74`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
+- `00f26d78`: `mov.w r6,#0x1e0`
+- `00f26d7c`: `adds r0,r4,r6`
 - `00f26d7e`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
 - `00f26d82`: `subs r6,#0xc`
 - `00f26d84`: `adds.w r0,r6,#0xc`
@@ -2606,6 +2626,9 @@
 - `00f26d9e`: `mov r0,r4`
 - `00f26da0`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
 - `00f26da4`: `add r0,sp,#0x2c`
+- `00f26da6`: `mov r1,r4`
+- `00f26da8`: `movs r2,#0x1`
+### Around `00f26e0c`
 - `00f26da6`: `mov r1,r4`
 - `00f26da8`: `movs r2,#0x1`
 - `00f26daa`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
@@ -2628,9 +2651,6 @@
 - `00f26dea`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 - `00f26dee`: `add r0,sp,#0x2c`
 - `00f26df0`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
-### Around `00f26e0c`
-- `00f26dee`: `add r0,sp,#0x2c`
-- `00f26df0`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f26df4`: `add r0,sp,#0x224`
 - `00f26df6`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
 - `00f26dfa`: `ldr r0,[0x00f26e20]` refs: `READ -> 00f26e20`
@@ -2645,6 +2665,9 @@
 - `00f26e0e`: `mov r0,r4`
 - `00f26e10`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
 - `00f26e14`: `add r0,sp,#0x2c`
+- `00f26e16`: `mov r1,r4`
+- `00f26e18`: `movs r2,#0x1`
+### Around `00f26e78`
 - `00f26e16`: `mov r1,r4`
 - `00f26e18`: `movs r2,#0x1`
 - `00f26e1a`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
@@ -2667,9 +2690,6 @@
 - `00f26e56`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 - `00f26e5a`: `add r0,sp,#0x2c`
 - `00f26e5c`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
-### Around `00f26e78`
-- `00f26e5a`: `add r0,sp,#0x2c`
-- `00f26e5c`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f26e60`: `add r0,sp,#0x224`
 - `00f26e62`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
 - `00f26e66`: `ldr r0,[0x00f26e8c]` refs: `READ -> 00f26e8c`
@@ -2686,6 +2706,7 @@
 - `00f26e80`: `add r0,sp,#0x2c`
 - `00f26e82`: `mov r1,r4`
 - `00f26e84`: `movs r2,#0x1`
+### Around `00f26eec`
 - `00f26e86`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
 - `00f26e8a`: `b 0x00f26e98` refs: `UNCONDITIONAL_JUMP -> 00f26e98`
 - `00f26e98`: `movs r0,#0x57`
@@ -2706,7 +2727,6 @@
 - `00f26ec2`: `b 0x00f26ec8` refs: `UNCONDITIONAL_JUMP -> 00f26ec8`
 - `00f26ec8`: `add r0,sp,#0x20`
 - `00f26eca`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
-### Around `00f26eec`
 - `00f26ece`: `add r0,sp,#0x2c`
 - `00f26ed0`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f26ed4`: `add r0,sp,#0x224`
@@ -2725,27 +2745,27 @@
 - `00f26ef4`: `add r0,sp,#0x2c`
 - `00f26ef6`: `mov r1,r5`
 - `00f26ef8`: `movs r2,#0x1`
-- `00f26efa`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `00f26efe`: `b 0x00f26f0c` refs: `UNCONDITIONAL_JUMP -> 00f26f0c`
-- `00f26f0c`: `movs r0,#0x4f`
-- `00f26f0e`: `strb.w r0,[r7,#-0x31]`
-- `00f26f12`: `ldr r0,[0x00f26f28]` refs: `READ -> 00f26f28`
-- `00f26f14`: `str.w r0,[r7,#-0x35]`
-- `00f26f18`: `add r0,sp,#0x20`
-- `00f26f1a`: `sub.w r1,r7,#0x35`
-- `00f26f1e`: `movs r2,#0x5`
-- `00f26f20`: `bl 0x00cdb87c` refs: `UNCONDITIONAL_CALL -> 00cdb87c`
-- `00f26f24`: `b 0x00f26f2c` refs: `UNCONDITIONAL_JUMP -> 00f26f2c`
-- `00f26f2c`: `ldr r0,[0x00f26f40]` refs: `READ -> 00f26f40`
-- `00f26f2e`: `add r1,sp,#0x2c`
-- `00f26f30`: `add r2,sp,#0x20`
-- `00f26f32`: `add r0,pc`
-- `00f26f34`: `ldr r5,[r0,#0x0]` refs: `READ -> 014dd94c`
-- `00f26f36`: `mov r0,r5` refs: `PARAM -> 014f5548`
-- `00f26f38`: `blx 0x01411ed0` refs: `UNCONDITIONAL_CALL -> 01411ed0`
-- `00f26f3c`: `b 0x00f26f44` refs: `UNCONDITIONAL_JUMP -> 00f26f44`
-- `00f26f44`: `add r0,sp,#0x20`
 ### Around `00f270f2`
+- `00f270a0`: `strd r1,r0,[sp,#0x34]` refs: `WRITE -> Stack[-0x224]`
+- `00f270a4`: `cbz r0,0x00f270b6` refs: `CONDITIONAL_JUMP -> 00f270b6`
+- `00f270a6`: `adds r0,#0x4`
+- `00f270a8`: `ldrex r1,[r0,#0x0]`
+- `00f270ac`: `adds r1,#0x1`
+- `00f270ae`: `strex r2,r1,[r0,#0x0]`
+- `00f270b2`: `cmp r2,#0x0`
+- `00f270b4`: `bne 0x00f270a8` refs: `CONDITIONAL_JUMP -> 00f270a8`
+- `00f270b6`: `str r6,[sp,#0x0]` refs: `DATA -> 014f5558` `WRITE -> Stack[-0x258]`
+- `00f270b8`: `movs r2,#0x2`
+- `00f270ba`: `ldr r0,[0x00f270cc]` refs: `READ -> 00f270cc`
+- `00f270bc`: `add r4,sp,#0x2c`
+- `00f270be`: `add r0,pc`
+- `00f270c0`: `mov r1,r4`
+- `00f270c2`: `ldr r5,[r0,#0x0]` refs: `READ -> 014dd954`
+- `00f270c4`: `mov r0,r5` refs: `PARAM -> 014f5560`
+- `00f270c6`: `blx 0x01411a30` refs: `UNCONDITIONAL_CALL -> 01411a30`
+- `00f270ca`: `b 0x00f270d0` refs: `UNCONDITIONAL_JUMP -> 00f270d0`
+- `00f270d0`: `movs r6,#0x8`
+- `00f270d2`: `adds r0,r4,r6`
 - `00f270d4`: `bl 0x00f0a196` refs: `UNCONDITIONAL_CALL -> 00f0a196`
 - `00f270d8`: `subs r6,#0x8`
 - `00f270da`: `adds.w r0,r6,#0x8`
@@ -2764,6 +2784,7 @@
 - `00f270fa`: `add r0,sp,#0x2c`
 - `00f270fc`: `mov r1,r4`
 - `00f270fe`: `movs r2,#0x1`
+### Around `00f2716a`
 - `00f27100`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
 - `00f27104`: `b 0x00f27114` refs: `UNCONDITIONAL_JUMP -> 00f27114`
 - `00f27114`: `ldr r0,[0x00f27128]` refs: `READ -> 00f27128`
@@ -2784,7 +2805,6 @@
 - `00f27144`: `add r0,sp,#0x20`
 - `00f27146`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 - `00f2714a`: `add r0,sp,#0x2c`
-### Around `00f2716a`
 - `00f2714c`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f27150`: `add r0,sp,#0x224`
 - `00f27152`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
@@ -2803,27 +2823,27 @@
 - `00f27172`: `add r0,sp,#0x2c`
 - `00f27174`: `mov r1,r4`
 - `00f27176`: `movs r2,#0x1`
-- `00f27178`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `00f2717c`: `b 0x00f2718c` refs: `UNCONDITIONAL_JUMP -> 00f2718c`
-- `00f2718c`: `movs r0,#0x78`
-- `00f2718e`: `strb.w r0,[r7,#-0x2d]`
-- `00f27192`: `ldr r0,[0x00f271ac]` refs: `READ -> 00f271ac`
-- `00f27194`: `str.w r0,[r7,#-0x31]`
-- `00f27198`: `ldr r0,[0x00f271b0]` refs: `READ -> 00f271b0`
-- `00f2719a`: `str.w r0,[r7,#-0x35]`
-- `00f2719e`: `add r0,sp,#0x20`
-- `00f271a0`: `sub.w r1,r7,#0x35`
-- `00f271a4`: `movs r2,#0x9`
-- `00f271a6`: `bl 0x00cdb87c` refs: `UNCONDITIONAL_CALL -> 00cdb87c`
-- `00f271aa`: `b 0x00f271b4` refs: `UNCONDITIONAL_JUMP -> 00f271b4`
-- `00f271b4`: `ldr r0,[0x00f271c8]` refs: `READ -> 00f271c8`
-- `00f271b6`: `add r1,sp,#0x2c`
-- `00f271b8`: `add r2,sp,#0x20`
-- `00f271ba`: `add r0,pc`
-- `00f271bc`: `ldr.w r11,[r0,#0x0]` refs: `READ -> 014dd9bc`
-- `00f271c0`: `mov r0,r11` refs: `PARAM -> 014f5570`
-- `00f271c2`: `blx 0x01411ed0` refs: `UNCONDITIONAL_CALL -> 01411ed0`
 ### Around `00f274da`
+- `00f27484`: `ldrd r1,r0,[r8,#0x0]` refs: `READ -> 014f5548` `READ -> 014f554c`
+- `00f27488`: `strd r1,r0,[sp,#0x34]` refs: `WRITE -> Stack[-0x224]`
+- `00f2748c`: `cbz r0,0x00f2749e` refs: `CONDITIONAL_JUMP -> 00f2749e`
+- `00f2748e`: `adds r0,#0x4`
+- `00f27490`: `ldrex r1,[r0,#0x0]`
+- `00f27494`: `adds r1,#0x1`
+- `00f27496`: `strex r2,r1,[r0,#0x0]`
+- `00f2749a`: `cmp r2,#0x0`
+- `00f2749c`: `bne 0x00f27490` refs: `CONDITIONAL_JUMP -> 00f27490`
+- `00f2749e`: `ldr r0,[0x00f274b4]` refs: `READ -> 00f274b4`
+- `00f274a0`: `add r4,sp,#0x2c`
+- `00f274a2`: `movs r2,#0x2`
+- `00f274a4`: `add r0,pc`
+- `00f274a6`: `mov r1,r4`
+- `00f274a8`: `ldr r5,[r0,#0x0]` refs: `READ -> 014dd9c4`
+- `00f274aa`: `mov r0,r5` refs: `PARAM -> 014f55a8`
+- `00f274ac`: `blx 0x01411a30` refs: `UNCONDITIONAL_CALL -> 01411a30`
+- `00f274b0`: `b 0x00f274b8` refs: `UNCONDITIONAL_JUMP -> 00f274b8`
+- `00f274b8`: `movs r6,#0x8`
+- `00f274ba`: `adds r0,r4,r6`
 - `00f274bc`: `bl 0x00f0a196` refs: `UNCONDITIONAL_CALL -> 00f0a196`
 - `00f274c0`: `subs r6,#0x8`
 - `00f274c2`: `adds.w r0,r6,#0x8`
@@ -2842,27 +2862,27 @@
 - `00f274e2`: `add r0,sp,#0x2c`
 - `00f274e4`: `mov r1,r4`
 - `00f274e6`: `movs r2,#0x1`
-- `00f274e8`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `00f274ec`: `b 0x00f274fc` refs: `UNCONDITIONAL_JUMP -> 00f274fc`
-- `00f274fc`: `movs r0,#0x23`
-- `00f274fe`: `strb.w r0,[r7,#-0x33]`
-- `00f27502`: `movw r0,#0x2221`
-- `00f27506`: `strh r0,[r7,#-0x35]`
-- `00f2750a`: `add r0,sp,#0x20`
-- `00f2750c`: `sub.w r1,r7,#0x35`
-- `00f27510`: `movs r2,#0x3`
-- `00f27512`: `bl 0x00cdb87c` refs: `UNCONDITIONAL_CALL -> 00cdb87c`
-- `00f27516`: `ldr r0,[0x00f27528]` refs: `READ -> 00f27528`
-- `00f27518`: `add r1,sp,#0x2c`
-- `00f2751a`: `add r2,sp,#0x20`
-- `00f2751c`: `add r0,pc`
-- `00f2751e`: `ldr r4,[r0,#0x0]` refs: `READ -> 014dd948`
-- `00f27520`: `mov r0,r4` refs: `PARAM -> 014f55b0`
-- `00f27522`: `blx 0x01411ed0` refs: `UNCONDITIONAL_CALL -> 01411ed0`
-- `00f27526`: `b 0x00f2752c` refs: `UNCONDITIONAL_JUMP -> 00f2752c`
-- `00f2752c`: `add r0,sp,#0x20`
-- `00f2752e`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 ### Around `00f27710`
+- `00f276c8`: `ldr r4,[0x00f27724]` refs: `READ -> 00f27724`
+- `00f276ca`: `mov r1,r6` refs: `PARAM -> 014f55c8`
+- `00f276cc`: `ldr r5,[0x00f27728]` refs: `READ -> 00f27728`
+- `00f276ce`: `add r4,pc`
+- `00f276d0`: `add r5,pc`
+- `00f276d2`: `mov r0,r4` refs: `PARAM -> 00f0a197`
+- `00f276d4`: `mov r2,r5` refs: `PARAM -> 014371d0`
+- `00f276d6`: `blx r9` refs: `COMPUTED_CALL -> 015a7004`
+- `00f276d8`: `ldr.w r1,[r11,#0x0]` refs: `READ -> 014f5570`
+- `00f276dc`: `ldr r0,[0x00f2772c]` refs: `READ -> 00f2772c`
+- `00f276de`: `ldr r2,[sp,#0x18]` refs: `PARAM -> 014f54e8` `READ -> Stack[-0x240]`
+- `00f276e0`: `add r0,pc`
+- `00f276e2`: `ldr r6,[r0,#0x0]` refs: `READ -> 014dd994`
+- `00f276e4`: `mov r0,r6` refs: `PARAM -> 014f55d0`
+- `00f276e6`: `blx 0x01411f10` refs: `UNCONDITIONAL_CALL -> 01411f10`
+- `00f276ea`: `mov r0,r4` refs: `PARAM -> 00f0a197`
+- `00f276ec`: `mov r1,r6` refs: `PARAM -> 014f55d0`
+- `00f276ee`: `mov r2,r5` refs: `PARAM -> 014371d0`
+- `00f276f0`: `blx r9` refs: `COMPUTED_CALL -> 015a7004`
+- `00f276f2`: `ldr.w r1,[r11,#0x0]` refs: `READ -> 014f5570`
 - `00f276f6`: `mov r2,r8` refs: `PARAM -> 014f55b8`
 - `00f276f8`: `ldr r0,[0x00f27730]` refs: `READ -> 00f27730`
 - `00f276fa`: `add r0,pc`
@@ -2879,6 +2899,9 @@
 - `00f27712`: `mov r0,r4`
 - `00f27714`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
 - `00f27718`: `add r0,sp,#0x2c`
+- `00f2771a`: `mov r1,r4`
+- `00f2771c`: `movs r2,#0x1`
+### Around `00f27788`
 - `00f2771a`: `mov r1,r4`
 - `00f2771c`: `movs r2,#0x1`
 - `00f2771e`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
@@ -2901,9 +2924,6 @@
 - `00f27766`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 - `00f2776a`: `add r0,sp,#0x2c`
 - `00f2776c`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
-### Around `00f27788`
-- `00f2776a`: `add r0,sp,#0x2c`
-- `00f2776c`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f27770`: `add r0,sp,#0x224`
 - `00f27772`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
 - `00f27776`: `ldr r0,[0x00f2779c]` refs: `READ -> 00f2779c`
@@ -2919,6 +2939,8 @@
 - `00f2778c`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
 - `00f27790`: `add r0,sp,#0x2c`
 - `00f27792`: `mov r1,r4`
+- `00f27794`: `movs r2,#0x1`
+### Around `00f277f6`
 - `00f27794`: `movs r2,#0x1`
 - `00f27796`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
 - `00f2779a`: `b 0x00f277a8` refs: `UNCONDITIONAL_JUMP -> 00f277a8`
@@ -2940,8 +2962,6 @@
 - `00f277d2`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 - `00f277d6`: `add r0,sp,#0x2c`
 - `00f277d8`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
-### Around `00f277f6`
-- `00f277d8`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f277dc`: `add r0,sp,#0x224`
 - `00f277de`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
 - `00f277e2`: `ldr r0,[0x00f2780c]` refs: `READ -> 00f2780c`
@@ -2957,6 +2977,9 @@
 - `00f277f8`: `mov r0,r4`
 - `00f277fa`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
 - `00f277fe`: `add r0,sp,#0x2c`
+- `00f27800`: `mov r1,r4`
+- `00f27802`: `movs r2,#0x1`
+### Around `00f27868`
 - `00f27800`: `mov r1,r4`
 - `00f27802`: `movs r2,#0x1`
 - `00f27804`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
@@ -2979,9 +3002,6 @@
 - `00f27846`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 - `00f2784a`: `add r0,sp,#0x2c`
 - `00f2784c`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
-### Around `00f27868`
-- `00f2784a`: `add r0,sp,#0x2c`
-- `00f2784c`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f27850`: `add r0,sp,#0x224`
 - `00f27852`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
 - `00f27856`: `ldr r0,[0x00f2787c]` refs: `READ -> 00f2787c`
@@ -2998,27 +3018,27 @@
 - `00f27870`: `add r0,sp,#0x2c`
 - `00f27872`: `mov r1,r4`
 - `00f27874`: `movs r2,#0x1`
-- `00f27876`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `00f2787a`: `b 0x00f27888` refs: `UNCONDITIONAL_JUMP -> 00f27888`
-- `00f27888`: `movs r0,#0x24`
-- `00f2788a`: `strb.w r0,[r7,#-0x35]`
-- `00f2788e`: `add r0,sp,#0x20`
-- `00f27890`: `sub.w r1,r7,#0x35`
-- `00f27894`: `movs r2,#0x1`
-- `00f27896`: `bl 0x00cdb87c` refs: `UNCONDITIONAL_CALL -> 00cdb87c`
-- `00f2789a`: `ldr r4,[sp,#0x1c]` refs: `READ -> Stack[-0x23c]`
-- `00f2789c`: `ldr r0,[0x00f278b0]` refs: `READ -> 00f278b0`
-- `00f2789e`: `add r1,sp,#0x2c`
-- `00f278a0`: `add r2,sp,#0x20`
-- `00f278a2`: `add r0,pc`
-- `00f278a4`: `ldr.w r11,[r0,#0x0]` refs: `READ -> 014dd9cc`
-- `00f278a8`: `mov r0,r11` refs: `PARAM -> 014f55f8`
-- `00f278aa`: `blx 0x01411ed0` refs: `UNCONDITIONAL_CALL -> 01411ed0`
-- `00f278ae`: `b 0x00f278b4` refs: `UNCONDITIONAL_JUMP -> 00f278b4`
-- `00f278b4`: `add r0,sp,#0x20`
-- `00f278b6`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
-- `00f278ba`: `add r0,sp,#0x2c`
 ### Around `00f279de`
+- `00f27988`: `ldrd r1,r0,[r11,#0x0]` refs: `READ -> 014f55f8` `READ -> 014f55fc`
+- `00f2798c`: `strd r1,r0,[sp,#0x34]` refs: `WRITE -> Stack[-0x224]`
+- `00f27990`: `cbz r0,0x00f279a2` refs: `CONDITIONAL_JUMP -> 00f279a2`
+- `00f27992`: `adds r0,#0x4`
+- `00f27994`: `ldrex r1,[r0,#0x0]`
+- `00f27998`: `adds r1,#0x1`
+- `00f2799a`: `strex r2,r1,[r0,#0x0]`
+- `00f2799e`: `cmp r2,#0x0`
+- `00f279a0`: `bne 0x00f27994` refs: `CONDITIONAL_JUMP -> 00f27994`
+- `00f279a2`: `ldr r0,[0x00f279b8]` refs: `READ -> 00f279b8`
+- `00f279a4`: `add r5,sp,#0x2c`
+- `00f279a6`: `movs r2,#0x2`
+- `00f279a8`: `add r0,pc`
+- `00f279aa`: `mov r1,r5`
+- `00f279ac`: `ldr r6,[r0,#0x0]` refs: `READ -> 014dd98c`
+- `00f279ae`: `mov r0,r6` refs: `PARAM -> 014f5608`
+- `00f279b0`: `blx 0x01411a30` refs: `UNCONDITIONAL_CALL -> 01411a30`
+- `00f279b4`: `b 0x00f279bc` refs: `UNCONDITIONAL_JUMP -> 00f279bc`
+- `00f279bc`: `movs r4,#0x8`
+- `00f279be`: `adds r0,r5,r4`
 - `00f279c0`: `bl 0x00f0a196` refs: `UNCONDITIONAL_CALL -> 00f0a196`
 - `00f279c4`: `subs r4,#0x8`
 - `00f279c6`: `adds.w r0,r4,#0x8`
@@ -3037,27 +3057,27 @@
 - `00f279e6`: `add r0,sp,#0x2c`
 - `00f279e8`: `mov r1,r4`
 - `00f279ea`: `movs r2,#0x1`
-- `00f279ec`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `00f279f0`: `movs r0,#0x2b`
-- `00f279f2`: `strb.w r0,[r7,#-0x35]`
-- `00f279f6`: `add r0,sp,#0x20`
-- `00f279f8`: `sub.w r1,r7,#0x35`
-- `00f279fc`: `movs r2,#0x1`
-- `00f279fe`: `bl 0x00cdb87c` refs: `UNCONDITIONAL_CALL -> 00cdb87c`
-- `00f27a02`: `ldr r0,[0x00f27d9c]` refs: `READ -> 00f27d9c`
-- `00f27a04`: `add r1,sp,#0x2c`
-- `00f27a06`: `add r2,sp,#0x20`
-- `00f27a08`: `add r0,pc`
-- `00f27a0a`: `ldr r5,[r0,#0x0]` refs: `READ -> 014dd964`
-- `00f27a0c`: `mov r0,r5` refs: `PARAM -> 014f5610`
-- `00f27a0e`: `blx 0x01411ed0` refs: `UNCONDITIONAL_CALL -> 01411ed0`
-- `00f27a12`: `add r0,sp,#0x20`
-- `00f27a14`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
-- `00f27a18`: `add r0,sp,#0x2c`
-- `00f27a1a`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
-- `00f27a1e`: `add r0,sp,#0x224`
-- `00f27a20`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
 ### Around `00f27b54`
+- `00f27b04`: `bne 0x00f27af8` refs: `CONDITIONAL_JUMP -> 00f27af8`
+- `00f27b06`: `ldrd r1,r0,[r11,#0x0]` refs: `READ -> 014f55f8` `READ -> 014f55fc`
+- `00f27b0a`: `strd r1,r0,[sp,#0x4c]` refs: `WRITE -> Stack[-0x20c]`
+- `00f27b0e`: `cbz r0,0x00f27b20` refs: `CONDITIONAL_JUMP -> 00f27b20`
+- `00f27b10`: `adds r0,#0x4`
+- `00f27b12`: `ldrex r1,[r0,#0x0]`
+- `00f27b16`: `adds r1,#0x1`
+- `00f27b18`: `strex r2,r1,[r0,#0x0]`
+- `00f27b1c`: `cmp r2,#0x0`
+- `00f27b1e`: `bne 0x00f27b12` refs: `CONDITIONAL_JUMP -> 00f27b12`
+- `00f27b20`: `ldr r0,[0x00f27db4]` refs: `READ -> 00f27db4`
+- `00f27b22`: `add r4,sp,#0x2c`
+- `00f27b24`: `movs r2,#0x5`
+- `00f27b26`: `add r0,pc`
+- `00f27b28`: `mov r1,r4`
+- `00f27b2a`: `ldr r5,[r0,#0x0]` refs: `READ -> 014dd928`
+- `00f27b2c`: `mov r0,r5` refs: `PARAM -> 014f5620`
+- `00f27b2e`: `blx 0x01411a30` refs: `UNCONDITIONAL_CALL -> 01411a30`
+- `00f27b32`: `movs r6,#0x20`
+- `00f27b34`: `adds r0,r4,r6`
 - `00f27b36`: `bl 0x00f0a196` refs: `UNCONDITIONAL_CALL -> 00f0a196`
 - `00f27b3a`: `subs r6,#0x8`
 - `00f27b3c`: `adds.w r0,r6,#0x8`
@@ -3074,6 +3094,9 @@
 - `00f27b56`: `mov r0,r4`
 - `00f27b58`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
 - `00f27b5c`: `add r0,sp,#0x2c`
+- `00f27b5e`: `mov r1,r4`
+- `00f27b60`: `movs r2,#0x1`
+### Around `00f27bb2`
 - `00f27b5e`: `mov r1,r4`
 - `00f27b60`: `movs r2,#0x1`
 - `00f27b62`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
@@ -3096,9 +3119,6 @@
 - `00f27b90`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 - `00f27b94`: `add r0,sp,#0x2c`
 - `00f27b96`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
-### Around `00f27bb2`
-- `00f27b94`: `add r0,sp,#0x2c`
-- `00f27b96`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f27b9a`: `add r0,sp,#0x224`
 - `00f27b9c`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
 - `00f27ba0`: `ldr r0,[0x00f27dcc]` refs: `READ -> 00f27dcc`
@@ -3111,6 +3131,11 @@
 - `00f27bb0`: `ldr r1,[0x00f27dd4]` refs: `READ -> 00f27dd4`
 - `00f27bb2`: `add r1,pc` refs: `PARAM -> 00ad5a21`
 - `00f27bb4`: `mov r0,r4`
+- `00f27bb6`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
+- `00f27bba`: `add r0,sp,#0x2c`
+- `00f27bbc`: `mov r1,r4`
+- `00f27bbe`: `movs r2,#0x1`
+### Around `00f27c0a`
 - `00f27bb6`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
 - `00f27bba`: `add r0,sp,#0x2c`
 - `00f27bbc`: `mov r1,r4`
@@ -3135,11 +3160,6 @@
 - `00f27bee`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f27bf2`: `add r0,sp,#0x224`
 - `00f27bf4`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
-### Around `00f27c0a`
-- `00f27bec`: `add r0,sp,#0x2c`
-- `00f27bee`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
-- `00f27bf2`: `add r0,sp,#0x224`
-- `00f27bf4`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
 - `00f27bf8`: `ldr r0,[0x00f27de0]` refs: `READ -> 00f27de0`
 - `00f27bfa`: `mov r1,r4` refs: `PARAM -> 014f5630`
 - `00f27bfc`: `ldr r2,[0x00f27de4]` refs: `READ -> 00f27de4`
@@ -3150,6 +3170,11 @@
 - `00f27c08`: `ldr r1,[0x00f27de8]` refs: `READ -> 00f27de8`
 - `00f27c0a`: `add r1,pc` refs: `PARAM -> 00ad5a21`
 - `00f27c0c`: `mov r0,r4`
+- `00f27c0e`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
+- `00f27c12`: `add r0,sp,#0x2c`
+- `00f27c14`: `mov r1,r4`
+- `00f27c16`: `movs r2,#0x1`
+### Around `00f27c62`
 - `00f27c0e`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
 - `00f27c12`: `add r0,sp,#0x2c`
 - `00f27c14`: `mov r1,r4`
@@ -3174,11 +3199,6 @@
 - `00f27c46`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f27c4a`: `add r0,sp,#0x224`
 - `00f27c4c`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
-### Around `00f27c62`
-- `00f27c44`: `add r0,sp,#0x2c`
-- `00f27c46`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
-- `00f27c4a`: `add r0,sp,#0x224`
-- `00f27c4c`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
 - `00f27c50`: `ldr r0,[0x00f27df0]` refs: `READ -> 00f27df0`
 - `00f27c52`: `mov r1,r4` refs: `PARAM -> 014f5638`
 - `00f27c54`: `ldr r2,[0x00f27df4]` refs: `READ -> 00f27df4`
@@ -3191,6 +3211,9 @@
 - `00f27c64`: `mov r0,r4`
 - `00f27c66`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
 - `00f27c6a`: `add r0,sp,#0x2c`
+- `00f27c6c`: `mov r1,r4`
+- `00f27c6e`: `movs r2,#0x1`
+### Around `00f27cc2`
 - `00f27c6c`: `mov r1,r4`
 - `00f27c6e`: `movs r2,#0x1`
 - `00f27c70`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
@@ -3213,9 +3236,6 @@
 - `00f27ca0`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
 - `00f27ca4`: `add r0,sp,#0x2c`
 - `00f27ca6`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
-### Around `00f27cc2`
-- `00f27ca4`: `add r0,sp,#0x2c`
-- `00f27ca6`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f27caa`: `add r0,sp,#0x224`
 - `00f27cac`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
 - `00f27cb0`: `ldr r0,[0x00f27e00]` refs: `READ -> 00f27e00`
@@ -3228,6 +3248,11 @@
 - `00f27cc0`: `ldr r1,[0x00f27e08]` refs: `READ -> 00f27e08`
 - `00f27cc2`: `add r1,pc` refs: `PARAM -> 00ad5a21`
 - `00f27cc4`: `mov r0,r4`
+- `00f27cc6`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
+- `00f27cca`: `add r0,sp,#0x2c`
+- `00f27ccc`: `mov r1,r4`
+- `00f27cce`: `movs r2,#0x1`
+### Around `00f27d1c`
 - `00f27cc6`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
 - `00f27cca`: `add r0,sp,#0x2c`
 - `00f27ccc`: `mov r1,r4`
@@ -3252,11 +3277,6 @@
 - `00f27d00`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
 - `00f27d04`: `add r0,sp,#0x224`
 - `00f27d06`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
-### Around `00f27d1c`
-- `00f27cfe`: `add r0,sp,#0x2c`
-- `00f27d00`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
-- `00f27d04`: `add r0,sp,#0x224`
-- `00f27d06`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
 - `00f27d0a`: `ldr r0,[0x00f27e10]` refs: `READ -> 00f27e10`
 - `00f27d0c`: `mov r1,r4` refs: `PARAM -> 014f5648`
 - `00f27d0e`: `ldr r2,[0x00f27e14]` refs: `READ -> 00f27e14`
@@ -3271,23 +3291,3 @@
 - `00f27d24`: `add r0,sp,#0x2c`
 - `00f27d26`: `mov r1,r4`
 - `00f27d28`: `movs r2,#0x1`
-- `00f27d2a`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
-- `00f27d2e`: `ldr r0,[0x00f27e1c]` refs: `READ -> 00f27e1c`
-- `00f27d30`: `str.w r0,[r7,#-0x35]`
-- `00f27d34`: `add r0,sp,#0x20`
-- `00f27d36`: `sub.w r1,r7,#0x35`
-- `00f27d3a`: `movs r2,#0x4`
-- `00f27d3c`: `bl 0x00cdb87c` refs: `UNCONDITIONAL_CALL -> 00cdb87c`
-- `00f27d40`: `ldr r0,[0x00f27e20]` refs: `READ -> 00f27e20`
-- `00f27d42`: `add r1,sp,#0x2c`
-- `00f27d44`: `add r2,sp,#0x20`
-- `00f27d46`: `add r0,pc`
-- `00f27d48`: `ldr r4,[r0,#0x0]` refs: `READ -> 014dd9d8`
-- `00f27d4a`: `mov r0,r4` refs: `PARAM -> 014f5650`
-- `00f27d4c`: `blx 0x01411ed0` refs: `UNCONDITIONAL_CALL -> 01411ed0`
-- `00f27d50`: `add r0,sp,#0x20`
-- `00f27d52`: `bl 0x00cb7f50` refs: `UNCONDITIONAL_CALL -> 00cb7f50`
-- `00f27d56`: `add r0,sp,#0x2c`
-- `00f27d58`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
-- `00f27d5c`: `add r0,sp,#0x224`
-- `00f27d5e`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`

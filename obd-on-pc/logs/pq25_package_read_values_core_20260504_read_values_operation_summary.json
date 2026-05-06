@@ -1,0 +1,21 @@
+[
+  {
+    "attempt_id": "",
+    "channel_parameter_profile": "carista_then_minimal",
+    "channel_parameter_status": "",
+    "channel_parameters": {},
+    "error": "could not open port 'COM10': OSError(22, 'De time-outperiode van de semafoor is verlopen.', None, 121)",
+    "listen_header": "",
+    "mode": "ReadValuesOperation::readItemAvailabilityAndValues",
+    "raw_payloads": [],
+    "read_command": "<setup>",
+    "read_command_label": "",
+    "read_counter": "",
+    "read_profile": "core",
+    "read_result": "",
+    "read_status": "",
+    "send_header": "",
+    "started": "2026-05-04T16:33:32.340",
+    "unit": "20"
+  }
+]

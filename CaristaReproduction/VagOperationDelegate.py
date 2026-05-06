@@ -39,8 +39,15 @@ from .VagEcuInfo import VagEcuInfo_getWorkshopCodeForWriting
 
 VAG_OPERATION_DELEGATE_METADATA_PREWRITE_DIDS = frozenset((CARISTA_DATE_WRITE_DID, CARISTA_WORKSHOP_CODE_WRITE_DID))
 VAG_UDS_ADAPTATION_DIRECT_READ_LIVE_REJECTIONS: dict[int, HexString] = {
+    0x0550: "7F2231",
+    0x0551: "7F2231",
     0x055C: "7F2231",
     0x055D: "7F2231",
+    0x056D: "7F2231",
+    0x0A57: "7F2231",
+    0x0A58: "7F2231",
+    0x0D01: "7F2231",
+    0x110E: "7F2231",
 }
 VAG_UDS_ADAPTATION_DIRECT_READ_LIVE_POSITIVES: dict[int, HexString] = {}
 
@@ -261,7 +268,7 @@ def VagOperationDelegate_readVagUdsAdaptationRawPlan(setting: VagUdsAdaptationSe
             "VagOperationDelegate::readRawValue dispatches raw type 7 to readVagUdsValue.",
             "VagOperationDelegate::readVagUdsValue builds ReadRawDataByIdentifierCommand from the raw address.",
             "Only a positive live raw payload is a write seed; rejected or untested reads stay read-only.",
-            "Live BCM probes returned 7F2231 for 22055C and 22055D, so those direct reads are not usable write seeds on this session.",
+            "Live BCM probes returned 7F2231 for the recovered lighting UDS-adaptation candidates in this table, so those direct reads are not usable write seeds on this session.",
         ),
     )
 

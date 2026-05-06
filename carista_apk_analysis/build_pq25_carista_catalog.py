@@ -22,7 +22,7 @@ SUPPLIED_REFERENCE_CODING = "3AB82B9F08A10000003008006C680ED000C8412F60A60000200
 READ_LONG_CODING_METHOD = "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding"
 UDS_FULL_CODING_WRITE_METHOD = (
     "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, "
-    "then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py"
+    "then 2E0600 + full 30-byte coding. The former live runner was removed after use."
 )
 COMPACT_CARISTA_WRITE_METHOD = (
     "Native Carista setting path appears to build 3B9A + 6-byte value + 4-byte rawAddress4 + tail; "

@@ -1,0 +1,321 @@
+{
+  "baud": 38400,
+  "current_coding": "3AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000",
+  "finished": "2026-05-05T13:20:59.554",
+  "port": "COM10",
+  "results": [
+    {
+      "counter_after": "1",
+      "counter_before": "0",
+      "ecu_ack_sent": "B5",
+      "expected_transmit_ack": "B1",
+      "frames": [
+        {
+          "header": "300",
+          "payload": "B1"
+        },
+        {
+          "header": "300",
+          "payload": "2000216206003AB8"
+        },
+        {
+          "header": "300",
+          "payload": "212B9F08A1000000"
+        },
+        {
+          "header": "300",
+          "payload": "223008006C680ED0"
+        },
+        {
+          "header": "300",
+          "payload": "2300C8412F60A600"
+        },
+        {
+          "header": "300",
+          "payload": "1400200000000000"
+        },
+        {
+          "header": "300",
+          "payload": "A3"
+        }
+      ],
+      "label": "current 220600",
+      "payload": "6206003AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000",
+      "request": "220600",
+      "status": "positive",
+      "transmit_ack": "B1"
+    },
+    {
+      "counter_after": "1",
+      "counter_before": "0",
+      "ecu_ack_sent": "B1",
+      "expected_transmit_ack": "B1",
+      "frames": [
+        {
+          "header": "300",
+          "payload": "B1"
+        },
+        {
+          "header": "300",
+          "payload": "1000046206011E"
+        }
+      ],
+      "label": "validation 220601",
+      "payload": "6206011E",
+      "request": "220601",
+      "status": "positive",
+      "transmit_ack": "B1"
+    },
+    {
+      "counter_after": "1",
+      "counter_before": "0",
+      "ecu_ack_sent": "B2",
+      "expected_transmit_ack": "B1",
+      "frames": [
+        {
+          "header": "300",
+          "payload": "B1"
+        },
+        {
+          "header": "300",
+          "payload": "2000096206060018"
+        },
+        {
+          "header": "300",
+          "payload": "1100018000"
+        }
+      ],
+      "label": "validation 220606",
+      "payload": "620606001800018000",
+      "request": "220606",
+      "status": "positive",
+      "transmit_ack": "B1"
+    },
+    {
+      "counter_after": "1",
+      "counter_before": "0",
+      "ecu_ack_sent": "B2",
+      "expected_transmit_ack": "B1",
+      "frames": [
+        {
+          "header": "300",
+          "payload": "B1"
+        },
+        {
+          "header": "300",
+          "payload": "20000962F1A50005"
+        },
+        {
+          "header": "300",
+          "payload": "11F3C7E719"
+        }
+      ],
+      "label": "validation 22F1A5",
+      "payload": "62F1A50005F3C7E719",
+      "request": "22F1A5",
+      "status": "positive",
+      "transmit_ack": "B1"
+    },
+    {
+      "counter_after": "1",
+      "counter_before": "0",
+      "ecu_ack_sent": "B1",
+      "expected_transmit_ack": "B1",
+      "frames": [
+        {
+          "header": "300",
+          "payload": "B1"
+        },
+        {
+          "header": "300",
+          "payload": "1000037F2231"
+        }
+      ],
+      "label": "validation 22110E",
+      "payload": "7F2231",
+      "request": "22110E",
+      "status": "negative",
+      "transmit_ack": "B1"
+    },
+    {
+      "counter_after": "1",
+      "counter_before": "0",
+      "ecu_ack_sent": "B1",
+      "expected_transmit_ack": "B1",
+      "frames": [
+        {
+          "header": "300",
+          "payload": "B1"
+        },
+        {
+          "header": "300",
+          "payload": "1000037F2231"
+        }
+      ],
+      "label": "validation 22056D",
+      "payload": "7F2231",
+      "request": "22056D",
+      "status": "negative",
+      "transmit_ack": "B1"
+    },
+    {
+      "counter_after": "1",
+      "counter_before": "0",
+      "ecu_ack_sent": "B1",
+      "expected_transmit_ack": "B1",
+      "frames": [
+        {
+          "header": "300",
+          "payload": "B1"
+        },
+        {
+          "header": "300",
+          "payload": "1000037F2231"
+        }
+      ],
+      "label": "validation 220550",
+      "payload": "7F2231",
+      "request": "220550",
+      "status": "negative",
+      "transmit_ack": "B1"
+    },
+    {
+      "counter_after": "1",
+      "counter_before": "0",
+      "ecu_ack_sent": "B1",
+      "expected_transmit_ack": "B1",
+      "frames": [
+        {
+          "header": "300",
+          "payload": "B1"
+        },
+        {
+          "header": "300",
+          "payload": "1000037F2231"
+        }
+      ],
+      "label": "validation 220551",
+      "payload": "7F2231",
+      "request": "220551",
+      "status": "negative",
+      "transmit_ack": "B1"
+    },
+    {
+      "counter_after": "1",
+      "counter_before": "0",
+      "ecu_ack_sent": "B1",
+      "expected_transmit_ack": "B1",
+      "frames": [
+        {
+          "header": "300",
+          "payload": "B1"
+        },
+        {
+          "header": "300",
+          "payload": "1000037F2231"
+        }
+      ],
+      "label": "validation 220D01",
+      "payload": "7F2231",
+      "request": "220D01",
+      "status": "negative",
+      "transmit_ack": "B1"
+    },
+    {
+      "counter_after": "1",
+      "counter_before": "0",
+      "ecu_ack_sent": "B1",
+      "expected_transmit_ack": "B1",
+      "frames": [
+        {
+          "header": "300",
+          "payload": "B1"
+        },
+        {
+          "header": "300",
+          "payload": "1000037F2231"
+        }
+      ],
+      "label": "validation 220A58",
+      "payload": "7F2231",
+      "request": "220A58",
+      "status": "negative",
+      "transmit_ack": "B1"
+    },
+    {
+      "counter_after": "1",
+      "counter_before": "0",
+      "ecu_ack_sent": "B1",
+      "expected_transmit_ack": "B1",
+      "frames": [
+        {
+          "header": "300",
+          "payload": "B1"
+        },
+        {
+          "header": "300",
+          "payload": "1000037F2231"
+        }
+      ],
+      "label": "validation 220A57",
+      "payload": "7F2231",
+      "request": "220A57",
+      "status": "negative",
+      "transmit_ack": "B1"
+    }
+  ],
+  "started": "2026-05-05T13:20:03.951",
+  "target_coding": "3AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000",
+  "validation_results": [
+    {
+      "payload": "6206011E",
+      "request": "220601",
+      "status": "positive"
+    },
+    {
+      "payload": "620606001800018000",
+      "request": "220606",
+      "status": "positive"
+    },
+    {
+      "payload": "62F1A50005F3C7E719",
+      "request": "22F1A5",
+      "status": "positive"
+    },
+    {
+      "payload": "7F2231",
+      "request": "22110E",
+      "status": "negative"
+    },
+    {
+      "payload": "7F2231",
+      "request": "22056D",
+      "status": "negative"
+    },
+    {
+      "payload": "7F2231",
+      "request": "220550",
+      "status": "negative"
+    },
+    {
+      "payload": "7F2231",
+      "request": "220551",
+      "status": "negative"
+    },
+    {
+      "payload": "7F2231",
+      "request": "220D01",
+      "status": "negative"
+    },
+    {
+      "payload": "7F2231",
+      "request": "220A58",
+      "status": "negative"
+    },
+    {
+      "payload": "7F2231",
+      "request": "220A57",
+      "status": "negative"
+    }
+  ]
+}

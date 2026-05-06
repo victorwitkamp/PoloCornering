@@ -8,8 +8,11 @@ when it is not.
 ## Rules
 
 - Use original Carista function/class name shapes for recovered behavior.
-- Keep source modules under `CaristaReproduction/`; live adapter tooling stays
-  under `obd-on-pc/`.
+- Keep all recovered Carista behavior, protocol, session, transport, and
+  operation logic under `CaristaReproduction/`.
+- `obd-on-pc/` is only for live adapter entrypoints, PowerShell helpers, and
+  logs. Do not add new Carista protocol logic there; wrappers must import the
+  package implementation.
 - Do not create a write plan for a raw setting unless the matching positive raw
   read payload is known and its length is proven.
 - Rejected or untested reads are read-only leads, not write seeds.
@@ -43,12 +46,14 @@ Duplicate-looking files are intentional unless listed otherwise:
 
 | Pair | Meaning |
 |---|---|
+| `ReadValuesOperation.py` / `Models/ReadValuesOperation.py` | ReadValuesOperation plan/report logic vs dataclasses. |
+| `CheckSettingsOperation.py` / `Models/CheckSettingsOperation.py` | CheckSettingsOperation operation-flow composition vs dataclasses. |
 | `JniBridge.py` / `Models/JniBridge.py` | JNI bridge evidence/validation logic vs dataclasses. |
 | `VagCanEcu.py` / `Models/VagCanEcu.py` | PQ25 ECU scan-plan registry vs dataclasses. |
-| `Pq25CurrentSettings.py` / `Models/Pq25CurrentSettingState.py` | Current-setting derivation logic vs the single state dataclass. |
 
-The old duplicate-looking `Models/Pq25CurrentSettings.py` filename was renamed
-to `Models/Pq25CurrentSettingState.py` to make that split explicit.
+Current-setting derivation belongs to `VagCanSettings.py` because it is derived
+from recovered `VagCanSettings` definitions; there is no separate
+`Pq25CurrentSettings` source-shaped module.
 
 ## Commands
 
@@ -56,6 +61,7 @@ Run from the workspace root:
 
 ```powershell
 python -m CaristaReproduction --ecu-scan-plan
+python -m CaristaReproduction --check-settings-operation --coding <30-byte-coding>
 python -m CaristaReproduction --customization-scan --coding <30-byte-coding>
 python -m CaristaReproduction --current-settings --coding <30-byte-coding>
 python -m CaristaReproduction --needle-sweep-settings
@@ -65,11 +71,55 @@ python -m CaristaReproduction --jni-bridge-summary
 python carista_apk_analysis/validate_carista_reproduction.py
 ```
 
-Live adapter commands are outside this package. The read-only scan path is:
+The process-oriented CLI views now print concise progress/status output by
+default and save the full evidence text under `logs/`:
 
 ```powershell
-python obd-on-pc/vw_tp20_readonly_probe.py --mode carista_ecu_scan --port COM10 --parameter-profile minimal
+python -m CaristaReproduction --check-settings-operation --coding <30-byte-coding>
+python -m CaristaReproduction --check-settings-operation --coding <30-byte-coding> --verbose
 ```
+
+Use `--verbose` to print the full evidence in the terminal, `--full-log <path>`
+to choose the saved text log path, or `--no-full-log` for a one-off no-log run.
+
+Persistent live-runner code has been removed from this package. To inspect the
+recovered `ReadValuesOperation` procedure, use:
+
+```powershell
+python -m CaristaReproduction --read-values-plan
+```
+
+To inspect the app-shaped adapter-connected scan sequence as recovered native
+symbols, use:
+
+```powershell
+python -m CaristaReproduction --check-settings-operation --coding <30-byte-coding>
+```
+
+That output composes `ConnectionManager::runCommand` /
+`Communicator::runCommand`, `CheckSettingsOperation.initNative(Operation)`,
+`GetEcuInfoOperation.initNative(Ecu, Operation)`, and
+`ReadValuesOperation::readItemAvailabilityAndValues` into the same high-level
+process the app shows as adapter connection, ECU scan, and available
+customizations. It remains an offline reproduction/evidence view, not a live
+adapter runner.
+
+Current gaps shown by the concise scan output are deliberate and narrower than
+before: native command retry/timeout handling, VAG CAN post-initialize wrapper
+call order, TP2.0 channel open retry/header extraction, keep-alive `A3`, ACK,
+NACK, and the high-level ECU-list path are now statically recovered. The
+remaining connection-side unknown is the exact human-readable AT command
+mapping behind recovered adapter wrapper offsets. The executable ECU discovery
+surface is intentionally limited to the current PQ25 BCM target for now;
+broader Carista all-ECU branches are preserved as evidence only. Carista's
+fallback decision for the Polo-proven channel-parameter payload and per-setting
+availability predicate objects are still not fully recovered.
+
+Any future adapter runner must be a temporary thin script outside
+`CaristaReproduction/`, and must be removed after the live session.
+
+Any `obd-on-pc` live command that needs this behavior should be a thin wrapper
+around `CaristaReproduction`, not a new implementation.
 
 ## Native-Exact Anchors
 
@@ -83,6 +133,34 @@ Request builders currently modeled and proof-checked:
 | `GetVagCanEcuListCommand::getRequest` | `1A9F` |
 | `ReadVagCanLongCodingCommand::getRequest` | `1A9A` |
 | VAG short adaptation routine | `31B80103`, `31BA0103`, `31B90103xx`, `31BA0103`, `32B80103` |
+
+## ECU Discovery Anchors
+
+Recovered native ECU-list symbols now represented in the scan plan:
+
+- `VagOperationDelegate::getEcuList(bool)` is a wrapper around
+  `VagOperationDelegate::readCachedEcuList(bool)`.
+- `VagOperationDelegate::readCachedEcuList(bool)` returns the cached
+  `Result<EcuList const>` when usable; otherwise it refreshes through the
+  delegate path that reaches `VagOperationDelegate::getVagEcuList(bool)`.
+- `GetVagCanEcuListCommand::getRequest` returns the VAGCAN20 list request
+  `1A9F`.
+- `VagOperationDelegate::getVagEcuList(bool)` runs `EcuListModel` commands,
+  retries an alternate list command on `obd2RequestNotSupported`, calls
+  `addBatteryRegulToEcuList`, and has a UDS/MK8 gateway branch that uses
+  `runBroadcastCommand` plus `mergeMk8EcuList`.
+- `VagOperationDelegate::sortEcuList(EcuList const&)` orders by
+  `VagEcu::values()`.
+
+By current project scope, `VagCanEcu_buildPq25ScanPlan()` exposes only one
+discoverable ECU:
+
+```text
+PQ25_BCM_UNIT_09 / TP2.0 unit 20 / expected 6R0937087K
+```
+
+Do not expand the executable discoverable set until additional recovered
+symbols/data are available and the scope is explicitly widened.
 
 Native state/result behavior reflected locally:
 
@@ -112,11 +190,60 @@ Modeled communicator behavior:
 - Multi-frame requests use 5 bytes in the first frame, then 7-byte chunks.
 - Outgoing sequence advances once per generated TP2.0 frame.
 - ECU response sequence `N` is ACKed with `B0 | ((N + 1) & 0x0F)`.
+- `VagCanCommunicator::sendAck(seq, bool)` dispatches
+  `sendAck(0xB0, (seq + 1) & 0x0F, bool)`.
+- `VagCanCommunicator::sendNack(seq)` dispatches `sendAck(0x90, seq, true)`,
+  which sends `9N`, sets timeout/spec `0x200`, and calls `receive()`.
+- `VagCanCommunicator::receiveMore()` sets timeout/spec `0x200`, sends `A3`,
+  then calls `receive()`.
+- `VagCanCommunicator::receive()` calls `Communicator::readResponses` and
+  appends returned packets to the native `receivedPackets` list at `this+0x1C`.
+- `VagCanCommunicator::parsePacket` reads a three-hex-digit CAN header, one
+  TP2.0 opcode byte, and then payload bytes. Sequenced opcodes use the low
+  nibble as the sequence number; invalid opcode classes set
+  `TRANSPORT_LAYER_ERROR`.
+- `VagCanCommunicator::readResponses` starts with an empty `receivedPackets`
+  list, receives packets, ignores `A3`, treats `A8` as channel disconnect,
+  sends `sendNack(expectedSeq)` on unexpected next sequence, calls
+  `receiveMore()` up to two times when the buffer does not grow, and extracts
+  DONE payloads from the 12-bit TP2.0 length prefix.
+- Offline replay with `carista_apk_analysis/analyze_vag_can_readresponses_evidence.py`
+  found 95/95 positive saved reads reassembled exactly to `read_result`, with
+  95/95 expected inbound `B{counter+1}` transmit ACKs.
 - Native-style write timing uses `ATST04` for non-final outgoing frames and
   `ATST20` for final/response waits in the live writer.
+- Package-owned live reads use the same `VagCanCommunicator::sendRequest` style
+  and close/reopen suspect channels instead of continuing after defaulted
+  channel-parameter setup.
 
-The exact native `getTimeoutSpec()` object is not fully reconstructed in Python;
-the package only exposes the currently useful constants and frame helpers.
+Recovered connection/setup anchors:
+
+- `VagCanCommunicator::postInitialize` skips extra setup for defective adapter
+  info, then calls wrapper offsets `0x30(1)`, `0x90(0)`, and `0x98(0)`. For
+  adapter versions at least `0x8C`, it also calls `0x38(6)`, `0xF4(0)`,
+  `0xF0(1)`, `0x8C()`, and then branches through wrapper offsets selected by
+  `0x124()` / `0x128()`.
+- `VagCanCommunicator::establishEcuComm` uses two outer attempts, sends the
+  unit-derived TP2.0 open request up to four times per outer attempt, derives
+  data-channel send/listen headers from the open response, sends channel
+  parameters up to four times, accepts parsed opcode `A1`, and sends
+  `sendDisconnect` when parameter setup fails.
+- `Communicator::runCommand<EmptyModel>` initializes if needed, retries up to
+  four attempts through `RETRY_COMMAND_STATES`, sleeps `300 ms` for no-data/busy
+  retries, adjusts timeout after response-pending, stops after two consecutive
+  `-0x0B` no-data states, and tracks final/recovered CAN error state `-0x2E`.
+- `Communicator::internalExecuteCommand<EmptyModel>` sends the command request,
+  validates status-1 hex responses, checks ECU deadlock, extracts first errors
+  with default `-0x0B`, filters to positive responses, and then calls
+  `processResponses<EmptyModel>`.
+- `ConnectionManager::runCommand<EmptyModel>` branches through native vtable
+  offset `0x14`: one path calls `internalRunCommand<EmptyModel>` and extracts a
+  broadcast result, the other path calls vtable offset `0x18` with the command
+  and `EmptyModel` typeinfo before wrapping the returned model result.
+
+The exact native `getTimeoutSpec()` object is only represented at the useful
+static shape recovered from native code: `Communicator::TimeoutSpec(0,
+vector{0}, 0)`.
 
 ## UDS DID 0600 Writer
 
@@ -135,10 +262,9 @@ The reproduction builds this plan with:
 python -m CaristaReproduction --uds-write-plan --coding <current> --target-coding <target> --workshop-code <6-byte-F1A5-payload>
 ```
 
-Important boundary: the working long-coding writer lives in
-`obd-on-pc/write_carista_uds_coding.py`. That script has changed BCM long-coding
-bytes on the car, but it is still separate from reproducing Carista's per-setting
-customization path.
+Important boundary: the previous live long-coding runner was removed. The
+persistent reproduction here is the recovered Carista request plan, not a
+standing adapter script.
 
 ## Android / JNI Bridge
 
@@ -173,6 +299,11 @@ Focused exports now prove the runtime availability/value route:
   runtime map. It calls delegate slot `0xE0` for availability, stores
   availability at `this + 0x7C`, then uses raw-address slot `0x148` and raw
   read slots for value-bearing settings.
+- `CheckSettingsOperation.initNative(Operation)` (`00CC93C8`) is the native
+  availability operation entry point recovered from the Java bridge. The local
+  `CheckSettingsOperation.py` composes this bridge with `VagCanEcu` and
+  `ReadValuesOperation`; it does not create a separate invented scan/profile
+  abstraction.
 - `VagOperationDelegate::getSettingAvailability` (`012703D0`) rejects absent or
   wrong-type ECUs before calling `getVagSettingAvailabilityForEcu`.
 - `VagOperationDelegate::getVagSettingAvailabilityForEcu` (`0127075C`) is the
@@ -195,28 +326,33 @@ Current typed `VagCanSettings` recoveries:
 |---|---|---|
 | `car_setting_cornering_lights_via_fogs_left` | `VagUdsAdaptationSetting`, DID `055C`, offset `5`, mask `FF`, choices `00/16/1E` | `22055C -> 7F2231`; not a write seed. |
 | `car_setting_cornering_lights_via_fogs_right` | `VagUdsAdaptationSetting`, DID `055D`, offset `5`, mask `FF`, choices `00/17/1E` | `22055D -> 7F2231`; not a write seed. |
-| `car_setting_coming_home_req_rls` | Mixed: `010B6B3C -> 010D8FE4 -> VagUdsAdaptationSetting`, `010B6B90 -> 010D917C -> VagCanLongCodingSetting`, plus UDS coding helpers | `220A57` only belongs to one adaptation branch; runtime branch unresolved. |
-| `car_setting_coming_home` | Mixed: `010B6BDC -> 010D92EC -> VagUdsAdaptationSetting`, `010B2040 -> 010C2700 -> VagUdsCodingSetting`, `010B3AF0 -> 010CA958 -> VagUdsCodingSetting` | `220A57` only belongs to one adaptation branch; coding packing and branch unresolved. |
+| `car_setting_coming_home_req_rls` | Mixed: `010B6B3C -> 010D8FE4 -> VagUdsAdaptationSetting`, `010B6B90 -> 010D917C -> VagCanLongCodingSetting`, plus UDS coding DID `0600` byte/mask `11/20` and `0A/04` | `220A57 -> 7F2231`; coding packing is typed, but branch selection and requested-choice encoding are unresolved. |
+| `car_setting_coming_home` | Mixed: `010B6BDC -> 010D92EC -> VagUdsAdaptationSetting`, `010B2040 -> 010C2700 -> VagUdsCodingSetting` DID `0600` byte/mask `06/02`, `010B3AF0 -> 010CA958 -> VagUdsCodingSetting` DID `0600` byte/mask `07/01` | `220A57 -> 7F2231`; coding packing is typed, but branch selection and requested-choice encoding are unresolved. |
 | `car_setting_coming_home_mode` | Mixed: `010B6C30 -> 010D9484 -> VagUdsAdaptationSetting`, `010B6C84 -> 010D9608 -> VagCanLongCodingSetting`; adaptation table uses DID `0A57`, offset `2`, mask/count `03` | Runtime branch unresolved. |
 | `car_setting_coming_home_duration` | Mixed: `010B704C -> 010DA7BC -> FullByteVagCanShortAdaptationSetting`, `010B7094 -> 010DA910 -> VagUdsAdaptationSetting`; duration values include `0A` through `3C` seconds table | Runtime branch unresolved; do not infer a write path. |
-| `car_setting_coming_leaving_home_output` | Mixed: `010B1930 -> 010C0418 -> VagUdsAdaptationSetting`, DID `110E`, offset `2`, mask `01`; second path `010B4218 -> 010CCBC8 -> VagUdsCodingSetting` | `22110E` only belongs to the adaptation path and is not live-proven; coding path packing/branch selection unresolved. |
-| `car_setting_coming_home_via_low_beams` | `010B5A98 -> 010D4140 -> VagUdsCodingSetting`, immediate `10/06` | Constructor typed, exact DID/byte/mask packing unresolved. |
-| `car_setting_coming_home_via_fogs` | `010B19D0 -> 010C0708 -> VagUdsCodingSetting`, immediate `20/06` | Constructor typed, exact DID/byte/mask packing unresolved. |
-| `car_setting_leaving_home_req_rls` | Mixed: `010B7184 -> 010DAD6C -> VagCanLongCodingSetting`, plus `010B19D0 -> 010C0708 -> VagUdsCodingSetting` | Coding packing and runtime branch unresolved. |
-| `car_setting_leaving_home` | `010B71D0 -> 010DAEDC -> VagUdsCodingSetting`, `010B0C78 -> 010BC404 -> VagUdsCodingSetting` | Constructor typed, exact DID/byte/mask packing unresolved. |
+| `car_setting_coming_leaving_home_output` | Mixed: `010B1930 -> 010C0418 -> VagUdsAdaptationSetting`, DID `110E`, offset `2`, mask `01`; second path `010B4218 -> 010CCBC8 -> VagUdsCodingSetting`, DID `0600`, byte/mask `0D/40` and `11/08` | `22110E -> 7F2231`; coding path packing is typed, but branch selection and requested-choice encoding are unresolved. |
+| `car_setting_coming_home_via_low_beams` | `010B5A98 -> 010D4140 -> VagUdsCodingSetting`, DID `0600`, byte/mask `06/10` | Constructor and packing typed; branch selection unresolved. |
+| `car_setting_coming_home_via_fogs` | `010B19D0 -> 010C0708 -> VagUdsCodingSetting`, DID `0600`, byte/mask `06/20` | Constructor and packing typed; branch selection unresolved. |
+| `car_setting_leaving_home_req_rls` | Mixed: `010B7184 -> 010DAD6C -> VagCanLongCodingSetting` byte/mask `00/20`, plus `010B19D0 -> 010C0708 -> VagUdsCodingSetting` DID `0600` byte/mask `0A/02` | Branch selection and requested-choice encoding unresolved. |
+| `car_setting_leaving_home` | `010B71D0 -> 010DAEDC -> VagUdsCodingSetting` DID `0600` byte/mask `06/04`, `010B0C78 -> 010BC404 -> VagUdsCodingSetting` DID `0600` byte/mask `07/08` | Constructor and packing typed; branch selection unresolved. |
 | `car_setting_leaving_home_duration` | Mixed: `010B1708 -> 010BF9DC -> FullByteVagCanShortAdaptationSetting`; `010B72C4/010B7318/010B7368` lead to UDS adaptation constructors; DID `0A57`, offset `5`, mask `FF` appears in one branch | Runtime branch unresolved; do not infer a write path. |
 | `car_setting_drl_via_fogs` | Mixed: UDS coding, long-coding, and `055C` offset-6 adaptation branch (`00/14`) | Runtime branch unknown; `055C` branch blocked by `22055C -> 7F2231`. |
-| `car_setting_turn_off_fogs_with_high_beam` | Mixed: UDS coding, long-coding, and adaptation branches at `0D01` / `0A58` | `220D01` / `220A58` are read-only candidates only. |
-| `car_setting_assist_dr_lights` | `010B74A0 -> 010DBC4C -> VagUdsCodingSetting`, immediate `20/16` | Constructor typed; not a write plan. |
+| `car_setting_turn_off_fogs_with_high_beam` | Mixed: UDS coding DID `0600` byte/mask `15/20`, `0E/04`, `04/02`; long-coding `11/20`; adaptation branches at `0D01` / `0A58` | `220D01` / `220A58 -> 7F2231`; coding packing is typed, but branch selection and requested-choice encoding are unresolved. |
+| `car_setting_assist_dr_lights` | `010B74A0 -> 010DBC4C -> VagUdsCodingSetting`, DID `0600`, byte/mask `16/20` | Constructor and packing typed; not a write plan. |
+
+Recovered direct refs that are not VAG/PQ25 write paths:
+
+| Setting | Native status | Safety status |
+|---|---|---|
+| `car_setting_front_fogs_with_low_beams` | `FUN_00E314FE`; `00E82930 -> 00E8FBE4 -> FordUdsSetting`; visible choice label `car_setting_low_beams` | Ford-only direct path; no PQ25 read/write method recovered. |
+| `car_setting_fogs_with_high_beam_restriction` | `FUN_00E314FE`; `00E820A8 -> 00E8D43C -> FordCodingSetting` | Ford-only direct path; use the separate VAG `turn_off_fogs_with_high_beam` recovery instead. |
+| `car_setting_turn_on_fogs_with_high_beam` | `FUN_00E314FE`; `00E820A8 -> 00E8D43C -> FordCodingSetting` | Ford-only direct path; no PQ25 read/write method recovered. |
 
 Catalog-only unresolved VAG/PQ25 lighting keys:
 
 ```text
 car_setting_left_fog_light_as
 car_setting_right_fog_light_as
-car_setting_front_fogs_with_low_beams
-car_setting_fogs_with_high_beam_restriction
-car_setting_turn_on_fogs_with_high_beam
 car_setting_pl_via_front_fog_lights
 ```
 
@@ -259,11 +395,16 @@ becomes available.
 
 ## Not Native-Exact Yet
 
-- `OperationDelegate`, `ConnectionManager`, and `Communicator` are source-shaped
-  shells, not complete native retry/timeout/run-command reproductions.
-- `VagCanCommunicator` models packet splitting and ACK helpers, not the full
-  native `readResponses`, `receiveMore`, keep-alive, NACK, or response-pending
-  state machine.
+- `OperationDelegate` is still not a complete native reproduction; enough
+  delegate callsites are modeled for the current PQ25 ReadValuesOperation and
+  UDS coding work.
+- `ConnectionManager::runCommand`, `Communicator::runCommand`, and
+  `Communicator::internalExecuteCommand` now have recovered control-flow
+  anchors, but the local functions remain evidence views rather than live
+  adapter executors.
+- `VagCanCommunicator` now models packet splitting, ACK, NACK, receiveMore,
+  postInitialize, and establishEcuComm anchors. The full branch-by-branch
+  `Communicator::readResponses` parser is still not rebuilt offline.
 - `GetVagCanEcuInfoCommand.processPayloads` exposes the recovered multi-payload
   path but does not rebuild every native submodule object.
 - `VagOperationDelegate.readEcuInfoCached`, `readVagCanEcuInfo`,
@@ -279,10 +420,9 @@ Highest-value static actions:
 1. Runtime-select the active branches for mixed CH/LH keys on `6R0937087K`,
   especially `coming_home`, `coming_home_mode`, `coming_home_duration`,
   `leaving_home_duration`, and `coming_leaving_home_output`.
-2. Resolve the coding raw address/index packing in the second
-  `coming_leaving_home_output` path now that `010B4218 -> 010CCBC8` proves a
-  `VagUdsCodingSetting` constructor and the window shows immediate pairs
-  `40/0D` and `08/11`.
+2. Resolve requested-choice encoding and runtime branch selection for the typed
+  DID `0600` coding variants, especially `coming_leaving_home_output`,
+  `coming_home_via_fogs`, and `turn_off_fogs_with_high_beam`.
 3. Resolve the concrete availability predicate/sub-object behind mixed PQ25
   lighting settings in `VagOperationDelegate::getVagSettingAvailabilityForEcu`.
 4. Trace how `car_setting_left_fog_light_as` and `car_setting_right_fog_light_as`
@@ -290,9 +430,9 @@ Highest-value static actions:
    constructor path.
 5. Runtime-select the active branches for mixed keys (`drl_via_fogs`,
    `turn_off_fogs_with_high_beam`) before any live plan.
-6. Keep read-only probes limited to proof candidates such as `220A57`, `22110E`,
-  `220D01`, and `220A58`; never promote them to writes without positive raw
-  payloads.
+6. Do not repeat the known-rejected direct reads (`220A57`, `22110E`, `220D01`,
+  `220A58`, `22055C`, `22055D`, `22056D`, `220550`, `220551`) unless a recovered
+  Carista precondition changes the read path.
 
 External markdown files under `docs/` and `carista_apk_analysis/` are retained as
 raw evidence/history. This README is the authoritative reproduction-status doc

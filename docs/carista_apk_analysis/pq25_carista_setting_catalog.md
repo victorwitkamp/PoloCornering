@@ -27,7 +27,7 @@ docs/carista_apk_analysis/pq25_carista_setting_catalog.md
 ## Current Read/Write Method Boundary
 
 - Long coding read: TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding.
-- Guarded full-coding write: Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py.
+- Guarded full-coding write: Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding. The former live runner was removed after use.
 - Native compact Carista setting write: Native Carista setting path appears to build 3B9A + 6-byte value + 4-byte rawAddress4 + tail; rawAddress4/coding type/tail are not recovered for this BCM.
 - Native UDS raw-value setting write: Native Carista type 7/8 raw-value settings dispatch to WriteDataByIdentifier 2E<DID> after F199/F198; 055C/055D type 7 direct reads returned 7F2231 live, so no safe raw payload seed is available for those settings.
 - Native adaptation/routine path: Carista VAG CAN adaptation/routine path is 31B8/31BA/31B9/31BA/32B8 with short id 0103 and long id 010A; native proof applies to raw types 0/1, not the recovered 055C/055D raw type 7 settings.

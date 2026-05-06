@@ -33,6 +33,14 @@ class UdsReadResult:
     raw: str
 
 
+@dataclass(frozen=True)
+class ElmCommandLogEntry:
+    order: int
+    phase: str
+    command: str
+    raw: str
+
+
 def normalize_hex(value: str) -> HexString:
     return re.sub(r"[^0-9A-Fa-f]", "", value).upper()
 
@@ -84,18 +92,45 @@ def read_until_prompt(ser: serial.Serial, timeout: float) -> str:
     return b"".join(chunks).decode("ascii", errors="replace")
 
 
-def send_elm(ser: serial.Serial, command: str, timeout: float, pause: float = 0.1) -> str:
+def clean_raw(raw: str) -> str:
+    return raw.replace(">", "").strip()
+
+
+def send_elm(
+    ser: serial.Serial,
+    command: str,
+    timeout: float,
+    pause: float = 0.1,
+    *,
+    phase: str = "command",
+    command_log: list[ElmCommandLogEntry] | None = None,
+) -> str:
     ser.reset_input_buffer()
     ser.write((command + "\r").encode("ascii"))
     time.sleep(pause)
-    return read_until_prompt(ser, timeout)
+    raw = read_until_prompt(ser, timeout)
+    if command_log is not None:
+        command_log.append(
+            ElmCommandLogEntry(
+                order=len(command_log) + 1,
+                phase=phase,
+                command=command,
+                raw=clean_raw(raw),
+            )
+        )
+    return raw
 
 
-def init_elm(ser: serial.Serial, timeout: float) -> list[tuple[str, str]]:
+def init_elm(
+    ser: serial.Serial,
+    timeout: float,
+    *,
+    command_log: list[ElmCommandLogEntry] | None = None,
+) -> list[tuple[str, str]]:
     commands = ("ATZ", "ATE0", "ATL0", "ATS0", "ATH1", "ATCAF1", "ATV0", "ATAL", "ATSP6", "ATDP", "ATRV")
     output: list[tuple[str, str]] = []
     for command in commands:
-        output.append((command, send_elm(ser, command, timeout, pause=0.25)))
+        output.append((command, send_elm(ser, command, timeout, pause=0.25, phase="elm_init", command_log=command_log)))
     return output
 
 
@@ -152,11 +187,13 @@ def probe(
     request_header: HexString,
     command: HexString,
     timeout: float,
+    *,
+    command_log: list[ElmCommandLogEntry] | None = None,
 ) -> UdsReadResult:
     response_header = expected_response_header(request_header)
-    send_elm(ser, f"ATSH{request_header}", timeout)
-    send_elm(ser, f"ATCRA{response_header}", timeout)
-    raw = send_elm(ser, command, timeout, pause=0.25)
+    send_elm(ser, f"ATSH{request_header}", timeout, phase="set_header", command_log=command_log)
+    send_elm(ser, f"ATCRA{response_header}", timeout, phase="set_response_filter", command_log=command_log)
+    raw = send_elm(ser, command, timeout, pause=0.25, phase="uds_read", command_log=command_log)
     frames = extract_frames(raw, response_header)
     payload = reassemble_isotp(frames)
     return UdsReadResult(
@@ -165,39 +202,71 @@ def probe(
         command=command,
         status=classify(command, raw, payload),
         payload=payload,
-        raw=raw.replace(">", "").strip(),
+        raw=clean_raw(raw),
     )
 
 
-def write_outputs(results: list[UdsReadResult], output_dir: Path, run_id: str) -> tuple[Path, Path, Path]:
+def write_outputs(
+    results: list[UdsReadResult],
+    command_log: list[ElmCommandLogEntry],
+    output_dir: Path,
+    run_id: str,
+) -> tuple[Path, Path, Path, Path]:
     output_dir.mkdir(parents=True, exist_ok=True)
     text_path = output_dir / f"{run_id}_uds_header_scan.txt"
     json_path = output_dir / f"{run_id}_uds_header_scan.json"
     csv_path = output_dir / f"{run_id}_uds_header_scan.csv"
+    command_json_path = output_dir / f"{run_id}_uds_header_scan_commands.json"
 
     lines = [
         "VAG UDS read-only header scan",
         f"Started: {datetime.now().isoformat(timespec='seconds')}",
         "Blocked services: 27, 2E, 31, 3B",
+        f"ELM command/response entries: {len(command_log)}",
+        f"UDS read results: {len(results)}",
         "",
+        "ELM command log:",
     ]
+    for entry in command_log:
+        lines.append(f"{entry.order:04d} [{entry.phase}] >>> {entry.command}")
+        lines.append(entry.raw or "<empty>")
+        lines.append("")
+
+    lines.append("UDS read results:")
     for result in results:
-        if result.status in {"positive", "negative", "other"}:
-            lines.append(
-                f"{result.request_header}->{result.response_header} {result.command}: {result.status} {result.payload}"
-            )
-            if result.raw:
-                lines.append(result.raw)
-                lines.append("")
+        lines.append(
+            f"{result.request_header}->{result.response_header} {result.command}: {result.status} {result.payload or '<empty>'}"
+        )
+        if result.raw:
+            lines.append(result.raw)
+        lines.append("")
 
     text_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     json_path.write_text(json.dumps([asdict(result) for result in results], indent=2), encoding="utf-8")
+    command_json_path.write_text(json.dumps([asdict(entry) for entry in command_log], indent=2), encoding="utf-8")
     with csv_path.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=tuple(UdsReadResult.__dataclass_fields__))
         writer.writeheader()
         for result in results:
             writer.writerow(asdict(result))
-    return text_path, json_path, csv_path
+    return text_path, json_path, csv_path, command_json_path
+
+
+def count_statuses(results: list[UdsReadResult]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for result in results:
+        counts[result.status] = counts.get(result.status, 0) + 1
+    return counts
+
+
+def render_status_counts(results: list[UdsReadResult]) -> str:
+    counts = count_statuses(results)
+    return ", ".join(f"{status}={count}" for status, count in sorted(counts.items())) or "none"
+
+
+def print_probe_result(result: UdsReadResult) -> None:
+    payload = f" {result.payload}" if result.payload else ""
+    print(f"  {result.request_header}->{result.response_header} {result.command}: {result.status}{payload}")
 
 
 def main() -> int:
@@ -210,35 +279,55 @@ def main() -> int:
     parser.add_argument("--detail-commands", type=parse_csv_hex, default=DEFAULT_DETAIL_COMMANDS)
     parser.add_argument("--output-dir", type=Path, default=Path("logs"))
     parser.add_argument("--run-id", default=datetime.now().strftime("vag_uds_scan_%Y%m%d_%H%M%S"))
+    parser.add_argument("--verbose", action="store_true", help="Print ELM init responses and responder details to the terminal.")
     args = parser.parse_args()
 
     results: list[UdsReadResult] = []
+    command_log: list[ElmCommandLogEntry] = []
     responders: set[HexString] = set()
+    print(f"Adapter: opening {args.port} at {args.baud} baud")
     with serial.Serial(args.port, args.baud, timeout=args.timeout, write_timeout=args.timeout) as ser:
-        for command, raw in init_elm(ser, args.timeout):
-            print(f">>> {command}\n{raw.replace('>', '').strip()}\n")
+        print("Adapter: initializing ELM327")
+        init_output = init_elm(ser, args.timeout, command_log=command_log)
+        if args.verbose:
+            for command, raw in init_output:
+                print(f">>> {command}\n{clean_raw(raw)}\n")
+        else:
+            print(f"Adapter: ELM initialization complete ({len(init_output)} commands)")
 
-        for header in args.headers:
+        header_count = len(args.headers)
+        print(f"Discovery: scanning {header_count} header(s) x {len(args.discovery_commands)} read command(s)")
+        for header_index, header in enumerate(args.headers, start=1):
+            if not args.verbose:
+                print(f"Discovery: header {header_index}/{header_count} {header}")
             for command in args.discovery_commands:
-                result = probe(ser, header, command, args.timeout)
+                result = probe(ser, header, command, args.timeout, command_log=command_log)
                 results.append(result)
                 if result.status in {"positive", "negative", "other"}:
                     responders.add(header)
-                    print(f"{header}->{result.response_header} {command}: {result.status} {result.payload}")
+                    print_probe_result(result)
 
-        for header in sorted(responders):
+        print(f"Discovery: complete, {len(responders)} responder header(s)")
+        detail_headers = sorted(responders)
+        if detail_headers:
+            print(f"Detail: reading {len(detail_headers)} responder header(s) x {len(args.detail_commands)} command(s)")
+        for detail_index, header in enumerate(detail_headers, start=1):
+            if not args.verbose:
+                print(f"Detail: header {detail_index}/{len(detail_headers)} {header}")
             for command in args.detail_commands:
                 if any(result.request_header == header and result.command == command for result in results):
                     continue
-                result = probe(ser, header, command, args.timeout)
+                result = probe(ser, header, command, args.timeout, command_log=command_log)
                 results.append(result)
                 if result.status in {"positive", "negative", "other"}:
-                    print(f"{header}->{result.response_header} {command}: {result.status} {result.payload}")
+                    print_probe_result(result)
 
-    text_path, json_path, csv_path = write_outputs(results, args.output_dir, args.run_id)
-    print(f"Wrote log: {text_path}")
-    print(f"Wrote JSON: {json_path}")
-    print(f"Wrote CSV: {csv_path}")
+    text_path, json_path, csv_path, command_json_path = write_outputs(results, command_log, args.output_dir, args.run_id)
+    print(f"Done: {len(results)} UDS read result(s), {len(responders)} responder header(s); {render_status_counts(results)}")
+    print(f"Full command log: {text_path}")
+    print(f"Results JSON: {json_path}")
+    print(f"Results CSV: {csv_path}")
+    print(f"Command JSON: {command_json_path}")
     return 0
 
 

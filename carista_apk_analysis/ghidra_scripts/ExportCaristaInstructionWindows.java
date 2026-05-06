@@ -47,6 +47,9 @@ public class ExportCaristaInstructionWindows extends GhidraScript {
         new Target("assist_dr_lights_ref", 0x0108252CL),
         new Target("turn_off_fogs_with_high_beam_ref_1", 0x0107F15AL),
         new Target("turn_off_fogs_with_high_beam_ref_2", 0x0107F26CL),
+        new Target("front_fogs_with_low_beams_ref", 0x00E4BCFAL),
+        new Target("fogs_with_high_beam_restriction_ref", 0x00E4DE8AL),
+        new Target("turn_on_fogs_with_high_beam_ref", 0x00E4DE9AL),
     };
 
     @Override

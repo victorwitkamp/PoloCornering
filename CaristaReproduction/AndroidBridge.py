@@ -113,4 +113,70 @@ def recovered_android_bridge_classes() -> tuple[AndroidBridgeClass, ...]:
                 AndroidBridgeMethod("isValueInterpretedAsDecimal", "(J)Z", access_flags="public native", is_native=True),
             ),
         ),
+        AndroidBridgeClass(
+            descriptor="Lwr/f;",
+            java_name="wr.f",
+            dex_file="classes2.dex",
+            methods=(
+                AndroidBridgeMethod("invokeSuspend", "(Ljava/lang/Object;)Ljava/lang/Object;"),
+                AndroidBridgeMethod("invoke", "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;"),
+            ),
+        ),
+        AndroidBridgeClass(
+            descriptor="Lwr/j;",
+            java_name="wr.j",
+            dex_file="classes2.dex",
+            methods=(AndroidBridgeMethod("O", "()V"),),
+        ),
+        AndroidBridgeClass(
+            descriptor="Lwr/n;",
+            java_name="wr.n",
+            dex_file="classes2.dex",
+            methods=(AndroidBridgeMethod("<init>", "(Ljava/lang/String;Ljt/j1;Z)V"),),
+        ),
+        AndroidBridgeClass(
+            descriptor="Lwr/p;",
+            java_name="wr.p",
+            dex_file="classes2.dex",
+            methods=(AndroidBridgeMethod("<init>", "(Ljava/lang/String;Ljava/util/List;)V"),),
+        ),
+        AndroidBridgeClass(
+            descriptor="Lwr/q;",
+            java_name="wr.q",
+            dex_file="classes2.dex",
+            methods=(AndroidBridgeMethod("<init>", "(IIILjava/lang/String;Ljava/lang/String;)V"),),
+        ),
+        AndroidBridgeClass(
+            descriptor="Lwr/r;",
+            java_name="wr.r",
+            dex_file="classes2.dex",
+            methods=(
+                AndroidBridgeMethod("<init>", "(Ljava/lang/String;Ljava/lang/String;Lwr/m;)V"),
+                AndroidBridgeMethod("a", "(Lwr/r;Ljava/lang/String;Lwr/m;I)Lwr/r;"),
+            ),
+        ),
+        AndroidBridgeClass(
+            descriptor="Lzr/f;",
+            java_name="zr.f",
+            dex_file="classes2.dex",
+            methods=(
+                AndroidBridgeMethod("<init>", "(Lcom/prizmos/carista/util/Log;Lzr/b;Lzr/d;Lzr/m;)V"),
+                AndroidBridgeMethod("a", "(Lwr/s;)Lt2/x;"),
+            ),
+        ),
+        AndroidBridgeClass(
+            descriptor="Lmi/t1;",
+            java_name="mi.t1",
+            dex_file="classes2.dex",
+            methods=(
+                AndroidBridgeMethod("U", "(J)[B"),
+                AndroidBridgeMethod("W", "([B)J"),
+            ),
+        ),
+        AndroidBridgeClass(
+            descriptor="Luc/d;",
+            java_name="uc.d",
+            dex_file="classes.dex",
+            methods=(AndroidBridgeMethod("o", "([BII)[B"),),
+        ),
     )

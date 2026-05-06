@@ -14,6 +14,7 @@ VagCanSettingsConstructorStatus: TypeAlias = Literal[
     "constructor_partial",
     "constructor_multi_path_recovered_coding_raw_address_unresolved",
     "constructor_multi_path_runtime_branch_unresolved",
+    "recovered_non_vag_ford_setting",
     "refs_only_unresolved",
     "catalog_only_unresolved",
 ]
@@ -22,6 +23,8 @@ VagCanSettingsConstructorKind: TypeAlias = Literal[
     "VagUdsCodingSetting",
     "VagCanLongCodingSetting",
     "FullByteVagCanShortAdaptationSetting",
+    "FordUdsSetting",
+    "FordCodingSetting",
     "mixed",
     "unknown",
 ]

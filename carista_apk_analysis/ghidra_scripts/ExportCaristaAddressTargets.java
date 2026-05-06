@@ -74,6 +74,7 @@ public class ExportCaristaAddressTargets extends GhidraScript {
         0x010E0DE8L,
         0x010E44E8L,
         0x010E466CL,
+        0x010E47E4L,
         0x010B0C2CL,
         0x010B0C78L,
         0x010B0CC4L,
@@ -90,6 +91,12 @@ public class ExportCaristaAddressTargets extends GhidraScript {
         0x00E8B8B4L,
         0x00E8DD54L,
         0x00E8FEECL,
+        0x00E81484L,  // helper reached near car_setting_front_fogs_with_low_beams setup
+        0x00E820A8L,  // helper reached near high-beam fog mode setup
+        0x00E82930L,  // helper reached by car_setting_front_fogs_with_low_beams construction
+        0x00E89B58L,  // callee behind 00E81484
+        0x00E8D43CL,  // callee behind 00E820A8
+        0x00E8FBE4L,  // callee behind 00E82930
         0x010CB7D8L,
         0x010C2874L,
         0x010C0418L,

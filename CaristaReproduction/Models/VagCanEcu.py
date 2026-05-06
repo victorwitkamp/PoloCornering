@@ -37,5 +37,7 @@ class VagCanEcuProbe:
 class VagCanEcuScanPlan:
     adapter: str
     protocol: str
+    discoverable_ecus: tuple[VagCanEcu, ...]
+    discovery_flow: tuple[str, ...]
     probes: tuple[VagCanEcuProbe, ...]
     unresolved: tuple[str, ...]

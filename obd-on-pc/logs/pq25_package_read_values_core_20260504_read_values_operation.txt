@@ -1,0 +1,1 @@
+ERROR: could not open port 'COM10': OSError(22, 'De time-outperiode van de semafoor is verlopen.', None, 121)

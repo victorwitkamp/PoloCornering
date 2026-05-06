@@ -46,29 +46,11 @@ byte 21 bit 2
 Both bits were live-written and verified. The visible fog/cornering behavior was
 unchanged, so they are mapped but behavior-ruled-out for the current symptom.
 
-## Working Writer
+## Historical Write Evidence
 
-Use the guarded Carista-shaped UDS writer for deliberate full long-coding writes:
-
-```text
-obd-on-pc/write_carista_uds_coding.py
-```
-
-For the next prepared lighting write, use the profile wrapper:
-
-```text
-obd-on-pc/run_next_pq25_lighting_write.ps1
-```
-
-Default dry plan:
-
-```text
-diagnostics-off-cornering -> previous-cornering-reference
-```
-
-That restores byte `19` bit `5` and byte `21` bit `5`, keeping the already
-tested cornering-reference bits. Add `-Execute` only when connected in the car
-and ready to write.
+The previous live long-coding runner was removed. Future live write/read runners
+must be temporary thin scripts that call recovered `CaristaReproduction` symbols
+and must be cleaned up after the session.
 
 Recovered Carista-shaped sequence:
 
@@ -90,7 +72,6 @@ open request: 20C00010000301
 open response: 22000D00003380301
 send header: 338
 listen header: 300
-channel params used successfully: A00F8AFF32FF -> A10F8AFF4FFF
 Carista exact parameter payload from libCarista.so: A00194FF82FF
 ACK ECU response seq N with B((N + 1) & 0x0F)
 advance outgoing counter per generated TP2.0 data frame
@@ -104,14 +85,12 @@ Write-channel recovery policy:
 - A write channel must answer TP2.0 channel parameters before any F199/F198/0600 write frame is sent.
 - If parameter setup returns A8 or only NO DATA, close the suspect channel, wait, reopen, and retry once by default.
 - If the retry still cannot negotiate parameters, stop and reset adapter/ignition before the next write attempt.
-- Do not use --allow-default-channel-parameters for BCM coding writes unless deliberately reproducing old behavior.
+- There is no default-channel fallback flag; if the Carista parameter setup does not answer, stop.
 ```
 
 This keeps the live writer close to Carista where proven: Carista-shaped write
 sequence, native frame timing, exact transmit-ACK expectation, and fresh channel
-boundaries after ECU disconnects. The exact Carista parameter payload exists in
-the `carista` / `all` profiles, but this Polo has repeatedly answered the
-known-good `A00F8AFF32FF` parameters instead.
+boundaries after ECU disconnects.
 
 ## Active Lead
 
@@ -134,18 +113,18 @@ car_setting_right_fog_light_as
 Do not flip unknown long-coding bits for those settings without a recovered
 Carista setting object, DID/adaptation key, raw tuple, or equivalent proof.
 
-## Read-Only Light Debug
+## Read-Only Carista Procedure
 
-The adapter-only light-state snapshot command is:
+Persistent live read runners were removed. To inspect recovered Carista
+`ReadValuesOperation` behavior, use:
 
 ```text
-python obd-on-pc/vw_tp20_readonly_probe.py --mode direct_sequence --port COM10 --parameter-profile carista_then_minimal --read-profile bcm_light_debug --timeout 2.5 --run-id pq25_light_debug_baseline
+python -m CaristaReproduction --read-values-plan
 ```
 
-This stays on the recovered Carista TP2.0 path, tries Carista's exact channel
-parameters before the Polo-proven fallback, and sends only Carista-recovered
-reads plus read-only status/DTC reads. It does not attempt VCDS-only measuring
-blocks or blocked routine/write services.
+Old direct probe/capture runners were removed. If a future live capture needs
+Carista behavior, add it under `CaristaReproduction` first and keep any
+`obd-on-pc` file as a thin wrapper.
 
 For broader read-only UDS module discovery, use:
 
@@ -172,11 +151,7 @@ docs/obd-on-pc/pq25_bcm_6R0937087K_longcoding_report.md
 Core scripts to keep:
 
 ```text
-obd-on-pc/vw_tp20_readonly_probe.py
 obd-on-pc/scan_vag_uds_headers.py
-obd-on-pc/collect_drive_diagnostics.ps1
-obd-on-pc/write_carista_uds_coding.py
-obd-on-pc/write_pq25_lighting_profile.py
 obd-on-pc/decode_pq25_longcoding.py
 ```
 
@@ -201,10 +176,10 @@ COM8 cheap ELM327 clone: engine only, unreliable for non-engine modules
 COM10 Carista ELM327 v1.5: correct adapter for this workflow
 ```
 
-Read-only script guardrail:
+Read-only live guardrail for any temporary runner:
 
 ```text
-obd-on-pc/vw_tp20_readonly_probe.py blocks 27..., 2E..., 31..., and 3B... services
+Do not send 27..., 2E..., 31..., or 3B... unless explicitly doing a confirmed write/routine operation.
 ```
 
 Historical compact `3B9A` research remains useful as background for Carista's

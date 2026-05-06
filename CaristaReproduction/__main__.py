@@ -4,6 +4,7 @@ import argparse
 import json
 import sys
 from dataclasses import asdict
+from datetime import datetime
 from pathlib import Path
 from typing import cast
 
@@ -11,7 +12,6 @@ if __package__ in {None, ""}:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from CaristaReproduction.CaristaClock import parse_iso_date
-from CaristaReproduction.CaristaReadValuesOperation import CaristaReadValuesOperation_buildPq25BcmPlan
 from CaristaReproduction.Commands.GetVagCanEcuInfoCommand import GetVagCanEcuInfoCommand_processEcuInfo, read_first_positive_ecu_info
 from CaristaReproduction.Commands.GetVagCanEcuInfoCommand import GetVagCanEcuInfoCommand_getRequest
 from CaristaReproduction.Commands.GetVagCanEcuListCommand import GetVagCanEcuListCommand_getRequest
@@ -26,20 +26,26 @@ from CaristaReproduction.Commands.VagCanAdaptationCommands import (
     StartReadVagCanRoutineCommand_getRequest,
     StopReadVagCanRoutineCommand_getRequest,
 )
+from CaristaReproduction.CheckSettingsOperation import CheckSettingsOperation_buildPq25BcmPlan
 from CaristaReproduction.Constants import CORNERING_FIXES
 from CaristaReproduction.JniBridge import build_jni_bridge_summary
-from CaristaReproduction.Pq25CaristaCatalog import build_pq25_customization_scan_report
+from CaristaReproduction.ReadValuesOperation import ReadValuesOperation_buildPq25BcmPlan, ReadValuesOperation_buildPq25SettingReport
 from CaristaReproduction.Renderers import (
     render_carista_process_validation,
-    render_carista_read_values_plan,
     render_carista_uds_coding_write_plan,
+    render_check_settings_operation_plan,
+    render_check_settings_operation_progress,
     render_fog_setting_candidates,
     render_jni_bridge_summary,
     render_needle_sweep_settings,
-    render_pq25_current_settings,
-    render_pq25_customization_scan,
+    render_read_values_operation_plan,
+    render_read_values_operation_plan_progress,
+    render_read_values_operation_setting_report,
+    render_read_values_operation_setting_report_progress,
+    render_vag_can_settings_current_values,
     render_vag_can_settings_setting_recoveries,
     render_vag_can_ecu_scan_plan,
+    render_vag_can_ecu_scan_plan_progress,
 )
 from CaristaReproduction.Types import CorneringFixKey
 from CaristaReproduction.VagCanEcu import VagCanEcu_buildPq25ScanPlan
@@ -88,6 +94,22 @@ def _print_request(function_name: str) -> int:
     raise ValueError(f"unknown request builder {function_name}")
 
 
+def _default_full_log_path(label: str) -> Path:
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    return Path("logs") / f"carista_reproduction_{label}_{timestamp}_full.txt"
+
+
+def _emit_process_output(label: str, full_text: str, progress_text: str, args: argparse.Namespace) -> None:
+    log_path = None
+    if not args.no_full_log:
+        log_path = args.full_log or _default_full_log_path(label)
+        log_path.parent.mkdir(parents=True, exist_ok=True)
+        log_path.write_text(full_text, encoding="utf-8")
+    print(full_text if args.verbose else progress_text, end="")
+    if log_path:
+        print(f"Full log: {log_path}")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Python reproduction of recovered Carista VAGCAN coding helpers.")
     parser.add_argument(
@@ -113,9 +135,13 @@ def main() -> int:
     parser.add_argument("--ecu-info-response", help="Optional positive 5A9B response for workflow validation.")
     parser.add_argument("--ecu-info-file", action="append", type=Path, default=[], help="JSON/text file to scan for a positive 5A9B response. Can be repeated.")
     parser.add_argument("--json-output", type=Path, help="Optional JSON output path.")
+    parser.add_argument("--full-log", type=Path, help="Optional full text log path for concise process-oriented CLI output.")
+    parser.add_argument("--no-full-log", action="store_true", help="Do not auto-save the full text log for process-oriented CLI output.")
+    parser.add_argument("--verbose", action="store_true", help="Print full evidence output to the terminal instead of concise progress output.")
     parser.add_argument("--jni-bridge-summary", action="store_true", help="Print recovered JNI/native bridge evidence and unresolved ReadValuesOperation slots.")
     parser.add_argument("--jni-export-dir", type=Path, help="Override exact-flow JNI export directory for --jni-bridge-summary.")
     parser.add_argument("--ecu-scan-plan", action="store_true", help="Print the current Carista-shaped PQ25 ECU scan plan.")
+    parser.add_argument("--check-settings-operation", action="store_true", help="Print the recovered CheckSettingsOperation -> ReadValuesOperation scan flow.")
     parser.add_argument("--read-values-plan", action="store_true", help="Print the recovered Carista ReadValuesOperation PQ25 BCM read plan.")
     parser.add_argument(
         "--needle-sweep-settings",
@@ -134,7 +160,7 @@ def main() -> int:
     )
     parser.add_argument("--current-settings", action="store_true", help="Print evidence-backed Carista-style current setting states for the supplied coding.")
     parser.add_argument("--customization-scan", action="store_true", help="Print the offline Carista-style supported customization/current-value view.")
-    parser.add_argument("--catalog-file", type=Path, help="Override pq25_carista_setting_catalog.json for --customization-scan.")
+    parser.add_argument("--catalog-file", type=Path, help="Override pq25_carista_setting_catalog.json for --customization-scan or --check-settings-operation.")
     parser.add_argument("--uds-write-plan", action="store_true", help="Print the recovered Carista UDS DID 0600 write plan.")
     parser.add_argument("--target-coding", help="Explicit target long coding for --uds-write-plan.")
     parser.add_argument(
@@ -165,14 +191,37 @@ def main() -> int:
         return 0
     if args.ecu_scan_plan:
         ecu_scan_plan = VagCanEcu_buildPq25ScanPlan()
-        print(render_vag_can_ecu_scan_plan(ecu_scan_plan), end="")
+        _emit_process_output(
+            "ecu_scan_plan",
+            render_vag_can_ecu_scan_plan(ecu_scan_plan),
+            render_vag_can_ecu_scan_plan_progress(ecu_scan_plan),
+            args,
+        )
         if args.json_output:
             args.json_output.parent.mkdir(parents=True, exist_ok=True)
             args.json_output.write_text(json.dumps(asdict(ecu_scan_plan), indent=2, sort_keys=True) + "\n", encoding="utf-8")
         return 0
+    if args.check_settings_operation:
+        coding = read_coding(args.coding, args.coding_file) if (args.coding or args.coding_file) else None
+        check_settings_operation = CheckSettingsOperation_buildPq25BcmPlan(coding, catalog_path=args.catalog_file)
+        _emit_process_output(
+            "check_settings_operation",
+            render_check_settings_operation_plan(check_settings_operation),
+            render_check_settings_operation_progress(check_settings_operation),
+            args,
+        )
+        if args.json_output:
+            args.json_output.parent.mkdir(parents=True, exist_ok=True)
+            args.json_output.write_text(json.dumps(asdict(check_settings_operation), indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        return 0
     if args.read_values_plan:
-        read_values_plan = CaristaReadValuesOperation_buildPq25BcmPlan()
-        print(render_carista_read_values_plan(read_values_plan), end="")
+        read_values_plan = ReadValuesOperation_buildPq25BcmPlan()
+        _emit_process_output(
+            "read_values_plan",
+            render_read_values_operation_plan(read_values_plan),
+            render_read_values_operation_plan_progress(read_values_plan),
+            args,
+        )
         if args.json_output:
             args.json_output.parent.mkdir(parents=True, exist_ok=True)
             args.json_output.write_text(json.dumps(asdict(read_values_plan), indent=2, sort_keys=True) + "\n", encoding="utf-8")
@@ -205,18 +254,23 @@ def main() -> int:
         coding = read_coding(args.coding, args.coding_file)
         if coding is None:
             raise ValueError("--current-settings requires --coding or --coding-file")
-        print(render_pq25_current_settings(coding), end="")
+        print(render_vag_can_settings_current_values(coding), end="")
         return 0
     if args.customization_scan:
         coding = read_coding(args.coding, args.coding_file)
         if coding is None:
             raise ValueError("--customization-scan requires --coding or --coding-file")
         report = (
-            build_pq25_customization_scan_report(coding, catalog_path=args.catalog_file)
+            ReadValuesOperation_buildPq25SettingReport(coding, catalog_path=args.catalog_file)
             if args.catalog_file
-            else build_pq25_customization_scan_report(coding)
+            else ReadValuesOperation_buildPq25SettingReport(coding)
         )
-        print(render_pq25_customization_scan(report), end="")
+        _emit_process_output(
+            "customization_scan",
+            render_read_values_operation_setting_report(report),
+            render_read_values_operation_setting_report_progress(report),
+            args,
+        )
         if args.json_output:
             args.json_output.parent.mkdir(parents=True, exist_ok=True)
             args.json_output.write_text(json.dumps(asdict(report), indent=2, sort_keys=True) + "\n", encoding="utf-8")

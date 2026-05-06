@@ -1,0 +1,219 @@
+VW PQ25 TP2.0 read-only sequencing experiment
+Started: 2026-05-04T14:38:16.882
+Mode: carista_ecu_scan
+Attempt: PQ25_BCM_UNIT_09_unit20_ctr0
+Port: COM10
+Baud: 38400
+Unit TP2.0 address: 20
+Channel parameter profile: minimal
+Blocked services: 27, 2E, 31, 3B
+
+================================================================================
+ELM initialization
+================================================================================
+[2026-05-04T14:38:24.016] >>> ATZ
+ELM327 v1.5
+------------------------------------------------------------
+[2026-05-04T14:38:24.277] >>> ATE0
+OK
+------------------------------------------------------------
+[2026-05-04T14:38:24.528] >>> ATL0
+OK
+------------------------------------------------------------
+[2026-05-04T14:38:24.779] >>> ATS0
+OK
+------------------------------------------------------------
+[2026-05-04T14:38:25.030] >>> ATH1
+OK
+------------------------------------------------------------
+[2026-05-04T14:38:25.283] >>> ATCAF0
+OK
+------------------------------------------------------------
+[2026-05-04T14:38:25.534] >>> ATV1
+OK
+------------------------------------------------------------
+[2026-05-04T14:38:25.786] >>> ATAL
+OK
+------------------------------------------------------------
+[2026-05-04T14:38:26.037] >>> ATSP6
+OK
+------------------------------------------------------------
+[2026-05-04T14:38:26.290] >>> ATDP
+ISO 15765-4 (CAN 11/500)
+------------------------------------------------------------
+[2026-05-04T14:38:26.540] >>> ATRV
+14.0V
+------------------------------------------------------------
+
+================================================================================
+Open TP2.0 channel to unit address 20
+================================================================================
+[2026-05-04T14:38:26.742] >>> ATSP6
+OK
+------------------------------------------------------------
+[2026-05-04T14:38:26.943] >>> ATCAF0
+OK
+------------------------------------------------------------
+[2026-05-04T14:38:27.144] >>> ATV1
+OK
+------------------------------------------------------------
+[2026-05-04T14:38:27.345] >>> ATAR
+OK
+------------------------------------------------------------
+[2026-05-04T14:38:27.546] >>> ATSH200
+OK
+------------------------------------------------------------
+[2026-05-04T14:38:27.748] >>> ATST0A
+OK
+------------------------------------------------------------
+[2026-05-04T14:38:28.450] >>> 20C00010000301
+22000D00003380301
+FRAME 2026-05-04T14:38:28.450 220 00D00003380301 [TP2.0 application/control frame type=0 seq=0]
+------------------------------------------------------------
+Opened TP2.0 channel: send=338, listen=300
+Trying TP2.0 parameter setup: minimal-fast payload=A00F8AFF32FF
+[2026-05-04T14:38:28.653] >>> ATST32
+OK
+------------------------------------------------------------
+[2026-05-04T14:38:28.855] >>> ATSH338
+OK
+------------------------------------------------------------
+[2026-05-04T14:38:29.757] >>> A00F8AFF32FF (known-good minimal TP2.0 channel parameter request for this Polo)
+NO DATA
+------------------------------------------------------------
+TP2.0 parameter read did not answer; continuing with conservative defaults.
+[2026-05-04T14:38:29.909] >>> ATST32
+OK
+------------------------------------------------------------
+[2026-05-04T14:38:30.061] >>> ATSH338
+OK
+------------------------------------------------------------
+[2026-05-04T14:38:30.211] >>> ATCRA300
+OK
+------------------------------------------------------------
+
+================================================================================
+Carista ECU scan: PQ25_BCM_UNIT_09 / Central electronics / BCM / J519
+================================================================================
+Expected part: 6R0937087K
+Expected component: BCM PQ25 H+4
+This mode is read-only and uses recovered Carista request builders where available.
+
+================================================================================
+Carista scan read: counter=0, request=1A9B
+================================================================================
+Native builder: GetVagCanEcuInfoCommand::getRequest
+Purpose: VAGCAN20 ECU metadata/cache read; status=native_builder_recovered; setting=<ecu_info>
+[2026-05-04T14:38:30.214] TP2.0 application request counter=0 command=1A9B (ReadValuesOperation <ecu_info>: GetVagCanEcuInfoCommand::getRequest; path=VAGCAN20 ECU metadata/cache read; status=native_builder_recovered)
+[2026-05-04T14:38:30.915] >>> 1000021A9B
+NO DATA
+------------------------------------------------------------
+
+================================================================================
+Carista scan read: counter=1, request=1A9F
+================================================================================
+Native builder: GetVagCanEcuListCommand::getRequest
+Purpose: VAGCAN20 ECU list/info read; status=native_builder_recovered; setting=<ecu_list>
+[2026-05-04T14:38:30.916] TP2.0 application request counter=1 command=1A9F (ReadValuesOperation <ecu_list>: GetVagCanEcuListCommand::getRequest; path=VAGCAN20 ECU list/info read; status=native_builder_recovered)
+[2026-05-04T14:38:31.617] >>> 1100021A9F
+NO DATA
+------------------------------------------------------------
+
+================================================================================
+Carista scan read: counter=2, request=1A9A
+================================================================================
+Native builder: ReadVagCanLongCodingCommand::getRequest
+Purpose: VAGCAN20 long-coding read/cache path; status=native_builder_recovered; setting=<long_coding_cache>
+[2026-05-04T14:38:31.618] TP2.0 application request counter=2 command=1A9A (ReadValuesOperation <long_coding_cache>: ReadVagCanLongCodingCommand::getRequest; path=VAGCAN20 long-coding read/cache path; status=native_builder_recovered)
+[2026-05-04T14:38:32.319] >>> 1200021A9A
+NO DATA
+------------------------------------------------------------
+
+================================================================================
+Carista scan read: counter=3, request=220600
+================================================================================
+Native builder: ReadDataByIdentifierCommand(0600) / readVagUdsCodingValue
+Purpose: UDS coding current-value read on TP2.0 unit 09; status=live_positive_primary_coding_read; setting=<uds_coding_0600>
+[2026-05-04T14:38:32.320] TP2.0 application request counter=3 command=220600 (ReadValuesOperation <uds_coding_0600>: ReadDataByIdentifierCommand(0600) / readVagUdsCodingValue; path=UDS coding current-value read on TP2.0 unit 09; status=live_positive_primary_coding_read)
+[2026-05-04T14:38:33.022] >>> 130003220600
+NO DATA
+------------------------------------------------------------
+
+================================================================================
+Carista scan read: counter=4, request=22110E
+================================================================================
+Native builder: VagCanSettings::getSettings/car_setting_coming_leaving_home_output
+Purpose: ReadValuesOperation raw-value candidate from recovered Play 9.8.3 x86 setting constructor; status=unverified_live; setting=car_setting_coming_leaving_home_output
+[2026-05-04T14:38:33.023] TP2.0 application request counter=4 command=22110E (VagCanSettings::getSettings Play 9.8.3 x86 car_setting_coming_leaving_home_output: Coming/leaving-home output selector adaptation/coding candidate; status=unverified_live)
+[2026-05-04T14:38:33.724] >>> 14000322110E
+NO DATA
+------------------------------------------------------------
+
+================================================================================
+Carista scan read: counter=5, request=22056D
+================================================================================
+Native builder: VagCanSettings::getSettings/car_setting_coming_home_via_fogs
+Purpose: ReadValuesOperation raw-value candidate from recovered Play 9.8.3 x86 setting constructor; status=unverified_live; setting=car_setting_coming_home_via_fogs
+[2026-05-04T14:38:33.728] TP2.0 application request counter=5 command=22056D (VagCanSettings::getSettings Play 9.8.3 x86 car_setting_coming_home_via_fogs: Coming-home via fogs nearby UDS adaptation candidate; status=unverified_live)
+[2026-05-04T14:38:34.429] >>> 15000322056D
+NO DATA
+------------------------------------------------------------
+
+================================================================================
+Carista scan read: counter=6, request=220550
+================================================================================
+Native builder: VagCanSettings::getSettings/car_setting_coming_home_via_fogs
+Purpose: ReadValuesOperation raw-value candidate from recovered Play 9.8.3 x86 setting constructor; status=unverified_live; setting=car_setting_coming_home_via_fogs
+[2026-05-04T14:38:34.431] TP2.0 application request counter=6 command=220550 (VagCanSettings::getSettings Play 9.8.3 x86 car_setting_coming_home_via_fogs: Coming-home via fogs nearby raw channel candidate; status=unverified_live)
+[2026-05-04T14:38:35.132] >>> 160003220550
+NO DATA
+------------------------------------------------------------
+
+================================================================================
+Carista scan read: counter=7, request=220551
+================================================================================
+Native builder: VagCanSettings::getSettings/car_setting_coming_home_via_fogs
+Purpose: ReadValuesOperation raw-value candidate from recovered Play 9.8.3 x86 setting constructor; status=unverified_live; setting=car_setting_coming_home_via_fogs
+[2026-05-04T14:38:35.135] TP2.0 application request counter=7 command=220551 (VagCanSettings::getSettings Play 9.8.3 x86 car_setting_coming_home_via_fogs: Coming-home via fogs nearby raw channel candidate; status=unverified_live)
+[2026-05-04T14:38:35.836] >>> 170003220551
+NO DATA
+------------------------------------------------------------
+
+================================================================================
+Carista scan read: counter=8, request=220D01
+================================================================================
+Native builder: VagCanSettings::getSettings/car_setting_turn_off_fogs_with_high_beam
+Purpose: ReadValuesOperation raw-value candidate from recovered Play 9.8.3 x86 setting constructor; status=unverified_live; setting=car_setting_turn_off_fogs_with_high_beam
+[2026-05-04T14:38:35.837] TP2.0 application request counter=8 command=220D01 (VagCanSettings::getSettings Play 9.8.3 x86 car_setting_turn_off_fogs_with_high_beam: Turn-off-fogs-with-high-beam UDS adaptation candidate; status=unverified_live)
+[2026-05-04T14:38:36.538] >>> 180003220D01
+NO DATA
+------------------------------------------------------------
+
+================================================================================
+Carista scan read: counter=9, request=220A58
+================================================================================
+Native builder: VagCanSettings::getSettings/car_setting_turn_off_fogs_with_high_beam
+Purpose: ReadValuesOperation raw-value candidate from recovered Play 9.8.3 x86 setting constructor; status=unverified_live; setting=car_setting_turn_off_fogs_with_high_beam
+[2026-05-04T14:38:36.540] TP2.0 application request counter=9 command=220A58 (VagCanSettings::getSettings Play 9.8.3 x86 car_setting_turn_off_fogs_with_high_beam: Turn-off-fogs-with-high-beam nearby UDS adaptation candidate; status=unverified_live)
+[2026-05-04T14:38:37.241] >>> 190003220A58
+NO DATA
+------------------------------------------------------------
+
+================================================================================
+Close TP2.0 channel
+================================================================================
+[2026-05-04T14:38:37.394] >>> ATSH338
+OK
+------------------------------------------------------------
+[2026-05-04T14:38:37.695] >>> A8 (TP2.0 disconnect/close frame)
+NO DATA
+------------------------------------------------------------
+[2026-05-04T14:38:37.848] >>> ATSP6
+OK
+------------------------------------------------------------
+[2026-05-04T14:38:37.999] >>> ATCAF1
+OK
+------------------------------------------------------------
+[2026-05-04T14:38:38.152] >>> ATV0
+OK
+------------------------------------------------------------

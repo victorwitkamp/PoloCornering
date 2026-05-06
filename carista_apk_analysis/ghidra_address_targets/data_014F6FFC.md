@@ -1,0 +1,672 @@
+# Data Target `014f6ffc`
+
+## Symbols
+- `Label` `VagWhitelists::CENTRAL_ELEC_1S`
+- `Label` `_ZN13VagWhitelists15CENTRAL_ELEC_1SE`
+
+## Memory Bytes
+<unreadable: MemoryAccessException: Unable to read bytes at ram:014f6ffc>
+
+## Direct References To This Address
+- `EXTERNAL` from `Entry Point` in `<no function>`
+- `DATA` from `014de4a4` in `<no function>`
+- `DATA` from `01062460` in `FUN_0105f6c0 @ 0105f6c0`
+- `PARAM` from `01062450` in `FUN_0105f6c0 @ 0105f6c0`
+- `PARAM` from `0107c744` in `FUN_0105f6c0 @ 0105f6c0`
+- `READ` from `0107ef92` in `FUN_0105f6c0 @ 0105f6c0`
+- `PARAM` from `01081198` in `FUN_0105f6c0 @ 0105f6c0`
+- `PARAM` from `01082770` in `FUN_0105f6c0 @ 0105f6c0`
+- `PARAM` from `01083b72` in `FUN_0105f6c0 @ 0105f6c0`
+- `PARAM` from `0108652e` in `FUN_0105f6c0 @ 0105f6c0`
+- `PARAM` from `0108656e` in `FUN_0105f6c0 @ 0105f6c0`
+- `PARAM` from `01087466` in `FUN_0105f6c0 @ 0105f6c0`
+- `READ` from `01088220` in `FUN_0105f6c0 @ 0105f6c0`
+- `READ` from `010919a2` in `FUN_0105f6c0 @ 0105f6c0`
+- `READ` from `010920d0` in `FUN_0105f6c0 @ 0105f6c0`
+- `PARAM` from `01168af4` in `_INIT_138 @ 01156090`
+- `PARAM` from `01168b18` in `_INIT_138 @ 01156090`
+- `PARAM` from `01168b28` in `_INIT_138 @ 01156090`
+
+## Instructions At Direct Reference Sites
+- `01062460`: `str r2,[sp,#0x148]`
+- `01062450`: `ldr r2,[r0,#0x0]`
+- `0107c744`: `ldr r2,[sp,#0x148]`
+- `0107ef92`: `ldrd r1,r0,[r0,#0x0]`
+- `01081198`: `ldr r2,[sp,#0x148]`
+- `01082770`: `ldr r2,[sp,#0x148]`
+- `01083b72`: `ldr r2,[sp,#0x148]`
+- `0108652e`: `ldr r2,[sp,#0x148]`
+- `0108656e`: `ldr r2,[sp,#0x148]`
+- `01087466`: `ldr r2,[sp,#0x148]`
+- `01088220`: `ldrd r1,r0,[r0,#0x0]`
+- `010919a2`: `ldrd r1,r0,[r0,#0x0]`
+- `010920d0`: `ldrd r1,r0,[r0,#0x0]`
+- `01168af4`: `mov r0,r6`
+- `01168b18`: `mov r1,r6`
+- `01168b28`: `mov r2,r6`
+
+## Local Instruction Windows
+### Around `01062460`
+- `01062400`: `ldr r1,[sp,#0x214]` refs: `PARAM -> 014f62d4` `READ -> Stack[0x214]`
+- `01062402`: `bl 0x010b1cf4` refs: `UNCONDITIONAL_CALL -> 010b1cf4`
+- `01062406`: `ldr.w r0,[r6,#0x790]`
+- `0106240a`: `ldr.w r1,[r6,#0x794]`
+- `0106240e`: `add r2,sp,#0x17c`
+- `01062410`: `add.w r2,r2,#0x16a00`
+- `01062414`: `str.w r4,[r6,#0x790]`
+- `01062418`: `str.w r4,[r6,#0x794]`
+- `0106241c`: `str.w r0,[r2,#0x750]`
+- `01062420`: `movs r0,#0x11`
+- `01062422`: `str.w r1,[r2,#0x754]`
+- `01062426`: `movs r1,#0x40`
+- `01062428`: `str.w r1,[r6,#0x77c]`
+- `0106242c`: `str.w r0,[r6,#0x780]`
+- `01062430`: `add r0,sp,#0x10c`
+- `01062432`: `add.w r0,r0,#0x17000`
+- `01062436`: `add.w r8,r0,#0x1c8`
+- `0106243a`: `ldr r0,[0x01062468]` refs: `READ -> 01062468`
+- `0106243c`: `add r1,sp,#0x84`
+- `0106243e`: `add.w r1,r1,#0xbd00`
+- `01062442`: `add r0,pc`
+- `01062444`: `strd r1,r0,[sp,#0x0]` refs: `DATA -> 0075f8a9` `WRITE -> Stack[0x0]`
+- `01062448`: `ldr r0,[sp,#0x254]` refs: `READ -> Stack[0x254]`
+- `0106244a`: `str r0,[sp,#0x8]` refs: `DATA -> 014f1fd8` `WRITE -> Stack[0x8]`
+- `0106244c`: `ldr r0,[0x0106246c]` refs: `READ -> 0106246c`
+- `0106244e`: `add r0,pc`
+- `01062450`: `ldr r2,[r0,#0x0]` refs: `READ -> 014de4a4` `PARAM -> 014f6ffc`
+- `01062452`: `add r0,sp,#0x8c`
+- `01062454`: `add r1,sp,#0x88`
+- `01062456`: `add.w r0,r0,#0xbd00`
+- `0106245a`: `add.w r3,r1,#0xbd00`
+- `0106245e`: `ldr r1,[sp,#0x240]` refs: `PARAM -> 014f638c` `READ -> Stack[0x240]`
+- `01062460`: `str r2,[sp,#0x148]` refs: `DATA -> 014f6ffc` `WRITE -> Stack[0x148]`
+- `01062462`: `bl 0x010b1d40` refs: `UNCONDITIONAL_CALL -> 010b1d40`
+- `01062466`: `b 0x01062470` refs: `UNCONDITIONAL_JUMP -> 01062470`
+- `01062470`: `ldr.w r1,[r6,#0x784]`
+- `01062474`: `ldr r0,[r1,#0x0]`
+- `01062476`: `ldr r2,[r0,#0x30]`
+### Around `01062450`
+- `010623f0`: `str r5,[sp,#0x0]` refs: `DATA -> 00b7c4ac` `WRITE -> Stack[0x0]`
+- `010623f2`: `str r0,[sp,#0x8]` refs: `DATA -> 014f61c0` `WRITE -> Stack[0x8]`
+- `010623f4`: `add r0,sp,#0x98`
+- `010623f6`: `add r1,sp,#0x94`
+- `010623f8`: `add.w r0,r0,#0xbd00`
+- `010623fc`: `add.w r3,r1,#0xbd00`
+- `01062400`: `ldr r1,[sp,#0x214]` refs: `PARAM -> 014f62d4` `READ -> Stack[0x214]`
+- `01062402`: `bl 0x010b1cf4` refs: `UNCONDITIONAL_CALL -> 010b1cf4`
+- `01062406`: `ldr.w r0,[r6,#0x790]`
+- `0106240a`: `ldr.w r1,[r6,#0x794]`
+- `0106240e`: `add r2,sp,#0x17c`
+- `01062410`: `add.w r2,r2,#0x16a00`
+- `01062414`: `str.w r4,[r6,#0x790]`
+- `01062418`: `str.w r4,[r6,#0x794]`
+- `0106241c`: `str.w r0,[r2,#0x750]`
+- `01062420`: `movs r0,#0x11`
+- `01062422`: `str.w r1,[r2,#0x754]`
+- `01062426`: `movs r1,#0x40`
+- `01062428`: `str.w r1,[r6,#0x77c]`
+- `0106242c`: `str.w r0,[r6,#0x780]`
+- `01062430`: `add r0,sp,#0x10c`
+- `01062432`: `add.w r0,r0,#0x17000`
+- `01062436`: `add.w r8,r0,#0x1c8`
+- `0106243a`: `ldr r0,[0x01062468]` refs: `READ -> 01062468`
+- `0106243c`: `add r1,sp,#0x84`
+- `0106243e`: `add.w r1,r1,#0xbd00`
+- `01062442`: `add r0,pc`
+- `01062444`: `strd r1,r0,[sp,#0x0]` refs: `DATA -> 0075f8a9` `WRITE -> Stack[0x0]`
+- `01062448`: `ldr r0,[sp,#0x254]` refs: `READ -> Stack[0x254]`
+- `0106244a`: `str r0,[sp,#0x8]` refs: `DATA -> 014f1fd8` `WRITE -> Stack[0x8]`
+- `0106244c`: `ldr r0,[0x0106246c]` refs: `READ -> 0106246c`
+- `0106244e`: `add r0,pc`
+- `01062450`: `ldr r2,[r0,#0x0]` refs: `READ -> 014de4a4` `PARAM -> 014f6ffc`
+- `01062452`: `add r0,sp,#0x8c`
+- `01062454`: `add r1,sp,#0x88`
+- `01062456`: `add.w r0,r0,#0xbd00`
+- `0106245a`: `add.w r3,r1,#0xbd00`
+- `0106245e`: `ldr r1,[sp,#0x240]` refs: `PARAM -> 014f638c` `READ -> Stack[0x240]`
+### Around `0107c744`
+- `0107c6e4`: `add r0,pc`
+- `0107c6e6`: `strd r1,r0,[sp,#0x0]` refs: `DATA -> 00c47ffe` `WRITE -> Stack[0x0]`
+- `0107c6ea`: `add r0,sp,#0x38`
+- `0107c6ec`: `add r1,sp,#0x34`
+- `0107c6ee`: `ldr r2,[sp,#0x194]` refs: `PARAM -> 014f711c` `READ -> Stack[0x194]`
+- `0107c6f0`: `add.w r3,r1,#0x6500`
+- `0107c6f4`: `ldr r1,[sp,#0x240]` refs: `PARAM -> 014f638c` `READ -> Stack[0x240]`
+- `0107c6f6`: `add.w r0,r0,#0x6500`
+- `0107c6fa`: `bl 0x010b3ffc` refs: `UNCONDITIONAL_CALL -> 010b3ffc`
+- `0107c6fe`: `b 0x0107c704` refs: `UNCONDITIONAL_JUMP -> 0107c704`
+- `0107c704`: `ldrd r0,r1,[r10,#0x2c8]`
+- `0107c708`: `add r3,sp,#0x10`
+- `0107c70a`: `add.w r3,r3,#0xf700`
+- `0107c70e`: `movs r2,#0x0`
+- `0107c710`: `strd r2,r2,[r10,#0x2c8]`
+- `0107c714`: `str.w r0,[r3,#0x9e4]`
+- `0107c718`: `movs r0,#0xc`
+- `0107c71a`: `str.w r1,[r3,#0x9e8]`
+- `0107c71e`: `movs r1,#0x10`
+- `0107c720`: `strd r1,r0,[r10,#0x29c]`
+- `0107c724`: `add r0,sp,#0xf4`
+- `0107c726`: `add.w r0,r0,#0x10000`
+- `0107c72a`: `add.w r11,r0,#0x8`
+- `0107c72e`: `ldr r5,[0x0107c758]` refs: `READ -> 0107c758`
+- `0107c730`: `add r0,sp,#0xc`
+- `0107c732`: `add.w r0,r0,#0x6500`
+- `0107c736`: `add r5,pc`
+- `0107c738`: `strd r0,r5,[sp,#0x0]` refs: `DATA -> 006cd45a` `WRITE -> Stack[0x0]`
+- `0107c73c`: `ldr r0,[sp,#0x254]` refs: `READ -> Stack[0x254]`
+- `0107c73e`: `str r0,[sp,#0x8]` refs: `DATA -> 014f1fd8` `WRITE -> Stack[0x8]`
+- `0107c740`: `add r0,sp,#0x14`
+- `0107c742`: `add r1,sp,#0x10`
+- `0107c744`: `ldr r2,[sp,#0x148]` refs: `PARAM -> 014f6ffc` `READ -> Stack[0x148]`
+- `0107c746`: `add.w r3,r1,#0x6500`
+- `0107c74a`: `ldr r1,[sp,#0x240]` refs: `PARAM -> 014f638c` `READ -> Stack[0x240]`
+- `0107c74c`: `add.w r0,r0,#0x6500`
+- `0107c750`: `bl 0x010b0d5c` refs: `UNCONDITIONAL_CALL -> 010b0d5c`
+- `0107c754`: `b 0x0107c75c` refs: `UNCONDITIONAL_JUMP -> 0107c75c`
+### Around `0107ef92`
+- `0107ef38`: `strd r0,r4,[sp,#0x0]` refs: `DATA -> 00745baa` `WRITE -> Stack[0x0]`
+- `0107ef3c`: `ldr r0,[sp,#0x254]` refs: `READ -> Stack[0x254]`
+- `0107ef3e`: `str r0,[sp,#0x8]` refs: `DATA -> 014f1fd8` `WRITE -> Stack[0x8]`
+- `0107ef40`: `add r0,sp,#0x34`
+- `0107ef42`: `add r1,sp,#0x30`
+- `0107ef44`: `ldr r2,[sp,#0x7c]` refs: `PARAM -> 014f70ec` `READ -> Stack[0x7c]`
+- `0107ef46`: `add.w r3,r1,#0x5b00`
+- `0107ef4a`: `ldr r1,[sp,#0x240]` refs: `PARAM -> 014f638c` `READ -> Stack[0x240]`
+- `0107ef4c`: `add.w r0,r0,#0x5b00`
+- `0107ef50`: `bl 0x010b839c` refs: `UNCONDITIONAL_CALL -> 010b839c`
+- `0107ef54`: `ldr.w r1,[r6,#0x8e4]`
+- `0107ef58`: `ldr r0,[r1,#0x0]`
+- `0107ef5a`: `ldr r2,[r0,#0x30]`
+- `0107ef5c`: `mov r0,r11`
+- `0107ef5e`: `blx r2`
+- `0107ef60`: `ldr r0,[sp,#0x1c8]` refs: `READ -> Stack[0x1c8]`
+- `0107ef62`: `ldrd r1,r0,[r0,#0x0]` refs: `READ -> 014f6fec` `READ -> 014f6ff0`
+- `0107ef66`: `add r2,sp,#0x10`
+- `0107ef68`: `add.w r2,r2,#0xf700`
+- `0107ef6c`: `str.w r1,[r2,#0x400]`
+- `0107ef70`: `str.w r0,[r2,#0x404]`
+- `0107ef74`: `cbz r0,0x0107ef86` refs: `CONDITIONAL_JUMP -> 0107ef86`
+- `0107ef76`: `adds r0,#0x4`
+- `0107ef78`: `ldrex r1,[r0,#0x0]`
+- `0107ef7c`: `adds r1,#0x1`
+- `0107ef7e`: `strex r2,r1,[r0,#0x0]`
+- `0107ef82`: `cmp r2,#0x0`
+- `0107ef84`: `bne 0x0107ef78` refs: `CONDITIONAL_JUMP -> 0107ef78`
+- `0107ef86`: `add r0,sp,#0xf4`
+- `0107ef88`: `add.w r0,r0,#0x10000`
+- `0107ef8c`: `add.w r11,r0,#0x210`
+- `0107ef90`: `ldr r0,[sp,#0x148]` refs: `READ -> Stack[0x148]`
+- `0107ef92`: `ldrd r1,r0,[r0,#0x0]` refs: `READ -> 014f6ffc` `READ -> 014f7000`
+- `0107ef96`: `add r2,sp,#0x10`
+- `0107ef98`: `add.w r2,r2,#0xf700`
+- `0107ef9c`: `str.w r1,[r2,#0x408]`
+- `0107efa0`: `str.w r0,[r2,#0x40c]`
+- `0107efa4`: `cbz r0,0x0107efb6` refs: `CONDITIONAL_JUMP -> 0107efb6`
+### Around `01081198`
+- `0108113c`: `str r0,[sp,#0x1f0]` refs: `WRITE -> Stack[0x1f0]`
+- `0108113e`: `add r0,sp,#0x6c`
+- `01081140`: `add.w r0,r0,#0x5380`
+- `01081144`: `strd r0,r4,[sp,#0x0]` refs: `DATA -> 00b7e2e1` `WRITE -> Stack[0x0]`
+- `01081148`: `ldr r0,[sp,#0x24c]` refs: `READ -> Stack[0x24c]`
+- `0108114a`: `str r0,[sp,#0x8]` refs: `DATA -> 014f1ff0` `WRITE -> Stack[0x8]`
+- `0108114c`: `add r0,sp,#0x74`
+- `0108114e`: `add r1,sp,#0x70`
+- `01081150`: `ldr r2,[sp,#0x1c0]` refs: `PARAM -> 014f70d4` `READ -> Stack[0x1c0]`
+- `01081152`: `add.w r3,r1,#0x5380`
+- `01081156`: `ldr r1,[sp,#0x250]` refs: `PARAM -> 014f7ad8` `READ -> Stack[0x250]`
+- `01081158`: `add.w r0,r0,#0x5380`
+- `0108115c`: `bl 0x010b82b0` refs: `UNCONDITIONAL_CALL -> 010b82b0`
+- `01081160`: `ldrd r0,r1,[r6,#0x1a4]`
+- `01081164`: `add r3,sp,#0x10`
+- `01081166`: `add.w r3,r3,#0xf700`
+- `0108116a`: `movs r2,#0x0`
+- `0108116c`: `strd r2,r2,[r6,#0x1a4]`
+- `01081170`: `str.w r0,[r3,#0xd8c]`
+- `01081174`: `movs r0,#0x1b`
+- `01081176`: `str.w r1,[r3,#0xd90]`
+- `0108117a`: `str.w r0,[r6,#0x190]`
+- `0108117e`: `add r0,sp,#0xf4`
+- `01081180`: `add.w r0,r0,#0x10000`
+- `01081184`: `add.w r0,r0,#0x3b0`
+- `01081188`: `str r0,[sp,#0x1f0]` refs: `WRITE -> Stack[0x1f0]`
+- `0108118a`: `ldr r4,[0x010811ac]` refs: `READ -> 010811ac`
+- `0108118c`: `ldr r0,[sp,#0x254]` refs: `READ -> Stack[0x254]`
+- `0108118e`: `add r4,pc`
+- `01081190`: `strd r4,r0,[sp,#0x0]` refs: `DATA -> 00aea7ef` `DATA -> 014f1fd8` `WRITE -> Stack[0x0]`
+- `01081194`: `add r0,sp,#0x64`
+- `01081196`: `add r1,sp,#0x60`
+- `01081198`: `ldr r2,[sp,#0x148]` refs: `PARAM -> 014f6ffc` `READ -> Stack[0x148]`
+- `0108119a`: `add.w r3,r1,#0x5380`
+- `0108119e`: `ldr r1,[sp,#0x240]` refs: `PARAM -> 014f638c` `READ -> Stack[0x240]`
+- `010811a0`: `add.w r0,r0,#0x5380`
+- `010811a4`: `bl 0x010b8a20` refs: `UNCONDITIONAL_CALL -> 010b8a20`
+- `010811a8`: `b 0x010811b0` refs: `UNCONDITIONAL_JUMP -> 010811b0`
+### Around `01082770`
+- `0108270c`: `add r1,sp,#0x1c`
+- `0108270e`: `ldr r2,[sp,#0x68]` refs: `PARAM -> 014f6f34` `READ -> Stack[0x68]`
+- `01082710`: `add.w r3,r1,#0x4f00`
+- `01082714`: `ldr r1,[sp,#0x240]` refs: `PARAM -> 014f638c` `READ -> Stack[0x240]`
+- `01082716`: `add.w r0,r0,#0x4f00`
+- `0108271a`: `bl 0x010b9080` refs: `UNCONDITIONAL_CALL -> 010b9080`
+- `0108271e`: `b 0x01082724` refs: `UNCONDITIONAL_JUMP -> 01082724`
+- `01082724`: `ldr.w r0,[r9,#0x488]`
+- `01082728`: `movs r2,#0x0`
+- `0108272a`: `ldr.w r1,[r9,#0x48c]`
+- `0108272e`: `add r3,sp,#0x10`
+- `01082730`: `add.w r3,r3,#0xf700`
+- `01082734`: `str.w r2,[r9,#0x488]`
+- `01082738`: `str.w r2,[r9,#0x48c]`
+- `0108273c`: `str.w r0,[r3,#0xf04]`
+- `01082740`: `movs r0,#0xc`
+- `01082742`: `str.w r1,[r3,#0xf08]`
+- `01082746`: `movs r1,#0x40`
+- `01082748`: `str.w r1,[r9,#0x45c]`
+- `0108274c`: `str.w r0,[r9,#0x460]`
+- `01082750`: `add r0,sp,#0xf4`
+- `01082752`: `add.w r0,r0,#0x10000`
+- `01082756`: `add.w r11,r0,#0x528`
+- `0108275a`: `ldr r4,[0x01082784]` refs: `READ -> 01082784`
+- `0108275c`: `add r0,sp,#0x74`
+- `0108275e`: `add.w r0,r0,#0x4e80`
+- `01082762`: `add r4,pc`
+- `01082764`: `strd r0,r4,[sp,#0x0]` refs: `DATA -> 00b4f397` `WRITE -> Stack[0x0]`
+- `01082768`: `ldr r0,[sp,#0x254]` refs: `READ -> Stack[0x254]`
+- `0108276a`: `str r0,[sp,#0x8]` refs: `DATA -> 014f1fd8` `WRITE -> Stack[0x8]`
+- `0108276c`: `add r0,sp,#0x7c`
+- `0108276e`: `add r1,sp,#0x78`
+- `01082770`: `ldr r2,[sp,#0x148]` refs: `PARAM -> 014f6ffc` `READ -> Stack[0x148]`
+- `01082772`: `add.w r3,r1,#0x4e80`
+- `01082776`: `ldr r1,[sp,#0x240]` refs: `PARAM -> 014f638c` `READ -> Stack[0x240]`
+- `01082778`: `add.w r0,r0,#0x4e80`
+- `0108277c`: `bl 0x010b5a98` refs: `UNCONDITIONAL_CALL -> 010b5a98`
+- `01082780`: `b 0x01082788` refs: `UNCONDITIONAL_JUMP -> 01082788`
+### Around `01083b72`
+- `01083b10`: `add r1,sp,#0x58`
+- `01083b12`: `ldr r2,[sp,#0x180]` refs: `PARAM -> 014f7004` `READ -> Stack[0x180]`
+- `01083b14`: `add.w r3,r1,#0x4a00`
+- `01083b18`: `ldr r1,[sp,#0x240]` refs: `PARAM -> 014f638c` `READ -> Stack[0x240]`
+- `01083b1a`: `add.w r0,r0,#0x4a00`
+- `01083b1e`: `bl 0x010b69c0` refs: `UNCONDITIONAL_CALL -> 010b69c0`
+- `01083b22`: `b 0x01083b28` refs: `UNCONDITIONAL_JUMP -> 01083b28`
+- `01083b28`: `ldr.w r0,[r10,#0xd8c]`
+- `01083b2c`: `ldr.w r1,[r10,#0xd90]`
+- `01083b30`: `add r2,sp,#0x8c`
+- `01083b32`: `add.w r2,r2,#0xe600`
+- `01083b36`: `str.w r4,[r10,#0xd8c]`
+- `01083b3a`: `str.w r4,[r10,#0xd90]`
+- `01083b3e`: `str.w r0,[r2,#0xbbc]`
+- `01083b42`: `movs r0,#0xd`
+- `01083b44`: `str.w r1,[r2,#0xbc0]`
+- `01083b48`: `movs r1,#0x10`
+- `01083b4a`: `str.w r1,[r10,#0xd74]`
+- `01083b4e`: `str.w r0,[r10,#0xd78]`
+- `01083b52`: `add r0,sp,#0xd0`
+- `01083b54`: `add.w r0,r0,#0xf100`
+- `01083b58`: `adds r0,#0x80`
+- `01083b5a`: `str r0,[sp,#0x1f0]` refs: `WRITE -> Stack[0x1f0]`
+- `01083b5c`: `ldr r4,[0x01083b84]` refs: `READ -> 01083b84`
+- `01083b5e`: `add r0,sp,#0x44`
+- `01083b60`: `add.w r0,r0,#0x4a00`
+- `01083b64`: `add r4,pc`
+- `01083b66`: `strd r0,r4,[sp,#0x0]` refs: `DATA -> 00ac9ba0` `WRITE -> Stack[0x0]`
+- `01083b6a`: `ldr r0,[sp,#0x254]` refs: `READ -> Stack[0x254]`
+- `01083b6c`: `str r0,[sp,#0x8]` refs: `DATA -> 014f1fd8` `WRITE -> Stack[0x8]`
+- `01083b6e`: `add r0,sp,#0x4c`
+- `01083b70`: `add r1,sp,#0x48`
+- `01083b72`: `ldr r2,[sp,#0x148]` refs: `PARAM -> 014f6ffc` `READ -> Stack[0x148]`
+- `01083b74`: `add.w r3,r1,#0x4a00`
+- `01083b78`: `ldr r1,[sp,#0x240]` refs: `PARAM -> 014f638c` `READ -> Stack[0x240]`
+- `01083b7a`: `add.w r0,r0,#0x4a00`
+- `01083b7e`: `bl 0x010b6a58` refs: `UNCONDITIONAL_CALL -> 010b6a58`
+- `01083b82`: `b 0x01083b88` refs: `UNCONDITIONAL_JUMP -> 01083b88`
+### Around `0108652e`
+- `010864ce`: `add r1,pc`
+- `010864d0`: `ldr r0,[sp,#0x254]` refs: `READ -> Stack[0x254]`
+- `010864d2`: `str r1,[sp,#0x8]` refs: `DATA -> 00c84cc4` `WRITE -> Stack[0x8]`
+- `010864d4`: `str r0,[sp,#0xc]` refs: `DATA -> 014f1fd8` `WRITE -> Stack[0xc]`
+- `010864d6`: `add r0,sp,#0x10`
+- `010864d8`: `add r1,sp,#0xc`
+- `010864da`: `ldr r2,[sp,#0x228]` refs: `PARAM -> 014f70f4` `READ -> Stack[0x228]`
+- `010864dc`: `add.w r3,r1,#0x4200`
+- `010864e0`: `ldr r1,[sp,#0x23c]` refs: `PARAM -> 014f6394` `READ -> Stack[0x23c]`
+- `010864e2`: `add.w r0,r0,#0x4200`
+- `010864e6`: `bl 0x010b7d0c` refs: `UNCONDITIONAL_CALL -> 010b7d0c`
+- `010864ea`: `b 0x010864f0` refs: `UNCONDITIONAL_JUMP -> 010864f0`
+- `010864f0`: `ldr.w r0,[r10,#0x540]`
+- `010864f4`: `movs r2,#0x0`
+- `010864f6`: `ldr.w r1,[r10,#0x544]`
+- `010864fa`: `add r3,sp,#0x8c`
+- `010864fc`: `add.w r3,r3,#0xe600`
+- `01086500`: `str.w r2,[r10,#0x540]`
+- `01086504`: `str.w r2,[r10,#0x544]`
+- `01086508`: `str.w r0,[r3,#0x69c]`
+- `0108650c`: `movs r0,#0xb`
+- `0108650e`: `str.w r1,[r3,#0x6a0]`
+- `01086512`: `str.w r0,[r10,#0x520]`
+- `01086516`: `add r0,sp,#0x98`
+- `01086518`: `add.w r0,r0,#0xec00`
+- `0108651c`: `add.w r8,r0,#0x98`
+- `01086520`: `ldr r0,[0x01086540]` refs: `READ -> 01086540`
+- `01086522`: `ldr r1,[sp,#0x254]` refs: `READ -> Stack[0x254]`
+- `01086524`: `add r0,pc`
+- `01086526`: `strd r0,r1,[sp,#0x0]` refs: `DATA -> 00c6f66c` `DATA -> 014f1fd8` `WRITE -> Stack[0x0]`
+- `0108652a`: `add r0,sp,#0x74`
+- `0108652c`: `add r1,sp,#0x70`
+- `0108652e`: `ldr r2,[sp,#0x148]` refs: `PARAM -> 014f6ffc` `READ -> Stack[0x148]`
+- `01086530`: `add.w r3,r1,#0x4180`
+- `01086534`: `ldr r1,[sp,#0x240]` refs: `PARAM -> 014f638c` `READ -> Stack[0x240]`
+- `01086536`: `add.w r0,r0,#0x4180`
+- `0108653a`: `bl 0x010b99d0` refs: `UNCONDITIONAL_CALL -> 010b99d0`
+- `0108653e`: `b 0x01086544` refs: `UNCONDITIONAL_JUMP -> 01086544`
+### Around `0108656e`
+- `01086512`: `str.w r0,[r10,#0x520]`
+- `01086516`: `add r0,sp,#0x98`
+- `01086518`: `add.w r0,r0,#0xec00`
+- `0108651c`: `add.w r8,r0,#0x98`
+- `01086520`: `ldr r0,[0x01086540]` refs: `READ -> 01086540`
+- `01086522`: `ldr r1,[sp,#0x254]` refs: `READ -> Stack[0x254]`
+- `01086524`: `add r0,pc`
+- `01086526`: `strd r0,r1,[sp,#0x0]` refs: `DATA -> 00c6f66c` `DATA -> 014f1fd8` `WRITE -> Stack[0x0]`
+- `0108652a`: `add r0,sp,#0x74`
+- `0108652c`: `add r1,sp,#0x70`
+- `0108652e`: `ldr r2,[sp,#0x148]` refs: `PARAM -> 014f6ffc` `READ -> Stack[0x148]`
+- `01086530`: `add.w r3,r1,#0x4180`
+- `01086534`: `ldr r1,[sp,#0x240]` refs: `PARAM -> 014f638c` `READ -> Stack[0x240]`
+- `01086536`: `add.w r0,r0,#0x4180`
+- `0108653a`: `bl 0x010b99d0` refs: `UNCONDITIONAL_CALL -> 010b99d0`
+- `0108653e`: `b 0x01086544` refs: `UNCONDITIONAL_JUMP -> 01086544`
+- `01086544`: `ldr.w r1,[r10,#0x524]`
+- `01086548`: `ldr r0,[r1,#0x0]`
+- `0108654a`: `ldr r2,[r0,#0x30]`
+- `0108654c`: `mov r0,r8`
+- `0108654e`: `blx r2`
+- `01086550`: `movs r0,#0x9`
+- `01086552`: `str.w r0,[r10,#0x514]`
+- `01086556`: `add r0,sp,#0x98`
+- `01086558`: `add.w r0,r0,#0xec00`
+- `0108655c`: `add.w r8,r0,#0xa0`
+- `01086560`: `ldr r0,[0x01086580]` refs: `READ -> 01086580`
+- `01086562`: `ldr r1,[sp,#0x254]` refs: `READ -> Stack[0x254]`
+- `01086564`: `add r0,pc`
+- `01086566`: `strd r0,r1,[sp,#0x0]` refs: `DATA -> 0078dcdd` `DATA -> 014f1fd8` `WRITE -> Stack[0x0]`
+- `0108656a`: `add r0,sp,#0x68`
+- `0108656c`: `add r1,sp,#0x64`
+- `0108656e`: `ldr r2,[sp,#0x148]` refs: `PARAM -> 014f6ffc` `READ -> Stack[0x148]`
+- `01086570`: `add.w r3,r1,#0x4180`
+- `01086574`: `ldr r1,[sp,#0x240]` refs: `PARAM -> 014f638c` `READ -> Stack[0x240]`
+- `01086576`: `add.w r0,r0,#0x4180`
+- `0108657a`: `bl 0x010b898c` refs: `UNCONDITIONAL_CALL -> 010b898c`
+- `0108657e`: `b 0x01086584` refs: `UNCONDITIONAL_JUMP -> 01086584`
+### Around `01087466`
+- `01087406`: `add r0,pc`
+- `01087408`: `str r0,[sp,#0x8]` refs: `DATA -> 00a56bfb` `WRITE -> Stack[0x8]`
+- `0108740a`: `ldr r0,[sp,#0x254]` refs: `READ -> Stack[0x254]`
+- `0108740c`: `add.w r2,r2,#0x3e80`
+- `01087410`: `strd r2,r1,[sp,#0x0]` refs: `WRITE -> Stack[0x0]`
+- `01087414`: `str r0,[sp,#0xc]` refs: `DATA -> 014f1fd8` `WRITE -> Stack[0xc]`
+- `01087416`: `add r0,sp,#0x3c`
+- `01087418`: `add r1,sp,#0x38`
+- `0108741a`: `ldr r2,[sp,#0xfc]` refs: `PARAM -> 014f7114` `READ -> Stack[0xfc]`
+- `0108741c`: `add.w r3,r1,#0x3e80`
+- `01087420`: `ldr r1,[sp,#0x23c]` refs: `PARAM -> 014f6394` `READ -> Stack[0x23c]`
+- `01087422`: `add.w r0,r0,#0x3e80`
+- `01087426`: `bl 0x010b97ec` refs: `UNCONDITIONAL_CALL -> 010b97ec`
+- `0108742a`: `b 0x01087430` refs: `UNCONDITIONAL_JUMP -> 01087430`
+- `01087430`: `ldrd r0,r1,[r10,#0x1ec]`
+- `01087434`: `add r2,sp,#0x8c`
+- `01087436`: `add.w r2,r2,#0xe600`
+- `0108743a`: `movs r4,#0x0`
+- `0108743c`: `strd r4,r4,[r10,#0x1ec]`
+- `01087440`: `str.w r0,[r2,#0x7bc]`
+- `01087444`: `movs r0,#0xc`
+- `01087446`: `str.w r1,[r2,#0x7c0]`
+- `0108744a`: `str.w r0,[r10,#0x1d4]`
+- `0108744e`: `add r0,sp,#0x98`
+- `01087450`: `add.w r0,r0,#0xec00`
+- `01087454`: `add.w r8,r0,#0x1b8`
+- `01087458`: `ldr r5,[0x01087478]` refs: `READ -> 01087478`
+- `0108745a`: `ldr r0,[sp,#0x254]` refs: `READ -> Stack[0x254]`
+- `0108745c`: `add r5,pc`
+- `0108745e`: `strd r5,r0,[sp,#0x0]` refs: `DATA -> 00b5a4e1` `DATA -> 014f1fd8` `WRITE -> Stack[0x0]`
+- `01087462`: `add r0,sp,#0x28`
+- `01087464`: `add r1,sp,#0x24`
+- `01087466`: `ldr r2,[sp,#0x148]` refs: `PARAM -> 014f6ffc` `READ -> Stack[0x148]`
+- `01087468`: `add.w r3,r1,#0x3e80`
+- `0108746c`: `ldr r1,[sp,#0x240]` refs: `PARAM -> 014f638c` `READ -> Stack[0x240]`
+- `0108746e`: `add.w r0,r0,#0x3e80`
+- `01087472`: `bl 0x010b8a20` refs: `UNCONDITIONAL_CALL -> 010b8a20`
+- `01087476`: `b 0x0108747c` refs: `UNCONDITIONAL_JUMP -> 0108747c`
+### Around `01088220`
+- `010881be`: `add r0,sp,#0x14`
+- `010881c0`: `add.w r0,r0,#0x3b40`
+- `010881c4`: `stm sp,{r0,r4,r6}` refs: `DATA -> 008f8e70` `WRITE -> Stack[0x0]`
+- `010881c8`: `add r0,sp,#0x1c`
+- `010881ca`: `add r1,sp,#0x18`
+- `010881cc`: `add.w r3,r1,#0x3b40`
+- `010881d0`: `ldr r1,[sp,#0x23c]` refs: `PARAM -> 014f6394` `READ -> Stack[0x23c]`
+- `010881d2`: `ldr r2,[sp,#0x12c]` refs: `PARAM -> 014f710c` `READ -> Stack[0x12c]`
+- `010881d4`: `add.w r0,r0,#0x3b40`
+- `010881d8`: `bl 0x010b9cdc` refs: `UNCONDITIONAL_CALL -> 010b9cdc`
+- `010881dc`: `ldr.w r0,[r9,#0x42c]`
+- `010881e0`: `movs r2,#0x0`
+- `010881e2`: `ldr.w r1,[r9,#0x430]`
+- `010881e6`: `add r3,sp,#0x8c`
+- `010881e8`: `add.w r3,r3,#0xe600`
+- `010881ec`: `str.w r2,[r9,#0x42c]`
+- `010881f0`: `str.w r2,[r9,#0x430]`
+- `010881f4`: `strd r0,r1,[r3,#0x27c]`
+- `010881f8`: `ldr r0,[sp,#0x1c8]` refs: `READ -> Stack[0x1c8]`
+- `010881fa`: `ldrd r1,r0,[r0,#0x0]` refs: `READ -> 014f6fec` `READ -> 014f6ff0`
+- `010881fe`: `strd r1,r0,[r3,#0xfc]`
+- `01088202`: `cbz r0,0x01088214` refs: `CONDITIONAL_JUMP -> 01088214`
+- `01088204`: `adds r0,#0x4`
+- `01088206`: `ldrex r1,[r0,#0x0]`
+- `0108820a`: `adds r1,#0x1`
+- `0108820c`: `strex r2,r1,[r0,#0x0]`
+- `01088210`: `cmp r2,#0x0`
+- `01088212`: `bne 0x01088206` refs: `CONDITIONAL_JUMP -> 01088206`
+- `01088214`: `add r0,sp,#0xc8`
+- `01088216`: `add.w r0,r0,#0xe800`
+- `0108821a`: `add.w r5,r0,#0x48`
+- `0108821e`: `ldr r0,[sp,#0x148]` refs: `READ -> Stack[0x148]`
+- `01088220`: `ldrd r1,r0,[r0,#0x0]` refs: `READ -> 014f6ffc` `READ -> 014f7000`
+- `01088224`: `add r2,sp,#0x8c`
+- `01088226`: `add.w r2,r2,#0xe600`
+- `0108822a`: `strd r1,r0,[r2,#0x104]`
+- `0108822e`: `cbz r0,0x01088240` refs: `CONDITIONAL_JUMP -> 01088240`
+- `01088230`: `adds r0,#0x4`
+### Around `010919a2`
+- `01091940`: `strd r0,r5,[sp,#0x0]` refs: `DATA -> 00ac87a5` `WRITE -> Stack[0x0]`
+- `01091944`: `ldr r0,[sp,#0x254]` refs: `READ -> Stack[0x254]`
+- `01091946`: `str r0,[sp,#0x8]` refs: `DATA -> 014f1fd8` `WRITE -> Stack[0x8]`
+- `01091948`: `add r0,sp,#0x4`
+- `0109194a`: `ldr r1,[sp,#0x23c]` refs: `PARAM -> 014f6394` `READ -> Stack[0x23c]`
+- `0109194c`: `add.w r0,r0,#0x1700`
+- `01091950`: `ldr r2,[sp,#0x1b0]` refs: `PARAM -> 014f6efc` `READ -> Stack[0x1b0]`
+- `01091952`: `bl 0x010b6368` refs: `UNCONDITIONAL_CALL -> 010b6368`
+- `01091956`: `ldr.w r0,[r10,#0xcc4]`
+- `0109195a`: `ldr.w r1,[r10,#0xcc8]`
+- `0109195e`: `add r2,sp,#0x10`
+- `01091960`: `add.w r2,r2,#0xc400`
+- `01091964`: `str.w r4,[r10,#0xcc4]`
+- `01091968`: `str.w r4,[r10,#0xcc8]`
+- `0109196c`: `str.w r0,[r2,#0xfa8]`
+- `01091970`: `ldr r0,[sp,#0xd0]` refs: `READ -> Stack[0xd0]`
+- `01091972`: `str.w r1,[r2,#0xfac]`
+- `01091976`: `ldrd r1,r0,[r0,#0x0]` refs: `READ -> 014f70c4` `READ -> 014f70c8`
+- `0109197a`: `str.w r1,[r2,#0xc28]`
+- `0109197e`: `str.w r0,[r2,#0xc2c]`
+- `01091982`: `cbz r0,0x01091994` refs: `CONDITIONAL_JUMP -> 01091994`
+- `01091984`: `adds r0,#0x4`
+- `01091986`: `ldrex r1,[r0,#0x0]`
+- `0109198a`: `adds r1,#0x1`
+- `0109198c`: `strex r2,r1,[r0,#0x0]`
+- `01091990`: `cmp r2,#0x0`
+- `01091992`: `bne 0x01091986` refs: `CONDITIONAL_JUMP -> 01091986`
+- `01091994`: `add r0,sp,#0xa8`
+- `01091996`: `add.w r0,r0,#0xd000`
+- `0109199a`: `add.w r0,r0,#0x318`
+- `0109199e`: `str r0,[sp,#0x22c]` refs: `WRITE -> Stack[0x22c]`
+- `010919a0`: `ldr r0,[sp,#0x148]` refs: `READ -> Stack[0x148]`
+- `010919a2`: `ldrd r1,r0,[r0,#0x0]` refs: `READ -> 014f6ffc` `READ -> 014f7000`
+- `010919a6`: `add r2,sp,#0x10`
+- `010919a8`: `add.w r2,r2,#0xc400`
+- `010919ac`: `str.w r1,[r2,#0xc30]`
+- `010919b0`: `str.w r0,[r2,#0xc34]`
+- `010919b4`: `cbz r0,0x010919c6` refs: `CONDITIONAL_JUMP -> 010919c6`
+### Around `010920d0`
+- `0109206a`: `ldr r2,[sp,#0x1b0]` refs: `PARAM -> 014f6efc` `READ -> Stack[0x1b0]`
+- `0109206c`: `add.w r3,r1,#0x1560`
+- `01092070`: `ldr r1,[sp,#0x23c]` refs: `PARAM -> 014f6394` `READ -> Stack[0x23c]`
+- `01092072`: `add.w r0,r0,#0x1560`
+- `01092076`: `bl 0x010b8480` refs: `UNCONDITIONAL_CALL -> 010b8480`
+- `0109207a`: `add.w r2,sp,#0xd000`
+- `0109207e`: `ldr.w r0,[r10,#0xb34]`
+- `01092082`: `ldr.w r1,[r10,#0xb38]`
+- `01092086`: `str.w r0,[r2,#0x438]`
+- `0109208a`: `movs r0,#0x0`
+- `0109208c`: `add.w r2,sp,#0xd000`
+- `01092090`: `str.w r0,[r10,#0xb34]`
+- `01092094`: `str.w r0,[r10,#0xb38]`
+- `01092098`: `ldr r0,[sp,#0xd0]` refs: `READ -> Stack[0xd0]`
+- `0109209a`: `str.w r1,[r2,#0x43c]`
+- `0109209e`: `ldrd r1,r0,[r0,#0x0]` refs: `READ -> 014f70c4` `READ -> 014f70c8`
+- `010920a2`: `add r2,sp,#0x10`
+- `010920a4`: `add.w r2,r2,#0xc400`
+- `010920a8`: `str.w r1,[r2,#0xc18]`
+- `010920ac`: `str.w r0,[r2,#0xc1c]`
+- `010920b0`: `cbz r0,0x010920c2` refs: `CONDITIONAL_JUMP -> 010920c2`
+- `010920b2`: `adds r0,#0x4`
+- `010920b4`: `ldrex r1,[r0,#0x0]`
+- `010920b8`: `adds r1,#0x1`
+- `010920ba`: `strex r2,r1,[r0,#0x0]`
+- `010920be`: `cmp r2,#0x0`
+- `010920c0`: `bne 0x010920b4` refs: `CONDITIONAL_JUMP -> 010920b4`
+- `010920c2`: `add r0,sp,#0xa8`
+- `010920c4`: `add.w r0,r0,#0xd000`
+- `010920c8`: `add.w r0,r0,#0x398`
+- `010920cc`: `str r0,[sp,#0x22c]` refs: `WRITE -> Stack[0x22c]`
+- `010920ce`: `ldr r0,[sp,#0x148]` refs: `READ -> Stack[0x148]`
+- `010920d0`: `ldrd r1,r0,[r0,#0x0]` refs: `READ -> 014f6ffc` `READ -> 014f7000`
+- `010920d4`: `add r2,sp,#0x10`
+- `010920d6`: `add.w r2,r2,#0xc400`
+- `010920da`: `str.w r1,[r2,#0xc20]`
+- `010920de`: `str.w r0,[r2,#0xc24]`
+- `010920e2`: `cbz r0,0x010920f4` refs: `CONDITIONAL_JUMP -> 010920f4`
+### Around `01168af4`
+- `01168a90`: `add r5,sp,#0x174`
+- `01168a92`: `ldr r1,[0x01168aa8]` refs: `READ -> 01168aa8`
+- `01168a94`: `add r1,pc` refs: `PARAM -> 00845f66`
+- `01168a96`: `mov r0,r5`
+- `01168a98`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
+- `01168a9c`: `b 0x01168aac` refs: `UNCONDITIONAL_JUMP -> 01168aac`
+- `01168aac`: `add.w r6,r5,#0xc`
+- `01168ab0`: `ldr r1,[0x01168abc]` refs: `READ -> 01168abc`
+- `01168ab2`: `mov r0,r6`
+- `01168ab4`: `add r1,pc` refs: `PARAM -> 006eb2a5`
+- `01168ab6`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
+- `01168aba`: `b 0x01168ac0` refs: `UNCONDITIONAL_JUMP -> 01168ac0`
+- `01168ac0`: `add.w r6,r5,#0x18`
+- `01168ac4`: `ldr r1,[0x01168ad0]` refs: `READ -> 01168ad0`
+- `01168ac6`: `mov r0,r6`
+- `01168ac8`: `add r1,pc` refs: `PARAM -> 00bab9f9`
+- `01168aca`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
+- `01168ace`: `b 0x01168ad4` refs: `UNCONDITIONAL_JUMP -> 01168ad4`
+- `01168ad4`: `add r0,sp,#0x48`
+- `01168ad6`: `add r5,sp,#0x174`
+- `01168ad8`: `movs r2,#0x3`
+- `01168ada`: `mov r1,r5`
+- `01168adc`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
+- `01168ae0`: `movs r4,#0x1`
+- `01168ae2`: `add r1,sp,#0x48`
+- `01168ae4`: `mov r0,r8`
+- `01168ae6`: `blx 0x014086e0` refs: `UNCONDITIONAL_CALL -> 014086e0`
+- `01168aea`: `movs r4,#0x0`
+- `01168aec`: `ldr r0,[0x01168afc]` refs: `READ -> 01168afc`
+- `01168aee`: `mov r1,r8`
+- `01168af0`: `add r0,pc`
+- `01168af2`: `ldr r6,[r0,#0x0]` refs: `READ -> 014de4a4`
+- `01168af4`: `mov r0,r6` refs: `PARAM -> 014f6ffc`
+- `01168af6`: `blx 0x0140be90` refs: `UNCONDITIONAL_CALL -> 0140be90`
+- `01168afa`: `b 0x01168b00` refs: `UNCONDITIONAL_JUMP -> 01168b00`
+- `01168b00`: `add r0,sp,#0x48`
+- `01168b02`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
+- `01168b06`: `movs r4,#0x18`
+### Around `01168b18`
+- `01168ac0`: `add.w r6,r5,#0x18`
+- `01168ac4`: `ldr r1,[0x01168ad0]` refs: `READ -> 01168ad0`
+- `01168ac6`: `mov r0,r6`
+- `01168ac8`: `add r1,pc` refs: `PARAM -> 00bab9f9`
+- `01168aca`: `bl 0x00cb4d44` refs: `UNCONDITIONAL_CALL -> 00cb4d44`
+- `01168ace`: `b 0x01168ad4` refs: `UNCONDITIONAL_JUMP -> 01168ad4`
+- `01168ad4`: `add r0,sp,#0x48`
+- `01168ad6`: `add r5,sp,#0x174`
+- `01168ad8`: `movs r2,#0x3`
+- `01168ada`: `mov r1,r5`
+- `01168adc`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
+- `01168ae0`: `movs r4,#0x1`
+- `01168ae2`: `add r1,sp,#0x48`
+- `01168ae4`: `mov r0,r8`
+- `01168ae6`: `blx 0x014086e0` refs: `UNCONDITIONAL_CALL -> 014086e0`
+- `01168aea`: `movs r4,#0x0`
+- `01168aec`: `ldr r0,[0x01168afc]` refs: `READ -> 01168afc`
+- `01168aee`: `mov r1,r8`
+- `01168af0`: `add r0,pc`
+- `01168af2`: `ldr r6,[r0,#0x0]` refs: `READ -> 014de4a4`
+- `01168af4`: `mov r0,r6` refs: `PARAM -> 014f6ffc`
+- `01168af6`: `blx 0x0140be90` refs: `UNCONDITIONAL_CALL -> 0140be90`
+- `01168afa`: `b 0x01168b00` refs: `UNCONDITIONAL_JUMP -> 01168b00`
+- `01168b00`: `add r0,sp,#0x48`
+- `01168b02`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
+- `01168b06`: `movs r4,#0x18`
+- `01168b08`: `adds r0,r5,r4`
+- `01168b0a`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
+- `01168b0e`: `subs r4,#0xc`
+- `01168b10`: `adds.w r0,r4,#0xc`
+- `01168b14`: `bne 0x01168b08` refs: `CONDITIONAL_JUMP -> 01168b08`
+- `01168b16`: `ldr r0,[0x01168b48]` refs: `READ -> 01168b48`
+- `01168b18`: `mov r1,r6` refs: `PARAM -> 014f6ffc`
+- `01168b1a`: `ldr r2,[0x01168b4c]` refs: `READ -> 01168b4c`
+- `01168b1c`: `add r0,pc` refs: `PARAM -> 00d5d495`
+- `01168b1e`: `add r2,pc` refs: `PARAM -> 014371d0`
+- `01168b20`: `blx 0x013fa330` refs: `UNCONDITIONAL_CALL -> 013fa330`
+- `01168b24`: `ldr.w r1,[r10,#0x0]` refs: `READ -> 014f6fec`
+### Around `01168b28`
+- `01168ad4`: `add r0,sp,#0x48`
+- `01168ad6`: `add r5,sp,#0x174`
+- `01168ad8`: `movs r2,#0x3`
+- `01168ada`: `mov r1,r5`
+- `01168adc`: `bl 0x00d22d0c` refs: `UNCONDITIONAL_CALL -> 00d22d0c`
+- `01168ae0`: `movs r4,#0x1`
+- `01168ae2`: `add r1,sp,#0x48`
+- `01168ae4`: `mov r0,r8`
+- `01168ae6`: `blx 0x014086e0` refs: `UNCONDITIONAL_CALL -> 014086e0`
+- `01168aea`: `movs r4,#0x0`
+- `01168aec`: `ldr r0,[0x01168afc]` refs: `READ -> 01168afc`
+- `01168aee`: `mov r1,r8`
+- `01168af0`: `add r0,pc`
+- `01168af2`: `ldr r6,[r0,#0x0]` refs: `READ -> 014de4a4`
+- `01168af4`: `mov r0,r6` refs: `PARAM -> 014f6ffc`
+- `01168af6`: `blx 0x0140be90` refs: `UNCONDITIONAL_CALL -> 0140be90`
+- `01168afa`: `b 0x01168b00` refs: `UNCONDITIONAL_JUMP -> 01168b00`
+- `01168b00`: `add r0,sp,#0x48`
+- `01168b02`: `bl 0x00cbe2dc` refs: `UNCONDITIONAL_CALL -> 00cbe2dc`
+- `01168b06`: `movs r4,#0x18`
+- `01168b08`: `adds r0,r5,r4`
+- `01168b0a`: `blx 0x013fa600` refs: `UNCONDITIONAL_CALL -> 013fa600`
+- `01168b0e`: `subs r4,#0xc`
+- `01168b10`: `adds.w r0,r4,#0xc`
+- `01168b14`: `bne 0x01168b08` refs: `CONDITIONAL_JUMP -> 01168b08`
+- `01168b16`: `ldr r0,[0x01168b48]` refs: `READ -> 01168b48`
+- `01168b18`: `mov r1,r6` refs: `PARAM -> 014f6ffc`
+- `01168b1a`: `ldr r2,[0x01168b4c]` refs: `READ -> 01168b4c`
+- `01168b1c`: `add r0,pc` refs: `PARAM -> 00d5d495`
+- `01168b1e`: `add r2,pc` refs: `PARAM -> 014371d0`
+- `01168b20`: `blx 0x013fa330` refs: `UNCONDITIONAL_CALL -> 013fa330`
+- `01168b24`: `ldr.w r1,[r10,#0x0]` refs: `READ -> 014f6fec`
+- `01168b28`: `mov r2,r6` refs: `PARAM -> 014f6ffc`
+- `01168b2a`: `ldr r0,[r1,#0x0]`
+- `01168b2c`: `ldr r3,[r0,#0x14]`
+- `01168b2e`: `add r5,sp,#0x174`
+- `01168b30`: `mov r0,r5`
+- `01168b32`: `blx r3`

@@ -3,12 +3,12 @@
     "key": "car_setting_cornering_lights_via_fogs_left",
     "label": "Cornering lights using left fog output",
     "ecu": "PQ25 BCM / unit 09",
-    "native_function": "FUN_0105f6c0",
-    "reference_address": "01082988 / 01082A4A",
-    "instruction_window": "cornering_fogs_left_ref_1_01082988.txt; cornering_fogs_left_ref_2_01082A4A.txt",
-    "constructor_kind": "VagUdsAdaptationSetting",
-    "constructor_status": "write_blocked_read_rejected",
-    "native_helper": "readVagUdsValue -> ReadRawDataByIdentifierCommand",
+    "native_function": "_ZN14VagCanSettings11getSettingsEv / official Play 9.8.3 x86",
+    "reference_address": "0x012da210 (Play 9.8.3 x86); 01082988 / 01082A4A (older ARM windows)",
+    "instruction_window": "docs/carista_apk_analysis/play_9_8_3_x86_vag_static_reverse_update.md; cornering_fogs_left_ref_1_01082988.txt; cornering_fogs_left_ref_2_01082A4A.txt",
+    "constructor_kind": "mixed",
+    "constructor_status": "constructor_multi_path_runtime_branch_unresolved_read_rejected",
+    "native_helper": "official x86: 0x012da25a -> 0x0136c910 -> PLT 0x0197e2f0 VagCanShortAdaptationSetting; 0x012da39a -> 0x01356f90 -> PLT 0x0197d6f0 VagUdsCodingSetting. Older ARM: 01082988 -> 010B90CC -> 010E44E8 VagUdsAdaptationSetting and 01082A4A -> 010B5620 -> 010D2BD0 VagUdsAdaptationSetting; readVagUdsValue -> ReadRawDataByIdentifierCommand applies only to the 055C type-7 branch",
     "raw_address": 1372,
     "value_offset": 5,
     "value_mask": "FF",
@@ -33,22 +33,30 @@
     ],
     "read_method": "22055C",
     "write_method": "Blocked: live direct read returned 7F2231, so no raw payload seed exists for 2E055C.",
-    "next_re_step": "Recover why Carista can expose this setting without a positive direct 22055C read, or find the required session/security precondition.",
+    "next_re_step": "Recover the constructor StringWhitelist/runtime availability branch for 6R0937087K before treating any x86 or older ARM branch as active.",
     "evidence": [
-      "Native constructor uses raw address 055C, value offset 5, mask FF.",
-      "Type 7 dispatch goes through UDS raw DID read/write helpers."
+      "Official Play 9.8.3 x86 string ref is 0x012da210 inside VagCanSettings::getSettings.",
+      "Direct x86 ELF audit resolves 0x0136c910 through PLT entry 0x0197e2f0 to shared_ptr_emplace<VagCanShortAdaptationSetting, VagCanEcu, StringWhitelist, ..., MultipleChoiceInterpretation>.",
+      "Direct x86 ELF audit resolves adjacent helper 0x01356f90 through PLT entry 0x0197d6f0 to shared_ptr_emplace<VagUdsCodingSetting, VagCanEcu, StringWhitelist, ..., MultipleChoiceInterpretation>.",
+      "The first x86 helper obtains its whitelist through a slot-0x14 call combining CENTRAL_ELEC_MQB_ALL with CENTRAL_ELEC_MK8; exact slot semantics are still unresolved, but this is not a recovered 6R whitelist.",
+      "The second x86 helper uses VagUdsEcu::CAN_GATEWAY with VagWhitelists::UDS_CAN_GATEWAY_MEB, despite carrying the left fog-role key.",
+      "The older ARM 01082988 type-7 branch has the same CENTRAL_ELEC plus MQB/MK8-derived whitelist argument shape: cornering_fogs_left_ref_1_01082988.txt loads VagUdsEcu::CENTRAL_ELEC from 014f7ad8 and derives a whitelist from CENTRAL_ELEC_MQB_ALL (014f706c) with CENTRAL_ELEC_MK8 (014f701c).",
+      "The older ARM 01082A4A type-7 branch is gateway-shaped: cornering_fogs_left_ref_2_01082A4A.txt loads VagWhitelists::UDS_CAN_GATEWAY_MEB from 014f6c0c and VagUdsEcu::CAN_GATEWAY from 014f7a7c.",
+      "Older ARM windows prove both left variants allocate VagUdsAdaptationSetting: 01082988 -> 010B90CC -> 010E44E8 and 01082A4A -> 010B5620 -> 010D2BD0.",
+      "Older ARM type-7 constructor uses raw address 055C, value offset 5, mask FF.",
+      "Only the type-7 branch dispatches through UDS raw DID read/write helpers."
     ]
   },
   {
     "key": "car_setting_cornering_lights_via_fogs_right",
     "label": "Cornering lights using right fog output",
     "ecu": "PQ25 BCM / unit 09",
-    "native_function": "FUN_0105f6c0",
-    "reference_address": "01082B78 / 01082C34",
-    "instruction_window": "cornering_fogs_right_ref_1_01082B78.txt; cornering_fogs_right_ref_2_01082C34.txt",
-    "constructor_kind": "VagUdsAdaptationSetting",
-    "constructor_status": "write_blocked_read_rejected",
-    "native_helper": "readVagUdsValue -> ReadRawDataByIdentifierCommand",
+    "native_function": "_ZN14VagCanSettings11getSettingsEv / official Play 9.8.3 x86",
+    "reference_address": "0x012da55f (Play 9.8.3 x86); 01082B78 / 01082C34 (older ARM windows)",
+    "instruction_window": "docs/carista_apk_analysis/play_9_8_3_x86_vag_static_reverse_update.md; cornering_fogs_right_ref_1_01082B78.txt; cornering_fogs_right_ref_2_01082C34.txt",
+    "constructor_kind": "mixed",
+    "constructor_status": "constructor_multi_path_runtime_branch_unresolved_read_rejected",
+    "native_helper": "official x86: 0x012da5a9 -> 0x01368690 -> PLT 0x0197e0a0 VagCanLongCodingSetting/NumericalInterpretation; 0x012da6e9 -> 0x0136caf0 -> PLT 0x0197e300 VagUdsAdaptationSetting/MultipleChoiceInterpretation. Older ARM: 01082B78 -> 010B8574 -> 010E0DE8 VagUdsAdaptationSetting and 01082C34 -> 010B9120 -> 010E466C VagUdsAdaptationSetting; readVagUdsValue -> ReadRawDataByIdentifierCommand applies only to the 055D type-7 branch",
     "raw_address": 1373,
     "value_offset": 5,
     "value_mask": "FF",
@@ -73,10 +81,18 @@
     ],
     "read_method": "22055D",
     "write_method": "Blocked: live direct read returned 7F2231, so no raw payload seed exists for 2E055D.",
-    "next_re_step": "Recover why Carista can expose this setting without a positive direct 22055D read, or find the required session/security precondition.",
+    "next_re_step": "Recover the constructor StringWhitelist/runtime availability branch for 6R0937087K before treating any x86 or older ARM branch as active.",
     "evidence": [
-      "Native constructor uses raw address 055D, value offset 5, mask FF.",
-      "Type 7 dispatch goes through UDS raw DID read/write helpers."
+      "Official Play 9.8.3 x86 string ref is 0x012da55f inside VagCanSettings::getSettings.",
+      "Direct x86 ELF audit resolves 0x01368690 through PLT entry 0x0197e0a0 to shared_ptr_emplace<VagCanLongCodingSetting, VagCanEcu, StringWhitelist, ..., NumericalInterpretation>.",
+      "Direct x86 ELF audit resolves adjacent helper 0x0136caf0 through PLT entry 0x0197e300 to shared_ptr_emplace<VagUdsAdaptationSetting, VagUdsEcu, StringWhitelist, ..., MultipleChoiceInterpretation>.",
+      "The first x86 helper obtains its whitelist through a slot-0x14 call combining CENTRAL_ELEC_MQB_ALL with CENTRAL_ELEC_MK8; exact slot semantics are still unresolved, but this is not a recovered 6R whitelist.",
+      "The second right-side x86 gateway-shaped path near 0x012da6e9 uses VagUdsEcu::CAN_GATEWAY with VagWhitelists::UDS_CAN_GATEWAY_MEB.",
+      "The older ARM 01082B78 type-7 branch has the same CENTRAL_ELEC plus MQB/MK8-derived whitelist argument shape: cornering_fogs_right_ref_1_01082B78.txt follows the same 014f706c/014f701c derivation and loads VagUdsEcu::CENTRAL_ELEC from 014f7ad8.",
+      "The older ARM 01082C34 type-7 branch is gateway-shaped: cornering_fogs_right_ref_2_01082C34.txt loads VagWhitelists::UDS_CAN_GATEWAY_MEB from 014f6c0c and VagUdsEcu::CAN_GATEWAY from 014f7a7c.",
+      "Older ARM windows prove both right variants allocate VagUdsAdaptationSetting: 01082B78 -> 010B8574 -> 010E0DE8 and 01082C34 -> 010B9120 -> 010E466C.",
+      "Older ARM type-7 constructor uses raw address 055D, value offset 5, mask FF.",
+      "Only the type-7 branch dispatches through UDS raw DID read/write helpers."
     ]
   },
   {
@@ -92,18 +108,21 @@
     "raw_address": 2647,
     "value_offset": 2,
     "value_mask": "04",
-    "immediate_value": null,
-    "immediate_index": null,
+    "immediate_value": 32,
+    "immediate_index": 17,
     "choices": [],
-    "read_method": "220A57 is the adaptation-branch read candidate only; other refs are coding/long-coding variants.",
-    "write_method": "Do not write from this recovery until runtime branch selection and positive read/packing evidence are known.",
-    "next_re_step": "Identify which coming_home_req_rls branch is selected for 6R0937087K and test 220A57 read-only before any adaptation write.",
+    "read_method": "220A57 is the rejected adaptation branch; UDS coding variants read DID 0600 byte 0x11 mask 0x20 and byte 0x0A mask 0x04; a long-coding variant is also present.",
+    "write_method": "Do not write from this recovery until runtime branch selection and the branch-specific choice table are known.",
+    "next_re_step": "Identify which coming_home_req_rls branch is selected for 6R0937087K and recover its MultipleChoiceInterpretation table.",
     "evidence": [
       "Instruction window shows raw address 0A57, offset 2, mask/value field 04 before one req-RLS constructor.",
       "target_010B6B3C.c calls 010D8FE4, which constructs VagUdsAdaptationSetting.",
       "target_010B6B90.c calls 010D917C, which constructs VagCanLongCodingSetting.",
       "target_010B0D5C.c calls 010BC860, which constructs VagUdsCodingSetting.",
-      "The same key appears again through 010B19D0 -> 010C0708, another VagUdsCodingSetting helper."
+      "The same key appears again through 010B19D0 -> 010C0708, another VagUdsCodingSetting helper.",
+      "coming_home_req_rls_ref_0107671A shows UDS coding immediate pairs 20/11 and 04/0A for these helpers.",
+      "VagUdsCodingSetting(Ecu, int, byte/vector) hardcodes raw address 0x0600 and type 8, mapping those pairs to DID 0600 byte/mask fields.",
+      "VagCanLongCodingSetting(Ecu, int, byte/vector) is now recovered from target_0105F484/target_0105F500 as raw type 3, raw address 0, int offset, and byte/vector mask."
     ]
   },
   {
@@ -119,17 +138,19 @@
     "raw_address": 2647,
     "value_offset": 4,
     "value_mask": "40",
-    "immediate_value": null,
-    "immediate_index": null,
+    "immediate_value": 2,
+    "immediate_index": 6,
     "choices": [],
-    "read_method": "220A57 is the adaptation-branch read candidate only; the same key also has UDS coding variants.",
-    "write_method": "Do not write from this recovery until runtime branch selection and positive read/packing evidence are known.",
-    "next_re_step": "Runtime-select the active coming_home branch for this BCM; then prove 220A57 or exact coding packing before any write.",
+    "read_method": "220A57 is the rejected adaptation branch; UDS coding variants read DID 0600 byte 0x06 mask 0x02 and byte 0x07 mask 0x01.",
+    "write_method": "Do not write from this recovery until runtime branch selection and the branch-specific choice table are known.",
+    "next_re_step": "Runtime-select the active coming_home branch for this BCM and recover its MultipleChoiceInterpretation table.",
     "evidence": [
       "Instruction window shows raw address 0A57, offset 4, mask/value field 40 before one coming_home constructor.",
       "target_010B6BDC.c calls 010D92EC, which constructs VagUdsAdaptationSetting.",
       "target_010B2040.c calls 010C2700, which constructs VagUdsCodingSetting.",
-      "target_010B3AF0.c calls 010CA958, which constructs VagUdsCodingSetting."
+      "target_010B3AF0.c calls 010CA958, which constructs VagUdsCodingSetting.",
+      "coming_home_master_ref_01076860 shows UDS coding immediate pairs 02/06 and 01/07 for the two coding helpers.",
+      "VagUdsCodingSetting(Ecu, int, byte/vector) hardcodes raw address 0x0600 and type 8, mapping those pairs to DID 0600 byte/mask fields."
     ]
   },
   {
@@ -164,13 +185,14 @@
         "evidence": "0A57 mode choice table in coming_home_mode_ref."
       }
     ],
-    "read_method": "220A57 adaptation candidate at offset 2; a long-coding variant is also present.",
+    "read_method": "220A57 adaptation candidate at offset 2 returned 7F2231 live; a long-coding variant is also present.",
     "write_method": "Do not write from this recovery until runtime branch selection and positive read/packing evidence are known.",
     "next_re_step": "Determine whether this BCM uses the 0A57 adaptation branch or the long-coding branch for coming_home_mode.",
     "evidence": [
       "Instruction window shows raw address 0A57, offset/count 2/3 and disabled/manual/automatic choices.",
       "target_010B6C30.c calls 010D9484, which constructs VagUdsAdaptationSetting.",
-      "target_010B6C84.c calls 010D9608, which constructs VagCanLongCodingSetting."
+      "target_010B6C84.c calls 010D9608, which constructs VagCanLongCodingSetting.",
+      "VagCanLongCodingSetting(Ecu, int, byte/vector) is now recovered from target_0105F484/target_0105F500 as raw type 3, raw address 0, int offset, and byte/vector mask."
     ]
   },
   {
@@ -225,25 +247,26 @@
         "evidence": "0A57 duration table."
       }
     ],
-    "read_method": "VAG short-adaptation and 220A57 UDS-adaptation duration variants are both present.",
+    "read_method": "VAG short-adaptation and 220A57 UDS-adaptation duration variants are both present; direct 220A57 returned 7F2231 live.",
     "write_method": "Do not write from this recovery until runtime branch selection proves which adaptation path applies.",
     "next_re_step": "Runtime-select whether Carista uses the short-adaptation branch or UDS 0A57 duration branch on this BCM.",
     "evidence": [
       "Instruction window shows 10-60 second duration tables and one 0A57 offset 3 mask FF UDS branch.",
       "target_010B704C.c calls 010DA7BC, which constructs FullByteVagCanShortAdaptationSetting.",
-      "target_010B7094.c calls 010DA910, which constructs VagUdsAdaptationSetting with NumericalInterpretation."
+      "target_010B7094.c calls 010DA910, which constructs VagUdsAdaptationSetting with NumericalInterpretation.",
+      "FullByteVagCanShortAdaptationSetting is now recovered from 010569FC as a VagCanShortAdaptationSetting wrapper with raw type 0, channel byte, offset 0, and mask FFFF."
     ]
   },
   {
     "key": "car_setting_coming_leaving_home_output",
     "label": "Coming/leaving-home output selector",
     "ecu": "PQ25 BCM / unit 09",
-    "native_function": "FUN_0105f6c0",
-    "reference_address": "010775EE / 01077694 / 01079282 / 01079316",
-    "instruction_window": "coming_leaving_home_output_ref_1_010775EE.txt; coming_leaving_home_output_ref_2_01079282.txt",
+    "native_function": "_ZN14VagCanSettings11getSettingsEv / official Play 9.8.3 x86",
+    "reference_address": "0x012c88d0 (Play 9.8.3 x86); 010775EE / 01077694 / 01079282 / 01079316 (older ARM windows)",
+    "instruction_window": "docs/carista_apk_analysis/play_9_8_3_x86_vag_static_reverse_update.md; coming_leaving_home_output_ref_1_010775EE.txt; coming_leaving_home_output_ref_2_01079282.txt",
     "constructor_kind": "mixed",
-    "constructor_status": "constructor_multi_path_recovered_coding_raw_address_unresolved",
-    "native_helper": "0x010B1930 -> 0x010C0418 -> VagUdsAdaptationSetting; 0x010B4218 -> 0x010CCBC8 -> VagUdsCodingSetting",
+    "constructor_status": "constructor_multi_path_runtime_branch_unresolved",
+    "native_helper": "0x012c8913 -> 0x0133fdf0 -> PLT/GOT VagUdsAdaptationSetting / VagUdsEcu / MultipleChoiceInterpretation; 0x010B1930 -> 0x010C0418 -> VagUdsAdaptationSetting; 0x010B4218 -> 0x010CCBC8 -> VagUdsCodingSetting",
     "raw_address": 4366,
     "value_offset": 2,
     "value_mask": "01",
@@ -252,76 +275,94 @@
     "choices": [
       {
         "key": "car_setting_fogs",
-        "requested_value": "00",
-        "evidence": "Choice table stores 0 next to car_setting_fogs in the instruction window."
+        "requested_value": null,
+        "evidence": "Label recovered. Interpretation value is 0 on raw 110E and DID 0600 byte 0x0D/mask 0x40, but 1 on DID 0600 byte 0x11/mask 0x08."
       },
       {
         "key": "car_setting_low_beams",
-        "requested_value": "01",
-        "evidence": "Choice table stores 1 next to car_setting_low_beams in the instruction window."
+        "requested_value": null,
+        "evidence": "Label recovered. Interpretation value is 1 on raw 110E and DID 0600 byte 0x0D/mask 0x40, but 0 on DID 0600 byte 0x11/mask 0x08."
       }
     ],
-    "read_method": "22110E is the native-shaped read candidate for the adaptation path only; the coding path raw address/packing remains unresolved.",
-    "write_method": "Do not write either path until branch selection and positive read/packing evidence are known.",
-    "next_re_step": "Resolve the VagUdsCodingSetting raw address/index packing around coming_leaving_home_output_ref_2_01079282 and identify which runtime branch applies to this BCM.",
+    "read_method": "22110E is the rejected adaptation path; the recovered UDS coding alternatives read DID 0600 with byte/mask pairs 0x0D/0x40 and 0x11/0x08.",
+    "write_method": "Do not write either path until branch selection is known for this BCM.",
+    "next_re_step": "Resolve which coming_leaving_home_output runtime branch applies to this BCM.",
     "evidence": [
+      "Official Play 9.8.3 x86 string ref is 0x012c88d0; first visible helper call targets 0x0133fdf0.",
+      "Direct x86 ELF audit resolves 0x0133fdf0 through PLT entry 0x0197ca10 / GOT 0x01a39088 to shared_ptr_emplace<VagUdsAdaptationSetting, VagUdsEcu, ..., MultipleChoiceInterpretation>.",
+      "Official static candidate DID 0x110E has offset 2 / field 1, but live 22110E returned 7F2231, so this is not a write seed.",
       "Instruction window shows raw address 110E, value offset 2, mask/value field 1 near the key.",
       "Ghidra export target_010B1930.c calls 0x010C0418.",
       "Ghidra export target_010C0418.c constructs VagUdsAdaptationSetting.",
-      "Second-path instruction window stores coding-like immediate pairs 40/0D and 08/11 before calling 0x010B4218.",
+      "Second-path instruction window stores coding pairs 40/0D and 08/11 before calling 0x010B4218.",
+      "target_00CEA35C.c proves the local choice source arrays are copied as vector<pair<unsigned long long,char const*>>.",
+      "Raw 110E and DID 0600 byte 0x0D/mask 0x40 branches store car_setting_fogs=0 and car_setting_low_beams=1.",
+      "DID 0600 byte 0x11/mask 0x08 branch stores car_setting_low_beams=0 and car_setting_fogs=1.",
       "Instruction window coming_leaving_home_output_ref_2_01079282 calls 0x010B4218 at 01079296 and 0107932A.",
       "target_010B4218.c calls 0x010CCBC8.",
-      "target_010CCBC8.c constructs VagUdsCodingSetting."
+      "target_010CCBC8.c constructs VagUdsCodingSetting.",
+      "VagUdsCodingSetting(Ecu, int, byte/vector) hardcodes raw address 0x0600 and type 8, so those pairs are DID 0600 byte/mask variants rather than separate raw DIDs.",
+      "target_012E867C.c and target_012E8890.c prove masked branches use compact requested choice values shifted by getLsbOffset(mask) during extract/insert."
     ]
   },
   {
     "key": "car_setting_coming_home_via_low_beams",
     "label": "Use low beams as coming-home lights",
     "ecu": "PQ25 BCM / unit 09",
-    "native_function": "FUN_0105f6c0",
-    "reference_address": "010776D8",
-    "instruction_window": "coming_home_via_low_beams_ref_010776D8.txt",
-    "constructor_kind": "VagUdsCodingSetting",
+    "native_function": "_ZN14VagCanSettings11getSettingsEv / official Play 9.8.3 x86",
+    "reference_address": "0x012c8a55 (Play 9.8.3 x86); 010776D8 (older ARM window)",
+    "instruction_window": "docs/carista_apk_analysis/play_9_8_3_x86_vag_static_reverse_update.md; coming_home_via_low_beams_ref_010776D8.txt",
+    "constructor_kind": "mixed",
     "constructor_status": "constructor_partial",
-    "native_helper": "0x010B5A98 -> 0x010D4140",
+    "native_helper": "0x012c8a8a -> 0x01358fd0 -> PLT/GOT VagUdsCodingSetting / VagCanEcu / MultipleChoiceInterpretation; 0x012c8bf7 -> 0x013604b0 -> PLT/GOT VagUdsAdaptationSetting; 0x010B5A98 -> 0x010D4140",
     "raw_address": null,
     "value_offset": null,
     "value_mask": null,
     "immediate_value": 16,
     "immediate_index": 6,
     "choices": [],
-    "read_method": "UDS coding setting path; exact DID/value packing still needs constructor proof.",
-    "write_method": "Do not write from this setting recovery; class is known, but exact coding byte/value packing is not recovered.",
-    "next_re_step": "Map the VagUdsCodingSetting constructor parameters from helper 0x010D4140 back to DID/byte/mask fields.",
+    "read_method": "UDS coding setting path reads DID 0600 and applies byte 0x06 mask 0x10; a VAG short-adaptation variant is also present.",
+    "write_method": "Do not write from this setting recovery until runtime branch selection and the branch-specific choice table are known.",
+    "next_re_step": "Resolve whether this BCM selects the UDS coding branch or FullByteVagCanShortAdaptationSetting branch for coming_home_via_low_beams.",
     "evidence": [
+      "Official Play 9.8.3 x86 string ref is 0x012c8a55; first visible helper call targets 0x01358fd0.",
+      "Direct x86 ELF audit resolves 0x01358fd0 through PLT entry 0x0197d810 / GOT 0x01a39408 to shared_ptr_emplace<VagUdsCodingSetting, VagCanEcu, ..., MultipleChoiceInterpretation>.",
+      "The adjacent official x86 helper 0x013604b0 resolves through PLT entry 0x0197dc20 / GOT 0x01a3958c to VagUdsAdaptationSetting; it is not a FullByteVagCanShortAdaptationSetting proof.",
       "Instruction window shows movs r4,#0x6 and movs r0,#0x10 before the key.",
       "Ghidra export target_010B5A98.c calls 0x010D4140.",
-      "Ghidra export target_010D4140.c constructs VagUdsCodingSetting."
+      "Ghidra export target_010D4140.c constructs VagUdsCodingSetting.",
+      "VagUdsCodingSetting(Ecu, int, byte/vector) hardcodes raw address 0x0600 and type 8, mapping the immediate pair to DID 0600 byte 0x06 mask 0x10."
     ]
   },
   {
     "key": "car_setting_coming_home_via_fogs",
     "label": "Use fog lights as coming-home lights",
     "ecu": "PQ25 BCM / unit 09",
-    "native_function": "FUN_0105f6c0",
-    "reference_address": "01077C50",
-    "instruction_window": "coming_home_via_fogs_ref_01077C50.txt",
-    "constructor_kind": "VagUdsCodingSetting",
+    "native_function": "_ZN14VagCanSettings11getSettingsEv / official Play 9.8.3 x86",
+    "reference_address": "0x012c929b (Play 9.8.3 x86); 01077C50 (older ARM window)",
+    "instruction_window": "docs/carista_apk_analysis/play_9_8_3_x86_vag_static_reverse_update.md; coming_home_via_fogs_ref_01077C50.txt",
+    "constructor_kind": "mixed",
     "constructor_status": "constructor_partial",
-    "native_helper": "0x010B19D0 -> 0x010C0708",
+    "native_helper": "0x012c92d0 -> 0x01340190 -> PLT/GOT VagUdsCodingSetting / VagCanEcu / MultipleChoiceInterpretation; 0x012c93f1 -> 0x01348190 -> PLT/GOT VagUdsAdaptationSetting; 0x010B19D0 -> 0x010C0708",
     "raw_address": null,
     "value_offset": null,
     "value_mask": null,
     "immediate_value": 32,
     "immediate_index": 6,
     "choices": [],
-    "read_method": "UDS coding setting path; exact DID/value packing still needs constructor proof.",
-    "write_method": "Do not write from this setting recovery; class is known, but exact coding byte/value packing is not recovered.",
-    "next_re_step": "Map the VagUdsCodingSetting constructor parameters from helper 0x010C0708 back to DID/byte/mask fields.",
+    "read_method": "UDS coding setting path reads DID 0600 and applies byte 0x06 mask 0x20; direct adaptation candidates returned 7F2231.",
+    "write_method": "Do not write from this setting recovery until runtime branch selection and the branch-specific choice table are known.",
+    "next_re_step": "Resolve whether this BCM selects the UDS coding branch or one of the rejected/alternate adaptation branches for coming_home_via_fogs.",
     "evidence": [
+      "Official Play 9.8.3 x86 string ref is 0x012c929b; first visible helper call targets 0x01340190.",
+      "Direct x86 ELF audit resolves 0x01340190 through PLT entry 0x0197ca30 / GOT 0x01a39090 to shared_ptr_emplace<VagUdsCodingSetting, VagCanEcu, ..., MultipleChoiceInterpretation>.",
+      "The adjacent official x86 helper 0x01348190 resolves through PLT entry 0x0197ce90 / GOT 0x01a39180 to VagUdsAdaptationSetting.",
+      "Official static read-only candidates include 22056D plus nearby 220550/220551; all returned 7F2231 live.",
       "Instruction window shows movs r0,#0x6, movs r1,#0x20, strd r1,r0 before the key.",
       "Ghidra export target_010B19D0.c calls 0x010C0708.",
-      "Ghidra export target_010C0708.c constructs VagUdsCodingSetting."
+      "Ghidra export target_010C0708.c constructs VagUdsCodingSetting.",
+      "VagUdsCodingSetting(Ecu, int, byte/vector) hardcodes raw address 0x0600 and type 8, mapping the immediate pair to DID 0600 byte 0x06 mask 0x20.",
+      "The adjacent 056D/0550/0551 full-mask adaptation tables carry disabled=00/enabled=1E for separate coming_leaving_home_* role keys, not a proven choice table for this DID 0600 bitmask setting."
     ]
   },
   {
@@ -337,16 +378,19 @@
     "raw_address": null,
     "value_offset": null,
     "value_mask": null,
-    "immediate_value": null,
-    "immediate_index": null,
+    "immediate_value": 2,
+    "immediate_index": 10,
     "choices": [],
-    "read_method": "Coding/long-coding variants are visible; no raw adaptation DID is proven for this key yet.",
-    "write_method": "Do not write from this recovery until exact coding packing and branch selection are known.",
-    "next_re_step": "Map the leaving_home_req_rls immediate pairs around 0107879A/01078896 back to exact coding byte/mask fields.",
+    "read_method": "UDS coding variant reads DID 0600 byte 0x0A mask 0x02; a long-coding byte 0x00 mask 0x20 variant is also visible.",
+    "write_method": "Do not write from this recovery until runtime branch selection and the branch-specific choice table are known.",
+    "next_re_step": "Runtime-select whether leaving_home_req_rls uses the long-coding branch or DID 0600 coding branch on this BCM.",
     "evidence": [
       "Instruction window shows leaving_home_req_rls refs at 0107879A and 01078896.",
       "target_010B7184.c calls 010DAD6C, which constructs VagCanLongCodingSetting.",
-      "Second visible path reuses 010B19D0 -> 010C0708, which constructs VagUdsCodingSetting."
+      "Second visible path reuses 010B19D0 -> 010C0708, which constructs VagUdsCodingSetting.",
+      "leaving_home_req_rls_ref_0107879A shows long-coding pair 20/00 and UDS coding pair 02/0A for this key family.",
+      "VagUdsCodingSetting(Ecu, int, byte/vector) hardcodes raw address 0x0600 and type 8, mapping the UDS pair to DID 0600 byte 0x0A mask 0x02.",
+      "VagCanLongCodingSetting(Ecu, int, byte/vector) is now recovered from target_0105F484/target_0105F500 as raw type 3, raw address 0, int offset, and byte/vector mask."
     ]
   },
   {
@@ -362,16 +406,18 @@
     "raw_address": null,
     "value_offset": null,
     "value_mask": null,
-    "immediate_value": null,
-    "immediate_index": null,
+    "immediate_value": 4,
+    "immediate_index": 6,
     "choices": [],
-    "read_method": "UDS coding setting variants; exact DID/value packing still needs constructor-field mapping.",
-    "write_method": "Do not write from this setting recovery; class is known, but exact coding byte/value packing is not recovered.",
-    "next_re_step": "Map the leaving_home immediate pairs around 010787F2/01078848 back to exact coding byte/mask fields.",
+    "read_method": "UDS coding variants read DID 0600 byte 0x06 mask 0x04 and byte 0x07 mask 0x08.",
+    "write_method": "Do not write from this setting recovery until runtime branch selection and the branch-specific choice table are known.",
+    "next_re_step": "Resolve which leaving_home UDS coding helper applies and recover its MultipleChoiceInterpretation table.",
     "evidence": [
       "Instruction window shows leaving_home refs through two UDS coding helpers.",
       "target_010B71D0.c calls 010DAEDC, which constructs VagUdsCodingSetting.",
-      "target_010B0C78.c calls 010BC404, which constructs VagUdsCodingSetting."
+      "target_010B0C78.c calls 010BC404, which constructs VagUdsCodingSetting.",
+      "leaving_home_req_rls_ref_0107879A shows immediate pairs 04/06 and 08/07 before the leaving_home helper calls.",
+      "VagUdsCodingSetting(Ecu, int, byte/vector) hardcodes raw address 0x0600 and type 8, mapping those pairs to DID 0600 byte/mask fields."
     ]
   },
   {
@@ -426,7 +472,7 @@
         "evidence": "0A57 duration table."
       }
     ],
-    "read_method": "VAG short-adaptation and 220A57 UDS-adaptation duration variants are both present.",
+    "read_method": "VAG short-adaptation and 220A57 UDS-adaptation duration variants are both present; direct 220A57 returned 7F2231 live.",
     "write_method": "Do not write from this recovery until runtime branch selection proves which adaptation path applies.",
     "next_re_step": "Runtime-select whether Carista uses the short-adaptation branch or UDS 0A57 duration branch on this BCM.",
     "evidence": [
@@ -434,19 +480,20 @@
       "target_010B1708.c calls 010BF9DC, which constructs FullByteVagCanShortAdaptationSetting.",
       "target_010B72C4.c calls 010DB380, which constructs VagUdsAdaptationSetting with NumericalInterpretation.",
       "target_010B7318.c calls 010DB504, which constructs VagUdsAdaptationSetting with NumericalInterpretation.",
-      "target_010B7368.c calls 010DB67C, which constructs VagUdsAdaptationSetting with MultipleChoiceInterpretation."
+      "target_010B7368.c calls 010DB67C, which constructs VagUdsAdaptationSetting with MultipleChoiceInterpretation.",
+      "FullByteVagCanShortAdaptationSetting is now recovered from 010569FC as a VagCanShortAdaptationSetting wrapper with raw type 0, channel byte, offset 0, and mask FFFF."
     ]
   },
   {
     "key": "car_setting_drl_via_fogs",
     "label": "Use fog lights as daytime running lights",
     "ecu": "PQ25 BCM / unit 09",
-    "native_function": "FUN_0105f6c0",
-    "reference_address": "0107AA66 / 0107AAAC / 0107AB04 / 0107AB60 / 0107ABF4 / 0107AC84",
-    "instruction_window": "drl_via_fogs_ref_1_0107AA66.txt; drl_via_fogs_ref_2_0107ABF4.txt",
+    "native_function": "_ZN14VagCanSettings11getSettingsEv / official Play 9.8.3 x86",
+    "reference_address": "0x012cde7b (Play 9.8.3 x86); 0107AA66 / 0107AAAC / 0107AB04 / 0107AB60 / 0107ABF4 / 0107AC84 (older ARM windows)",
+    "instruction_window": "docs/carista_apk_analysis/play_9_8_3_x86_vag_static_reverse_update.md; drl_via_fogs_ref_1_0107AA66.txt; drl_via_fogs_ref_2_0107ABF4.txt",
     "constructor_kind": "mixed",
     "constructor_status": "constructor_partial",
-    "native_helper": "010B71D0 -> 010DAEDC VagUdsCodingSetting; 010B7764 -> 010DC980 VagCanLongCodingSetting; 010B1980 -> 010C0590 VagUdsAdaptationSetting",
+    "native_helper": "0x012cdeb6 -> 0x01361520 -> PLT/GOT VagUdsCodingSetting; 0x012cdf28 -> 0x01363440 -> PLT/GOT VagCanLongCodingSetting; 010B71D0 -> 010DAEDC VagUdsCodingSetting; 010B7764 -> 010DC980 VagCanLongCodingSetting; 010B1980 -> 010C0590 VagUdsAdaptationSetting",
     "raw_address": 1372,
     "value_offset": 6,
     "value_mask": "FF",
@@ -464,40 +511,48 @@
         "evidence": "055C adaptation choice table in drl_via_fogs_ref_2."
       }
     ],
-    "read_method": "22055C adaptation candidate at offset 6; the same key also has UDS/long-coding variants.",
-    "write_method": "Do not write from this recovery until a positive 22055C read supplies the full raw payload.",
+    "read_method": "22055C adaptation candidate at offset 6 returned 7F2231 live; the same key also has UDS/long-coding variants.",
+    "write_method": "Do not write from this recovery until the runtime branch and positive coding/adaptation payload are proven.",
     "next_re_step": "Determine which of the six Carista variants is selected for 6R0937087K; current evidence proves multiple constructor variants, not the runtime branch.",
     "evidence": [
+      "Official Play 9.8.3 x86 string ref is 0x012cde7b; direct x86 ELF audit resolves 0x01361520 to VagUdsCodingSetting and 0x01363440 to VagCanLongCodingSetting.",
       "Refs-only probe finds six FUN_0105f6c0 references for this exact key.",
       "Instruction windows show UDS coding variants with immediate pairs 17/04, 0E/02, and 02/08.",
       "Instruction window shows a long-coding variant with immediate pair 11/10.",
+      "VagCanLongCodingSetting(Ecu, int, byte/vector) is now recovered from target_0105F484/target_0105F500 as raw type 3, raw address 0, int offset, and byte/vector mask.",
       "Two 010B1980 calls construct VagUdsAdaptationSetting via 010C0590.",
-      "The 055C adaptation table stores raw address 055C, offset 6, mask FF, disabled 00, enabled 14."
+      "The 055C adaptation table stores raw address 055C, offset 6, mask FF, disabled 00, enabled 14.",
+      "target_00CEA35C.c proves disabled/enabled are copied from a vector<pair<unsigned long long,char const*>> interpretation table for the full-mask 055C adaptation branch.",
+      "These 055C values do not prove the choice table for the separate DID 0600 and long-coding bitmask branches."
     ]
   },
   {
     "key": "car_setting_turn_off_fogs_with_high_beam",
     "label": "Turn off fogs with high beam",
     "ecu": "PQ25 BCM / unit 09",
-    "native_function": "FUN_0105f6c0",
-    "reference_address": "0107F15A / 0107F1B4 / 0107F20A / 0107F26C / 0107F2D6 / 0107F330",
-    "instruction_window": "turn_off_fogs_with_high_beam_ref_1_0107F15A.txt; turn_off_fogs_with_high_beam_ref_2_0107F26C.txt",
+    "native_function": "_ZN14VagCanSettings11getSettingsEv / official Play 9.8.3 x86",
+    "reference_address": "0x012d4db5 (Play 9.8.3 x86); 0107F15A / 0107F1B4 / 0107F20A / 0107F26C / 0107F2D6 / 0107F330 (older ARM windows)",
+    "instruction_window": "docs/carista_apk_analysis/play_9_8_3_x86_vag_static_reverse_update.md; turn_off_fogs_with_high_beam_ref_1_0107F15A.txt; turn_off_fogs_with_high_beam_ref_2_0107F26C.txt",
     "constructor_kind": "mixed",
     "constructor_status": "constructor_partial",
-    "native_helper": "010B69C0 -> 010D88A0 VagUdsCodingSetting; 010B8480 -> 010E0970 VagCanLongCodingSetting; 010B7F38 -> 010DEE9C VagUdsAdaptationSetting",
+    "native_helper": "0x012d4dea -> 0x0135e580 -> PLT/GOT VagUdsCodingSetting; 0x012d4e65 -> 0x01368100 -> PLT/GOT VagCanLongCodingSetting; 010B69C0 -> 010D88A0 VagUdsCodingSetting; 010B8480 -> 010E0970 VagCanLongCodingSetting; 010B7F38 -> 010DEE9C VagUdsAdaptationSetting",
     "raw_address": 3329,
     "value_offset": 1,
     "value_mask": "01",
     "immediate_value": null,
     "immediate_index": null,
     "choices": [],
-    "read_method": "220D01 adaptation candidate for one variant; other variants are UDS coding or long-coding settings.",
-    "write_method": "Do not write from this recovery until the exact runtime variant and positive read payload are proven.",
-    "next_re_step": "Runtime-select the variant for this BCM by matching availability reads; then test 220D01 read-only before any adaptation write.",
+    "read_method": "220D01/220A58 adaptation variants returned 7F2231 live; UDS coding alternatives read DID 0600 with byte/mask pairs 0x15/0x20, 0x0E/0x04, and 0x04/0x02, plus a long-coding 0x11/0x20 variant.",
+    "write_method": "Do not write from this recovery until the exact runtime variant and branch-specific choice table are proven.",
+    "next_re_step": "Runtime-select the variant for this BCM; if a DID 0600 coding branch applies, compare its byte/mask against current 220600 before any guarded full-coding write plan.",
     "evidence": [
+      "Official Play 9.8.3 x86 string ref is 0x012d4db5; direct x86 ELF audit resolves 0x0135e580 to VagUdsCodingSetting and 0x01368100 to VagCanLongCodingSetting.",
+      "Official static read-only candidates include 220D01 and nearby 220A58; both returned 7F2231 live.",
       "Refs-only probe finds six FUN_0105f6c0 references plus app getSettings refs for this key.",
-      "Instruction windows show UDS coding variants with immediate pairs 20/15, 04/0E, 02/04, and 01/0F.",
+      "Instruction windows show UDS coding variants with immediate pairs 20/15, 04/0E, 02/04, and 01/0F; the first three are in the front-fog window and 01/0F sits at the boundary before the rear-fog key.",
       "Instruction window shows a long-coding variant with immediate pair 20/11.",
+      "VagCanLongCodingSetting(Ecu, int, byte/vector) is now recovered from target_0105F484/target_0105F500 as raw type 3, raw address 0, int offset, and byte/vector mask.",
+      "VagUdsCodingSetting(Ecu, int, byte/vector) hardcodes raw address 0x0600 and type 8, so UDS coding immediate pairs map to DID 0600 byte/mask fields.",
       "Instruction windows show UDS adaptation variants at raw addresses 0D01 and 0A58 through 010B7F38 -> 010DEE9C.",
       "For the first adaptation variant, the window stores raw address 0D01 with adjacent 1/1 fields before constructing VagUdsAdaptationSetting."
     ]
@@ -506,25 +561,27 @@
     "key": "car_setting_assist_dr_lights",
     "label": "Assistant Driving Light (ADL)",
     "ecu": "PQ25 BCM / unit 09",
-    "native_function": "FUN_0105f6c0",
-    "reference_address": "0108252C",
-    "instruction_window": "assist_dr_lights_ref_0108252C.txt",
-    "constructor_kind": "VagUdsCodingSetting",
+    "native_function": "_ZN14VagCanSettings11getSettingsEv / official Play 9.8.3 x86",
+    "reference_address": "0x012d9b78 (Play 9.8.3 x86); 0108252C (older ARM window)",
+    "instruction_window": "docs/carista_apk_analysis/play_9_8_3_x86_vag_static_reverse_update.md; assist_dr_lights_ref_0108252C.txt",
+    "constructor_kind": "mixed",
     "constructor_status": "constructor_partial",
-    "native_helper": "010B74A0 -> 010DBC4C VagUdsCodingSetting",
+    "native_helper": "0x012d9bad -> 0x013625a0 -> PLT/GOT VagUdsCodingSetting; 0x012d9cc0 -> 0x0135f600 -> PLT/GOT VagCanLongCodingSetting; 010B74A0 -> 010DBC4C VagUdsCodingSetting",
     "raw_address": null,
     "value_offset": null,
     "value_mask": null,
     "immediate_value": 32,
     "immediate_index": 22,
     "choices": [],
-    "read_method": "UDS coding setting path; exact DID/value packing still needs constructor-field mapping.",
+    "read_method": "UDS coding setting path reads DID 0600 and applies byte 0x16 mask 0x20.",
     "write_method": "Use only full-coding guarded writes if intentionally tested; do not infer this from byte 22 bit 5 alone.",
-    "next_re_step": "Map the VagUdsCodingSetting constructor parameters from 010DBC4C to the exact DID/byte/mask fields.",
+    "next_re_step": "Resolve whether this BCM selects the UDS coding, long-coding, or adaptation branch for assist_dr_lights before using the byte 0x16 mask 0x20 clue.",
     "evidence": [
+      "Official Play 9.8.3 x86 string ref is 0x012d9b78; direct x86 ELF audit resolves 0x013625a0 to VagUdsCodingSetting and 0x0135f600 to VagCanLongCodingSetting.",
       "Refs-only probe finds a direct FUN_0105f6c0 ref.",
       "Instruction window stores immediate pair 20/16 before car_setting_assist_dr_lights.",
       "010B74A0 calls 010DBC4C, which constructs VagUdsCodingSetting.",
+      "VagUdsCodingSetting(Ecu, int, byte/vector) hardcodes raw address 0x0600 and type 8, mapping the immediate pair to DID 0600 byte 0x16 mask 0x20.",
       "PQ25 catalog byte 22 bit 5 remains an external candidate, not native proof."
     ]
   },
@@ -555,73 +612,89 @@
   {
     "key": "car_setting_front_fogs_with_low_beams",
     "label": "Activate front fog lights with low beams",
-    "ecu": "PQ25 BCM / unit 09",
-    "native_function": "unknown",
-    "reference_address": "unknown",
-    "instruction_window": null,
-    "constructor_kind": "unknown",
-    "constructor_status": "catalog_only_unresolved",
-    "native_helper": null,
+    "ecu": "Ford setting zone, not PQ25 BCM / unit 09",
+    "native_function": "FUN_00E314FE / older ARM Ford lighting setting constructor zone",
+    "reference_address": "00E4BCFA direct string ref; string at 00A5D168",
+    "instruction_window": "carista_apk_analysis/ghidra_instruction_windows/front_fogs_with_low_beams_ref_00E4BCFA.txt",
+    "constructor_kind": "FordUdsSetting",
+    "constructor_status": "recovered_non_vag_ford_setting",
+    "native_helper": "00E82930 -> 00E8FBE4 -> shared_ptr_emplace<FordUdsSetting, ... RA22_Kc, MultipleChoiceInterpretation>",
     "raw_address": null,
     "value_offset": null,
     "value_mask": null,
     "immediate_value": null,
     "immediate_index": null,
-    "choices": [],
-    "read_method": "Catalog/resource only.",
-    "write_method": "Unknown; do not write.",
-    "next_re_step": "Search callers outside the VAG FUN_0105f6c0 path if this setting becomes relevant; current probe found no PQ25/VAG constructor.",
+    "choices": [
+      {
+        "key": "car_setting_low_beams",
+        "requested_value": null,
+        "evidence": "Instruction window passes car_setting_low_beams into the FordUdsSetting constructor block at 00E4BD5C."
+      }
+    ],
+    "read_method": "Recovered direct constructor is FordUdsSetting only; no VAG/PQ25 DID, raw address, or long-coding path was found.",
+    "write_method": "Do not write on VW/PQ25 from this key. The recovered read/write path is Ford-only.",
+    "next_re_step": "Find the VAG/PQ25 equivalent through ReadValuesOperation availability/value objects or another VAG key; the direct key is not the VW implementation.",
     "evidence": [
       "Carista catalog contains the resource key.",
-      "Refs-only probe found this exact key only in FUN_00E314FE, not in FUN_0105F6C0."
+      "Refs-only probe found this exact key only in FUN_00E314FE, not in FUN_0105F6C0.",
+      "Focused instruction window stores car_setting_front_fogs_with_low_beams at 00E4BCFA into the setting table and then calls 00E82930.",
+      "00E82930 is a thin wrapper around 00E8FBE4.",
+      "target_00E8FBE4.c constructs shared_ptr_emplace<FordUdsSetting, ..., RA22_Kc, MultipleChoiceInterpretation>.",
+      "The same window uses car_setting_low_beams as a choice label at 00E4BD5C."
     ]
   },
   {
     "key": "car_setting_fogs_with_high_beam_restriction",
     "label": "Fog lights with high beam restriction",
-    "ecu": "PQ25 BCM / unit 09",
-    "native_function": "unknown",
-    "reference_address": "unknown",
-    "instruction_window": null,
-    "constructor_kind": "unknown",
-    "constructor_status": "catalog_only_unresolved",
-    "native_helper": null,
+    "ecu": "Ford setting zone, not PQ25 BCM / unit 09",
+    "native_function": "FUN_00E314FE / older ARM Ford lighting setting constructor zone",
+    "reference_address": "00E4DE8A direct string ref; string at 0076A97E",
+    "instruction_window": "carista_apk_analysis/ghidra_instruction_windows/fogs_with_high_beam_restriction_ref_00E4DE8A.txt",
+    "constructor_kind": "FordCodingSetting",
+    "constructor_status": "recovered_non_vag_ford_setting",
+    "native_helper": "00E820A8 -> 00E8D43C -> shared_ptr_emplace<FordCodingSetting, ... RA28_Kc, MultipleChoiceInterpretation>",
     "raw_address": null,
     "value_offset": null,
     "value_mask": null,
     "immediate_value": null,
     "immediate_index": null,
     "choices": [],
-    "read_method": "Catalog/resource only.",
-    "write_method": "Unknown; do not write.",
-    "next_re_step": "Search callers outside the VAG FUN_0105f6c0 path if this setting becomes relevant; current probe found no PQ25/VAG constructor.",
+    "read_method": "Recovered direct constructor is FordCodingSetting only; use car_setting_turn_off_fogs_with_high_beam for the VAG/PQ25 high-beam fog lead.",
+    "write_method": "Do not write on VW/PQ25 from this key. The recovered direct path is Ford-only.",
+    "next_re_step": "Keep the VAG-side high-beam lead on car_setting_turn_off_fogs_with_high_beam, whose mixed VAG constructors are recovered separately.",
     "evidence": [
       "Carista catalog contains a high-beam fog restriction key relevant to the observed high-beam test.",
-      "Refs-only probe found this exact key only in FUN_00E314FE, not in FUN_0105F6C0."
+      "Refs-only probe found this exact key only in FUN_00E314FE, not in FUN_0105F6C0.",
+      "Focused instruction window stores car_setting_fogs_with_high_beam_restriction at 00E4DE8A inside a Ford fog_lights_mode choice table.",
+      "00E820A8 is a thin wrapper around 00E8D43C.",
+      "target_00E8D43C.c constructs shared_ptr_emplace<FordCodingSetting, ..., RA28_Kc, MultipleChoiceInterpretation>."
     ]
   },
   {
     "key": "car_setting_turn_on_fogs_with_high_beam",
     "label": "Turn on fogs with high beam",
-    "ecu": "PQ25 BCM / unit 09",
-    "native_function": "unknown",
-    "reference_address": "unknown",
-    "instruction_window": null,
-    "constructor_kind": "unknown",
-    "constructor_status": "catalog_only_unresolved",
-    "native_helper": null,
+    "ecu": "Ford setting zone, not PQ25 BCM / unit 09",
+    "native_function": "FUN_00E314FE / older ARM Ford lighting setting constructor zone",
+    "reference_address": "00E4DE9A direct string ref; string at 00A5D1BA",
+    "instruction_window": "carista_apk_analysis/ghidra_instruction_windows/turn_on_fogs_with_high_beam_ref_00E4DE9A.txt",
+    "constructor_kind": "FordCodingSetting",
+    "constructor_status": "recovered_non_vag_ford_setting",
+    "native_helper": "00E820A8 -> 00E8D43C -> shared_ptr_emplace<FordCodingSetting, ... RA28_Kc, MultipleChoiceInterpretation>",
     "raw_address": null,
     "value_offset": null,
     "value_mask": null,
     "immediate_value": null,
     "immediate_index": null,
     "choices": [],
-    "read_method": "Catalog/resource only.",
-    "write_method": "Unknown; do not write.",
-    "next_re_step": "Search callers outside the VAG FUN_0105f6c0 path if this setting becomes relevant; current probe found no PQ25/VAG constructor.",
+    "read_method": "Recovered direct constructor is FordCodingSetting only; no VAG/PQ25 read method was recovered for this key.",
+    "write_method": "Do not write on VW/PQ25 from this key. The recovered direct path is Ford-only.",
+    "next_re_step": "Search VAG/PQ25 settings by VAG constructor paths, not by this Ford high-beam key.",
     "evidence": [
       "Carista catalog contains a high-beam fog setting key relevant to the observed high-beam test.",
-      "Refs-only probe found this exact key only in FUN_00E314FE, not in FUN_0105F6C0."
+      "Refs-only probe found this exact key only in FUN_00E314FE, not in FUN_0105F6C0.",
+      "Focused instruction window stores car_setting_turn_on_fogs_with_high_beam at 00E4DE9A inside the same Ford fog_lights_mode choice table.",
+      "00E820A8 is a thin wrapper around 00E8D43C.",
+      "target_00E8D43C.c constructs shared_ptr_emplace<FordCodingSetting, ..., RA28_Kc, MultipleChoiceInterpretation>."
     ]
   }
 ]

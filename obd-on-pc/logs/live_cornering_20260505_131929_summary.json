@@ -1,0 +1,192 @@
+{
+  "baud": 38400,
+  "current_coding": "3AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000",
+  "finished": "2026-05-05T13:19:51.842",
+  "port": "COM10",
+  "results": [
+    {
+      "counter_after": "1",
+      "counter_before": "0",
+      "ecu_ack_sent": "B5",
+      "expected_transmit_ack": "B1",
+      "frames": [
+        {
+          "header": "300",
+          "payload": "B1"
+        },
+        {
+          "header": "300",
+          "payload": "2000216206003AB0"
+        },
+        {
+          "header": "300",
+          "payload": "212BBF08A1000000"
+        },
+        {
+          "header": "300",
+          "payload": "223008006C6A0CD0"
+        },
+        {
+          "header": "300",
+          "payload": "2300C0412F608600"
+        },
+        {
+          "header": "300",
+          "payload": "1400200000000000"
+        },
+        {
+          "header": "300",
+          "payload": "A3"
+        },
+        {
+          "header": "300",
+          "payload": "1400200000000000"
+        }
+      ],
+      "label": "current 220600",
+      "payload": "6206003AB02BBF08A10000003008006C6A0CD000C0412F60860000200000000000",
+      "request": "220600",
+      "status": "positive",
+      "transmit_ack": "B1"
+    },
+    {
+      "counter_after": "2",
+      "counter_before": "0",
+      "ecu_ack_sent": "B1",
+      "expected_transmit_ack": "B2",
+      "frames": [
+        {
+          "header": "300",
+          "payload": "B2"
+        },
+        {
+          "header": "300",
+          "payload": "1000037F2E31"
+        }
+      ],
+      "label": "Carista DATE_WRITE_ID pre-write",
+      "payload": "7F2E31",
+      "request": "2EF199260505",
+      "status": "negative",
+      "transmit_ack": "B2"
+    },
+    {
+      "counter_after": "3",
+      "counter_before": "2",
+      "ecu_ack_sent": "B3",
+      "expected_transmit_ack": "B3",
+      "frames": [
+        {
+          "header": "300",
+          "payload": "B3"
+        },
+        {
+          "header": "300",
+          "payload": "21000962F1A50005"
+        },
+        {
+          "header": "300",
+          "payload": "12F3C7E719"
+        }
+      ],
+      "label": "inline 22F1A5 workshop-code read",
+      "payload": "62F1A50005F3C7E719",
+      "request": "22F1A5",
+      "status": "positive",
+      "transmit_ack": "B3"
+    },
+    {
+      "counter_after": "5",
+      "counter_before": "3",
+      "ecu_ack_sent": "B4",
+      "expected_transmit_ack": "B5",
+      "frames": [
+        {
+          "header": "300",
+          "payload": "B5"
+        },
+        {
+          "header": "300",
+          "payload": "1300036EF198"
+        }
+      ],
+      "label": "Carista WORKSHOP_CODE_WRITE_ID pre-write",
+      "payload": "6EF198",
+      "request": "2EF1980005F3C7E719",
+      "status": "positive",
+      "transmit_ack": "B5"
+    },
+    {
+      "counter_after": "A",
+      "counter_before": "5",
+      "ecu_ack_sent": "B5",
+      "expected_transmit_ack": "BA",
+      "frames": [
+        {
+          "header": "300",
+          "payload": "BA"
+        },
+        {
+          "header": "300",
+          "payload": "1400036E0600"
+        }
+      ],
+      "label": "Carista UDS long-coding write",
+      "payload": "6E0600",
+      "request": "2E06003AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000",
+      "status": "positive",
+      "transmit_ack": "BA"
+    },
+    {
+      "counter_after": "1",
+      "counter_before": "0",
+      "ecu_ack_sent": "B5",
+      "expected_transmit_ack": "B1",
+      "frames": [
+        {
+          "header": "300",
+          "payload": "B1"
+        },
+        {
+          "header": "300",
+          "payload": "2000216206003AB8"
+        },
+        {
+          "header": "300",
+          "payload": "212B9F08A1000000"
+        },
+        {
+          "header": "300",
+          "payload": "223008006C680ED0"
+        },
+        {
+          "header": "300",
+          "payload": "2300C8412F60A600"
+        },
+        {
+          "header": "300",
+          "payload": "1400200000000000"
+        },
+        {
+          "header": "300",
+          "payload": "A3"
+        },
+        {
+          "header": "300",
+          "payload": "1400200000000000"
+        }
+      ],
+      "label": "current 220600",
+      "payload": "6206003AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000",
+      "request": "220600",
+      "status": "positive",
+      "transmit_ack": "B1"
+    }
+  ],
+  "started": "2026-05-05T13:19:29.804",
+  "target_coding": "3AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000",
+  "verified_coding": "3AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000",
+  "workshop_code_payload": "0005F3C7E719",
+  "write_skipped": false,
+  "write_target": "3AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000"
+}

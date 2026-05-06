@@ -1,0 +1,50 @@
+[
+  {
+    "attempt_id": "sequence_ctr0_22055D",
+    "mode": "direct_sequence",
+    "started": "2026-05-04T14:18:56.441",
+    "log_file": "logs\\pq25_live_direct_055d_single_minimal_20260504_direct_sequence_sequence_ctr0_22055D.txt",
+    "unit": "20",
+    "ecu_scan_status": "",
+    "scan_probe": "",
+    "scan_native_builder": "",
+    "scan_purpose": "",
+    "send_header": "338",
+    "listen_header": "300",
+    "channel_parameter_profile": "minimal",
+    "channel_parameter_status": "defaulted",
+    "channel_parameters": {
+      "block": 15,
+      "T1": 255,
+      "T2": 255,
+      "T3": 255,
+      "T4": 255
+    },
+    "session_command": "",
+    "session_command_label": "",
+    "session_counter": "",
+    "session_status": "",
+    "session_result": "",
+    "pre_read_sequence": "",
+    "post_session_extra_frames": [],
+    "read_profile": "carista_read_values",
+    "ack_variant": "",
+    "delay_ms": "",
+    "read_counter": "0",
+    "read_command": "22055D",
+    "read_command_label": "VagCanSettings::getSettings Play 9.8.3 x86 car_setting_cornering_lights_via_fogs_right: Right cornering/fog role static candidate; live direct read rejected; status=live_rejected_7F2231",
+    "read_status": "no_response",
+    "read_result": "",
+    "stopped_early": "",
+    "raw_payloads": [
+      {
+        "timestamp": "2026-05-04T14:19:03.469",
+        "source": "20C00010000301",
+        "header": "220",
+        "payload": "00D00003380301",
+        "tp20_label": "TP2.0 application/control frame type=0 seq=0"
+      }
+    ],
+    "error": ""
+  }
+]

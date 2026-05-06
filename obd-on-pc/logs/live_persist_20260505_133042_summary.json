@@ -1,0 +1,11 @@
+{
+  "baud": 38400,
+  "coding": "3AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000",
+  "expected_transmit_ack": "B1",
+  "log_path": "C:\\Users\\victo\\Downloads\\PoloCornering\\obd-on-pc\\logs\\live_persist_20260505_133042.txt",
+  "payload": "6206003AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000",
+  "port": "COM10",
+  "started": "2026-05-05T13:30:42.217",
+  "status": "positive",
+  "transmit_ack": "B1"
+}

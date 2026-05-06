@@ -54,6 +54,33 @@ B? = TP2.0 ACK
 ACK rule = B0 | ((sequence + 1) & 0x0F)
 ```
 
+Deeper `VagCanCommunicator::parsePacket` and `readResponses` recovery on
+2026-05-05:
+
+```text
+parsePacket input shape: 3-hex CAN header + 1 opcode byte + payload bytes
+sequenced opcode classes: 0x0, 0x1, 0x2, 0x3, 0x9, 0xA, 0xB
+unsequenced opcode classes: 0xC, 0xD
+invalid opcode classes: TRANSPORT_LAYER_ERROR
+readResponses receiveMore limit when no progress: 2
+consecutive negative response cap: > 0x1E terminates connection
+DONE payload extraction: first 2 payload bytes are a 12-bit length prefix
+unexpected sequence path: clear receivedPackets and sendNack(expectedSeq)
+```
+
+Offline saved-log replay with
+`carista_apk_analysis/analyze_vag_can_readresponses_evidence.py` found:
+
+```text
+summary JSON files: 69
+records: 364
+positive reads: 95
+positive reassembly matches: 95/95
+inbound transmit ACK matches: 95/95
+saved outbound B? ACK commands in text logs: 35
+observed positive sequence patterns: (0,1), (0,1,2), (0,1,2,3,4), (0)
+```
+
 ## Read Commands
 
 Carista native command builders identified:

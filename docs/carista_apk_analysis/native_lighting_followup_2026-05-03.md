@@ -131,13 +131,13 @@ All previously listed helper chains were re-confirmed from the bounded decompila
   - First variant: raw address `0x0D01`, fields `1/1` adjacent.
   - Second variant: raw address `0x0A58`, fields `4/0` adjacent.
 - Additional paths use `010B69C0` (UDS coding, immediate pairs `0x20/0x15`, `0x04/0x0E`, `0x02/0x04`, `0x01/0x0F`) and `010B8480` (long-coding, immediate pair `0x20/0x11`).
-- Read-only candidates: `220D01` and `220A58` are safe to probe; neither has been live-tested on this BCM. Do not write until a positive read establishes the raw payload.
+- Direct-read candidates `220D01` and `220A58` were live-tested on 2026-05-05 and both returned `7F2231`. Treat the UDS adaptation variants as negative direct-read evidence on this BCM/session.
 
 ### `coming_leaving_home_output` — partial new finding
 
 - Instruction window `010775EE` confirms helper `010B1930 -> 010C0418 -> VagUdsAdaptationSetting` with raw address `0x110E`, choice list `car_setting_fogs` / `car_setting_low_beams`.
 - Instruction window `01079282` shows a second construction path calling `bl 0x010b4218`; `target_010B4218.c` calls `010CCBC8`, and `target_010CCBC8.c` constructs `VagUdsCodingSetting`.
-- Status: this setting is now known to be mixed, with a UDS adaptation path and a UDS coding path. `22110E` only covers the adaptation path and is not live-tested. The coding raw address/index packing and runtime branch selection still need recovery before writing.
+- Status: this setting is now known to be mixed, with a UDS adaptation path and two UDS coding variants. `22110E` only covers the adaptation path and returned `7F2231` live on 2026-05-05. The UDS coding variants are now typed as DID `0600` byte/mask `0D/40` and `11/08`; runtime branch selection and requested-choice encoding still need recovery before writing.
 
 ### `car_setting_left_fog_light_as` / `car_setting_right_fog_light_as` — still non-VAG
 
@@ -156,11 +156,17 @@ All previously listed helper chains were re-confirmed from the bounded decompila
 |---|---|
 | `22055C` | Rejected live as `7F2231`. Blocks both `drl_via_fogs` adaptation variant (offset 6) and `cornering_fogs_left` (offset 5). |
 | `22055D` | Rejected live as `7F2231`. Blocks `cornering_fogs_right` (offset 5). |
-| `22110E` | Not live-tested. Safe to probe read-only for the adaptation path only; the second `coming_leaving_home_output` path is now typed as `VagUdsCodingSetting` via `010B4218 -> 010CCBC8`. |
-| `220D01` | Not live-tested. Safe to probe read-only. |
-| `220A58` | Not live-tested. Safe to probe read-only. |
+| `22110E` | Rejected live as `7F2231` on 2026-05-05. Blocks the direct adaptation path only; the second `coming_leaving_home_output` path is typed as `VagUdsCodingSetting` via `010B4218 -> 010CCBC8`. |
+| `22056D` | Rejected live as `7F2231` on 2026-05-05. Blocks the nearby `coming_home_via_fogs` direct adaptation candidate. |
+| `220550` | Rejected live as `7F2231` on 2026-05-05. Blocks the nearby `coming_home_via_fogs` raw channel candidate. |
+| `220551` | Rejected live as `7F2231` on 2026-05-05. Blocks the nearby `coming_home_via_fogs` raw channel candidate. |
+| `220A57` | Rejected live as `7F2231` on 2026-05-05. Blocks the shared CH/LH direct UDS adaptation branch but not the VAG short-adaptation, UDS coding, or long-coding alternatives. |
+| `220D01` | Rejected live as `7F2231` on 2026-05-05. Blocks one `turn_off_fogs_with_high_beam` adaptation variant. |
+| `220A58` | Rejected live as `7F2231` on 2026-05-05. Blocks the nearby `turn_off_fogs_with_high_beam` adaptation variant. |
 
 Do not write any of these until the corresponding positive read payload is obtained, the full byte-length is confirmed, and the correct runtime variant for `6R0937087K` is identified.
+
+Conclusion for blocked reads: more work is needed, but not more blind retries of these same direct `22` requests in the normal TP2.0 session. The useful path is to recover Carista's runtime branch selection and exact packing for the UDS coding, long-coding, and VAG short-adaptation constructors that sit beside the rejected UDS adaptation DIDs.
 
 ---
 
@@ -191,7 +197,7 @@ Important recovered fields:
 
 Safety impact:
 
-- `220A57` is now a read-only candidate for several CH/LH adaptation branches, but it is not a write seed until this BCM returns a positive payload and the selected runtime branch is known.
+- `220A57` is now live-rejected as `7F2231` for several CH/LH adaptation branches, so it is negative evidence for the direct UDS adaptation path rather than a retry target.
 - Mixed settings in this cluster must be branch-selected before use. The same visible Carista key can map to UDS adaptation, VAG short adaptation, UDS coding, or long-coding constructors depending on the runtime branch.
 - The `VagCanSettings` Python recovery map and `vag_can_settings_recoveries.json` now carry these broader PQ25 entries so the reproduction has code-level proof anchors, not only markdown notes.
 
@@ -222,3 +228,73 @@ Impact on the open gaps:
 - The Java vtable slot targets are now proven for the base `ReadValuesOperation`; the remaining branch-selection gap has moved into the per-setting availability predicate/sub-object used by `VagOperationDelegate::getVagSettingAvailabilityForEcu`.
 - `left_fog_light_as` / `right_fog_light_as` still have no VAG constructor proof. The next static target is the availability predicate map or setting sub-object path, not the Java JNI bridge.
 - The raw-type switch confirms why the reproduction must keep UDS adaptation reads, UDS coding reads, VAG CAN adaptation reads, and submodule reads separate. A visible Carista setting key is not enough to infer the raw read/write path.
+
+---
+
+## Fog Role Constructor Pass - 2026-05-06
+
+Scope: static Ghidra address-target exports only, plus synthesis with the 2026-05-05 live behavior. No live vehicle write was performed.
+
+The left/right `cornering_lights_via_fogs_*` constructor proof is now stronger on the older ARM native path. The second right-side constructor callee was added to `ExportCaristaAddressTargets.java` and regenerated with:
+
+```powershell
+.\carista_apk_analysis\setup_ghidra_re.ps1 -ExportAddressTargets
+```
+
+Newly confirmed helper chains:
+
+| Setting | Call site | Wrapper | Constructor callee | Class allocated |
+|---|---:|---:|---:|---|
+| `car_setting_cornering_lights_via_fogs_left` | `01082988` | `010B90CC` | `010E44E8` | `VagUdsAdaptationSetting` |
+| `car_setting_cornering_lights_via_fogs_left` | `01082A4A` | `010B5620` | `010D2BD0` | `VagUdsAdaptationSetting` |
+| `car_setting_cornering_lights_via_fogs_right` | `01082B78` | `010B8574` | `010E0DE8` | `VagUdsAdaptationSetting` |
+| `car_setting_cornering_lights_via_fogs_right` | `01082C34` | `010B9120` | `010E466C` | `VagUdsAdaptationSetting` |
+
+`target_010E47E4.c` was also generated and confirms another `VagUdsAdaptationSetting` constructor callee behind wrapper `010B9170`; that wrapper is retained as typed background evidence, but it is not referenced by the current `01082988` / `01082A4A` / `01082B78` / `01082C34` fog-role windows.
+
+Live-behavior explanation:
+
+- The persisted `0600` long-coding target turned on the Carista-shaped cornering master bits, but the physical fogs still behave as steady low-beam-linked outputs and turn off with high beam.
+- That behavior fits a role/output conflict more than a missing cornering master bit: the fog outputs appear to be assigned to a coming-home/leaving-home or low-beam-linked role, so turn-signal input never gets visible ownership of them.
+- The strongest static clue is that Carista's per-side fog-role tables carry `1E=car_setting_enabled_coming_home_or_leaving_home` next to `16` for left-cornering and `17` for right-cornering, and the car repeatedly returned stable `220601 -> 6206011E` across switch states.
+
+Possible fix path, still blocked from live write:
+
+1. Prove which runtime branch Carista selects for `6R0937087K` for the two per-side role settings and the CH/LH output settings.
+2. Find a positive read path for the current per-side role payload, or prove an alternate Carista read/cache/source path that supplies the raw bytes Carista would write.
+3. Only after that proof, evaluate whether the matched repair is per-side role `1E -> 16/17`, a CH/LH output/master change, or both.
+
+Safety boundary remains unchanged: the recovered type `7` path reads the per-side role objects as direct UDS raw DIDs `22055C` / `22055D`, and the car returned `7F2231` for both. There is still no safe seed for `2E055C` / `2E055D`, and no write should be built from the static choice table alone.
+
+---
+
+## UDS Coding Constructor Packing Pass - 2026-05-06
+
+Scope: static constructor export synthesis only. No live vehicle work.
+
+The named `VagUdsCodingSetting` constructor exports prove the older ARM immediate pairs are not standalone raw DIDs. They are DID `0600` coding masks:
+
+- `VagUdsCodingSetting(Ecu*, StringWhitelist, int, vector<unsigned char>, ...)` calls `VagSetting` with raw address `0x0600` and type `8`.
+- `VagUdsCodingSetting(Ecu*, StringWhitelist, int, unsigned char, ...)` first builds a one-byte vector, then calls the vector constructor.
+- The constructor `int` is the `VagSetting` offset field used by `VagSetting::insertValue`; the byte/vector is the mask vector.
+
+Newly typed lighting packing:
+
+| Setting | Helper chain | DID `0600` coding packing |
+|---|---|---|
+| `car_setting_coming_home_req_rls` | `010B0D5C -> 010BC860 -> VagUdsCodingSetting`; `010B19D0 -> 010C0708 -> VagUdsCodingSetting` | byte `0x11`, mask `0x20`; byte `0x0A`, mask `0x04` |
+| `car_setting_coming_home` | `010B2040 -> 010C2700 -> VagUdsCodingSetting`; `010B3AF0 -> 010CA958 -> VagUdsCodingSetting` | byte `0x06`, mask `0x02`; byte `0x07`, mask `0x01` |
+| `car_setting_coming_leaving_home_output` | `010B4218 -> 010CCBC8 -> VagUdsCodingSetting` | byte `0x0D`, mask `0x40`; byte `0x11`, mask `0x08` |
+| `car_setting_coming_home_via_low_beams` | `010B5A98 -> 010D4140 -> VagUdsCodingSetting` | byte `0x06`, mask `0x10` |
+| `car_setting_coming_home_via_fogs` | `010B19D0 -> 010C0708 -> VagUdsCodingSetting` | byte `0x06`, mask `0x20` |
+| `car_setting_leaving_home_req_rls` | `010B19D0 -> 010C0708 -> VagUdsCodingSetting` | byte `0x0A`, mask `0x02` |
+| `car_setting_leaving_home` | `010B71D0 -> 010DAEDC -> VagUdsCodingSetting`; `010B0C78 -> 010BC404 -> VagUdsCodingSetting` | byte `0x06`, mask `0x04`; byte `0x07`, mask `0x08` |
+| `car_setting_turn_off_fogs_with_high_beam` | `010B69C0 -> 010D88A0 -> VagUdsCodingSetting` | byte `0x15`, mask `0x20`; byte `0x0E`, mask `0x04`; byte `0x04`, mask `0x02` |
+| `car_setting_turn_off_fogs_with_high_beam` | `010B8480 -> 010E0970 -> VagCanLongCodingSetting` | long-coding byte `0x11`, mask `0x20` |
+| `car_setting_assist_dr_lights` | `010B74A0 -> 010DBC4C -> VagUdsCodingSetting` | byte `0x16`, mask `0x20` |
+
+Impact:
+
+- The coding branch packing for the most relevant CH/LH and fog/high-beam settings is now recovered as DID `0600` byte/mask data.
+- This still is not a live write plan. The unresolved part is now runtime branch selection and requested-choice encoding, not the DID/byte/mask shape for these UDS coding branches.
+- The rejected adaptation reads remain negative evidence for their direct type-7 branches only; they do not disprove the adjacent DID `0600` coding branches.

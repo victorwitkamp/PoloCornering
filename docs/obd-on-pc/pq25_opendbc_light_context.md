@@ -33,10 +33,9 @@ services.
 Use this focused raw-CAN pass when checking whether the BCM sees the physical
 inputs needed for cornering logic:
 
-```powershell
-cd C:\Users\victo\Downloads\PoloCornering\obd-on-pc
-.\run_bcm_light_capture.ps1 -Port COM10 -ReadProfile bcm_light_fast -States "baseline_off,left_turn,right_turn,lowbeam_fog_on,highbeam,reverse" -RawCanSeconds 5 -RawHeaders pq25_light_context -Repeats 2
-```
+The old `run_bcm_light_capture.ps1` runner was removed. Any future live capture
+for this preset should use a temporary thin `obd-on-pc` wrapper around recovered
+`CaristaReproduction` symbols and be removed after the session.
 
 The analyzer will decode known payloads in the state-specific raw CAN report
 and will also parse the downloaded VW PQ DBC into a signal-level delta report:

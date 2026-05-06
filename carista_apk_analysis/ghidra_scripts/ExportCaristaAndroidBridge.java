@@ -32,7 +32,25 @@ public class ExportCaristaAndroidBridge extends GhidraScript {
         "com::prizmos::carista::library::operation::ReadValuesOperation::",
         "com::prizmos::carista::library::operation::ChangeSettingOperation::",
         "com::prizmos::carista::library::operation::CheckSettingsOperation::",
-        "com::prizmos::carista::library::operation::GetEcuInfoOperation::"
+        "com::prizmos::carista::library::operation::GetEcuInfoOperation::",
+        "mi::t1::",
+        "uc::d::",
+        "wr::f::",
+        "wr::n::",
+        "wr::p::",
+        "wr::q::",
+        "wr::r::",
+        "wr::s::",
+        "zr::b::",
+        "zr::d::",
+        "zr::f::",
+        "zr::m::"
+    };
+
+    private static final long[] TARGET_ADDRESSES = new long[] {
+        0x504C3AECL,  // wr::j::O; only direct DEX caller of ChangeSettingOperation(Setting, byte[], ReadValuesOperation)
+        0x504C2BB4L,  // wr::f::invokeSuspend; populates zr setting-value maps from ReadValuesOperation values
+        0x5054D018L   // zr::f::a; computes the Lt2/x tuple whose C field is passed as ChangeSettingOperation byte[]
     };
 
     private static final int MAX_REFERENCES_PER_FUNCTION = 80;
@@ -99,7 +117,16 @@ public class ExportCaristaAndroidBridge extends GhidraScript {
                 break;
             }
         }
-        return classMatch;
+        if (classMatch) {
+            return true;
+        }
+        long entry = function.getEntryPoint().getOffset();
+        for (long target : TARGET_ADDRESSES) {
+            if (entry == target) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void exportFunction(DecompInterface decompiler, Function function, File outputDir,

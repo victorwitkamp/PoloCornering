@@ -1,14 +1,13 @@
 from __future__ import annotations
 
-from .Models.CaristaCustomization import CaristaCustomizationScanReport
+from .Models.CheckSettingsOperation import CheckSettingsOperationPlan
 from .Models.CaristaProcessValidation import CaristaProcessValidation
-from .Models.CaristaReadValuesOperation import CaristaReadValuesPlan
 from .Models.CaristaUdsCodingWritePlan import CaristaUdsCodingWritePlan
 from .Models.JniBridge import JniBridgeSummary
+from .Models.ReadValuesOperation import ReadValuesOperationPlan, ReadValuesOperationSettingReport
 from .Models.VagCanEcu import VagCanEcuScanPlan
-from .Pq25CurrentSettings import UNMODELED_CARISTA_GROUPS, pq25_current_setting_states
 from .Types import HexString
-from .VagCanSettings import VagCanSettingsSettingRecovery
+from .VagCanSettings import UNMODELED_CARISTA_GROUPS, VagCanSettings_pq25CurrentSettingStates, VagCanSettingsSettingRecovery
 from .VagUdsAdaptationSetting import VagUdsAdaptationSetting
 
 
@@ -78,7 +77,7 @@ def render_carista_uds_coding_write_plan(plan: CaristaUdsCodingWritePlan) -> str
         [
             "",
             "Proof anchors:",
-            "  VagUdsCodingSetting(ecu, vector) hardcodes DID 0600 and setting type 8.",
+            "  VagUdsCodingSetting(Ecu, int, byte/vector) hardcodes DID 0600 and setting type 8, with the int as byte offset and the byte/vector as mask.",
             "  writeRawValue dispatches type 8 into writeVagUdsValue.",
             "  writeVagUdsValue sends DATE_WRITE_ID F199, reads ECU info for workshop code, sends WORKSHOP_CODE_WRITE_ID F198, then target DID 0600.",
             "  F199/F198 are gated with isFatalFail; the final target result is returned after native state mapping.",
@@ -111,8 +110,8 @@ def render_jni_bridge_summary(summary: JniBridgeSummary) -> str:
     return "\n".join(lines) + "\n"
 
 
-def render_pq25_current_settings(coding: HexString) -> str:
-    states = pq25_current_setting_states(coding)
+def render_vag_can_settings_current_values(coding: HexString) -> str:
+    states = VagCanSettings_pq25CurrentSettingStates(coding)
     lines = ["Carista-style PQ25 current settings", "", "Evidence-backed settings:"]
     for state in states:
         lines.append(
@@ -135,8 +134,22 @@ def render_vag_can_ecu_scan_plan(plan: VagCanEcuScanPlan) -> str:
         f"Adapter:  {plan.adapter}",
         f"Protocol: {plan.protocol}",
         "",
-        "ECU probes:",
+        "Discoverable ECUs:",
     ]
+    for ecu in plan.discoverable_ecus:
+        lines.append(f"  {ecu.ecu_id}: {ecu.name} (TP2.0 unit {ecu.tp20_unit_address})")
+
+    lines.extend([
+        "",
+        "Recovered ECU-list flow:",
+    ])
+    for item in plan.discovery_flow:
+        lines.append(f"  {item}")
+
+    lines.extend([
+        "",
+        "ECU probes:",
+    ])
     for probe in plan.probes:
         lines.extend(
             [
@@ -163,7 +176,121 @@ def render_vag_can_ecu_scan_plan(plan: VagCanEcuScanPlan) -> str:
     return "\n".join(lines) + "\n"
 
 
-def render_carista_read_values_plan(plan: CaristaReadValuesPlan) -> str:
+def render_vag_can_ecu_scan_plan_progress(plan: VagCanEcuScanPlan) -> str:
+    command_count = sum(len(probe.commands) for probe in plan.probes)
+    lines = [
+        "Carista VAGCAN ECU scan",
+        f"Adapter/protocol: {plan.adapter}; {plan.protocol}",
+        f"Discoverable ECUs: {len(plan.discoverable_ecus)} (PQ25-limited)",
+        f"ECU probes: {len(plan.probes)}; default read-only requests: {command_count}",
+    ]
+    for ecu in plan.discoverable_ecus:
+        lines.append(f"- discoverable: {ecu.ecu_id} / unit {ecu.tp20_unit_address}")
+    for probe in plan.probes:
+        lines.append(
+            f"- {probe.ecu.ecu_id}: open {probe.tp20_open_request}, channel {probe.expected_send_header}/{probe.expected_listen_header}, params {probe.channel_parameter_request}"
+        )
+    lines.append("Current gaps:")
+    for item in plan.unresolved:
+        lines.append(f"- {item}")
+    return "\n".join(lines) + "\n"
+
+
+def render_check_settings_operation_plan(plan: CheckSettingsOperationPlan) -> str:
+    lines = [
+        "Carista CheckSettingsOperation scan",
+        "",
+        f"Name:    {plan.name}",
+        f"Vehicle: {plan.vehicle_scope}",
+        f"Source:  {plan.source}",
+        "",
+        "Native operation flow:",
+    ]
+    for step in plan.native_flow:
+        lines.append(f"  {step.order}. {step.native_method} [{step.ghidra_address}]")
+        lines.append(f"     Java bridge: {step.java_bridge}")
+        lines.append(f"     recovered call: {step.recovered_call}")
+        lines.append(f"     purpose: {step.purpose}")
+        for evidence in step.evidence:
+            lines.append(f"     evidence: {evidence}")
+
+    lines.extend(["", "ECU scan stage:"])
+    for probe in plan.vag_can_ecu_scan_plan.probes:
+        lines.append(f"  {probe.ecu.ecu_id}: {probe.ecu.name}")
+        lines.append(f"     open: {probe.tp20_open_request}")
+        lines.append(f"     expected channel: send={probe.expected_send_header or '<unknown>'} listen={probe.expected_listen_header or '<unknown>'}")
+        lines.append(f"     channel parameters: {probe.channel_parameter_request}")
+        lines.append("     default recovered read requests:")
+        for command in probe.commands:
+            lines.append(f"       {command.request}: {command.native_builder}")
+
+    lines.extend(["", "ReadValuesOperation availability/value stage:"])
+    for request in plan.read_values_operation_plan.requests:
+        if request.included_by_default:
+            lines.append(f"  {request.request}: {request.setting_key} ({request.status})")
+    modeled_only = tuple(request for request in plan.read_values_operation_plan.requests if not request.included_by_default)
+    if modeled_only:
+        lines.append("  modeled-only evidence branches:")
+        for request in modeled_only:
+            lines.append(f"    {request.request}: {request.setting_key} ({request.status})")
+
+    if plan.read_values_operation_setting_report:
+        report = plan.read_values_operation_setting_report
+        lines.extend(
+            [
+                "",
+                "Customization map evidence:",
+                f"  coding: {report.coding}",
+                f"  rendered settings: {len(report.settings)}",
+                f"  priority unresolved settings: {len(report.unresolved_priority_settings)}",
+            ]
+        )
+        for setting in report.unresolved_priority_settings:
+            lines.append(f"    {setting.key}: {setting.mapping_status}")
+    else:
+        lines.extend(
+            [
+                "",
+                "Customization map evidence:",
+                "  pass --coding to include the offline ReadValuesOperation current-value view for a 30-byte BCM coding payload",
+            ]
+        )
+
+    lines.extend(["", "Unresolved:"])
+    for item in plan.unresolved:
+        lines.append(f"  {item}")
+    return "\n".join(lines) + "\n"
+
+
+def render_check_settings_operation_progress(plan: CheckSettingsOperationPlan) -> str:
+    default_requests = tuple(request for request in plan.read_values_operation_plan.requests if request.included_by_default)
+    modeled_only = tuple(request for request in plan.read_values_operation_plan.requests if not request.included_by_default)
+    setting_count = len(plan.read_values_operation_setting_report.settings) if plan.read_values_operation_setting_report else 0
+    unresolved_priority_count = (
+        len(plan.read_values_operation_setting_report.unresolved_priority_settings)
+        if plan.read_values_operation_setting_report
+        else 0
+    )
+    lines = [
+        "Carista CheckSettingsOperation scan",
+        f"Vehicle: {plan.vehicle_scope}",
+        "1. Adapter handoff: ConnectionManager::runCommand / Communicator::runCommand",
+        "2. Native operation: CheckSettingsOperation.initNative(Operation)",
+        f"3. ECU scan: {len(plan.vag_can_ecu_scan_plan.probes)} probe(s), {len(default_requests)} default read-only request(s)",
+        f"4. Availability/value scan: ReadValuesOperation::readItemAvailabilityAndValues, {len(modeled_only)} modeled-only evidence branch(es)",
+    ]
+    if plan.read_values_operation_setting_report:
+        lines.append(f"5. Customization map: {setting_count} rendered setting(s), {unresolved_priority_count} priority unresolved setting(s)")
+    else:
+        lines.append("5. Customization map: pass --coding to include current-value rendering")
+
+    lines.append("Current gaps:")
+    for item in plan.unresolved:
+        lines.append(f"- {item}")
+    return "\n".join(lines) + "\n"
+
+
+def render_read_values_operation_plan(plan: ReadValuesOperationPlan) -> str:
     lines = [
         "Carista ReadValuesOperation plan",
         "",
@@ -171,20 +298,20 @@ def render_carista_read_values_plan(plan: CaristaReadValuesPlan) -> str:
         f"Vehicle: {plan.vehicle_scope}",
         f"Source:  {plan.source}",
         "",
-        "Transport profile:",
+        "Transport procedure:",
     ]
-    for step in plan.transport:
-        lines.append(f"  {step.order}. {step.name}: {step.value}")
-        lines.append(f"     {step.purpose}")
-        for evidence in step.evidence:
+    for transport_step in plan.transport:
+        lines.append(f"  {transport_step.order}. {transport_step.name}: {transport_step.value}")
+        lines.append(f"     {transport_step.purpose}")
+        for evidence in transport_step.evidence:
             lines.append(f"     evidence: {evidence}")
 
     lines.extend(["", "Native read/value flow:"])
-    for step in plan.native_flow:
-        lines.append(f"  {step.order}. {step.native_method} [{step.ghidra_address}]")
-        lines.append(f"     dispatch: {step.dispatch}")
-        lines.append(f"     purpose: {step.purpose}")
-        for evidence in step.evidence:
+    for flow_step in plan.native_flow:
+        lines.append(f"  {flow_step.order}. {flow_step.native_method} [{flow_step.ghidra_address}]")
+        lines.append(f"     dispatch: {flow_step.dispatch}")
+        lines.append(f"     purpose: {flow_step.purpose}")
+        for evidence in flow_step.evidence:
             lines.append(f"     evidence: {evidence}")
 
     lines.extend(["", "Read requests:"])
@@ -199,6 +326,26 @@ def render_carista_read_values_plan(plan: CaristaReadValuesPlan) -> str:
     lines.extend(["", "Unresolved:"])
     for item in plan.unresolved:
         lines.append(f"  {item}")
+    return "\n".join(lines) + "\n"
+
+
+def render_read_values_operation_plan_progress(plan: ReadValuesOperationPlan) -> str:
+    default_requests = tuple(request for request in plan.requests if request.included_by_default)
+    modeled_only = tuple(request for request in plan.requests if not request.included_by_default)
+    status_counts: dict[str, int] = {}
+    for request in plan.requests:
+        status_counts[request.status] = status_counts.get(request.status, 0) + 1
+    status_text = ", ".join(f"{status}={count}" for status, count in sorted(status_counts.items()))
+    lines = [
+        "Carista ReadValuesOperation plan",
+        f"Vehicle: {plan.vehicle_scope}",
+        f"Transport steps: {len(plan.transport)}; native flow steps: {len(plan.native_flow)}",
+        f"Default read-only requests: {len(default_requests)}; modeled-only requests: {len(modeled_only)}",
+        f"Request status counts: {status_text}",
+        "Current gaps:",
+    ]
+    for item in plan.unresolved:
+        lines.append(f"- {item}")
     return "\n".join(lines) + "\n"
 
 
@@ -286,7 +433,7 @@ def render_vag_can_settings_setting_recoveries(recoveries: tuple[VagCanSettingsS
         "",
         "Purpose:",
         "  Keep recovered native constructor facts separate from guessed write plans.",
-        "  Anything marked constructor_partial, refs_only_unresolved, or catalog_only_unresolved is not write-safe.",
+        "  Anything marked constructor_partial, recovered_non_vag_ford_setting, refs_only_unresolved, or catalog_only_unresolved is not write-safe.",
         "",
         "Settings:",
     ]
@@ -311,7 +458,7 @@ def render_vag_can_settings_setting_recoveries(recoveries: tuple[VagCanSettingsS
         if recovery.value_mask:
             lines.append(f"     value mask: {recovery.value_mask}")
         if recovery.immediate_value is not None:
-            lines.append(f"     immediate value: 0x{recovery.immediate_value:02X}")
+            lines.append(f"     immediate value/mask: 0x{recovery.immediate_value:02X}")
         if recovery.immediate_index is not None:
             lines.append(f"     immediate index/field: 0x{recovery.immediate_index:02X}")
         if recovery.choices:
@@ -328,7 +475,7 @@ def render_vag_can_settings_setting_recoveries(recoveries: tuple[VagCanSettingsS
     return "\n".join(lines) + "\n"
 
 
-def render_pq25_customization_scan(report: CaristaCustomizationScanReport) -> str:
+def render_read_values_operation_setting_report(report: ReadValuesOperationSettingReport) -> str:
     lines = [
         "Carista-style PQ25 customization scan",
         "",
@@ -357,4 +504,23 @@ def render_pq25_customization_scan(report: CaristaCustomizationScanReport) -> st
             lines.append(f"  {setting.key}: {setting.label}")
             lines.append(f"     status: {setting.mapping_status}")
             lines.append(f"     write: {setting.write_method}")
+    return "\n".join(lines) + "\n"
+
+
+def render_read_values_operation_setting_report_progress(report: ReadValuesOperationSettingReport) -> str:
+    proof_counts: dict[str, int] = {}
+    for setting in report.settings:
+        proof_counts[setting.proof_status] = proof_counts.get(setting.proof_status, 0) + 1
+    proof_text = ", ".join(f"{status}={count}" for status, count in sorted(proof_counts.items()))
+    lines = [
+        "Carista-style PQ25 customization scan",
+        f"ECU: {report.ecu_name}",
+        f"Rendered settings: {len(report.settings)}; priority unresolved: {len(report.unresolved_priority_settings)}",
+        f"Proof status counts: {proof_text}",
+    ]
+    if report.unresolved_priority_settings:
+        lines.append("Priority unresolved settings:")
+        for setting in report.unresolved_priority_settings:
+            lines.append(f"- {setting.key}: {setting.mapping_status}")
+    lines.append(f"Note: {report.warning}")
     return "\n".join(lines) + "\n"
