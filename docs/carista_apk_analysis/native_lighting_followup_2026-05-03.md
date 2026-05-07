@@ -57,9 +57,9 @@ Evidence:
 
 Deeper argument tracing changes the availability interpretation:
 
-- Preferred x86 `0x012da25a -> 0x0136c910 -> PLT 0x0197e2f0` resolves to a `VagCanShortAdaptationSetting` helper for the left key. Its whitelist comes from GOT `[EBX-0x2AA4]` `VagWhitelists::CENTRAL_ELEC_MQB_ALL`, combined with GOT `[EBX-0x2C9C]` `VagWhitelists::CENTRAL_ELEC_MK8`.
-- Preferred x86 `0x012da39a -> 0x01356f90 -> PLT 0x0197d6f0` resolves to a `VagUdsCodingSetting` helper for the left key. It pushes GOT `[EBX-0x2C94]` `VagWhitelists::UDS_CAN_GATEWAY_MEB` and GOT `[EBX-0x5DF4]` `VagUdsEcu::CAN_GATEWAY`.
-- Preferred x86 `0x012da5a9 -> 0x01368690 -> PLT 0x0197e0a0` resolves to a `VagCanLongCodingSetting` helper for the right key and uses the same `CENTRAL_ELEC_MQB_ALL` plus `CENTRAL_ELEC_MK8` whitelist family.
+- Preferred x86 `0x012da25a -> 0x0136c910 -> PLT 0x0197e2f0` resolves to a `VagUdsAdaptationSetting` helper for the left key. Its whitelist comes from GOT `[EBX-0x2AA4]` `VagWhitelists::CENTRAL_ELEC_MQB_ALL`, combined with GOT `[EBX-0x2C9C]` `VagWhitelists::CENTRAL_ELEC_MK8`.
+- Preferred x86 `0x012da39a -> 0x01356f90 -> PLT 0x0197d6f0` resolves to a `VagUdsAdaptationSetting` helper for the left key. It pushes GOT `[EBX-0x2C94]` `VagWhitelists::UDS_CAN_GATEWAY_MEB` and GOT `[EBX-0x5DF4]` `VagUdsEcu::CAN_GATEWAY`.
+- Preferred x86 `0x012da5a9 -> 0x01368690 -> PLT 0x0197e0a0` resolves to a `VagUdsAdaptationSetting` helper for the right key and uses the same `CENTRAL_ELEC_MQB_ALL` plus `CENTRAL_ELEC_MK8` whitelist family.
 - Preferred x86 `0x012da6e9 -> 0x0136caf0 -> PLT 0x0197e300` resolves to a `VagUdsAdaptationSetting` helper for the right key and uses the same `UDS_CAN_GATEWAY_MEB` plus `CAN_GATEWAY` guard.
 - Older ARM `01082988` and `01082B78` use `VagUdsEcu::CENTRAL_ELEC` with a `CENTRAL_ELEC_MQB_ALL` / `CENTRAL_ELEC_MK8`-derived whitelist.
 - Older ARM `01082A4A` and `01082C34` use `VagUdsEcu::CAN_GATEWAY` with `VagWhitelists::UDS_CAN_GATEWAY_MEB`.
@@ -311,6 +311,43 @@ Possible fix path, still blocked from live write:
 
 Safety boundary remains unchanged: the recovered type `7` path reads the per-side role objects as direct UDS raw DIDs `22055C` / `22055D`, and the car returned `7F2231` for both. There is still no safe seed for `2E055C` / `2E055D`, and no write should be built from the static choice table alone.
 
+2026-05-06 companion-DID follow-up:
+
+- `0601=1E` is now the top actual-fix clue. Historical switch-state reads kept
+  `6206011E` stable across switch left/middle/right, pulled-fog states, and
+  turn-signal states, so it behaves like stored configuration/status.
+- The `1E` byte matches the recovered `car_setting_enabled_coming_home_or_leaving_home`
+  enum in the per-side fog-role tables, but no official x86 6R/PQ25 branch or
+  positive raw read ties DID `0601` to a writable Carista object yet.
+- `0606=001800018000` remains a weaker companion: successful isolated reads
+  reassembled to that same payload, but the retained switch-state sweeps do not
+  prove any lamp-state correlation.
+- The next proof step is a focused read-only before/after or state-correlation
+  capture, preferably with raw CAN light-context headers, not a direct write.
+
+2026-05-06 x86 `0601` static recovery pass:
+
+- Primary authority is still official Play 9.8.3 x86 `libCarista.so`; ARM is
+  only corroboration when it explains older tables or part-pattern scope.
+- `carista_apk_analysis/scan_x86_0601_static_evidence.py` disassembles the x86
+  library with Capstone/pyelftools and found zero decoded instruction operands
+  for `0x0601`, `0x0606`, `0x220601`, `0x220606`, `0x620601`, or `0x620606`.
+- The x86 binary contains `car_setting_enabled_coming_home_or_leaving_home` in
+  `.rodata` at `0x006D0F27`, but the same scan found no decoded instruction
+  reference or raw pointer tying that enum string to DID `0601`.
+- The only exported target-level `0x0601` hit inspected so far is a
+  `NissanLiveData` whitelist initializer, not a VAG setting constructor. Other
+  x86 raw/ascii hits are symbol/relocation, PDX, unwind, or table noise until a
+  decoded VAG constructor or `ReadValuesOperation` path proves otherwise.
+- Current classification: `0601=1E` is a strong live role clue, but x86 does not
+  yet prove whether it is stored config, status/current-value container, or a
+  read-only mirror of another setting.
+- The next static choke point is therefore still
+  `VagOperationDelegate::getVagSettingAvailabilityForEcu`: recover the special
+  setting predicate/vtable slot `+0x3C`, then dump the selected
+  `StringWhitelist` contents for normal `AvailBy=2` branches and match those to
+  `6R0937087K`.
+
 ---
 
 ## UDS Coding Constructor Packing Pass - 2026-05-06
@@ -356,15 +393,19 @@ branches against the `6R0937087K` ECU-tag route:
 
 | Setting | x86 6R/PQ25 branch fact | Current car implication |
 |---|---|---|
+| `car_setting_coming_home_req_rls` | Reused-key branch `0x012c74fe -> 0x0133b390`, `CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S`, DID `0600` byte `0x0A`, mask `0x04`; adjacent `coming_home_menu_default_req_rls` is MK7/6C raw `0x0D04` adaptation evidence. | PQ25 CH/LH prerequisite branch is now x86-confirmed, but it is not a `0601` owner path and not a standalone cornering-fog write plan. |
 | `car_setting_cornering_lights_via_fogs` | `0x012d9f7b -> 0x01358fd0`, `CENTRAL_ELEC_6R_5C_7E_7H`, byte `0x0C`, mask `0x40` | Already set in live coding; behavior-disproven as standalone fix. |
-| `car_setting_cornering_lights_via_fogs_experimental` | `0x012da0f2 -> 0x0135eaf0`, `CENTRAL_ELEC_6R_5C_7E_7H`, byte `0x15`, mask `0x80` | Current byte `0x15 = 0x86`; bit already set. |
+| `car_setting_cornering_lights_via_fogs_experimental` | `0x012da0f2 -> 0x0135eaf0`, `CENTRAL_ELEC_6R_5C_7E_7H`, byte `0x15`, mask `0x80` | Fresh engine-running byte `0x15 = 0xA6`; bit already set. |
 | `car_setting_cornering_lights_with_turn_signals` | `0x012da761 -> 0x0135e920`, `CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S`, byte `0x15`, mask `0x04` | Explicit turn-signal-cornering bit is already set. |
 | `car_setting_drl_via_fogs` | `0x012cdeb6 -> 0x01361520`, `CENTRAL_ELEC_6R_5C_7E_7H`, byte `0x17`, mask `0x04` | Clear on current car; DRL/fog clue, not the observed cornering symptom. |
-| `car_setting_turn_off_fogs_with_high_beam` | `0x012d4dea -> 0x0135e580`, `CENTRAL_ELEC_6R_5C_7E_7H`, byte `0x15`, mask `0x20` | Clear on current car while physical high-beam fog shutoff already occurs. |
+| `car_setting_turn_off_fogs_with_high_beam` | `0x012d4dea -> 0x0135e580`, `CENTRAL_ELEC_6R_5C_7E_7H`, byte `0x15`, mask `0x20` | Set in fresh engine-running coding; physical high-beam fog shutoff already occurs. |
 | `car_setting_assist_dr_lights` | `0x012d9bad -> 0x013625a0`, `CENTRAL_ELEC_6R_5C_7E_7H`, byte `0x16`, mask `0x20` | Clear on current car; lower-priority ADL clue. |
 
 Negative x86 branch-selection facts:
 
+- `car_setting_coming_home_req_rls` now has a recovered x86 6R/PQ25 DID `0600`
+  byte `0x0A` mask `0x04` branch, but this is a CH/LH prerequisite branch, not
+  the unresolved `0601` role owner.
 - `car_setting_coming_leaving_home_output` direct x86 branches are
   `CENTRAL_ELEC_MK8` or `UDS_CAN_GATEWAY_MEB`; no x86 6R/PQ25 branch is
   recovered.
@@ -372,7 +413,10 @@ Negative x86 branch-selection facts:
   `car_setting_coming_home_via_fogs` direct x86 branches are B8-scoped; the
   older ARM DID `0600` branches remain build/version evidence, not x86 6R proof.
 - The per-side `055C` / `055D` role branches remain MQB/MK8 or gateway/MEB
-  scoped on x86, matching the earlier ARM-negative conclusion.
+  scoped on x86, matching the earlier ARM-negative conclusion. The older ARM
+  per-side region also loads part-number patterns `5Q0937084*` and
+  `6C093708*`, but no `6R0937087K` / `6R0-937-08x` pattern was recovered for
+  the `055C` or `055D` paths.
 - A preferred x86 sweep found no decoded instruction operand immediate `0x0601`
   or `0x0606`; the positive live companion reads stay unresolved companions, not
   recovered native setting branches.
@@ -383,3 +427,19 @@ Near-term car-read conclusion:
   `0x15` mask `0x04` as standalone fixes; all are already set or disproven.
 - The remaining likely gap is an output-role/prerequisite path not exposed by the
   direct per-side `055C` / `055D` branches.
+
+## VW/PQ25 Fog Output-Role / Prerequisite Pass - 2026-05-06
+
+The output-role path is now separated into three buckets for the actual
+`6R0937087K` car:
+
+| Bucket | Evidence | Current conclusion |
+|---|---|---|
+| Recovered 6R/PQ25 prerequisites | `cornering_lights_via_fogs`, `cornering_lights_via_fogs_experimental`, `cornering_lights_with_turn_signals`, and `turn_off_fogs_with_high_beam` all have x86 6R/PQ25 DID `0600` byte/mask branches. | All relevant masks are already set in the fresh engine-running coding or behavior-disproven as standalone fixes. |
+| Per-side fog role/output branches | `cornering_lights_via_fogs_left/right` recover `055C`/`055D` offset `5` mask `FF`, but x86 guards are MQB/MK8 or gateway/MEB. ARM neighbors include `5Q0937084*` and `6C093708*`, not `6R0937087K`. | Do not promote these to the Polo path without a separate special-predicate proof or positive raw payload. |
+| CH/LH output selector | `coming_leaving_home_output` has branch-specific `110E`, DID `0600` byte `0x0D` mask `0x40`, and DID `0600` byte `0x11` mask `0x08` encodings. `22110E` rejected live and x86 direct branches are MK8/gateway scoped. | Current value is intentionally reported as unknown because the choice encoding flips by branch. |
+
+This makes the present gap narrower: find a recovered VAG branch or runtime
+`ReadValuesOperation` value object that is actually selected for `6R0937087K`,
+instead of reusing the Ford direct labels or the non-6R per-side `055C`/`055D`
+constructors.

@@ -6,9 +6,9 @@
     "native_function": "_ZN14VagCanSettings11getSettingsEv / official Play 9.8.3 x86",
     "reference_address": "0x012da210 (Play 9.8.3 x86); 01082988 / 01082A4A (older ARM windows)",
     "instruction_window": "docs/carista_apk_analysis/play_9_8_3_x86_vag_static_reverse_update.md; cornering_fogs_left_ref_1_01082988.txt; cornering_fogs_left_ref_2_01082A4A.txt",
-    "constructor_kind": "mixed",
+    "constructor_kind": "VagUdsAdaptationSetting",
     "constructor_status": "write_blocked_read_rejected",
-    "native_helper": "official x86: 0x012da25a -> 0x0136c910 -> PLT 0x0197e2f0 VagCanShortAdaptationSetting; 0x012da39a -> 0x01356f90 -> PLT 0x0197d6f0 VagUdsCodingSetting. Older ARM: 01082988 -> 010B90CC -> 010E44E8 VagUdsAdaptationSetting and 01082A4A -> 010B5620 -> 010D2BD0 VagUdsAdaptationSetting; readVagUdsValue -> ReadRawDataByIdentifierCommand applies only to the 055C type-7 branch",
+    "native_helper": "official x86: 0x012da25a -> 0x0136c910 -> PLT 0x0197e2f0 VagUdsAdaptationSetting; 0x012da39a -> 0x01356f90 -> PLT 0x0197d6f0 VagUdsAdaptationSetting. Older ARM: 01082988 -> 010B90CC -> 010E44E8 VagUdsAdaptationSetting and 01082A4A -> 010B5620 -> 010D2BD0 VagUdsAdaptationSetting; readVagUdsValue -> ReadRawDataByIdentifierCommand applies to these 055C type-7 branches",
     "raw_address": 1372,
     "value_offset": 5,
     "value_mask": "FF",
@@ -36,11 +36,12 @@
     "next_re_step": "Recover why Carista can expose this setting without a positive direct 22055C read, or find the required session/security precondition.",
     "evidence": [
       "Official Play 9.8.3 x86 string ref is 0x012da210 inside VagCanSettings::getSettings with EBX base 0x01a35618.",
-      "Direct x86 ELF audit resolves 0x0136c910 through PLT entry 0x0197e2f0 to shared_ptr_emplace<VagCanShortAdaptationSetting, VagCanEcu, StringWhitelist, ..., MultipleChoiceInterpretation>.",
-      "Direct x86 ELF audit resolves adjacent helper 0x01356f90 through PLT entry 0x0197d6f0 to shared_ptr_emplace<VagUdsCodingSetting, VagCanEcu, StringWhitelist, ..., MultipleChoiceInterpretation>.",
+      "Direct x86 ELF audit resolves 0x0136c910 through PLT entry 0x0197e2f0 to shared_ptr_emplace<VagUdsAdaptationSetting, VagUdsEcu, StringWhitelist, ..., MultipleChoiceInterpretation>.",
+      "Direct x86 ELF audit resolves adjacent helper 0x01356f90 through PLT entry 0x0197d6f0 to shared_ptr_emplace<VagUdsAdaptationSetting, VagUdsEcu, StringWhitelist, ..., MultipleChoiceInterpretation>.",
       "The x86 helper path at 0x012da25a obtains its whitelist through GOT [EBX-0x2AA4] relocation _ZN13VagWhitelists20CENTRAL_ELEC_MQB_ALLE and passes GOT [EBX-0x2C9C] relocation _ZN13VagWhitelists16CENTRAL_ELEC_MK8E through the whitelist vtable slot +0x14.",
       "The second x86 helper at 0x012da39a pushes GOT-derived _ZN13VagWhitelists19UDS_CAN_GATEWAY_MEBE from [EBX-0x2C94] and _ZN9VagUdsEcu11CAN_GATEWAYE from [EBX-0x5DF4], despite carrying the left fog-role key.",
       "The older ARM 01082988 type-7 branch has the same CENTRAL_ELEC plus MQB/MK8-derived whitelist argument shape: cornering_fogs_left_ref_1_01082988.txt loads VagUdsEcu::CENTRAL_ELEC from 014f7ad8 and derives a whitelist from CENTRAL_ELEC_MQB_ALL (014f706c) with CENTRAL_ELEC_MK8 (014f701c).",
+      "The same older ARM per-side region loads part-number patterns 5Q0937084* and 6C093708*, but no 6R0937087K / 6R0-937-08x pattern was recovered for the 055C path.",
       "The older ARM 01082A4A type-7 branch is gateway-shaped: cornering_fogs_left_ref_2_01082A4A.txt loads VagWhitelists::UDS_CAN_GATEWAY_MEB from 014f6c0c and VagUdsEcu::CAN_GATEWAY from 014f7a7c.",
       "Older ARM windows prove both left variants allocate VagUdsAdaptationSetting: 01082988 -> 010B90CC -> 010E44E8 and 01082A4A -> 010B5620 -> 010D2BD0.",
       "Native constructor uses raw address 055C, value offset 5, mask FF.",
@@ -55,9 +56,9 @@
     "native_function": "_ZN14VagCanSettings11getSettingsEv / official Play 9.8.3 x86",
     "reference_address": "0x012da55f (Play 9.8.3 x86); 01082B78 / 01082C34 (older ARM windows)",
     "instruction_window": "docs/carista_apk_analysis/play_9_8_3_x86_vag_static_reverse_update.md; cornering_fogs_right_ref_1_01082B78.txt; cornering_fogs_right_ref_2_01082C34.txt",
-    "constructor_kind": "mixed",
+    "constructor_kind": "VagUdsAdaptationSetting",
     "constructor_status": "write_blocked_read_rejected",
-    "native_helper": "official x86: 0x012da5a9 -> 0x01368690 -> PLT 0x0197e0a0 VagCanLongCodingSetting/NumericalInterpretation; 0x012da6e9 -> 0x0136caf0 -> PLT 0x0197e300 VagUdsAdaptationSetting/MultipleChoiceInterpretation. Older ARM: 01082B78 -> 010B8574 -> 010E0DE8 VagUdsAdaptationSetting and 01082C34 -> 010B9120 -> 010E466C VagUdsAdaptationSetting; readVagUdsValue -> ReadRawDataByIdentifierCommand applies only to the 055D type-7 branch",
+    "native_helper": "official x86: 0x012da5a9 -> 0x01368690 -> PLT 0x0197e0a0 VagUdsAdaptationSetting/MultipleChoiceInterpretation; 0x012da6e9 -> 0x0136caf0 -> PLT 0x0197e300 VagUdsAdaptationSetting/MultipleChoiceInterpretation. Older ARM: 01082B78 -> 010B8574 -> 010E0DE8 VagUdsAdaptationSetting and 01082C34 -> 010B9120 -> 010E466C VagUdsAdaptationSetting; readVagUdsValue -> ReadRawDataByIdentifierCommand applies to these 055D type-7 branches",
     "raw_address": 1373,
     "value_offset": 5,
     "value_mask": "FF",
@@ -85,11 +86,12 @@
     "next_re_step": "Recover why Carista can expose this setting without a positive direct 22055D read, or find the required session/security precondition.",
     "evidence": [
       "Official Play 9.8.3 x86 string ref is 0x012da55f inside VagCanSettings::getSettings with EBX base 0x01a35618.",
-      "Direct x86 ELF audit resolves 0x01368690 through PLT entry 0x0197e0a0 to shared_ptr_emplace<VagCanLongCodingSetting, VagCanEcu, StringWhitelist, ..., NumericalInterpretation>.",
+      "Direct x86 ELF audit resolves 0x01368690 through PLT entry 0x0197e0a0 to shared_ptr_emplace<VagUdsAdaptationSetting, VagUdsEcu, StringWhitelist, ..., MultipleChoiceInterpretation>.",
       "Direct x86 ELF audit resolves adjacent helper 0x0136caf0 through PLT entry 0x0197e300 to shared_ptr_emplace<VagUdsAdaptationSetting, VagUdsEcu, StringWhitelist, ..., MultipleChoiceInterpretation>.",
       "The x86 helper path at 0x012da5a9 uses the same GOT [EBX-0x2AA4] CENTRAL_ELEC_MQB_ALL plus [EBX-0x2C9C] CENTRAL_ELEC_MK8 whitelist derivation as the left-side first helper.",
       "The second right-side x86 gateway-shaped path at 0x012da6e9 pushes GOT-derived _ZN13VagWhitelists19UDS_CAN_GATEWAY_MEBE from [EBX-0x2C94] and _ZN9VagUdsEcu11CAN_GATEWAYE from [EBX-0x5DF4].",
       "The older ARM 01082B78 type-7 branch has the same CENTRAL_ELEC plus MQB/MK8-derived whitelist argument shape: cornering_fogs_right_ref_1_01082B78.txt follows the same 014f706c/014f701c derivation and loads VagUdsEcu::CENTRAL_ELEC from 014f7ad8.",
+      "The same older ARM per-side region loads part-number patterns 5Q0937084* and 6C093708*, but no 6R0937087K / 6R0-937-08x pattern was recovered for the 055D path.",
       "The older ARM 01082C34 type-7 branch is gateway-shaped: cornering_fogs_right_ref_2_01082C34.txt loads VagWhitelists::UDS_CAN_GATEWAY_MEB from 014f6c0c and VagUdsEcu::CAN_GATEWAY from 014f7a7c.",
       "Older ARM windows prove both right variants allocate VagUdsAdaptationSetting: 01082B78 -> 010B8574 -> 010E0DE8 and 01082C34 -> 010B9120 -> 010E466C.",
       "Native constructor uses raw address 055D, value offset 5, mask FF.",
@@ -104,9 +106,9 @@
     "native_function": "_ZN14VagCanSettings11getSettingsEv / official Play 9.8.3 x86",
     "reference_address": "0x012d9ed4 / 0x012d9f7b (Play 9.8.3 x86)",
     "instruction_window": "docs/carista_apk_analysis/play_9_8_3_x86_vag_static_reverse_update.md",
-    "constructor_kind": "FullByteVagCanShortAdaptationSetting",
+    "constructor_kind": "VagUdsCodingSetting",
     "constructor_status": "constructor_partial",
-    "native_helper": "official x86 same-key branches: 0x012d9f09, 0x012d9f7b, 0x012d9ff6, and 0x012da071 all call 0x01358fd0 FullByteVagCanShortAdaptationSetting; the 0x012d9f7b branch is guarded by CENTRAL_ELEC_6R_5C_7E_7H",
+    "native_helper": "official x86 same-key branches: 0x012d9f09, 0x012d9f7b, 0x012d9ff6, and 0x012da071 all call 0x01358fd0 which resolves through PLT 0x0197d810 to VagUdsCodingSetting; the 0x012d9f7b branch is guarded by CENTRAL_ELEC_6R_5C_7E_7H",
     "raw_address": null,
     "value_offset": 12,
     "value_mask": "40",
@@ -124,12 +126,13 @@
         "evidence": "Official x86 0x012d9f7b branch passes MultipleChoiceInterpretation::ENABLED_DISABLED into the 6R/PQ25 byte 0x0c mask 0x40 branch. MultipleChoiceInterpretation::ENABLED_DISABLED at 014f1ff0 is initialized by static init 00D54B34: car_setting_enabled has compact requested value 01 and car_setting_disabled has compact requested value 00."
       }
     ],
-    "read_method": "Official x86 branch is FullByteVagCanShortAdaptationSetting; live DID 0600 writes changed the same byte/mask but did not fix the symptom.",
+    "read_method": "Official x86 branch is UDS-coding DID 0600 byte 0x0C mask 0x40; live DID 0600 writes changed the same byte/mask but did not fix the symptom.",
     "write_method": "Do not retest as a standalone write; this byte/mask is already behavior-disproven for the missing turn-signal cornering behavior.",
     "next_re_step": "Keep this as a ruled-out prerequisite bit and focus on branches not already set/behavior-disproven.",
     "evidence": [
       "Official x86 0x012d9ed4 loads car_setting_cornering_lights_via_fogs.",
       "Official x86 0x012d9f7b pushes CENTRAL_ELEC_6R_5C_7E_7H, VagCanEcu::CENTRAL_ELEC, immediate pair byte 0x0c/mask 0x40, and ENABLED_DISABLED.",
+      "Direct x86 ELF audit resolves helper 0x01358fd0 through PLT entry 0x0197d810 to shared_ptr_emplace<VagUdsCodingSetting, VagCanEcu, StringWhitelist, ..., MultipleChoiceInterpretation>.",
       "The same key also has official x86 1S byte 0x0c/mask 0x40, MK6_8X_B7 byte 0x0e/mask 0x80, and B8 byte 0x04/mask 0x01 branches.",
       "Current live coding has byte 0x0c mask 0x40 set, but physical testing still showed no turn-signal-triggered cornering."
     ]
@@ -162,12 +165,12 @@
       }
     ],
     "read_method": "Coding-style byte 0x15 mask 0x80 branch; no separate direct DID candidate recovered.",
-    "write_method": "Do not write: current live coding byte 0x15 is 0x86, so mask 0x80 is already set.",
+    "write_method": "Do not write: fresh engine-running coding byte 0x15 is 0xA6, so mask 0x80 is already set.",
     "next_re_step": "Treat as already-enabled negative evidence for this symptom unless runtime Carista UI proves otherwise.",
     "evidence": [
       "Official x86 0x012da0bd loads car_setting_cornering_lights_via_fogs_experimental.",
       "Official x86 0x012da0f2 pushes CENTRAL_ELEC_6R_5C_7E_7H, VagCanEcu::CENTRAL_ELEC, byte 0x15, mask 0x80, and YES_NO.",
-      "Current live coding byte 0x15 is 0x86, so this bit is already set while turn-signal cornering behavior is absent."
+      "Fresh engine-running coding byte 0x15 is 0xA6, so this bit is already set while turn-signal cornering behavior is absent."
     ]
   },
   {
@@ -198,12 +201,160 @@
       }
     ],
     "read_method": "Coding-style byte 0x15 mask 0x04 branch; no separate direct DID candidate recovered.",
-    "write_method": "Do not write: current live coding byte 0x15 is 0x86, so mask 0x04 is already set.",
+    "write_method": "Do not write: fresh engine-running coding byte 0x15 is 0xA6, so mask 0x04 is already set.",
     "next_re_step": "This explicit turn-signal key is already enabled in current coding; look for prerequisite/output-role branches instead of toggling it again.",
     "evidence": [
       "Official x86 0x012da72c loads car_setting_cornering_lights_with_turn_signals before the 0x012da761 helper call.",
       "Official x86 0x012da761 pushes CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S, VagCanEcu::CENTRAL_ELEC, byte 0x15, mask 0x04, and YES_NO.",
-      "Current live coding byte 0x15 is 0x86, so this bit is already set while turn-signal cornering behavior is absent."
+      "Fresh engine-running coding byte 0x15 is 0xA6, so this bit is already set while turn-signal cornering behavior is absent."
+    ]
+  },
+  {
+    "key": "car_setting_fog_lights_on_reverse",
+    "label": "Fog lights on reverse",
+    "ecu": "non-6R VAG central electrics D1D branch family",
+    "native_function": "_ZN14VagCanSettings11getSettingsEv / official Play 9.8.3 x86 Ghidra export",
+    "reference_address": "0x012d62e6 / 0x012d632e / 0x012d63ec (Play 9.8.3 x86)",
+    "instruction_window": "carista_apk_analysis/play_9.8.3/ghidra_x86_vag_lighting/branches/fog_lights_on_reverse_d1d_012D62E6.md",
+    "constructor_kind": "VagUdsAdaptationSetting",
+    "constructor_status": "constructor_partial",
+    "native_helper": "official x86 D1D branches call 0x013591a0 and 0x013691d0 VagUdsAdaptationSetting helpers",
+    "raw_address": 3357,
+    "value_offset": 0,
+    "value_mask": "02",
+    "immediate_value": 2,
+    "immediate_index": 0,
+    "choices": [
+      {
+        "key": "car_setting_disabled",
+        "requested_value": "00",
+        "evidence": "Official x86 0x012d632e branch passes MultipleChoiceInterpretation::ENABLED_DISABLED into the D1D offset 0 mask 0x02 branch. MultipleChoiceInterpretation::ENABLED_DISABLED at 014f1ff0 is initialized by static init 00D54B34: car_setting_enabled has compact requested value 01 and car_setting_disabled has compact requested value 00."
+      },
+      {
+        "key": "car_setting_enabled",
+        "requested_value": "01",
+        "evidence": "Official x86 0x012d632e branch passes MultipleChoiceInterpretation::ENABLED_DISABLED into the D1D offset 0 mask 0x02 branch. MultipleChoiceInterpretation::ENABLED_DISABLED at 014f1ff0 is initialized by static init 00D54B34: car_setting_enabled has compact requested value 01 and car_setting_disabled has compact requested value 00."
+      }
+    ],
+    "read_method": "D1D UDS adaptation-style branch; recovered guards are MK7/6C/MQBA0/MK8, not 6R/PQ25.",
+    "write_method": "Blocked: no recovered 6R/PQ25 guard and no positive 220D1D payload; never build 2E0D1D from this branch for the Polo.",
+    "next_re_step": "Use this as negative platform-scope evidence while continuing to search for 6R/PQ25-owned branches.",
+    "evidence": [
+      "Ghidra export fog_lights_on_reverse_d1d_012D62E6 shows car_setting_fog_lights_on_reverse at 0x012d62e6.",
+      "The 0x012d632e helper call passes raw/DID 0x0d1d, offset 0, mask 0x02, UDS_CENTRAL_ELEC_MK7, CENTRAL_ELEC_MK7_6C, VagUdsEcu::CENTRAL_ELEC, and ENABLED_DISABLED.",
+      "The later same-key 0x012d63ec helper path uses CENTRAL_ELEC_MK7_NEW_MQBA0 plus a CENTRAL_ELEC_MK8-derived whitelist with VagUdsEcu::CENTRAL_ELEC.",
+      "No recovered fog-on-reverse D1D branch in the Ghidra x86 window is guarded by CENTRAL_ELEC_6R, CENTRAL_ELEC_6R_5C_7E_7H, or CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S."
+    ]
+  },
+  {
+    "key": "car_setting_cornering_lights_activation",
+    "label": "Cornering lights activation method",
+    "ecu": "non-6R VAG central electrics D1D branch family",
+    "native_function": "_ZN14VagCanSettings11getSettingsEv / official Play 9.8.3 x86 Ghidra export",
+    "reference_address": "0x012da8bd / 0x012da906 / 0x012daab2 / 0x012dab32 (Play 9.8.3 x86)",
+    "instruction_window": "carista_apk_analysis/play_9.8.3/ghidra_x86_vag_lighting/branches/cornering_lights_activation_d1d_012DA8BD.md",
+    "constructor_kind": "mixed",
+    "constructor_status": "constructor_partial",
+    "native_helper": "official x86 D1D paths call 0x0133e9f0 VagUdsAdaptationSetting; nearby non-D1D B8 path calls 0x0135e750 -> PLT 0x0197db20 VagUdsCodingSetting",
+    "raw_address": 3357,
+    "value_offset": 2,
+    "value_mask": "38",
+    "immediate_value": 56,
+    "immediate_index": 2,
+    "choices": [
+      {
+        "key": "car_setting_disabled",
+        "requested_value": "00",
+        "evidence": "D1D activation choice vector"
+      },
+      {
+        "key": "car_setting_steering_wheel_method_a",
+        "requested_value": "01",
+        "evidence": "D1D activation choice vector"
+      },
+      {
+        "key": "car_setting_steering_wheel_and_blinker_method_a",
+        "requested_value": "02",
+        "evidence": "D1D activation choice vector"
+      },
+      {
+        "key": "car_setting_steering_wheel_method_b",
+        "requested_value": "03",
+        "evidence": "D1D activation choice vector"
+      },
+      {
+        "key": "car_setting_steering_wheel_and_blinker_method_b",
+        "requested_value": "04",
+        "evidence": "D1D activation choice vector"
+      },
+      {
+        "key": "car_setting_not_defined",
+        "requested_value": "06",
+        "evidence": "D1D activation choice vector"
+      }
+    ],
+    "read_method": "D1D UDS adaptation-style branch; recovered D1D guards are MK7/6C/MQBA0, not 6R/PQ25.",
+    "write_method": "Blocked: no recovered 6R/PQ25 guard and no positive 220D1D payload; never build 2E0D1D from this branch for the Polo.",
+    "next_re_step": "Keep as platform-negative evidence; do not confuse this with the already-set 6R DID 0600 byte 0x15 mask 0x04 turn-signal key.",
+    "evidence": [
+      "Ghidra export cornering_lights_activation_d1d_012DA8BD shows car_setting_cornering_lights_activation at 0x012da8bd.",
+      "The 0x012da906 helper call passes raw/DID 0x0d1d, offset 2, mask 0x38, UDS_CENTRAL_ELEC_MK7, CENTRAL_ELEC_MK7_6C, and VagUdsEcu::CENTRAL_ELEC.",
+      "The later 0x012daab2 same-key D1D helper uses CENTRAL_ELEC_MK7_NEW_MQBA0 with VagUdsEcu::CENTRAL_ELEC.",
+      "The nearby 0x012dab32 path is a B8 UDS-coding variant guarded by CENTRAL_ELEC_B8 plus VagCanEcu::CENTRAL_ELEC, not a D1D 6R path.",
+      "Direct x86 ELF audit resolves helper 0x0135e750 through PLT entry 0x0197db20 to shared_ptr_emplace<VagUdsCodingSetting, VagCanEcu, StringWhitelist, ..., MultipleChoiceInterpretation>.",
+      "No recovered activation D1D branch in the Ghidra x86 window is guarded by CENTRAL_ELEC_6R, CENTRAL_ELEC_6R_5C_7E_7H, or CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S."
+    ]
+  },
+  {
+    "key": "car_setting_cornering_lights_min_activation_speed",
+    "label": "Cornering lights minimum activation speed",
+    "ecu": "non-6R VAG central electrics D1D branch family",
+    "native_function": "_ZN14VagCanSettings11getSettingsEv / official Play 9.8.3 x86 Ghidra export",
+    "reference_address": "0x012daf54 / 0x012daf97 / 0x012db0a5 (Play 9.8.3 x86)",
+    "instruction_window": "carista_apk_analysis/play_9.8.3/ghidra_x86_vag_lighting/branches/cornering_lights_min_activation_speed_d1d_012DAF54.md",
+    "constructor_kind": "VagUdsAdaptationSetting",
+    "constructor_status": "constructor_partial",
+    "native_helper": "official x86 D1D numerical helpers call 0x0136ccc0 and 0x0136cea0 VagUdsAdaptationSetting paths",
+    "raw_address": 3357,
+    "value_offset": 3,
+    "value_mask": "FF",
+    "immediate_value": 255,
+    "immediate_index": 3,
+    "choices": [],
+    "read_method": "D1D UDS adaptation-style numerical branch with Unit::KM_H; guards are MK7/MK7_6C/MK7_NEW_MQBA0, not 6R/PQ25.",
+    "write_method": "Blocked: no recovered 6R/PQ25 guard and no positive 220D1D payload; never build 2E0D1D from this branch for the Polo.",
+    "next_re_step": "Treat the D1D speed settings as non-PQ25 evidence unless a recovered 6R guard appears.",
+    "evidence": [
+      "Ghidra export cornering_lights_min_activation_speed_d1d_012DAF54 shows the key at 0x012daf54.",
+      "The primary observed raw tuple is raw/DID 0x0d1d, offset 3, mask 0xff with Unit::KM_H numerical interpretation.",
+      "Observed guards include CENTRAL_ELEC_MK7_ALL, CENTRAL_ELEC_MK7_6C, and CENTRAL_ELEC_MK7_NEW_MQBA0 with VagUdsEcu::CENTRAL_ELEC.",
+      "No recovered min-speed D1D branch in the Ghidra x86 window is guarded by CENTRAL_ELEC_6R, CENTRAL_ELEC_6R_5C_7E_7H, or CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S."
+    ]
+  },
+  {
+    "key": "car_setting_cornering_lights_max_activation_speed",
+    "label": "Cornering lights maximum activation speed",
+    "ecu": "non-6R VAG central electrics D1D branch family",
+    "native_function": "_ZN14VagCanSettings11getSettingsEv / official Play 9.8.3 x86 Ghidra export",
+    "reference_address": "0x012db176 / 0x012db1bf / 0x012db2f6 (Play 9.8.3 x86)",
+    "instruction_window": "carista_apk_analysis/play_9.8.3/ghidra_x86_vag_lighting/branches/cornering_lights_max_activation_speed_d1d_012DB176.md",
+    "constructor_kind": "VagUdsAdaptationSetting",
+    "constructor_status": "constructor_partial",
+    "native_helper": "official x86 D1D numerical helpers call 0x0136cea0 and 0x0136d080 VagUdsAdaptationSetting paths",
+    "raw_address": 3357,
+    "value_offset": 4,
+    "value_mask": "FF",
+    "immediate_value": 255,
+    "immediate_index": 4,
+    "choices": [],
+    "read_method": "D1D UDS adaptation-style numerical branch with Unit::KM_H; guards are MK7_6C/MK7_NEW_MQBA0/MK8-derived, not 6R/PQ25.",
+    "write_method": "Blocked: no recovered 6R/PQ25 guard and no positive 220D1D payload; never build 2E0D1D from this branch for the Polo.",
+    "next_re_step": "Treat the D1D speed settings as non-PQ25 evidence unless a recovered 6R guard appears.",
+    "evidence": [
+      "Ghidra export cornering_lights_max_activation_speed_d1d_012DB176 shows the key at 0x012db176.",
+      "The primary observed raw tuple is raw/DID 0x0d1d, offset 4, mask 0xff with Unit::KM_H numerical interpretation.",
+      "Observed guards include CENTRAL_ELEC_MK7_6C and CENTRAL_ELEC_MK7_NEW_MQBA0/MK8-derived whitelists with VagUdsEcu::CENTRAL_ELEC.",
+      "No recovered max-speed D1D branch in the Ghidra x86 window is guarded by CENTRAL_ELEC_6R, CENTRAL_ELEC_6R_5C_7E_7H, or CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S."
     ]
   },
   {
@@ -447,7 +598,7 @@
     "instruction_window": "docs/carista_apk_analysis/play_9_8_3_x86_vag_static_reverse_update.md; coming_home_via_low_beams_ref_010776D8.txt",
     "constructor_kind": "mixed",
     "constructor_status": "constructor_partial",
-    "native_helper": "official x86 direct key: 0x012c8a8a -> 0x01358fd0 FullByteVagCanShortAdaptationSetting / VagCanEcu / MultipleChoiceInterpretation guarded by CENTRAL_ELEC_B8; older ARM fallback: 0x010B5A98 -> 0x010D4140 VagUdsCodingSetting",
+    "native_helper": "official x86 direct key: 0x012c8a8a -> 0x01358fd0 -> PLT 0x0197d810 VagUdsCodingSetting / VagCanEcu / MultipleChoiceInterpretation guarded by CENTRAL_ELEC_B8; older ARM fallback: 0x010B5A98 -> 0x010D4140 VagUdsCodingSetting",
     "raw_address": null,
     "value_offset": null,
     "value_mask": null,
@@ -465,11 +616,12 @@
         "evidence": "coming_home_via_low_beams_ref_010776D8 passes MultipleChoiceInterpretation::YES_NO (014f1fd8) into the DID 0600 byte 06/mask 10 UDS-coding branch. MultipleChoiceInterpretation::YES_NO at 014f1fd8 is initialized by static init 00D54B34: car_setting_yes has compact requested value 01 and car_setting_no has compact requested value 00."
       }
     ],
-    "read_method": "Official x86 direct key is B8-scoped FullByteVagCanShortAdaptationSetting; older ARM fallback evidence has DID 0600 byte 0x06 mask 0x10.",
+    "read_method": "Official x86 direct key is B8-scoped UDS-coding DID 0600 byte 0x06 mask 0x10; older ARM fallback evidence has the same DID 0600 byte/mask.",
     "write_method": "Do not write from this setting recovery until runtime branch selection and requested-choice encoding are known.",
     "next_re_step": "Do not treat this as PQ25-selected unless an x86 6R whitelist branch or a licensed runtime availability record proves it.",
     "evidence": [
       "Official Play 9.8.3 x86 string ref is 0x012c8a55; first visible helper call targets 0x01358fd0.",
+      "Direct x86 ELF audit resolves helper 0x01358fd0 through PLT entry 0x0197d810 to shared_ptr_emplace<VagUdsCodingSetting, VagCanEcu, StringWhitelist, ..., MultipleChoiceInterpretation>.",
       "Official x86 0x012c8a8a pushes CENTRAL_ELEC_B8, VagCanEcu::CENTRAL_ELEC, immediate pair byte 0x06/mask 0x10, and YES_NO.",
       "No official x86 direct branch for this key is currently guarded by CENTRAL_ELEC_6R or CENTRAL_ELEC_6R_5C_7E_7H.",
       "Ghidra export target_010B5A98.c calls 0x010D4140.",
@@ -669,7 +821,7 @@
     "instruction_window": "docs/carista_apk_analysis/play_9_8_3_x86_vag_static_reverse_update.md; drl_via_fogs_ref_1_0107AA66.txt; drl_via_fogs_ref_2_0107ABF4.txt",
     "constructor_kind": "mixed",
     "constructor_status": "constructor_partial",
-    "native_helper": "official x86 6R/PQ25: 0x012cdeb6 -> 0x01361520 VagCanLongCodingSetting guarded by CENTRAL_ELEC_6R_5C_7E_7H byte 0x17/mask 0x04; official x86 non-6R variants include 0x012cdf28 -> 0x01363440 and additional MK5/MK6/B8 coding branches; 010B71D0 -> 010DAEDC VagUdsCodingSetting; 010B7764 -> 010DC980 VagCanLongCodingSetting; 010B1980 -> 010C0590 VagUdsAdaptationSetting",
+    "native_helper": "official x86 6R/PQ25: 0x012cdeb6 -> 0x01361520 -> PLT 0x0197dcb0 VagUdsCodingSetting guarded by CENTRAL_ELEC_6R_5C_7E_7H byte 0x17/mask 0x04; official x86 non-6R variants include 0x012cdf28 -> 0x01363440 and additional MK5/MK6/B8 coding branches; 010B71D0 -> 010DAEDC VagUdsCodingSetting; 010B7764 -> 010DC980 VagCanLongCodingSetting; 010B1980 -> 010C0590 VagUdsAdaptationSetting",
     "raw_address": 1372,
     "value_offset": 6,
     "value_mask": "FF",
@@ -703,6 +855,7 @@
     "evidence": [
       "Official Play 9.8.3 x86 string ref is 0x012cde7b.",
       "Official x86 0x012cdeb6 pushes CENTRAL_ELEC_6R_5C_7E_7H, VagCanEcu::CENTRAL_ELEC, byte 0x17, mask 0x04, and YES_NO.",
+      "Direct x86 ELF audit resolves helper 0x01361520 through PLT entry 0x0197dcb0 to shared_ptr_emplace<VagUdsCodingSetting, VagCanEcu, StringWhitelist, ..., MultipleChoiceInterpretation>.",
       "Official x86 non-6R variants include CENTRAL_ELEC_MK5_HIGH byte 0x11/mask 0x10, CENTRAL_ELEC_MK6_8X_B7 byte 0x0e/mask 0x02, CENTRAL_ELEC_B8 byte 0x02/mask 0x08, plus MK8/gateway 055C adaptation branches.",
       "Refs-only probe finds six FUN_0105f6c0 references for this exact key.",
       "The DID 0600 and long-coding variants pass MultipleChoiceInterpretation::YES_NO (014f1fd8), whose static init maps car_setting_no=00 and car_setting_yes=01.",
@@ -720,7 +873,7 @@
     "instruction_window": "docs/carista_apk_analysis/play_9_8_3_x86_vag_static_reverse_update.md; turn_off_fogs_with_high_beam_ref_1_0107F15A.txt; turn_off_fogs_with_high_beam_ref_2_0107F26C.txt",
     "constructor_kind": "mixed",
     "constructor_status": "constructor_partial",
-    "native_helper": "official x86 6R/PQ25: 0x012d4dea -> 0x0135e580 VagUdsCodingSetting guarded by CENTRAL_ELEC_6R_5C_7E_7H byte 0x15/mask 0x20; 0x012d4e65 -> 0x01368100 VagUdsCodingSetting-neighborhood; 010B69C0 -> 010D88A0 VagUdsCodingSetting; 010B8480 -> 010E0970 VagCanLongCodingSetting; 010B7F38 -> 010DEE9C VagUdsAdaptationSetting",
+    "native_helper": "official x86 6R/PQ25: 0x012d4dea -> 0x0135e580 VagUdsCodingSetting guarded by CENTRAL_ELEC_6R_5C_7E_7H byte 0x15/mask 0x20; official x86 non-6R: 0x012d4e65 -> 0x01368100 -> PLT 0x0197e070 VagCanLongCodingSetting guarded by CENTRAL_ELEC_MK5_HIGH byte 0x11/mask 0x20; 010B69C0 -> 010D88A0 VagUdsCodingSetting; 010B8480 -> 010E0970 VagCanLongCodingSetting; 010B7F38 -> 010DEE9C VagUdsAdaptationSetting",
     "raw_address": 3329,
     "value_offset": 1,
     "value_mask": "01",
@@ -739,11 +892,12 @@
       }
     ],
     "read_method": "The x86 6R/PQ25 branch is coding-style byte 0x15 mask 0x20; 220D01/220A58 adaptation variants returned 7F2231 live.",
-    "write_method": "Do not write from this recovery; current live coding byte 0x15 has mask 0x20 clear while the physical high-beam shutoff behavior is already present.",
+    "write_method": "Do not write from this recovery; fresh engine-running coding byte 0x15 has mask 0x20 set and the physical high-beam shutoff behavior is already present.",
     "next_re_step": "Treat byte 0x15 mask 0x20 as a selected Carista branch but not a likely missing turn-signal-cornering fix.",
     "evidence": [
       "Official Play 9.8.3 x86 string ref is 0x012d4db5; helper calls target 0x0135e580 and 0x01368100.",
       "Official x86 0x012d4dea pushes CENTRAL_ELEC_6R_5C_7E_7H, VagCanEcu::CENTRAL_ELEC, byte 0x15, mask 0x20, and YES_NO.",
+      "Direct x86 ELF audit resolves helper 0x01368100 through PLT entry 0x0197e070 to shared_ptr_emplace<VagCanLongCodingSetting, VagCanEcu, StringWhitelist, ..., MultipleChoiceInterpretation>; its callsite pushes CENTRAL_ELEC_MK5_HIGH, byte 0x11, and mask 0x20.",
       "Official static read-only candidates include 220D01 and nearby 220A58; both returned 7F2231 live.",
       "Refs-only probe finds six FUN_0105f6c0 references plus app getSettings refs for this key.",
       "Instruction windows show UDS coding variants with immediate pairs 20/15, 04/0E, 02/04, and 01/0F; the first three are in the front-fog window and 01/0F sits at the boundary before the rear-fog key.",
@@ -764,7 +918,7 @@
     "instruction_window": "docs/carista_apk_analysis/play_9_8_3_x86_vag_static_reverse_update.md; assist_dr_lights_ref_0108252C.txt",
     "constructor_kind": "mixed",
     "constructor_status": "constructor_partial",
-    "native_helper": "official x86 6R/PQ25: 0x012d9bad -> 0x013625a0 VagCanLongCodingSetting guarded by CENTRAL_ELEC_6R_5C_7E_7H byte 0x16/mask 0x20; 0x012d9cc0 -> 0x0135f600 non-6R cornering_lights branch; older ARM 010B74A0 -> 010DBC4C VagUdsCodingSetting",
+    "native_helper": "official x86 6R/PQ25: 0x012d9bad -> 0x013625a0 -> PLT 0x0197dd40 VagUdsCodingSetting guarded by CENTRAL_ELEC_6R_5C_7E_7H byte 0x16/mask 0x20; 0x012d9cc0 -> 0x0135f600 non-6R cornering_lights branch; older ARM 010B74A0 -> 010DBC4C VagUdsCodingSetting",
     "raw_address": null,
     "value_offset": null,
     "value_mask": null,
@@ -788,6 +942,7 @@
     "evidence": [
       "Official Play 9.8.3 x86 string ref is 0x012d9b78.",
       "Official x86 0x012d9bad pushes CENTRAL_ELEC_6R_5C_7E_7H, VagCanEcu::CENTRAL_ELEC, byte 0x16, mask 0x20, and ENABLED_DISABLED.",
+      "Direct x86 ELF audit resolves helper 0x013625a0 through PLT entry 0x0197dd40 to shared_ptr_emplace<VagUdsCodingSetting, VagCanEcu, StringWhitelist, ..., MultipleChoiceInterpretation>.",
       "Official x86 0x012d9cc0 is the nearby non-6R car_setting_cornering_lights branch, guarded by CENTRAL_ELEC_MK5_MED_30.",
       "Refs-only probe finds a direct FUN_0105f6c0 ref.",
       "Instruction window stores immediate pair 20/16 before car_setting_assist_dr_lights.",

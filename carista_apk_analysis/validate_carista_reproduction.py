@@ -8,11 +8,18 @@ if str(WORKSPACE_ROOT) not in sys.path:
     sys.path.insert(0, str(WORKSPACE_ROOT))
 
 from CaristaReproduction.Commands.WriteDataByIdentifierCommand import WriteDataByIdentifierCommand_getRequest
+from CaristaReproduction.Commands.GetSubmoduleIdsOverUdsCommand import (
+    GetSubmoduleIdsOverUdsCommand_processPayload,
+)
+from CaristaReproduction.Commands.GetVagUdsSubmoduleIdsCommand import (
+    GetVagUdsSubmoduleIdsCommand_processPayload,
+)
 from CaristaReproduction.CheckSettingsOperation import CheckSettingsOperation_buildPq25BcmPlan
 from CaristaReproduction.ReadValuesOperation import (
     CARISTA_EXACT_CHANNEL_PARAMETER_REQUEST,
     POLO_LIVE_PROVEN_CHANNEL_PARAMETER_REQUEST,
     ReadValuesOperation_buildPq25BcmPlan,
+    ReadValuesOperation_buildPq25SettingReport,
     ReadValuesOperation_pq25BcmRequests,
 )
 from CaristaReproduction.Commands.BaseCommand import BaseCommand_describeNegativePayload, BaseCommand_extractState, BaseCommand_filterOutErrors
@@ -98,6 +105,14 @@ def main() -> int:
     pending_then_positive = BaseCommand_filterOutErrors(["7F2E78", "6EF198"])
     assert not pending_then_positive.isFail()
     assert pending_then_positive.value == ["6EF198"]
+    over_uds_submodules = GetSubmoduleIdsOverUdsCommand_processPayload("C00000000000800000000000")
+    assert not over_uds_submodules.isFail()
+    assert over_uds_submodules.value == (0, 1, 0x80)
+    assert GetSubmoduleIdsOverUdsCommand_processPayload("00").state == State.EMPTY_OR_INVALID_RESPONSE
+    vag_uds_submodules = GetVagUdsSubmoduleIdsCommand_processPayload("0001000201000000")
+    assert not vag_uds_submodules.isFail()
+    assert vag_uds_submodules.value == (1, 2)
+    assert GetVagUdsSubmoduleIdsCommand_processPayload("000100").state == State.EMPTY_OR_INVALID_RESPONSE
 
     plan = build_carista_uds_coding_write_plan(CURRENT, TARGET, workshop_code_payload="0005F3C7E719")
     assert [request.did for request in plan.requests] == [0xF199, 0xF198, 0x0600]
@@ -134,13 +149,13 @@ def main() -> int:
     assert (right.raw_address, right.value_offset, right.requested_value_for_choice("car_setting_on")) == (0x055D, 5, "17")
     left_proof = " ".join(left.proof_notes)
     right_proof = " ".join(right.proof_notes)
-    assert "0x012da25a -> 0x0136c910 -> PLT 0x0197e2f0 VagCanShortAdaptationSetting" in left_proof
-    assert "0x012da39a -> 0x01356f90 -> PLT 0x0197d6f0 VagUdsCodingSetting" in left_proof
+    assert "0x012da25a -> 0x0136c910 -> PLT 0x0197e2f0 VagUdsAdaptationSetting" in left_proof
+    assert "0x012da39a -> 0x01356f90 -> PLT 0x0197d6f0 VagUdsAdaptationSetting" in left_proof
     assert "CENTRAL_ELEC_MQB_ALL plus [EBX-0x2C9C] CENTRAL_ELEC_MK8" in left_proof
     assert "[EBX-0x2C94] UDS_CAN_GATEWAY_MEB plus [EBX-0x5DF4] CAN_GATEWAY" in left_proof
     assert "0x0136c910 -> VagCanLongCodingSetting" not in left_proof
-    assert "0x012da5a9 -> 0x01368690 -> PLT 0x0197e0a0 VagCanLongCodingSetting/NumericalInterpretation" in right_proof
-    assert "0x012da6e9 -> 0x0136caf0 -> PLT 0x0197e300 VagUdsAdaptationSetting/MultipleChoiceInterpretation" in right_proof
+    assert "0x012da5a9 -> 0x01368690 -> PLT 0x0197e0a0 VagUdsAdaptationSetting" in right_proof
+    assert "0x012da6e9 -> 0x0136caf0 -> PLT 0x0197e300 VagUdsAdaptationSetting" in right_proof
     assert "CENTRAL_ELEC_MQB_ALL plus [EBX-0x2C9C] CENTRAL_ELEC_MK8" in right_proof
     assert "[EBX-0x2C94] UDS_CAN_GATEWAY_MEB plus [EBX-0x5DF4] CAN_GATEWAY" in right_proof
     assert "0x01368690 -> VagUdsAdaptationSetting/NumericalInterpretation" not in right_proof
@@ -180,14 +195,25 @@ def main() -> int:
     assert raw_dispatch[7].native_method == "VagOperationDelegate::readVagUdsValue"
     assert raw_dispatch[8].native_method == "VagOperationDelegate::readVagUdsCodingValue"
     assert raw_dispatch[9].native_method == "VagOperationDelegate::readVagUdsSubmoduleValue"
+    assert any("0x00c4e9b0" in item and "MSB-first bitmaps" in item for item in raw_dispatch[5].evidence)
+    assert any("0x00c51ef0" in item and "16-bit entries" in item for item in raw_dispatch[9].evidence)
     assert raw_dispatch[10].write_seed_policy == "never a write seed"
     availability_routes = VagOperationDelegate_getVagSettingAvailabilityForEcuRoutes()
     tag_route = next(route for route in availability_routes if route.avail_by_values == (2,))
-    assert tag_route.predicate_input == "ECU tag string from VagEcuInfo + 0x08"
+    assert tag_route.predicate_input == "full_scan_part_number shared string from VagEcuInfo +0x08"
     assert "StringWhitelist::itemMatches" in tag_route.availability_result
+    assert any("0x013c9ef0" in item and "full_scan_component_name" in item for item in tag_route.evidence)
     assert any(route.avail_by_values == (0, 1, 3, 4) for route in availability_routes)
     assert any(route.avail_by_values == (5,) for route in availability_routes)
     assert any(route.avail_by_values is None and "+0x3c" in route.native_route for route in availability_routes)
+    submodule_route = next(route for route in availability_routes if route.avail_by_values is None)
+    assert "getVagSettingAvailabilityForSubmodule" in submodule_route.availability_result
+    assert "VagEcuInfo submodule vector at +0x10" in submodule_route.predicate_input
+    assert "StringWhitelist::itemMatches" in submodule_route.availability_result
+    assert any("0x019836c0" in item and "getVagSettingAvailabilityForSubmodule" in item for item in submodule_route.evidence)
+    assert any("0x016c97d0" in item and "IllegalArgumentException" in item for item in submodule_route.evidence)
+    assert any("VagSetting+0x54" in item and "submodule VagEcuInfo+0x08" in item for item in submodule_route.evidence)
+    assert any("0x013c95b0" in item and "+0x10/+0x14" in item for item in submodule_route.evidence)
     availability_defaults = VagOperationDelegate_recoveredConstructorAvailabilityDefaults()
     assert {default.recovered_avail_by for default in availability_defaults} == {2}
     assert any(default.constructor_family == "VagUdsCodingSetting no-AvailBy VagCanEcu make_shared" for default in availability_defaults)
@@ -273,16 +299,20 @@ def main() -> int:
     setting_recoveries = {recovery.key: recovery for recovery in VagCanSettings_getPq25SettingRecoveries()}
     assert setting_recoveries["car_setting_cornering_lights_via_fogs_left"].raw_address == 0x055C
     assert setting_recoveries["car_setting_cornering_lights_via_fogs_right"].raw_address == 0x055D
+    assert any("5Q0937084*" in note and "6C093708*" in note for note in left.proof_notes)
+    assert any("5Q0937084*" in note and "6C093708*" in note for note in right.proof_notes)
     assert "0x012da210" in setting_recoveries["car_setting_cornering_lights_via_fogs_left"].reference_address
     assert_contains(setting_recoveries["car_setting_cornering_lights_via_fogs_left"].native_helper, "0x0136c910")
-    assert_contains(setting_recoveries["car_setting_cornering_lights_via_fogs_left"].native_helper, "VagCanShortAdaptationSetting")
+    assert_contains(setting_recoveries["car_setting_cornering_lights_via_fogs_left"].native_helper, "VagUdsAdaptationSetting")
     assert_contains(setting_recoveries["car_setting_cornering_lights_via_fogs_left"].native_helper, "0x01356f90")
-    assert_contains(setting_recoveries["car_setting_cornering_lights_via_fogs_left"].native_helper, "VagUdsCodingSetting")
+    assert_contains(setting_recoveries["car_setting_cornering_lights_via_fogs_left"].native_helper, "VagUdsAdaptationSetting")
     assert "0x012da55f" in setting_recoveries["car_setting_cornering_lights_via_fogs_right"].reference_address
     assert_contains(setting_recoveries["car_setting_cornering_lights_via_fogs_right"].native_helper, "0x01368690")
-    assert_contains(setting_recoveries["car_setting_cornering_lights_via_fogs_right"].native_helper, "VagCanLongCodingSetting")
+    assert_contains(setting_recoveries["car_setting_cornering_lights_via_fogs_right"].native_helper, "VagUdsAdaptationSetting")
     assert_contains(setting_recoveries["car_setting_cornering_lights_via_fogs_right"].native_helper, "0x0136caf0")
     assert_contains(setting_recoveries["car_setting_cornering_lights_via_fogs_right"].native_helper, "VagUdsAdaptationSetting")
+    assert "5Q0937084*" in " ".join(setting_recoveries["car_setting_cornering_lights_via_fogs_left"].evidence)
+    assert "5Q0937084*" in " ".join(setting_recoveries["car_setting_cornering_lights_via_fogs_right"].evidence)
     assert setting_recoveries["car_setting_cornering_lights_via_fogs"].value_offset == 0x0C
     assert setting_recoveries["car_setting_cornering_lights_via_fogs"].value_mask == "40"
     assert setting_recoveries["car_setting_cornering_lights_via_fogs"].immediate_value == 0x40
@@ -310,19 +340,28 @@ def main() -> int:
     assert_contains(setting_recoveries["car_setting_cornering_lights_with_turn_signals_one_touch"].native_helper, "0x00d7eec0")
     assert setting_recoveries["car_setting_coming_home_req_rls"].constructor_kind == "mixed"
     assert setting_recoveries["car_setting_coming_home_req_rls"].raw_address == 0x0A57
+    assert_contains(setting_recoveries["car_setting_coming_home_req_rls"].native_helper, "0x012c74fe -> 0x0133b390")
+    assert_contains(setting_recoveries["car_setting_coming_home_req_rls"].native_helper, "CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S")
     assert_contains(setting_recoveries["car_setting_coming_home_req_rls"].native_helper, "010D8FE4")
     assert_contains(setting_recoveries["car_setting_coming_home_req_rls"].native_helper, "010D917C")
-    assert setting_recoveries["car_setting_coming_home_req_rls"].immediate_value == 0x20
-    assert setting_recoveries["car_setting_coming_home_req_rls"].immediate_index == 0x11
+    assert setting_recoveries["car_setting_coming_home_req_rls"].immediate_value == 0x04
+    assert setting_recoveries["car_setting_coming_home_req_rls"].immediate_index == 0x0A
+    req_rls_evidence = " ".join(setting_recoveries["car_setting_coming_home_req_rls"].evidence)
+    assert "0x0A/0x04" in req_rls_evidence
+    assert "0x11/0x20" in req_rls_evidence
+    assert "not a 6R/PQ25 branch" in req_rls_evidence
     assert setting_recoveries["car_setting_coming_home"].value_offset == 4
     assert setting_recoveries["car_setting_coming_home"].immediate_value == 0x02
     assert setting_recoveries["car_setting_coming_home"].immediate_index == 0x06
     assert_contains(setting_recoveries["car_setting_coming_home"].native_helper, "010D92EC")
     assert_contains(setting_recoveries["car_setting_coming_home"].native_helper, "010C2700")
     assert setting_recoveries["car_setting_coming_home_mode"].value_mask == "03"
+    assert_contains(setting_recoveries["car_setting_coming_home_mode"].native_helper, "0x0135f420")
+    assert_contains(setting_recoveries["car_setting_coming_home_mode"].native_helper, "CENTRAL_ELEC_MQBA0")
     assert_contains(setting_recoveries["car_setting_coming_home_mode"].native_helper, "010D9484")
     assert_contains(setting_recoveries["car_setting_coming_home_mode"].native_helper, "010D9608")
     assert setting_recoveries["car_setting_coming_home_duration"].value_offset == 3
+    assert [choice.requested_value for choice in setting_recoveries["car_setting_coming_home_duration"].choices] == ["0A", "0F", "14", "19", "1E", "23", "28", "2D", "32", "37", "3C"]
     assert_contains(setting_recoveries["car_setting_coming_home_duration"].native_helper, "010DA7BC")
     assert_contains(setting_recoveries["car_setting_coming_home_duration"].native_helper, "010DA910")
     assert setting_recoveries["car_setting_coming_home_via_fogs"].immediate_value == 0x20
@@ -348,6 +387,8 @@ def main() -> int:
     assert setting_recoveries["car_setting_leaving_home_req_rls"].constructor_kind == "mixed"
     assert setting_recoveries["car_setting_leaving_home_req_rls"].immediate_value == 0x02
     assert setting_recoveries["car_setting_leaving_home_req_rls"].immediate_index == 0x0A
+    assert_contains(setting_recoveries["car_setting_leaving_home_req_rls"].native_helper, "0x012ca6e9 -> 0x01340190")
+    assert_contains(setting_recoveries["car_setting_leaving_home_req_rls"].native_helper, "CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S")
     assert_contains(setting_recoveries["car_setting_leaving_home_req_rls"].native_helper, "010DAD6C")
     assert setting_recoveries["car_setting_leaving_home"].constructor_kind == "VagUdsCodingSetting"
     assert setting_recoveries["car_setting_leaving_home"].immediate_value == 0x04
@@ -357,6 +398,7 @@ def main() -> int:
     assert leaving_home_choices == {"car_setting_disabled": "00", "car_setting_enabled": "01"}
     assert setting_recoveries["car_setting_leaving_home_duration"].raw_address == 0x0A57
     assert setting_recoveries["car_setting_leaving_home_duration"].value_offset == 5
+    assert [choice.requested_value for choice in setting_recoveries["car_setting_leaving_home_duration"].choices] == ["0A", "0F", "14", "19", "1E", "23", "28", "2D", "32", "37", "3C"]
     assert_contains(setting_recoveries["car_setting_leaving_home_duration"].native_helper, "010BF9DC")
     assert_contains(setting_recoveries["car_setting_leaving_home_duration"].native_helper, "010DB380")
     assert setting_recoveries["car_setting_drl_via_fogs"].raw_address == 0x055C
@@ -390,11 +432,11 @@ def main() -> int:
     assert VAG_CAN_SETTINGS_GET_SETTINGS_ADDRESS == "0x012a20c0"
     assert VAG_CAN_SETTINGS_GET_SETTINGS_EBX_BASE == "0x01a35618"
     assert native_settings_by_key["car_setting_cornering_lights_via_fogs_left"].helpers[0].target == "0x0136c910"
-    assert native_settings_by_key["car_setting_cornering_lights_via_fogs_left"].helpers[0].family.startswith("VagCanShortAdaptationSetting")
+    assert native_settings_by_key["car_setting_cornering_lights_via_fogs_left"].helpers[0].family.startswith("VagUdsAdaptationSetting")
     assert native_settings_by_key["car_setting_cornering_lights_via_fogs_left"].helpers[1].target == "0x01356f90"
-    assert native_settings_by_key["car_setting_cornering_lights_via_fogs_left"].helpers[1].family.startswith("VagUdsCodingSetting")
+    assert native_settings_by_key["car_setting_cornering_lights_via_fogs_left"].helpers[1].family.startswith("VagUdsAdaptationSetting")
     assert native_settings_by_key["car_setting_cornering_lights_via_fogs_right"].helpers[0].target == "0x01368690"
-    assert native_settings_by_key["car_setting_cornering_lights_via_fogs_right"].helpers[0].family.startswith("VagCanLongCodingSetting")
+    assert native_settings_by_key["car_setting_cornering_lights_via_fogs_right"].helpers[0].family.startswith("VagUdsAdaptationSetting")
     assert native_settings_by_key["car_setting_cornering_lights_via_fogs_right"].helpers[1].target == "0x0136caf0"
     assert native_settings_by_key["car_setting_cornering_lights_via_fogs_right"].helpers[1].family.startswith("VagUdsAdaptationSetting")
     assert native_settings_by_key["car_setting_cornering_lights_via_fogs"].helpers[1].callsite == "0x012d9f7b"
@@ -402,7 +444,31 @@ def main() -> int:
     assert native_settings_by_key["car_setting_cornering_lights_via_fogs_experimental"].helpers[0].callsite == "0x012da0f2"
     assert native_settings_by_key["car_setting_cornering_lights_with_turn_signals"].string_ref == "0x012da72c"
     assert native_settings_by_key["car_setting_cornering_lights_with_turn_signals"].helpers[0].callsite == "0x012da761"
+    assert native_settings_by_key["car_setting_coming_home_req_rls"].helpers[0].callsite == "0x012c74fe"
+    assert any("DID 0600 byte 0x0a mask 0x04" in item for item in native_settings_by_key["car_setting_coming_home_req_rls"].recovered_shape)
+    assert native_settings_by_key["car_setting_leaving_home_req_rls"].helpers[0].callsite == "0x012ca6e9"
+    assert any("DID 0600 byte 0x0a mask 0x02" in item for item in native_settings_by_key["car_setting_leaving_home_req_rls"].recovered_shape)
+    assert native_settings_by_key["car_setting_coming_home_duration"].helpers[0].target == "0x01360c30"
+    assert any("short-adaptation channel 0x2f" in item for item in native_settings_by_key["car_setting_coming_home_duration"].recovered_shape)
+    assert native_settings_by_key["car_setting_coming_home_mode"].helpers[0].target == "0x0135f420"
+    assert any("CENTRAL_ELEC_MQBA0" in item for item in native_settings_by_key["car_setting_coming_home_mode"].recovered_shape)
+    assert native_settings_by_key["car_setting_coming_home_trigger"].helpers[0].target == "0x0135fd50"
+    assert any("raw 0x0a57 offset 4 mask 0x02" in item for item in native_settings_by_key["car_setting_coming_home_trigger"].recovered_shape)
+    assert native_settings_by_key["car_setting_coming_home_trigger_when_auto"].helpers[0].target == "0x013602e0"
+    assert any("CENTRAL_ELEC_B9" in item for item in native_settings_by_key["car_setting_coming_home_trigger_when_auto"].recovered_shape)
+    assert native_settings_by_key["car_setting_coming_home_output"].helpers[0].target == "0x01342c30"
+    assert any("raw 0x0a57 offset 4 mask 0x01" in item for item in native_settings_by_key["car_setting_coming_home_output"].recovered_shape)
+    assert native_settings_by_key["car_setting_leaving_home_duration"].helpers[0].target == "0x0133f140"
+    assert any("short-adaptation channel 0x30" in item for item in native_settings_by_key["car_setting_leaving_home_duration"].recovered_shape)
+    assert native_settings_by_key["car_setting_leaving_home_menu_req_rls"].helpers[0].target == "0x013618d0"
+    assert any("raw 0x0d04 offset 2 mask 0x20" in item for item in native_settings_by_key["car_setting_leaving_home_menu_req_rls"].recovered_shape)
+    assert native_settings_by_key["car_setting_coming_leaving_home_duration_menu"].helpers[0].target == "0x013408c0"
+    assert any("raw 0x0a57 offset 0 mask 0x80" in item for item in native_settings_by_key["car_setting_coming_leaving_home_duration_menu"].recovered_shape)
+    assert native_settings_by_key["car_setting_enabled_coming_home_or_leaving_home"].helpers[0].target == "0x0135cf20"
+    assert any("not a recovered 0601 owner path" in item for item in native_settings_by_key["car_setting_enabled_coming_home_or_leaving_home"].recovered_shape)
+    assert native_settings_by_key["car_setting_coming_home_via_fogs"].helpers[0].family.startswith("VagUdsCodingSetting")
     assert any("byte 0x17 mask 0x04" in item for item in native_settings_by_key["car_setting_drl_via_fogs"].recovered_shape)
+    assert native_settings_by_key["car_setting_coming_leaving_home_output"].helpers[0].family.startswith("VagUdsAdaptationSetting")
     assert native_settings_by_key["car_setting_coming_leaving_home_output"].read_candidate_dids == (0x110E,)
     default_vag_can_settings_requests = VagCanSettings_readOnlyDidRequests()
     assert default_vag_can_settings_requests == ()
@@ -429,6 +495,9 @@ def main() -> int:
     assert "VagOperationDelegate::readRawValuesMulti" in native_flow_methods
     assert "VagOperationDelegate::readRawValue" in native_flow_methods
     default_read_values_requests = ReadValuesOperation_pq25BcmRequests()
+    ecu_info_request = next(request for request in read_values_plan.requests if request.setting_key == "<ecu_info>")
+    assert any("0x00c38ad0" in item and "shared_ptr<vector<shared_ptr<VagEcuInfo>>>" in item for item in ecu_info_request.evidence)
+    assert any("0x01971aa0" in item and "0x013c95b0" in item for item in ecu_info_request.evidence)
     assert default_read_values_requests == (
         "1A9B",
         "1A9F",
@@ -444,6 +513,15 @@ def main() -> int:
     assert "220A57" in rejected_read_values_requests
     companion_read_values_requests = ReadValuesOperation_pq25BcmRequests(include_live_companions=True)
     assert companion_read_values_requests == default_read_values_requests + ("220601", "220606")
+    companion_requests = {request.setting_key: request for request in read_values_plan.requests}
+    companion_0601_evidence = " ".join(companion_requests["pq25_live_companion_0601"].evidence)
+    assert "car_setting_enabled_coming_home_or_leaving_home" in companion_0601_evidence
+    assert "raw 0x0565" in companion_0601_evidence
+    assert "zero decoded instruction operands" in companion_0601_evidence
+    assert "no instruction or raw pointer tying that enum string to DID 0601" in companion_0601_evidence
+    assert "not a write seed" in companion_0601_evidence
+    companion_0606_evidence = " ".join(companion_requests["pq25_live_companion_0606"].evidence)
+    assert "no lamp-state correlation is proven" in companion_0606_evidence
     removed_obd_runners = (
         "run_carista_read_values.py",
         "vw_tp20_readonly_probe.py",
@@ -520,6 +598,24 @@ def main() -> int:
     assert "95 positive read records" in parser_evidence
     assert any("Result/vector object model" in item for item in check_settings_plan.unresolved)
     assert not any("all-ECU discovery list" in item for item in check_settings_plan.unresolved)
+
+    target_setting_report = ReadValuesOperation_buildPq25SettingReport(TARGET)
+    target_settings_by_key = {setting.key: setting for setting in target_setting_report.settings}
+    experimental_cornering = target_settings_by_key["car_setting_cornering_lights_via_fogs_experimental"]
+    assert experimental_cornering.pq25_bits == "DID 0600 byte 21 bit 7 (mask 0x80)"
+    assert experimental_cornering.current_value == "set"
+    turn_signal_cornering = target_settings_by_key["car_setting_cornering_lights_with_turn_signals"]
+    assert turn_signal_cornering.pq25_bits == "DID 0600 byte 21 bit 2 (mask 0x04)"
+    assert turn_signal_cornering.current_value == "set"
+    high_beam_fog_cutoff = target_settings_by_key["car_setting_turn_off_fogs_with_high_beam"]
+    assert high_beam_fog_cutoff.pq25_bits == "DID 0600 byte 21 bit 5 (mask 0x20)"
+    assert high_beam_fog_cutoff.current_value == "set"
+    drl_via_fogs = target_settings_by_key["car_setting_drl_via_fogs"]
+    assert drl_via_fogs.pq25_bits == "DID 0600 byte 23 bit 2 (mask 0x04)"
+    assert drl_via_fogs.current_value == "clear"
+    coming_leaving_output = target_settings_by_key["car_setting_coming_leaving_home_output"]
+    assert coming_leaving_output.pq25_bits == "byte 13 bit 6"
+    assert coming_leaving_output.current_value == "unknown"
 
     summary = build_jni_bridge_summary()
     statuses = {validation.label: validation.status for validation in summary.validations}

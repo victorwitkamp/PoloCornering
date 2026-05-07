@@ -3,97 +3,6 @@
   "ecu_name": "PQ25 BCM / unit 09 / 6R0937087K",
   "settings": [
     {
-      "category": "lighting_fog",
-      "current_value": "unknown",
-      "key": "car_setting_left_fog_light_as",
-      "label": "Use the left fog light as\u2026",
-      "mapping_status": "app_visible_priority_unmapped_for_this_bcm",
-      "native_string_found": true,
-      "possible_values": [
-        {
-          "coding_effect": "unknown",
-          "evidence": "Carista instruction text names this choice; native requested byte[] and coding/adaptation effect are not recovered.",
-          "label": "Cornering lights",
-          "requested_value": null
-        },
-        {
-          "coding_effect": "unknown",
-          "evidence": "Carista instruction text names this choice; native requested byte[] and coding/adaptation effect are not recovered.",
-          "label": "Use DRL via fog and cornering lights",
-          "requested_value": null
-        }
-      ],
-      "pq25_bits": "",
-      "priority": "highest_recovery_target",
-      "proof_status": "Resource/native string exists; raw_value_key/rawAddress4/coding_type/tail unknown",
-      "read_method": "Runtime ReadValuesOperation support/value method not recovered offline",
-      "unresolved": [
-        "Runtime ReadValuesOperation support/value method not recovered offline",
-        "Unknown until native Setting object/raw key is recovered; likely compact Carista coding or adaptation path"
-      ],
-      "value_model": "choice; Carista instruction says set to Cornering lights or Use DRL via fog and cornering lights",
-      "write_method": "Unknown until native Setting object/raw key is recovered; likely compact Carista coding or adaptation path"
-    },
-    {
-      "category": "lighting_fog",
-      "current_value": "unknown",
-      "key": "car_setting_right_fog_light_as",
-      "label": "Use the right fog light as\u2026",
-      "mapping_status": "app_visible_priority_unmapped_for_this_bcm",
-      "native_string_found": true,
-      "possible_values": [
-        {
-          "coding_effect": "unknown",
-          "evidence": "Carista instruction text names this choice; native requested byte[] and coding/adaptation effect are not recovered.",
-          "label": "Cornering lights",
-          "requested_value": null
-        },
-        {
-          "coding_effect": "unknown",
-          "evidence": "Carista instruction text names this choice; native requested byte[] and coding/adaptation effect are not recovered.",
-          "label": "Use DRL via fog and cornering lights",
-          "requested_value": null
-        }
-      ],
-      "pq25_bits": "",
-      "priority": "highest_recovery_target",
-      "proof_status": "Resource/native string exists; raw_value_key/rawAddress4/coding_type/tail unknown",
-      "read_method": "Runtime ReadValuesOperation support/value method not recovered offline",
-      "unresolved": [
-        "Runtime ReadValuesOperation support/value method not recovered offline",
-        "Unknown until native Setting object/raw key is recovered; likely compact Carista coding or adaptation path"
-      ],
-      "value_model": "choice; Carista instruction says set to Cornering lights or Use DRL via fog and cornering lights",
-      "write_method": "Unknown until native Setting object/raw key is recovered; likely compact Carista coding or adaptation path"
-    },
-    {
-      "category": "lighting_cornering",
-      "current_value": "unknown",
-      "key": "car_setting_cornering_lights_with_turn_signals_one_touch",
-      "label": "Turn on cornering lights when one-touch turn signal is on",
-      "mapping_status": "cornering_family_unmapped",
-      "native_string_found": true,
-      "possible_values": [
-        {
-          "coding_effect": "unknown",
-          "evidence": "Native Setting interpretation/value enum is not recovered for this setting.",
-          "label": "unknown",
-          "requested_value": null
-        }
-      ],
-      "pq25_bits": "",
-      "priority": "medium_recovery_target",
-      "proof_status": "Resource/native string exists, but no PQ25 bit or raw-value tuple recovered",
-      "read_method": "Runtime ReadValuesOperation support/value method not recovered offline",
-      "unresolved": [
-        "unknown; likely a separate choice or condition under the turn-signal cornering family",
-        "Runtime ReadValuesOperation support/value method not recovered offline",
-        "Native Carista setting path appears to build 3B9A + 6-byte value + 4-byte rawAddress4 + tail; rawAddress4/coding type/tail are not recovered for this BCM"
-      ],
-      "value_model": "unknown; likely a separate choice or condition under the turn-signal cornering family",
-      "write_method": "Native Carista setting path appears to build 3B9A + 6-byte value + 4-byte rawAddress4 + tail; rawAddress4/coding type/tail are not recovered for this BCM"
-    },
-    {
       "category": "lighting_cornering",
       "current_value": "clear",
       "key": "car_setting_cornerig_lights_with_turn_signal",
@@ -120,94 +29,94 @@
       "read_method": "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding",
       "unresolved": [],
       "value_model": "boolean; clear/off in baseline, set/on in supplied reference; target value6 412F60A60000",
-      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py"
+      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding. The former live runner was removed after use."
     },
     {
       "category": "lighting_cornering",
       "current_value": "clear",
       "key": "car_setting_cornering_lights_via_fogs",
       "label": "Cornering lights (using fog lights)",
-      "mapping_status": "mapped_to_long_coding_candidate_but_live_behavior_ruled_out",
+      "mapping_status": "constructor_partial",
       "native_string_found": true,
       "possible_values": [
         {
-          "coding_effect": "byte 12 bit 6 clear",
-          "evidence": "Derived from the mapped long-coding bit only; Carista requested byte[] is not recovered.",
-          "label": "clear",
-          "requested_value": null
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "Official x86 0x012d9f7b branch passes MultipleChoiceInterpretation::ENABLED_DISABLED into the 6R/PQ25 byte 0x0c mask 0x40 branch. MultipleChoiceInterpretation::ENABLED_DISABLED at 014f1ff0 is initialized by static init 00D54B34: car_setting_enabled has compact requested value 01 and car_setting_disabled has compact requested value 00.",
+          "label": "car_setting_disabled",
+          "requested_value": "00"
         },
         {
-          "coding_effect": "byte 12 bit 6 set",
-          "evidence": "Derived from the mapped long-coding bit only; Carista requested byte[] is not recovered.",
-          "label": "set",
-          "requested_value": null
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "Official x86 0x012d9f7b branch passes MultipleChoiceInterpretation::ENABLED_DISABLED into the 6R/PQ25 byte 0x0c mask 0x40 branch. MultipleChoiceInterpretation::ENABLED_DISABLED at 014f1ff0 is initialized by static init 00D54B34: car_setting_enabled has compact requested value 01 and car_setting_disabled has compact requested value 00.",
+          "label": "car_setting_enabled",
+          "requested_value": "01"
         }
       ],
-      "pq25_bits": "byte 12 bit 6",
+      "pq25_bits": "DID 0600 byte 12 bit 6 (mask 0x40)",
       "priority": "resolved_for_current_symptom",
-      "proof_status": "Carista string/native resource plus supplied-reference delta; live writes showed no visible behavior change",
-      "read_method": "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding",
+      "proof_status": "constructor_partial: Official x86 0x012d9ed4 loads car_setting_cornering_lights_via_fogs.; Official x86 0x012d9f7b pushes CENTRAL_ELEC_6R_5C_7E_7H, VagCanEcu::CENTRAL_ELEC, immediate pair byte 0x0c/mask 0x40, and ENABLED_DISABLED.; Direct x86 ELF audit resolves helper 0x01358fd0 through PLT entry 0x0197d810 to shared_ptr_emplace<VagUdsCodingSetting, VagCanEcu, StringWhitelist, ..., MultipleChoiceInterpretation>.; The same key also has official x86 1S byte 0x0c/mask 0x40, MK6_8X_B7 byte 0x0e/mask 0x80, and B8 byte 0x04/mask 0x01 branches.; Current live coding has byte 0x0c mask 0x40 set, but physical testing still showed no turn-signal-triggered cornering.",
+      "read_method": "Official x86 branch is UDS-coding DID 0600 byte 0x0C mask 0x40; live DID 0600 writes changed the same byte/mask but did not fix the symptom.",
       "unresolved": [],
-      "value_model": "boolean; clear/off in baseline, set/on in supplied reference; target value6 6C680ED000C8",
-      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py"
+      "value_model": "native choices recovered: 00=car_setting_disabled, 01=car_setting_enabled",
+      "write_method": "Do not retest as a standalone write; this byte/mask is already behavior-disproven for the missing turn-signal cornering behavior."
     },
     {
       "category": "lighting_cornering",
-      "current_value": "clear",
+      "current_value": "set",
       "key": "car_setting_cornering_lights_via_fogs_experimental",
       "label": "Cornering lights (using fog lights) (experimental)",
-      "mapping_status": "mapped_to_same_bit_as_cornering_lights_via_fogs",
+      "mapping_status": "constructor_partial",
       "native_string_found": true,
       "possible_values": [
         {
-          "coding_effect": "byte 12 bit 6 clear",
-          "evidence": "Derived from the mapped long-coding bit only; Carista requested byte[] is not recovered.",
-          "label": "clear",
-          "requested_value": null
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "Official x86 0x012da0f2 branch passes MultipleChoiceInterpretation::YES_NO into the 6R/PQ25 byte 0x15 mask 0x80 branch. MultipleChoiceInterpretation::YES_NO at 014f1fd8 is initialized by static init 00D54B34: car_setting_yes has compact requested value 01 and car_setting_no has compact requested value 00.",
+          "label": "car_setting_no",
+          "requested_value": "00"
         },
         {
-          "coding_effect": "byte 12 bit 6 set",
-          "evidence": "Derived from the mapped long-coding bit only; Carista requested byte[] is not recovered.",
-          "label": "set",
-          "requested_value": null
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "Official x86 0x012da0f2 branch passes MultipleChoiceInterpretation::YES_NO into the 6R/PQ25 byte 0x15 mask 0x80 branch. MultipleChoiceInterpretation::YES_NO at 014f1fd8 is initialized by static init 00D54B34: car_setting_yes has compact requested value 01 and car_setting_no has compact requested value 00.",
+          "label": "car_setting_yes",
+          "requested_value": "01"
         }
       ],
-      "pq25_bits": "byte 12 bit 6",
+      "pq25_bits": "DID 0600 byte 21 bit 7 (mask 0x80)",
       "priority": "resolved_for_current_symptom",
-      "proof_status": "Resource alias for the base fog/cornering setting; live behavior ruled out for visible symptom",
-      "read_method": "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding",
+      "proof_status": "constructor_partial: Official x86 0x012da0bd loads car_setting_cornering_lights_via_fogs_experimental.; Official x86 0x012da0f2 pushes CENTRAL_ELEC_6R_5C_7E_7H, VagCanEcu::CENTRAL_ELEC, byte 0x15, mask 0x80, and YES_NO.; Fresh engine-running coding byte 0x15 is 0xA6, so this bit is already set while turn-signal cornering behavior is absent.",
+      "read_method": "Coding-style byte 0x15 mask 0x80 branch; no separate direct DID candidate recovered.",
       "unresolved": [],
-      "value_model": "boolean; clear/off in baseline, set/on in supplied reference; target value6 6C680ED000C8",
-      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py"
+      "value_model": "native choices recovered: 00=car_setting_no, 01=car_setting_yes",
+      "write_method": "Do not write: fresh engine-running coding byte 0x15 is 0xA6, so mask 0x80 is already set."
     },
     {
       "category": "lighting_cornering",
       "current_value": "clear",
       "key": "car_setting_cornering_lights_with_turn_signals",
       "label": "Turn on cornering lights when turn signal is on",
-      "mapping_status": "mapped_to_same_bit_as_turn_signal_cornering",
+      "mapping_status": "constructor_partial",
       "native_string_found": true,
       "possible_values": [
         {
-          "coding_effect": "byte 21 bit 2 clear",
-          "evidence": "Derived from the mapped long-coding bit only; Carista requested byte[] is not recovered.",
-          "label": "clear",
-          "requested_value": null
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "Official x86 0x012da761 branch passes MultipleChoiceInterpretation::YES_NO into the explicit turn-signal-cornering byte 0x15 mask 0x04 branch. MultipleChoiceInterpretation::YES_NO at 014f1fd8 is initialized by static init 00D54B34: car_setting_yes has compact requested value 01 and car_setting_no has compact requested value 00.",
+          "label": "car_setting_no",
+          "requested_value": "00"
         },
         {
-          "coding_effect": "byte 21 bit 2 set",
-          "evidence": "Derived from the mapped long-coding bit only; Carista requested byte[] is not recovered.",
-          "label": "set",
-          "requested_value": null
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "Official x86 0x012da761 branch passes MultipleChoiceInterpretation::YES_NO into the explicit turn-signal-cornering byte 0x15 mask 0x04 branch. MultipleChoiceInterpretation::YES_NO at 014f1fd8 is initialized by static init 00D54B34: car_setting_yes has compact requested value 01 and car_setting_no has compact requested value 00.",
+          "label": "car_setting_yes",
+          "requested_value": "01"
         }
       ],
-      "pq25_bits": "byte 21 bit 2",
+      "pq25_bits": "DID 0600 byte 21 bit 2 (mask 0x04)",
       "priority": "resolved_for_current_symptom",
-      "proof_status": "Carista string/native resource plus supplied-reference delta; live behavior ruled out for visible symptom",
-      "read_method": "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding",
+      "proof_status": "constructor_partial: Official x86 0x012da72c loads car_setting_cornering_lights_with_turn_signals before the 0x012da761 helper call.; Official x86 0x012da761 pushes CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S, VagCanEcu::CENTRAL_ELEC, byte 0x15, mask 0x04, and YES_NO.; Fresh engine-running coding byte 0x15 is 0xA6, so this bit is already set while turn-signal cornering behavior is absent.",
+      "read_method": "Coding-style byte 0x15 mask 0x04 branch; no separate direct DID candidate recovered.",
       "unresolved": [],
-      "value_model": "boolean; clear/off in baseline, set/on in supplied reference; target value6 412F60A60000",
-      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py"
+      "value_model": "native choices recovered: 00=car_setting_no, 01=car_setting_yes",
+      "write_method": "Do not write: fresh engine-running coding byte 0x15 is 0xA6, so mask 0x04 is already set."
     },
     {
       "category": "lighting_cornering",
@@ -232,11 +141,11 @@
       ],
       "pq25_bits": "byte 12 bit 6",
       "priority": "resolved_for_current_symptom",
-      "proof_status": "Carista instruction/label family points at byte 12 bit 6; live behavior ruled out for visible symptom",
+      "proof_status": "Generic label family points at byte 12 bit 6, but preferred x86 direct ref is a Ford choice label; live behavior ruled out for visible symptom",
       "read_method": "TP2.0 unit 20 direct read 220600; positive response is 620600 + 30-byte coding",
       "unresolved": [],
       "value_model": "boolean; clear/off in baseline, set/on in supplied reference; target value6 6C680ED000C8",
-      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding via obd-on-pc/write_carista_uds_coding.py"
+      "write_method": "Validated guarded path: 2EF199 date, inline 22F1A5, 2EF198 workshop code, then 2E0600 + full 30-byte coding. The former live runner was removed after use."
     },
     {
       "category": "lighting_general",
@@ -5485,23 +5394,29 @@
       "native_string_found": true,
       "possible_values": [
         {
-          "coding_effect": "unknown",
-          "evidence": "Native Setting interpretation/value enum is not recovered for this setting.",
-          "label": "unknown",
-          "requested_value": null
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "coming_home_master_ref_01076860 passes MultipleChoiceInterpretation::ENABLED_DISABLED (014f1ff0) into all recovered coming_home constructor calls. MultipleChoiceInterpretation::ENABLED_DISABLED at 014f1ff0 is initialized by static init 00D54B34: car_setting_enabled has compact requested value 01 and car_setting_disabled has compact requested value 00.",
+          "label": "car_setting_disabled",
+          "requested_value": "00"
+        },
+        {
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "coming_home_master_ref_01076860 passes MultipleChoiceInterpretation::ENABLED_DISABLED (014f1ff0) into all recovered coming_home constructor calls. MultipleChoiceInterpretation::ENABLED_DISABLED at 014f1ff0 is initialized by static init 00D54B34: car_setting_enabled has compact requested value 01 and car_setting_disabled has compact requested value 00.",
+          "label": "car_setting_enabled",
+          "requested_value": "01"
         }
       ],
       "pq25_bits": "",
       "priority": "review_if_lighting_related",
-      "proof_status": "constructor_multi_path_runtime_branch_unresolved: Instruction window shows raw address 0A57, offset 4, mask/value field 40 before one coming_home constructor.; target_010B6BDC.c calls 010D92EC, which constructs VagUdsAdaptationSetting.; target_010B2040.c calls 010C2700, which constructs VagUdsCodingSetting.; target_010B3AF0.c calls 010CA958, which constructs VagUdsCodingSetting.",
-      "read_method": "220A57 is the adaptation-branch read candidate only; the same key also has UDS coding variants.",
+      "proof_status": "constructor_multi_path_runtime_branch_unresolved: Instruction window shows raw address 0A57, offset 4, mask/value field 40 before one coming_home constructor.; target_010B6BDC.c calls 010D92EC, which constructs VagUdsAdaptationSetting.; target_010B2040.c calls 010C2700, which constructs VagUdsCodingSetting.; target_010B3AF0.c calls 010CA958, which constructs VagUdsCodingSetting.; coming_home_master_ref_01076860 shows UDS coding immediate pairs 02/06 and 01/07 for the two coding helpers.; VagUdsCodingSetting(Ecu, int, byte/vector) hardcodes raw address 0x0600 and type 8, mapping those pairs to DID 0600 byte/mask fields.; MultipleChoiceInterpretation::ENABLED_DISABLED at 014f1ff0 is initialized by static init 00D54B34: car_setting_enabled has compact requested value 01 and car_setting_disabled has compact requested value 00.",
+      "read_method": "220A57 is the rejected adaptation branch; UDS coding variants read DID 0600 byte 0x06 mask 0x02 and byte 0x07 mask 0x01.",
       "unresolved": [
         "unknown; runtime Setting object/value enum not recovered",
         "Runtime ReadValuesOperation support/value method not recovered offline",
         "unknown; native Setting object/raw key not recovered"
       ],
-      "value_model": "unknown; runtime Setting object/value enum not recovered",
-      "write_method": "Do not write from this recovery until runtime branch selection and positive read/packing evidence are known."
+      "value_model": "native choices recovered: 00=car_setting_disabled, 01=car_setting_enabled",
+      "write_method": "Do not write from this recovery until runtime branch selection and requested-choice encoding are known."
     },
     {
       "category": "lighting_coming_leaving_home",
@@ -5611,7 +5526,7 @@
       "pq25_bits": "",
       "priority": "review_if_lighting_related",
       "proof_status": "constructor_multi_path_runtime_branch_unresolved: Instruction window shows 10-60 second duration tables and one 0A57 offset 3 mask FF UDS branch.; target_010B704C.c calls 010DA7BC, which constructs FullByteVagCanShortAdaptationSetting.; target_010B7094.c calls 010DA910, which constructs VagUdsAdaptationSetting with NumericalInterpretation.",
-      "read_method": "VAG short-adaptation and 220A57 UDS-adaptation duration variants are both present.",
+      "read_method": "VAG short-adaptation and 220A57 UDS-adaptation duration variants are both present; direct 220A57 returned 7F2231 live.",
       "unresolved": [
         "unknown; runtime Setting object/value enum not recovered",
         "Runtime ReadValuesOperation support/value method not recovered offline",
@@ -5758,7 +5673,7 @@
       "pq25_bits": "",
       "priority": "review_if_lighting_related",
       "proof_status": "constructor_multi_path_runtime_branch_unresolved: Instruction window shows raw address 0A57, offset/count 2/3 and disabled/manual/automatic choices.; target_010B6C30.c calls 010D9484, which constructs VagUdsAdaptationSetting.; target_010B6C84.c calls 010D9608, which constructs VagCanLongCodingSetting.",
-      "read_method": "220A57 adaptation candidate at offset 2; a long-coding variant is also present.",
+      "read_method": "220A57 adaptation candidate at offset 2 returned 7F2231 live; a long-coding variant is also present.",
       "unresolved": [
         "unknown; runtime Setting object/value enum not recovered",
         "Runtime ReadValuesOperation support/value method not recovered offline",
@@ -5803,23 +5718,29 @@
       "native_string_found": true,
       "possible_values": [
         {
-          "coding_effect": "unknown",
-          "evidence": "Native Setting interpretation/value enum is not recovered for this setting.",
-          "label": "unknown",
-          "requested_value": null
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "coming_home_req_rls_ref_0107671A passes MultipleChoiceInterpretation::ENABLED_DISABLED (014f1ff0) into the recovered adaptation, long-coding, and UDS-coding constructor calls. MultipleChoiceInterpretation::ENABLED_DISABLED at 014f1ff0 is initialized by static init 00D54B34: car_setting_enabled has compact requested value 01 and car_setting_disabled has compact requested value 00.",
+          "label": "car_setting_disabled",
+          "requested_value": "00"
+        },
+        {
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "coming_home_req_rls_ref_0107671A passes MultipleChoiceInterpretation::ENABLED_DISABLED (014f1ff0) into the recovered adaptation, long-coding, and UDS-coding constructor calls. MultipleChoiceInterpretation::ENABLED_DISABLED at 014f1ff0 is initialized by static init 00D54B34: car_setting_enabled has compact requested value 01 and car_setting_disabled has compact requested value 00.",
+          "label": "car_setting_enabled",
+          "requested_value": "01"
         }
       ],
       "pq25_bits": "",
       "priority": "review_if_lighting_related",
-      "proof_status": "constructor_multi_path_runtime_branch_unresolved: Instruction window shows raw address 0A57, offset 2, mask/value field 04 before one req-RLS constructor.; target_010B6B3C.c calls 010D8FE4, which constructs VagUdsAdaptationSetting.; target_010B6B90.c calls 010D917C, which constructs VagCanLongCodingSetting.; target_010B0D5C.c calls 010BC860, which constructs VagUdsCodingSetting.; The same key appears again through 010B19D0 -> 010C0708, another VagUdsCodingSetting helper.",
-      "read_method": "220A57 is the adaptation-branch read candidate only; other refs are coding/long-coding variants.",
+      "proof_status": "constructor_multi_path_runtime_branch_unresolved: Instruction window shows raw address 0A57, offset 2, mask/value field 04 before one req-RLS constructor.; target_010B6B3C.c calls 010D8FE4, which constructs VagUdsAdaptationSetting.; target_010B6B90.c calls 010D917C, which constructs VagCanLongCodingSetting.; target_010B0D5C.c calls 010BC860, which constructs VagUdsCodingSetting.; The same key appears again through 010B19D0 -> 010C0708, another VagUdsCodingSetting helper.; coming_home_req_rls_ref_0107671A shows UDS coding immediate pairs 20/11 and 04/0A for these helpers.; VagUdsCodingSetting(Ecu, int, byte/vector) hardcodes raw address 0x0600 and type 8, mapping those pairs to DID 0600 byte/mask fields.; MultipleChoiceInterpretation::ENABLED_DISABLED at 014f1ff0 is initialized by static init 00D54B34: car_setting_enabled has compact requested value 01 and car_setting_disabled has compact requested value 00.",
+      "read_method": "220A57 is the rejected adaptation branch; UDS coding variants read DID 0600 byte 0x11 mask 0x20 and byte 0x0A mask 0x04; a long-coding variant is also present.",
       "unresolved": [
         "unknown; runtime Setting object/value enum not recovered",
         "Runtime ReadValuesOperation support/value method not recovered offline",
         "unknown; native Setting object/raw key not recovered"
       ],
-      "value_model": "unknown; runtime Setting object/value enum not recovered",
-      "write_method": "Do not write from this recovery until runtime branch selection and positive read/packing evidence are known."
+      "value_model": "native choices recovered: 00=car_setting_disabled, 01=car_setting_enabled",
+      "write_method": "Do not write from this recovery until runtime branch selection and requested-choice encoding are known."
     },
     {
       "category": "lighting_coming_leaving_home",
@@ -6339,27 +6260,57 @@
       "current_value": "unknown",
       "key": "car_setting_cornering_lights_activation",
       "label": "Cornering lights activation",
-      "mapping_status": "app_visible_lighting_unmapped",
+      "mapping_status": "constructor_partial",
       "native_string_found": true,
       "possible_values": [
         {
-          "coding_effect": "unknown",
-          "evidence": "Native Setting interpretation/value enum is not recovered for this setting.",
-          "label": "unknown",
-          "requested_value": null
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "D1D activation choice vector",
+          "label": "car_setting_disabled",
+          "requested_value": "00"
+        },
+        {
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "D1D activation choice vector",
+          "label": "car_setting_steering_wheel_method_a",
+          "requested_value": "01"
+        },
+        {
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "D1D activation choice vector",
+          "label": "car_setting_steering_wheel_and_blinker_method_a",
+          "requested_value": "02"
+        },
+        {
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "D1D activation choice vector",
+          "label": "car_setting_steering_wheel_method_b",
+          "requested_value": "03"
+        },
+        {
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "D1D activation choice vector",
+          "label": "car_setting_steering_wheel_and_blinker_method_b",
+          "requested_value": "04"
+        },
+        {
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "D1D activation choice vector",
+          "label": "car_setting_not_defined",
+          "requested_value": "06"
         }
       ],
       "pq25_bits": "",
       "priority": "review_if_lighting_related",
-      "proof_status": "Carista resource/native string inventory only; not proved supported on this BCM",
-      "read_method": "Runtime ReadValuesOperation support/value method not recovered offline",
+      "proof_status": "constructor_partial: Ghidra export cornering_lights_activation_d1d_012DA8BD shows car_setting_cornering_lights_activation at 0x012da8bd.; The 0x012da906 helper call passes raw/DID 0x0d1d, offset 2, mask 0x38, UDS_CENTRAL_ELEC_MK7, CENTRAL_ELEC_MK7_6C, and VagUdsEcu::CENTRAL_ELEC.; The later 0x012daab2 same-key D1D helper uses CENTRAL_ELEC_MK7_NEW_MQBA0 with VagUdsEcu::CENTRAL_ELEC.; The nearby 0x012dab32 path is a B8 UDS-coding variant guarded by CENTRAL_ELEC_B8 plus VagCanEcu::CENTRAL_ELEC, not a D1D 6R path.; Direct x86 ELF audit resolves helper 0x0135e750 through PLT entry 0x0197db20 to shared_ptr_emplace<VagUdsCodingSetting, VagCanEcu, StringWhitelist, ..., MultipleChoiceInterpretation>.; No recovered activation D1D branch in the Ghidra x86 window is guarded by CENTRAL_ELEC_6R, CENTRAL_ELEC_6R_5C_7E_7H, or CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S.",
+      "read_method": "D1D UDS adaptation-style branch; recovered D1D guards are MK7/6C/MQBA0, not 6R/PQ25.",
       "unresolved": [
         "unknown; runtime Setting object/value enum not recovered",
         "Runtime ReadValuesOperation support/value method not recovered offline",
         "unknown; native Setting object/raw key not recovered"
       ],
-      "value_model": "unknown; runtime Setting object/value enum not recovered",
-      "write_method": "unknown; native Setting object/raw key not recovered"
+      "value_model": "native choices recovered: 00=car_setting_disabled, 01=car_setting_steering_wheel_method_a, 02=car_setting_steering_wheel_and_blinker_method_a, 03=car_setting_steering_wheel_method_b, 04=car_setting_steering_wheel_and_blinker_method_b, 06=car_setting_not_defined",
+      "write_method": "Blocked: no recovered 6R/PQ25 guard and no positive 220D1D payload; never build 2E0D1D from this branch for the Polo."
     },
     {
       "category": "lighting_cornering",
@@ -6528,7 +6479,7 @@
       "current_value": "unknown",
       "key": "car_setting_cornering_lights_max_activation_speed",
       "label": "Cornering lights maximum activation speed",
-      "mapping_status": "app_visible_lighting_unmapped",
+      "mapping_status": "constructor_partial",
       "native_string_found": true,
       "possible_values": [
         {
@@ -6540,22 +6491,22 @@
       ],
       "pq25_bits": "",
       "priority": "review_if_lighting_related",
-      "proof_status": "Carista resource/native string inventory only; not proved supported on this BCM",
-      "read_method": "Runtime ReadValuesOperation support/value method not recovered offline",
+      "proof_status": "constructor_partial: Ghidra export cornering_lights_max_activation_speed_d1d_012DB176 shows the key at 0x012db176.; The primary observed raw tuple is raw/DID 0x0d1d, offset 4, mask 0xff with Unit::KM_H numerical interpretation.; Observed guards include CENTRAL_ELEC_MK7_6C and CENTRAL_ELEC_MK7_NEW_MQBA0/MK8-derived whitelists with VagUdsEcu::CENTRAL_ELEC.; No recovered max-speed D1D branch in the Ghidra x86 window is guarded by CENTRAL_ELEC_6R, CENTRAL_ELEC_6R_5C_7E_7H, or CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S.",
+      "read_method": "D1D UDS adaptation-style numerical branch with Unit::KM_H; guards are MK7_6C/MK7_NEW_MQBA0/MK8-derived, not 6R/PQ25.",
       "unresolved": [
         "unknown; runtime Setting object/value enum not recovered",
         "Runtime ReadValuesOperation support/value method not recovered offline",
         "unknown; native Setting object/raw key not recovered"
       ],
       "value_model": "unknown; runtime Setting object/value enum not recovered",
-      "write_method": "unknown; native Setting object/raw key not recovered"
+      "write_method": "Blocked: no recovered 6R/PQ25 guard and no positive 220D1D payload; never build 2E0D1D from this branch for the Polo."
     },
     {
       "category": "lighting_cornering",
       "current_value": "unknown",
       "key": "car_setting_cornering_lights_min_activation_speed",
       "label": "Cornering lights minimum activation speed",
-      "mapping_status": "app_visible_lighting_unmapped",
+      "mapping_status": "constructor_partial",
       "native_string_found": true,
       "possible_values": [
         {
@@ -6567,15 +6518,15 @@
       ],
       "pq25_bits": "",
       "priority": "review_if_lighting_related",
-      "proof_status": "Carista resource/native string inventory only; not proved supported on this BCM",
-      "read_method": "Runtime ReadValuesOperation support/value method not recovered offline",
+      "proof_status": "constructor_partial: Ghidra export cornering_lights_min_activation_speed_d1d_012DAF54 shows the key at 0x012daf54.; The primary observed raw tuple is raw/DID 0x0d1d, offset 3, mask 0xff with Unit::KM_H numerical interpretation.; Observed guards include CENTRAL_ELEC_MK7_ALL, CENTRAL_ELEC_MK7_6C, and CENTRAL_ELEC_MK7_NEW_MQBA0 with VagUdsEcu::CENTRAL_ELEC.; No recovered min-speed D1D branch in the Ghidra x86 window is guarded by CENTRAL_ELEC_6R, CENTRAL_ELEC_6R_5C_7E_7H, or CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S.",
+      "read_method": "D1D UDS adaptation-style numerical branch with Unit::KM_H; guards are MK7/MK7_6C/MK7_NEW_MQBA0, not 6R/PQ25.",
       "unresolved": [
         "unknown; runtime Setting object/value enum not recovered",
         "Runtime ReadValuesOperation support/value method not recovered offline",
         "unknown; native Setting object/raw key not recovered"
       ],
       "value_model": "unknown; runtime Setting object/value enum not recovered",
-      "write_method": "unknown; native Setting object/raw key not recovered"
+      "write_method": "Blocked: no recovered 6R/PQ25 guard and no positive 220D1D payload; never build 2E0D1D from this branch for the Polo."
     },
     {
       "category": "lighting_cornering",
@@ -8145,12 +8096,24 @@
     },
     {
       "category": "lighting_fog",
-      "current_value": "unknown",
+      "current_value": "clear",
       "key": "car_setting_drl_via_fogs",
       "label": "Use fog lights as daytime running lights",
       "mapping_status": "constructor_partial",
       "native_string_found": true,
       "possible_values": [
+        {
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "Official x86 6R/PQ25 coding branch uses MultipleChoiceInterpretation::YES_NO.",
+          "label": "car_setting_no",
+          "requested_value": "00"
+        },
+        {
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "Official x86 6R/PQ25 coding branch uses MultipleChoiceInterpretation::YES_NO.",
+          "label": "car_setting_yes",
+          "requested_value": "01"
+        },
         {
           "coding_effect": "unknown until Carista raw payload/readback is recovered",
           "evidence": "055C adaptation choice table in drl_via_fogs_ref_2.",
@@ -8164,17 +8127,17 @@
           "requested_value": "14"
         }
       ],
-      "pq25_bits": "",
+      "pq25_bits": "DID 0600 byte 23 bit 2 (mask 0x04)",
       "priority": "review_if_lighting_related",
-      "proof_status": "constructor_partial: Official Play 9.8.3 x86 string ref is 0x012cde7b; helper family is mixed around long-coding and UDS adaptation wrappers.; Refs-only probe finds six FUN_0105f6c0 references for this exact key.; Instruction windows show UDS coding variants with immediate pairs 17/04, 0E/02, and 02/08.; Instruction window shows a long-coding variant with immediate pair 11/10.; Two 010B1980 calls construct VagUdsAdaptationSetting via 010C0590.; The 055C adaptation table stores raw address 055C, offset 6, mask FF, disabled 00, enabled 14.",
-      "read_method": "22055C adaptation candidate at offset 6; the same key also has UDS/long-coding variants.",
+      "proof_status": "constructor_partial: Official Play 9.8.3 x86 string ref is 0x012cde7b.; Official x86 0x012cdeb6 pushes CENTRAL_ELEC_6R_5C_7E_7H, VagCanEcu::CENTRAL_ELEC, byte 0x17, mask 0x04, and YES_NO.; Direct x86 ELF audit resolves helper 0x01361520 through PLT entry 0x0197dcb0 to shared_ptr_emplace<VagUdsCodingSetting, VagCanEcu, StringWhitelist, ..., MultipleChoiceInterpretation>.; Official x86 non-6R variants include CENTRAL_ELEC_MK5_HIGH byte 0x11/mask 0x10, CENTRAL_ELEC_MK6_8X_B7 byte 0x0e/mask 0x02, CENTRAL_ELEC_B8 byte 0x02/mask 0x08, plus MK8/gateway 055C adaptation branches.; Refs-only probe finds six FUN_0105f6c0 references for this exact key.; The DID 0600 and long-coding variants pass MultipleChoiceInterpretation::YES_NO (014f1fd8), whose static init maps car_setting_no=00 and car_setting_yes=01.; Two 010B1980 calls construct VagUdsAdaptationSetting via 010C0590.; The 055C adaptation table stores raw address 055C, offset 6, mask FF, disabled 00, enabled 14.; MultipleChoiceInterpretation::YES_NO at 014f1fd8 is initialized by static init 00D54B34: car_setting_yes has compact requested value 01 and car_setting_no has compact requested value 00.",
+      "read_method": "The x86 6R/PQ25 branch is coding-style byte 0x17 mask 0x04; the 22055C adaptation candidate at offset 6 returned 7F2231 live.",
       "unresolved": [
         "unknown; runtime Setting object/value enum not recovered",
         "Runtime ReadValuesOperation support/value method not recovered offline",
         "unknown; native Setting object/raw key not recovered"
       ],
-      "value_model": "native choices recovered: 00=car_setting_disabled, 14=car_setting_enabled",
-      "write_method": "Do not write from this recovery until a positive 22055C read supplies the full raw payload."
+      "value_model": "native choices recovered: 00=car_setting_no, 01=car_setting_yes, 00=car_setting_disabled, 14=car_setting_enabled",
+      "write_method": "Do not write from this recovery until the runtime branch and positive coding/adaptation payload are proven."
     },
     {
       "category": "lighting_drl_adl",
@@ -9504,60 +9467,60 @@
       "current_value": "unknown",
       "key": "car_setting_fog_lights_on_reverse",
       "label": "Turn on fog lights on reverse",
-      "mapping_status": "app_visible_lighting_unmapped",
+      "mapping_status": "constructor_partial",
       "native_string_found": true,
       "possible_values": [
         {
-          "coding_effect": "unknown",
-          "evidence": "Native Setting interpretation/value enum is not recovered for this setting.",
-          "label": "unknown",
-          "requested_value": null
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "Official x86 0x012d632e branch passes MultipleChoiceInterpretation::ENABLED_DISABLED into the D1D offset 0 mask 0x02 branch. MultipleChoiceInterpretation::ENABLED_DISABLED at 014f1ff0 is initialized by static init 00D54B34: car_setting_enabled has compact requested value 01 and car_setting_disabled has compact requested value 00.",
+          "label": "car_setting_disabled",
+          "requested_value": "00"
+        },
+        {
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "Official x86 0x012d632e branch passes MultipleChoiceInterpretation::ENABLED_DISABLED into the D1D offset 0 mask 0x02 branch. MultipleChoiceInterpretation::ENABLED_DISABLED at 014f1ff0 is initialized by static init 00D54B34: car_setting_enabled has compact requested value 01 and car_setting_disabled has compact requested value 00.",
+          "label": "car_setting_enabled",
+          "requested_value": "01"
         }
       ],
       "pq25_bits": "",
       "priority": "review_if_lighting_related",
-      "proof_status": "Carista resource/native string inventory only; not proved supported on this BCM",
-      "read_method": "Runtime ReadValuesOperation support/value method not recovered offline",
+      "proof_status": "constructor_partial: Ghidra export fog_lights_on_reverse_d1d_012D62E6 shows car_setting_fog_lights_on_reverse at 0x012d62e6.; The 0x012d632e helper call passes raw/DID 0x0d1d, offset 0, mask 0x02, UDS_CENTRAL_ELEC_MK7, CENTRAL_ELEC_MK7_6C, VagUdsEcu::CENTRAL_ELEC, and ENABLED_DISABLED.; The later same-key 0x012d63ec helper path uses CENTRAL_ELEC_MK7_NEW_MQBA0 plus a CENTRAL_ELEC_MK8-derived whitelist with VagUdsEcu::CENTRAL_ELEC.; No recovered fog-on-reverse D1D branch in the Ghidra x86 window is guarded by CENTRAL_ELEC_6R, CENTRAL_ELEC_6R_5C_7E_7H, or CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S.",
+      "read_method": "D1D UDS adaptation-style branch; recovered guards are MK7/6C/MQBA0/MK8, not 6R/PQ25.",
       "unresolved": [
         "unknown; runtime Setting object/value enum not recovered",
         "Runtime ReadValuesOperation support/value method not recovered offline",
         "unknown; native Setting object/raw key not recovered"
       ],
-      "value_model": "unknown; runtime Setting object/value enum not recovered",
-      "write_method": "unknown; native Setting object/raw key not recovered"
+      "value_model": "native choices recovered: 00=car_setting_disabled, 01=car_setting_enabled",
+      "write_method": "Blocked: no recovered 6R/PQ25 guard and no positive 220D1D payload; never build 2E0D1D from this branch for the Polo."
     },
     {
       "category": "lighting_fog",
       "current_value": "unknown",
       "key": "car_setting_fog_when",
       "label": "Use fog lights when\u2026",
-      "mapping_status": "app_visible_lighting_unmapped",
+      "mapping_status": "recovered_non_vag_ford_setting",
       "native_string_found": true,
       "possible_values": [
         {
-          "coding_effect": "unknown",
-          "evidence": "Carista instruction text names this choice; native requested byte[] and coding/adaptation effect are not recovered.",
-          "label": "Cornering lights",
-          "requested_value": null
-        },
-        {
-          "coding_effect": "unknown",
-          "evidence": "Carista instruction text names this choice; native requested byte[] and coding/adaptation effect are not recovered.",
-          "label": "Use DRL via fog and cornering lights",
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "Official x86 FordSettings window loads this as a Ford choice label at 0x00e72ab3 before constructing car_setting_fog_when.",
+          "label": "car_setting_use_cornering_lights",
           "requested_value": null
         }
       ],
       "pq25_bits": "",
       "priority": "review_if_lighting_related",
-      "proof_status": "Carista resource/native string inventory only; not proved supported on this BCM",
-      "read_method": "Runtime ReadValuesOperation support/value method not recovered offline",
+      "proof_status": "recovered_non_vag_ford_setting: Official Play 9.8.3 x86 string for car_setting_fog_when is referenced at 0x00e72b62 inside _ZN12FordSettings11getSettingsEv.; The constructor call at 0x00e72bc1 targets 0x00ee30b0, whose symbol is shared_ptr_emplace<FordCodingSetting, ..., RA21_Kc, MultipleChoiceInterpretation>.; No official x86 reference to this exact key was found inside _ZN14VagCanSettings11getSettingsEv.",
+      "read_method": "Recovered direct constructor is FordCodingSetting only; no VAG/PQ25 setting object or read method recovered for this label.",
       "unresolved": [
         "unknown; runtime Setting object/value enum not recovered",
         "Runtime ReadValuesOperation support/value method not recovered offline",
         "unknown; native Setting object/raw key not recovered"
       ],
-      "value_model": "unknown; runtime Setting object/value enum not recovered",
-      "write_method": "unknown; native Setting object/raw key not recovered"
+      "value_model": "native choices recovered: ?=car_setting_use_cornering_lights",
+      "write_method": "Do not write on VW/PQ25 from this key. The recovered direct path is Ford-only."
     },
     {
       "category": "lighting_fog",
@@ -9591,7 +9554,7 @@
       "current_value": "unknown",
       "key": "car_setting_fogs_with_high_beam_restriction",
       "label": "Fog lights with high beam restriction",
-      "mapping_status": "catalog_only_unresolved",
+      "mapping_status": "recovered_non_vag_ford_setting",
       "native_string_found": true,
       "possible_values": [
         {
@@ -9603,15 +9566,15 @@
       ],
       "pq25_bits": "",
       "priority": "review_if_lighting_related",
-      "proof_status": "catalog_only_unresolved: Carista catalog contains a high-beam fog restriction key relevant to the observed high-beam test.; Refs-only probe found this exact key only in FUN_00E314FE, not in FUN_0105F6C0.",
-      "read_method": "Catalog/resource only.",
+      "proof_status": "recovered_non_vag_ford_setting: Carista catalog contains a high-beam fog restriction key relevant to the observed high-beam test.; Refs-only probe found this exact key only in FUN_00E314FE, not in FUN_0105F6C0.; Focused instruction window stores car_setting_fogs_with_high_beam_restriction at 00E4DE8A inside a Ford fog_lights_mode choice table.; 00E820A8 is a thin wrapper around 00E8D43C.; target_00E8D43C.c constructs shared_ptr_emplace<FordCodingSetting, ..., RA28_Kc, MultipleChoiceInterpretation>.",
+      "read_method": "Recovered direct constructor is FordCodingSetting only; use car_setting_turn_off_fogs_with_high_beam for the VAG/PQ25 high-beam fog lead.",
       "unresolved": [
         "unknown; runtime Setting object/value enum not recovered",
         "Runtime ReadValuesOperation support/value method not recovered offline",
         "unknown; native Setting object/raw key not recovered"
       ],
       "value_model": "unknown; runtime Setting object/value enum not recovered",
-      "write_method": "Unknown; do not write."
+      "write_method": "Do not write on VW/PQ25 from this key. The recovered direct path is Ford-only."
     },
     {
       "category": "lighting_general",
@@ -9969,27 +9932,27 @@
       "current_value": "unknown",
       "key": "car_setting_front_fogs_with_low_beams",
       "label": "Activate front fog lights with low beams",
-      "mapping_status": "catalog_only_unresolved",
+      "mapping_status": "recovered_non_vag_ford_setting",
       "native_string_found": true,
       "possible_values": [
         {
-          "coding_effect": "unknown",
-          "evidence": "Native Setting interpretation/value enum is not recovered for this setting.",
-          "label": "unknown",
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "Instruction window passes car_setting_low_beams into the FordUdsSetting constructor block at 00E4BD5C.",
+          "label": "car_setting_low_beams",
           "requested_value": null
         }
       ],
       "pq25_bits": "",
       "priority": "review_if_lighting_related",
-      "proof_status": "catalog_only_unresolved: Carista catalog contains the resource key.; Refs-only probe found this exact key only in FUN_00E314FE, not in FUN_0105F6C0.",
-      "read_method": "Catalog/resource only.",
+      "proof_status": "recovered_non_vag_ford_setting: Carista catalog contains the resource key.; Refs-only probe found this exact key only in FUN_00E314FE, not in FUN_0105F6C0.; Focused instruction window stores car_setting_front_fogs_with_low_beams at 00E4BCFA into the setting table and then calls 00E82930.; 00E82930 is a thin wrapper around 00E8FBE4.; target_00E8FBE4.c constructs shared_ptr_emplace<FordUdsSetting, ..., RA22_Kc, MultipleChoiceInterpretation>.; The same window uses car_setting_low_beams as a choice label at 00E4BD5C.",
+      "read_method": "Recovered direct constructor is FordUdsSetting only; no VAG/PQ25 DID, raw address, or long-coding path was found.",
       "unresolved": [
         "unknown; runtime Setting object/value enum not recovered",
         "Runtime ReadValuesOperation support/value method not recovered offline",
         "unknown; native Setting object/raw key not recovered"
       ],
-      "value_model": "unknown; runtime Setting object/value enum not recovered",
-      "write_method": "Unknown; do not write."
+      "value_model": "native choices recovered: ?=car_setting_low_beams",
+      "write_method": "Do not write on VW/PQ25 from this key. The recovered read/write path is Ford-only."
     },
     {
       "category": "lighting_general",
@@ -13726,23 +13689,29 @@
       "native_string_found": true,
       "possible_values": [
         {
-          "coding_effect": "unknown",
-          "evidence": "Native Setting interpretation/value enum is not recovered for this setting.",
-          "label": "unknown",
-          "requested_value": null
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "leaving_home_req_rls_ref_0107879A passes MultipleChoiceInterpretation::ENABLED_DISABLED (014f1ff0) into both recovered leaving_home UDS-coding branches. MultipleChoiceInterpretation::ENABLED_DISABLED at 014f1ff0 is initialized by static init 00D54B34: car_setting_enabled has compact requested value 01 and car_setting_disabled has compact requested value 00.",
+          "label": "car_setting_disabled",
+          "requested_value": "00"
+        },
+        {
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "leaving_home_req_rls_ref_0107879A passes MultipleChoiceInterpretation::ENABLED_DISABLED (014f1ff0) into both recovered leaving_home UDS-coding branches. MultipleChoiceInterpretation::ENABLED_DISABLED at 014f1ff0 is initialized by static init 00D54B34: car_setting_enabled has compact requested value 01 and car_setting_disabled has compact requested value 00.",
+          "label": "car_setting_enabled",
+          "requested_value": "01"
         }
       ],
       "pq25_bits": "",
       "priority": "review_if_lighting_related",
-      "proof_status": "constructor_partial: Instruction window shows leaving_home refs through two UDS coding helpers.; target_010B71D0.c calls 010DAEDC, which constructs VagUdsCodingSetting.; target_010B0C78.c calls 010BC404, which constructs VagUdsCodingSetting.",
-      "read_method": "UDS coding setting variants; exact DID/value packing still needs constructor-field mapping.",
+      "proof_status": "constructor_partial: Instruction window shows leaving_home refs through two UDS coding helpers.; target_010B71D0.c calls 010DAEDC, which constructs VagUdsCodingSetting.; target_010B0C78.c calls 010BC404, which constructs VagUdsCodingSetting.; leaving_home_req_rls_ref_0107879A shows immediate pairs 04/06 and 08/07 before the leaving_home helper calls.; VagUdsCodingSetting(Ecu, int, byte/vector) hardcodes raw address 0x0600 and type 8, mapping those pairs to DID 0600 byte/mask fields.; MultipleChoiceInterpretation::ENABLED_DISABLED at 014f1ff0 is initialized by static init 00D54B34: car_setting_enabled has compact requested value 01 and car_setting_disabled has compact requested value 00.",
+      "read_method": "UDS coding variants read DID 0600 byte 0x06 mask 0x04 and byte 0x07 mask 0x08.",
       "unresolved": [
         "unknown; runtime Setting object/value enum not recovered",
         "Runtime ReadValuesOperation support/value method not recovered offline",
         "unknown; native Setting object/raw key not recovered"
       ],
-      "value_model": "unknown; runtime Setting object/value enum not recovered",
-      "write_method": "Do not write from this setting recovery; class is known, but exact coding byte/value packing is not recovered."
+      "value_model": "native choices recovered: 00=car_setting_disabled, 01=car_setting_enabled",
+      "write_method": "Do not write from this setting recovery until runtime branch selection and requested-choice encoding are known."
     },
     {
       "category": "lighting_coming_leaving_home",
@@ -13825,7 +13794,7 @@
       "pq25_bits": "",
       "priority": "review_if_lighting_related",
       "proof_status": "constructor_multi_path_runtime_branch_unresolved: Instruction windows show 10-60 second leaving-home duration tables and one 0A57 offset 5 mask FF UDS branch.; target_010B1708.c calls 010BF9DC, which constructs FullByteVagCanShortAdaptationSetting.; target_010B72C4.c calls 010DB380, which constructs VagUdsAdaptationSetting with NumericalInterpretation.; target_010B7318.c calls 010DB504, which constructs VagUdsAdaptationSetting with NumericalInterpretation.; target_010B7368.c calls 010DB67C, which constructs VagUdsAdaptationSetting with MultipleChoiceInterpretation.",
-      "read_method": "VAG short-adaptation and 220A57 UDS-adaptation duration variants are both present.",
+      "read_method": "VAG short-adaptation and 220A57 UDS-adaptation duration variants are both present; direct 220A57 returned 7F2231 live.",
       "unresolved": [
         "unknown; runtime Setting object/value enum not recovered",
         "Runtime ReadValuesOperation support/value method not recovered offline",
@@ -13897,23 +13866,29 @@
       "native_string_found": true,
       "possible_values": [
         {
-          "coding_effect": "unknown",
-          "evidence": "Native Setting interpretation/value enum is not recovered for this setting.",
-          "label": "unknown",
-          "requested_value": null
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "leaving_home_req_rls_ref_0107879A passes MultipleChoiceInterpretation::ENABLED_DISABLED (014f1ff0) into the long-coding and DID 0600 UDS-coding branches. MultipleChoiceInterpretation::ENABLED_DISABLED at 014f1ff0 is initialized by static init 00D54B34: car_setting_enabled has compact requested value 01 and car_setting_disabled has compact requested value 00.",
+          "label": "car_setting_disabled",
+          "requested_value": "00"
+        },
+        {
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "leaving_home_req_rls_ref_0107879A passes MultipleChoiceInterpretation::ENABLED_DISABLED (014f1ff0) into the long-coding and DID 0600 UDS-coding branches. MultipleChoiceInterpretation::ENABLED_DISABLED at 014f1ff0 is initialized by static init 00D54B34: car_setting_enabled has compact requested value 01 and car_setting_disabled has compact requested value 00.",
+          "label": "car_setting_enabled",
+          "requested_value": "01"
         }
       ],
       "pq25_bits": "",
       "priority": "review_if_lighting_related",
-      "proof_status": "constructor_multi_path_runtime_branch_unresolved: Instruction window shows leaving_home_req_rls refs at 0107879A and 01078896.; target_010B7184.c calls 010DAD6C, which constructs VagCanLongCodingSetting.; Second visible path reuses 010B19D0 -> 010C0708, which constructs VagUdsCodingSetting.",
-      "read_method": "Coding/long-coding variants are visible; no raw adaptation DID is proven for this key yet.",
+      "proof_status": "constructor_multi_path_runtime_branch_unresolved: Instruction window shows leaving_home_req_rls refs at 0107879A and 01078896.; target_010B7184.c calls 010DAD6C, which constructs VagCanLongCodingSetting.; Second visible path reuses 010B19D0 -> 010C0708, which constructs VagUdsCodingSetting.; leaving_home_req_rls_ref_0107879A shows long-coding pair 20/00 and UDS coding pair 02/0A for this key family.; VagUdsCodingSetting(Ecu, int, byte/vector) hardcodes raw address 0x0600 and type 8, mapping the UDS pair to DID 0600 byte 0x0A mask 0x02.; MultipleChoiceInterpretation::ENABLED_DISABLED at 014f1ff0 is initialized by static init 00D54B34: car_setting_enabled has compact requested value 01 and car_setting_disabled has compact requested value 00.",
+      "read_method": "UDS coding variant reads DID 0600 byte 0x0A mask 0x02; a long-coding byte 0x00 mask 0x20 variant is also visible.",
       "unresolved": [
         "unknown; runtime Setting object/value enum not recovered",
         "Runtime ReadValuesOperation support/value method not recovered offline",
         "unknown; native Setting object/raw key not recovered"
       ],
-      "value_model": "unknown; runtime Setting object/value enum not recovered",
-      "write_method": "Do not write from this recovery until exact coding packing and branch selection are known."
+      "value_model": "native choices recovered: 00=car_setting_disabled, 01=car_setting_enabled",
+      "write_method": "Do not write from this recovery until runtime branch selection and requested-choice encoding are known."
     },
     {
       "category": "lighting_coming_leaving_home",
@@ -19128,30 +19103,36 @@
     },
     {
       "category": "lighting_fog",
-      "current_value": "unknown",
+      "current_value": "set",
       "key": "car_setting_turn_off_fogs_with_high_beam",
       "label": "Turn off front fog lights when high beams are on",
       "mapping_status": "constructor_partial",
       "native_string_found": true,
       "possible_values": [
         {
-          "coding_effect": "unknown",
-          "evidence": "Native Setting interpretation/value enum is not recovered for this setting.",
-          "label": "unknown",
-          "requested_value": null
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "turn_off_fogs_with_high_beam_ref_1_0107F15A and ref_2_0107F26C pass MultipleChoiceInterpretation::YES_NO (014f1fd8) into the recovered UDS-coding, long-coding, and adaptation branches. MultipleChoiceInterpretation::YES_NO at 014f1fd8 is initialized by static init 00D54B34: car_setting_yes has compact requested value 01 and car_setting_no has compact requested value 00.",
+          "label": "car_setting_no",
+          "requested_value": "00"
+        },
+        {
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "turn_off_fogs_with_high_beam_ref_1_0107F15A and ref_2_0107F26C pass MultipleChoiceInterpretation::YES_NO (014f1fd8) into the recovered UDS-coding, long-coding, and adaptation branches. MultipleChoiceInterpretation::YES_NO at 014f1fd8 is initialized by static init 00D54B34: car_setting_yes has compact requested value 01 and car_setting_no has compact requested value 00.",
+          "label": "car_setting_yes",
+          "requested_value": "01"
         }
       ],
-      "pq25_bits": "",
+      "pq25_bits": "DID 0600 byte 21 bit 5 (mask 0x20)",
       "priority": "review_if_lighting_related",
-      "proof_status": "constructor_partial: Official Play 9.8.3 x86 string ref is 0x012d4db5; helper calls target 0x0135e580 and 0x01368100.; Official static read-only candidates include 220D01 and nearby 220A58; neither is a write seed without positive live proof.; Refs-only probe finds six FUN_0105f6c0 references plus app getSettings refs for this key.; Instruction windows show UDS coding variants with immediate pairs 20/15, 04/0E, 02/04, and 01/0F.; Instruction window shows a long-coding variant with immediate pair 20/11.; Instruction windows show UDS adaptation variants at raw addresses 0D01 and 0A58 through 010B7F38 -> 010DEE9C.; For the first adaptation variant, the window stores raw address 0D01 with adjacent 1/1 fields before constructing VagUdsAdaptationSetting.",
-      "read_method": "220D01 adaptation candidate for one variant; other variants are UDS coding or long-coding settings.",
+      "proof_status": "constructor_partial: Official Play 9.8.3 x86 string ref is 0x012d4db5; helper calls target 0x0135e580 and 0x01368100.; Official x86 0x012d4dea pushes CENTRAL_ELEC_6R_5C_7E_7H, VagCanEcu::CENTRAL_ELEC, byte 0x15, mask 0x20, and YES_NO.; Direct x86 ELF audit resolves helper 0x01368100 through PLT entry 0x0197e070 to shared_ptr_emplace<VagCanLongCodingSetting, VagCanEcu, StringWhitelist, ..., MultipleChoiceInterpretation>; its callsite pushes CENTRAL_ELEC_MK5_HIGH, byte 0x11, and mask 0x20.; Official static read-only candidates include 220D01 and nearby 220A58; both returned 7F2231 live.; Refs-only probe finds six FUN_0105f6c0 references plus app getSettings refs for this key.; Instruction windows show UDS coding variants with immediate pairs 20/15, 04/0E, 02/04, and 01/0F; the first three are in the front-fog window and 01/0F sits at the boundary before the rear-fog key.; Instruction window shows a long-coding variant with immediate pair 20/11.; The recovered front-fog branches pass MultipleChoiceInterpretation::YES_NO (014f1fd8), whose static init maps car_setting_no=00 and car_setting_yes=01.; VagUdsCodingSetting(Ecu, int, byte/vector) hardcodes raw address 0x0600 and type 8, so UDS coding immediate pairs map to DID 0600 byte/mask fields.; Instruction windows show UDS adaptation variants at raw addresses 0D01 and 0A58 through 010B7F38 -> 010DEE9C.; For the first adaptation variant, the window stores raw address 0D01 with adjacent 1/1 fields before constructing VagUdsAdaptationSetting.; MultipleChoiceInterpretation::YES_NO at 014f1fd8 is initialized by static init 00D54B34: car_setting_yes has compact requested value 01 and car_setting_no has compact requested value 00.",
+      "read_method": "The x86 6R/PQ25 branch is coding-style byte 0x15 mask 0x20; 220D01/220A58 adaptation variants returned 7F2231 live.",
       "unresolved": [
         "unknown; runtime Setting object/value enum not recovered",
         "Runtime ReadValuesOperation support/value method not recovered offline",
         "unknown; native Setting object/raw key not recovered"
       ],
-      "value_model": "unknown; runtime Setting object/value enum not recovered",
-      "write_method": "Do not write from this recovery until the exact runtime variant and positive read payload are proven."
+      "value_model": "native choices recovered: 00=car_setting_no, 01=car_setting_yes",
+      "write_method": "Do not write from this recovery; fresh engine-running coding byte 0x15 has mask 0x20 set and the physical high-beam shutoff behavior is already present."
     },
     {
       "category": "lighting_general",
@@ -19212,7 +19193,7 @@
       "current_value": "unknown",
       "key": "car_setting_turn_on_fogs_with_high_beam",
       "label": "Turn on front fog lights when high beams are on",
-      "mapping_status": "catalog_only_unresolved",
+      "mapping_status": "recovered_non_vag_ford_setting",
       "native_string_found": true,
       "possible_values": [
         {
@@ -19224,15 +19205,15 @@
       ],
       "pq25_bits": "",
       "priority": "review_if_lighting_related",
-      "proof_status": "catalog_only_unresolved: Carista catalog contains a high-beam fog setting key relevant to the observed high-beam test.; Refs-only probe found this exact key only in FUN_00E314FE, not in FUN_0105F6C0.",
-      "read_method": "Catalog/resource only.",
+      "proof_status": "recovered_non_vag_ford_setting: Carista catalog contains a high-beam fog setting key relevant to the observed high-beam test.; Refs-only probe found this exact key only in FUN_00E314FE, not in FUN_0105F6C0.; Focused instruction window stores car_setting_turn_on_fogs_with_high_beam at 00E4DE9A inside the same Ford fog_lights_mode choice table.; 00E820A8 is a thin wrapper around 00E8D43C.; target_00E8D43C.c constructs shared_ptr_emplace<FordCodingSetting, ..., RA28_Kc, MultipleChoiceInterpretation>.",
+      "read_method": "Recovered direct constructor is FordCodingSetting only; no VAG/PQ25 read method was recovered for this key.",
       "unresolved": [
         "unknown; runtime Setting object/value enum not recovered",
         "Runtime ReadValuesOperation support/value method not recovered offline",
         "unknown; native Setting object/raw key not recovered"
       ],
       "value_model": "unknown; runtime Setting object/value enum not recovered",
-      "write_method": "Unknown; do not write."
+      "write_method": "Do not write on VW/PQ25 from this key. The recovered direct path is Ford-only."
     },
     {
       "category": "lighting_general",
@@ -19891,24 +19872,24 @@
       "native_string_found": true,
       "possible_values": [
         {
-          "coding_effect": "byte 22 bit 5 clear",
-          "evidence": "Derived from the mapped long-coding bit only; Carista requested byte[] is not recovered.",
-          "label": "clear",
-          "requested_value": null
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "assist_dr_lights_ref_0108252C passes MultipleChoiceInterpretation::ENABLED_DISABLED (014f1ff0) into the recovered DID 0600 byte 16/mask 20 UDS-coding branch. MultipleChoiceInterpretation::ENABLED_DISABLED at 014f1ff0 is initialized by static init 00D54B34: car_setting_enabled has compact requested value 01 and car_setting_disabled has compact requested value 00.",
+          "label": "car_setting_disabled",
+          "requested_value": "00"
         },
         {
-          "coding_effect": "byte 22 bit 5 set",
-          "evidence": "Derived from the mapped long-coding bit only; Carista requested byte[] is not recovered.",
-          "label": "set",
-          "requested_value": null
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "assist_dr_lights_ref_0108252C passes MultipleChoiceInterpretation::ENABLED_DISABLED (014f1ff0) into the recovered DID 0600 byte 16/mask 20 UDS-coding branch. MultipleChoiceInterpretation::ENABLED_DISABLED at 014f1ff0 is initialized by static init 00D54B34: car_setting_enabled has compact requested value 01 and car_setting_disabled has compact requested value 00.",
+          "label": "car_setting_enabled",
+          "requested_value": "01"
         }
       ],
-      "pq25_bits": "byte 22 bit 5",
+      "pq25_bits": "DID 0600 byte 22 bit 5 (mask 0x20)",
       "priority": "low_context",
-      "proof_status": "constructor_partial: Official Play 9.8.3 x86 string ref is 0x012d9b78; visible helpers land in mixed long-coding/adaptation wrapper neighborhoods.; Refs-only probe finds a direct FUN_0105f6c0 ref.; Instruction window stores immediate pair 20/16 before car_setting_assist_dr_lights.; 010B74A0 calls 010DBC4C, which constructs VagUdsCodingSetting.; PQ25 catalog byte 22 bit 5 remains an external candidate, not native proof.",
-      "read_method": "UDS coding setting path; exact DID/value packing still needs constructor-field mapping.",
+      "proof_status": "constructor_partial: Official Play 9.8.3 x86 string ref is 0x012d9b78.; Official x86 0x012d9bad pushes CENTRAL_ELEC_6R_5C_7E_7H, VagCanEcu::CENTRAL_ELEC, byte 0x16, mask 0x20, and ENABLED_DISABLED.; Direct x86 ELF audit resolves helper 0x013625a0 through PLT entry 0x0197dd40 to shared_ptr_emplace<VagUdsCodingSetting, VagCanEcu, StringWhitelist, ..., MultipleChoiceInterpretation>.; Official x86 0x012d9cc0 is the nearby non-6R car_setting_cornering_lights branch, guarded by CENTRAL_ELEC_MK5_MED_30.; Refs-only probe finds a direct FUN_0105f6c0 ref.; Instruction window stores immediate pair 20/16 before car_setting_assist_dr_lights.; 010B74A0 calls 010DBC4C, which constructs VagUdsCodingSetting.; Older ARM VagUdsCodingSetting(Ecu, int, byte/vector) evidence maps the immediate pair to DID 0600 byte 0x16 mask 0x20.; MultipleChoiceInterpretation::ENABLED_DISABLED at 014f1ff0 is initialized by static init 00D54B34: car_setting_enabled has compact requested value 01 and car_setting_disabled has compact requested value 00.; PQ25 catalog byte 22 bit 5 remains an external candidate, not native proof.",
+      "read_method": "The x86 6R/PQ25 branch is coding-style byte 0x16 mask 0x20.",
       "unresolved": [],
-      "value_model": "boolean; baseline and supplied reference are clear",
+      "value_model": "native choices recovered: 00=car_setting_disabled, 01=car_setting_enabled",
       "write_method": "Use only full-coding guarded writes if intentionally tested; do not infer this from byte 22 bit 5 alone."
     },
     {
@@ -19920,25 +19901,25 @@
       "native_string_found": true,
       "possible_values": [
         {
-          "coding_effect": "byte 13 bit 6 clear",
-          "evidence": "Derived from the mapped long-coding bit only; Carista requested byte[] is not recovered.",
-          "label": "clear",
-          "requested_value": null
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "coming_home_via_fogs_ref_01077C50 passes MultipleChoiceInterpretation::YES_NO (014f1fd8) into the DID 0600 byte 06/mask 20 UDS-coding branch. MultipleChoiceInterpretation::YES_NO at 014f1fd8 is initialized by static init 00D54B34: car_setting_yes has compact requested value 01 and car_setting_no has compact requested value 00.",
+          "label": "car_setting_no",
+          "requested_value": "00"
         },
         {
-          "coding_effect": "byte 13 bit 6 set",
-          "evidence": "Derived from the mapped long-coding bit only; Carista requested byte[] is not recovered.",
-          "label": "set",
-          "requested_value": null
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "coming_home_via_fogs_ref_01077C50 passes MultipleChoiceInterpretation::YES_NO (014f1fd8) into the DID 0600 byte 06/mask 20 UDS-coding branch. MultipleChoiceInterpretation::YES_NO at 014f1fd8 is initialized by static init 00D54B34: car_setting_yes has compact requested value 01 and car_setting_no has compact requested value 00.",
+          "label": "car_setting_yes",
+          "requested_value": "01"
         }
       ],
       "pq25_bits": "byte 13 bit 6",
       "priority": "low_context",
-      "proof_status": "constructor_partial: Official Play 9.8.3 x86 string ref is 0x012c929b; first visible helper call targets 0x01340190.; Official static read-only candidates include 22056D plus nearby 220550/220551; none are write seeds without live proof.; Instruction window shows movs r0,#0x6, movs r1,#0x20, strd r1,r0 before the key.; Ghidra export target_010B19D0.c calls 0x010C0708.; Ghidra export target_010C0708.c constructs VagUdsCodingSetting.",
-      "read_method": "UDS coding setting path; exact DID/value packing still needs constructor proof.",
+      "proof_status": "constructor_partial: Official Play 9.8.3 x86 string ref is 0x012c929b; first visible helper call targets 0x01340190.; Official x86 0x012c92d0 pushes CENTRAL_ELEC_B8, VagCanEcu::CENTRAL_ELEC, immediate pair byte 0x06/mask 0x20, and YES_NO.; No official x86 direct branch for this key is currently guarded by CENTRAL_ELEC_6R or CENTRAL_ELEC_6R_5C_7E_7H.; Official static read-only candidates include 22056D plus nearby 220550/220551; all returned 7F2231 live.; Ghidra export target_010B19D0.c calls 0x010C0708.; Ghidra export target_010C0708.c constructs VagUdsCodingSetting.; Older ARM VagUdsCodingSetting(Ecu, int, byte/vector) evidence maps the immediate pair to DID 0600 byte 0x06 mask 0x20.; MultipleChoiceInterpretation::YES_NO at 014f1fd8 is initialized by static init 00D54B34: car_setting_yes has compact requested value 01 and car_setting_no has compact requested value 00.",
+      "read_method": "Official x86 direct key is B8-scoped; older ARM fallback evidence has DID 0600 byte 0x06 mask 0x20; direct adaptation candidates returned 7F2231.",
       "unresolved": [],
-      "value_model": "boolean/choice; external labels say 0=fog lights, 1=low beam; baseline and supplied reference are set",
-      "write_method": "Do not write from this setting recovery; class is known, but exact coding byte/value packing is not recovered."
+      "value_model": "native choices recovered: 00=car_setting_no, 01=car_setting_yes",
+      "write_method": "Do not write from this setting recovery until runtime branch selection and requested-choice encoding are known."
     },
     {
       "category": "lighting_coming_leaving_home",
@@ -19949,29 +19930,29 @@
       "native_string_found": true,
       "possible_values": [
         {
-          "coding_effect": "byte 13 bit 6 clear",
-          "evidence": "Derived from the mapped long-coding bit only; Carista requested byte[] is not recovered.",
-          "label": "clear",
-          "requested_value": null
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "coming_home_via_low_beams_ref_010776D8 passes MultipleChoiceInterpretation::YES_NO (014f1fd8) into the DID 0600 byte 06/mask 10 UDS-coding branch. MultipleChoiceInterpretation::YES_NO at 014f1fd8 is initialized by static init 00D54B34: car_setting_yes has compact requested value 01 and car_setting_no has compact requested value 00.",
+          "label": "car_setting_no",
+          "requested_value": "00"
         },
         {
-          "coding_effect": "byte 13 bit 6 set",
-          "evidence": "Derived from the mapped long-coding bit only; Carista requested byte[] is not recovered.",
-          "label": "set",
-          "requested_value": null
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "coming_home_via_low_beams_ref_010776D8 passes MultipleChoiceInterpretation::YES_NO (014f1fd8) into the DID 0600 byte 06/mask 10 UDS-coding branch. MultipleChoiceInterpretation::YES_NO at 014f1fd8 is initialized by static init 00D54B34: car_setting_yes has compact requested value 01 and car_setting_no has compact requested value 00.",
+          "label": "car_setting_yes",
+          "requested_value": "01"
         }
       ],
       "pq25_bits": "byte 13 bit 6",
       "priority": "low_context",
-      "proof_status": "constructor_partial: Official Play 9.8.3 x86 string ref is 0x012c8a55; first visible helper call targets 0x01358fd0.; Instruction window shows movs r4,#0x6 and movs r0,#0x10 before the key.; Ghidra export target_010B5A98.c calls 0x010D4140.; Ghidra export target_010D4140.c constructs VagUdsCodingSetting.",
-      "read_method": "UDS coding setting path; exact DID/value packing still needs constructor proof.",
+      "proof_status": "constructor_partial: Official Play 9.8.3 x86 string ref is 0x012c8a55; first visible helper call targets 0x01358fd0.; Direct x86 ELF audit resolves helper 0x01358fd0 through PLT entry 0x0197d810 to shared_ptr_emplace<VagUdsCodingSetting, VagCanEcu, StringWhitelist, ..., MultipleChoiceInterpretation>.; Official x86 0x012c8a8a pushes CENTRAL_ELEC_B8, VagCanEcu::CENTRAL_ELEC, immediate pair byte 0x06/mask 0x10, and YES_NO.; No official x86 direct branch for this key is currently guarded by CENTRAL_ELEC_6R or CENTRAL_ELEC_6R_5C_7E_7H.; Ghidra export target_010B5A98.c calls 0x010D4140.; Ghidra export target_010D4140.c constructs VagUdsCodingSetting.; Older ARM VagUdsCodingSetting(Ecu, int, byte/vector) evidence maps the immediate pair to DID 0600 byte 0x06 mask 0x10.; MultipleChoiceInterpretation::YES_NO at 014f1fd8 is initialized by static init 00D54B34: car_setting_yes has compact requested value 01 and car_setting_no has compact requested value 00.",
+      "read_method": "Official x86 direct key is B8-scoped UDS-coding DID 0600 byte 0x06 mask 0x10; older ARM fallback evidence has the same DID 0600 byte/mask.",
       "unresolved": [],
-      "value_model": "boolean/choice; external labels say 0=fog lights, 1=low beam; baseline and supplied reference are set",
-      "write_method": "Do not write from this setting recovery; class is known, but exact coding byte/value packing is not recovered."
+      "value_model": "native choices recovered: 00=car_setting_no, 01=car_setting_yes",
+      "write_method": "Do not write from this setting recovery until runtime branch selection and requested-choice encoding are known."
     },
     {
       "category": "lighting_coming_leaving_home",
-      "current_value": "set",
+      "current_value": "unknown",
       "key": "car_setting_coming_leaving_home_output",
       "label": "Coming/leaving-home lights use\u2026",
       "mapping_status": "constructor_multi_path_recovered_coding_raw_address_unresolved",
@@ -19979,26 +19960,26 @@
       "possible_values": [
         {
           "coding_effect": "unknown until Carista raw payload/readback is recovered",
-          "evidence": "Choice table stores 0 next to car_setting_fogs in the instruction window.",
+          "evidence": "Branch-specific encoding: 110E adaptation and DID 0600 byte 0D/mask 40 tables store fogs=00, but the DID 0600 byte 11/mask 08 table stores fogs=01.",
           "label": "car_setting_fogs",
-          "requested_value": "00"
+          "requested_value": null
         },
         {
           "coding_effect": "unknown until Carista raw payload/readback is recovered",
-          "evidence": "Choice table stores 1 next to car_setting_low_beams in the instruction window.",
+          "evidence": "Branch-specific encoding: 110E adaptation and DID 0600 byte 0D/mask 40 tables store low_beams=01, but the DID 0600 byte 11/mask 08 table stores low_beams=00.",
           "label": "car_setting_low_beams",
-          "requested_value": "01"
+          "requested_value": null
         }
       ],
       "pq25_bits": "byte 13 bit 6",
       "priority": "low_context",
-      "proof_status": "constructor_multi_path_recovered_coding_raw_address_unresolved: Official Play 9.8.3 x86 string ref is 0x012c88d0; first visible helper call targets 0x0133fdf0.; Official static candidate is read-only DID 0x110E with offset 2 / field 1; this is not a write seed yet.; Instruction window shows raw address 110E, value offset 2, mask/value field 1 near the key.; Ghidra export target_010B1930.c calls 0x010C0418.; Ghidra export target_010C0418.c constructs VagUdsAdaptationSetting.; Second-path instruction window stores coding-like immediate pairs 40/0D and 08/11 before calling 0x010B4218.; Instruction window coming_leaving_home_output_ref_2_01079282 calls 0x010B4218 at 01079296 and 0107932A.; target_010B4218.c calls 0x010CCBC8.; target_010CCBC8.c constructs VagUdsCodingSetting.",
-      "read_method": "22110E is the native-shaped read candidate for the adaptation path only; the coding path raw address/packing remains unresolved.",
+      "proof_status": "constructor_multi_path_recovered_coding_raw_address_unresolved: Official Play 9.8.3 x86 string ref is 0x012c88d0; first visible helper call targets 0x0133fdf0.; Official x86 0x012c8913 pushes VagUdsEcu::CENTRAL_ELEC, CENTRAL_ELEC_MK8, raw/address 0x110e, offset 2, field 1, and the coming_leaving_home_output key.; Official x86 0x012c8a1e pushes VagUdsEcu::CAN_GATEWAY, UDS_CAN_GATEWAY_MEB, raw/address 0x110e, offset 2, field 1, and the same key.; No official x86 direct coming_leaving_home_output branch is currently guarded by CENTRAL_ELEC_6R or CENTRAL_ELEC_6R_5C_7E_7H.; Official static candidate DID 0x110E has offset 2 / field 1, but live 22110E returned 7F2231, so this is not a write seed.; Instruction window shows raw address 110E, value offset 2, mask/value field 1 near the key.; Ghidra export target_010B1930.c calls 0x010C0418.; Ghidra export target_010C0418.c constructs VagUdsAdaptationSetting.; Second-path instruction window stores coding pairs 40/0D and 08/11 before calling 0x010B4218.; For the 40/0D coding variant, coming_leaving_home_output_ref_2_01079282 stores car_setting_fogs with compact value 00 and car_setting_low_beams with compact value 01.; For the 08/11 coding variant, the same instruction window stores car_setting_fogs with compact value 01 and car_setting_low_beams with compact value 00.; The older 110E adaptation branch stores car_setting_fogs with compact value 00 and car_setting_low_beams with compact value 01.; Instruction window coming_leaving_home_output_ref_2_01079282 calls 0x010B4218 at 01079296 and 0107932A.; target_010B4218.c calls 0x010CCBC8.; target_010CCBC8.c constructs VagUdsCodingSetting.; VagUdsCodingSetting(Ecu, int, byte/vector) hardcodes raw address 0x0600 and type 8, so those pairs are DID 0600 byte/mask variants rather than separate raw DIDs.",
+      "read_method": "22110E is the rejected adaptation path; official x86 direct branches are MK8/gateway-scoped, while older ARM UDS coding alternatives show DID 0600 byte/mask pairs 0x0D/0x40 and 0x11/0x08.",
       "unresolved": [
         "choice setting; exact Carista value enum unresolved"
       ],
-      "value_model": "native choices recovered: 00=car_setting_fogs, 01=car_setting_low_beams",
-      "write_method": "Do not write either path until branch selection and positive read/packing evidence are known."
+      "value_model": "native choices recovered: ?=car_setting_fogs, ?=car_setting_low_beams",
+      "write_method": "Do not write either path until branch selection and requested-choice encoding are known."
     },
     {
       "category": "app_catalog",
@@ -20136,8 +20117,8 @@
         }
       ],
       "pq25_bits": "",
-      "priority": "high_recovery_target_read_first",
-      "proof_status": "write_blocked_read_rejected: Official Play 9.8.3 x86 string ref is 0x012da210 inside VagCanSettings::getSettings with EBX base 0x01a35618.; Official x86 visible helper call 0x012da25a targets 0x0136c910, a VagCanLongCodingSetting wrapper; adjacent helper 0x01356f90 is a VagUdsAdaptationSetting-neighborhood wrapper.; Native constructor uses raw address 055C, value offset 5, mask FF.; Type 7 dispatch goes through UDS raw DID read/write helpers.",
+      "priority": "alternate_vag_path_recovery_target",
+      "proof_status": "write_blocked_read_rejected: Official Play 9.8.3 x86 string ref is 0x012da210 inside VagCanSettings::getSettings with EBX base 0x01a35618.; Direct x86 ELF audit resolves 0x0136c910 through PLT entry 0x0197e2f0 to shared_ptr_emplace<VagUdsAdaptationSetting, VagUdsEcu, StringWhitelist, ..., MultipleChoiceInterpretation>.; Direct x86 ELF audit resolves adjacent helper 0x01356f90 through PLT entry 0x0197d6f0 to shared_ptr_emplace<VagUdsAdaptationSetting, VagUdsEcu, StringWhitelist, ..., MultipleChoiceInterpretation>.; The x86 helper path at 0x012da25a obtains its whitelist through GOT [EBX-0x2AA4] relocation _ZN13VagWhitelists20CENTRAL_ELEC_MQB_ALLE and passes GOT [EBX-0x2C9C] relocation _ZN13VagWhitelists16CENTRAL_ELEC_MK8E through the whitelist vtable slot +0x14.; The second x86 helper at 0x012da39a pushes GOT-derived _ZN13VagWhitelists19UDS_CAN_GATEWAY_MEBE from [EBX-0x2C94] and _ZN9VagUdsEcu11CAN_GATEWAYE from [EBX-0x5DF4], despite carrying the left fog-role key.; The older ARM 01082988 type-7 branch has the same CENTRAL_ELEC plus MQB/MK8-derived whitelist argument shape: cornering_fogs_left_ref_1_01082988.txt loads VagUdsEcu::CENTRAL_ELEC from 014f7ad8 and derives a whitelist from CENTRAL_ELEC_MQB_ALL (014f706c) with CENTRAL_ELEC_MK8 (014f701c).; The same older ARM per-side region loads part-number patterns 5Q0937084* and 6C093708*, but no 6R0937087K / 6R0-937-08x pattern was recovered for the 055C path.; The older ARM 01082A4A type-7 branch is gateway-shaped: cornering_fogs_left_ref_2_01082A4A.txt loads VagWhitelists::UDS_CAN_GATEWAY_MEB from 014f6c0c and VagUdsEcu::CAN_GATEWAY from 014f7a7c.; Older ARM windows prove both left variants allocate VagUdsAdaptationSetting: 01082988 -> 010B90CC -> 010E44E8 and 01082A4A -> 010B5620 -> 010D2BD0.; Native constructor uses raw address 055C, value offset 5, mask FF.; No recovered per-side 055C branch is currently guarded by CENTRAL_ELEC_6R, CENTRAL_ELEC_6R_5C_7E_7H, or CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S.; Type 7 dispatch goes through UDS raw DID read/write helpers.",
       "read_method": "22055C",
       "unresolved": [
         "Runtime ReadValuesOperation support/value method not recovered offline"
@@ -20173,88 +20154,21 @@
         }
       ],
       "pq25_bits": "",
-      "priority": "high_recovery_target_read_first",
-      "proof_status": "write_blocked_read_rejected: Official Play 9.8.3 x86 string ref is 0x012da55f inside VagCanSettings::getSettings with EBX base 0x01a35618.; Official x86 helper call 0x012da5a9 targets 0x01368690, a VagUdsAdaptationSetting wrapper using NumericalInterpretation.; Native constructor uses raw address 055D, value offset 5, mask FF.; Type 7 dispatch goes through UDS raw DID read/write helpers.",
+      "priority": "alternate_vag_path_recovery_target",
+      "proof_status": "write_blocked_read_rejected: Official Play 9.8.3 x86 string ref is 0x012da55f inside VagCanSettings::getSettings with EBX base 0x01a35618.; Direct x86 ELF audit resolves 0x01368690 through PLT entry 0x0197e0a0 to shared_ptr_emplace<VagUdsAdaptationSetting, VagUdsEcu, StringWhitelist, ..., MultipleChoiceInterpretation>.; Direct x86 ELF audit resolves adjacent helper 0x0136caf0 through PLT entry 0x0197e300 to shared_ptr_emplace<VagUdsAdaptationSetting, VagUdsEcu, StringWhitelist, ..., MultipleChoiceInterpretation>.; The x86 helper path at 0x012da5a9 uses the same GOT [EBX-0x2AA4] CENTRAL_ELEC_MQB_ALL plus [EBX-0x2C9C] CENTRAL_ELEC_MK8 whitelist derivation as the left-side first helper.; The second right-side x86 gateway-shaped path at 0x012da6e9 pushes GOT-derived _ZN13VagWhitelists19UDS_CAN_GATEWAY_MEBE from [EBX-0x2C94] and _ZN9VagUdsEcu11CAN_GATEWAYE from [EBX-0x5DF4].; The older ARM 01082B78 type-7 branch has the same CENTRAL_ELEC plus MQB/MK8-derived whitelist argument shape: cornering_fogs_right_ref_1_01082B78.txt follows the same 014f706c/014f701c derivation and loads VagUdsEcu::CENTRAL_ELEC from 014f7ad8.; The same older ARM per-side region loads part-number patterns 5Q0937084* and 6C093708*, but no 6R0937087K / 6R0-937-08x pattern was recovered for the 055D path.; The older ARM 01082C34 type-7 branch is gateway-shaped: cornering_fogs_right_ref_2_01082C34.txt loads VagWhitelists::UDS_CAN_GATEWAY_MEB from 014f6c0c and VagUdsEcu::CAN_GATEWAY from 014f7a7c.; Older ARM windows prove both right variants allocate VagUdsAdaptationSetting: 01082B78 -> 010B8574 -> 010E0DE8 and 01082C34 -> 010B9120 -> 010E466C.; Native constructor uses raw address 055D, value offset 5, mask FF.; No recovered per-side 055D branch is currently guarded by CENTRAL_ELEC_6R, CENTRAL_ELEC_6R_5C_7E_7H, or CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S.; Type 7 dispatch goes through UDS raw DID read/write helpers.",
       "read_method": "22055D",
       "unresolved": [
         "Runtime ReadValuesOperation support/value method not recovered offline"
       ],
       "value_model": "native choices recovered: 00=car_setting_off, 17=car_setting_on, 1E=car_setting_enabled_coming_home_or_leaving_home",
       "write_method": "Blocked: live direct read returned 7F2231, so no raw payload seed exists for 2E055D."
-    }
-  ],
-  "source": "C:\\Users\\victo\\Downloads\\PoloCornering\\carista_apk_analysis\\pq25_carista_setting_catalog.json",
-  "unresolved_priority_settings": [
-    {
-      "category": "lighting_fog",
-      "current_value": "unknown",
-      "key": "car_setting_left_fog_light_as",
-      "label": "Use the left fog light as\u2026",
-      "mapping_status": "app_visible_priority_unmapped_for_this_bcm",
-      "native_string_found": true,
-      "possible_values": [
-        {
-          "coding_effect": "unknown",
-          "evidence": "Carista instruction text names this choice; native requested byte[] and coding/adaptation effect are not recovered.",
-          "label": "Cornering lights",
-          "requested_value": null
-        },
-        {
-          "coding_effect": "unknown",
-          "evidence": "Carista instruction text names this choice; native requested byte[] and coding/adaptation effect are not recovered.",
-          "label": "Use DRL via fog and cornering lights",
-          "requested_value": null
-        }
-      ],
-      "pq25_bits": "",
-      "priority": "highest_recovery_target",
-      "proof_status": "Resource/native string exists; raw_value_key/rawAddress4/coding_type/tail unknown",
-      "read_method": "Runtime ReadValuesOperation support/value method not recovered offline",
-      "unresolved": [
-        "Runtime ReadValuesOperation support/value method not recovered offline",
-        "Unknown until native Setting object/raw key is recovered; likely compact Carista coding or adaptation path"
-      ],
-      "value_model": "choice; Carista instruction says set to Cornering lights or Use DRL via fog and cornering lights",
-      "write_method": "Unknown until native Setting object/raw key is recovered; likely compact Carista coding or adaptation path"
-    },
-    {
-      "category": "lighting_fog",
-      "current_value": "unknown",
-      "key": "car_setting_right_fog_light_as",
-      "label": "Use the right fog light as\u2026",
-      "mapping_status": "app_visible_priority_unmapped_for_this_bcm",
-      "native_string_found": true,
-      "possible_values": [
-        {
-          "coding_effect": "unknown",
-          "evidence": "Carista instruction text names this choice; native requested byte[] and coding/adaptation effect are not recovered.",
-          "label": "Cornering lights",
-          "requested_value": null
-        },
-        {
-          "coding_effect": "unknown",
-          "evidence": "Carista instruction text names this choice; native requested byte[] and coding/adaptation effect are not recovered.",
-          "label": "Use DRL via fog and cornering lights",
-          "requested_value": null
-        }
-      ],
-      "pq25_bits": "",
-      "priority": "highest_recovery_target",
-      "proof_status": "Resource/native string exists; raw_value_key/rawAddress4/coding_type/tail unknown",
-      "read_method": "Runtime ReadValuesOperation support/value method not recovered offline",
-      "unresolved": [
-        "Runtime ReadValuesOperation support/value method not recovered offline",
-        "Unknown until native Setting object/raw key is recovered; likely compact Carista coding or adaptation path"
-      ],
-      "value_model": "choice; Carista instruction says set to Cornering lights or Use DRL via fog and cornering lights",
-      "write_method": "Unknown until native Setting object/raw key is recovered; likely compact Carista coding or adaptation path"
     },
     {
       "category": "lighting_cornering",
       "current_value": "unknown",
       "key": "car_setting_cornering_lights_with_turn_signals_one_touch",
       "label": "Turn on cornering lights when one-touch turn signal is on",
-      "mapping_status": "cornering_family_unmapped",
+      "mapping_status": "recovered_non_vag_bmw_setting",
       "native_string_found": true,
       "possible_values": [
         {
@@ -20265,17 +20179,73 @@
         }
       ],
       "pq25_bits": "",
-      "priority": "medium_recovery_target",
-      "proof_status": "Resource/native string exists, but no PQ25 bit or raw-value tuple recovered",
-      "read_method": "Runtime ReadValuesOperation support/value method not recovered offline",
+      "priority": "resolved_non_pq25_direct_label",
+      "proof_status": "recovered_non_vag_bmw_setting: Official Play 9.8.3 x86 string for car_setting_cornering_lights_with_turn_signals_one_touch is referenced at 0x00d39204 inside _ZN12BmwESettings11getSettingsEv.; The constructor calls at 0x00d39240 and 0x00d392ba target 0x00d7eec0, whose symbol is shared_ptr_emplace<BmwESetting, ..., RA25_Kc, MultipleChoiceInterpretation>.; No official x86 reference to this exact key was found inside _ZN14VagCanSettings11getSettingsEv.",
+      "read_method": "Recovered direct constructor is BmwESetting only; no VAG/PQ25 setting object or read method recovered for this label.",
       "unresolved": [
-        "unknown; likely a separate choice or condition under the turn-signal cornering family",
-        "Runtime ReadValuesOperation support/value method not recovered offline",
-        "Native Carista setting path appears to build 3B9A + 6-byte value + 4-byte rawAddress4 + tail; rawAddress4/coding type/tail are not recovered for this BCM"
+        "Runtime ReadValuesOperation support/value method not recovered offline"
       ],
-      "value_model": "unknown; likely a separate choice or condition under the turn-signal cornering family",
-      "write_method": "Native Carista setting path appears to build 3B9A + 6-byte value + 4-byte rawAddress4 + tail; rawAddress4/coding type/tail are not recovered for this BCM"
+      "value_model": "not a recovered PQ25 value; preferred x86 direct ref is BMW-only",
+      "write_method": "Do not write on VW/PQ25 from this key. The recovered direct path is BMW-only."
+    },
+    {
+      "category": "lighting_fog",
+      "current_value": "unknown",
+      "key": "car_setting_left_fog_light_as",
+      "label": "Use the left fog light as\u2026",
+      "mapping_status": "recovered_non_vag_ford_setting",
+      "native_string_found": true,
+      "possible_values": [
+        {
+          "coding_effect": "unknown until Carista raw payload/readback is recovered",
+          "evidence": "Official x86 FordSettings window loads this typo-preserved label at 0x00e73334 as a Ford choice-table item for the left-fog setting.",
+          "label": "car_setting_cornerig_lights_with_turn_signal",
+          "requested_value": null
+        }
+      ],
+      "pq25_bits": "",
+      "priority": "alternate_vag_path_recovery_target",
+      "proof_status": "recovered_non_vag_ford_setting: Official Play 9.8.3 x86 string for car_setting_left_fog_light_as is referenced at 0x00e73135 inside _ZN12FordSettings11getSettingsEv.; The constructor call at 0x00e73194 targets 0x00ee03b0, whose symbol is shared_ptr_emplace<FordUdsSetting, ..., RA45_Kc, MultipleChoiceInterpretation>.; No official x86 reference to this exact key was found inside _ZN14VagCanSettings11getSettingsEv.",
+      "read_method": "Recovered direct constructor is FordUdsSetting only; no VAG/PQ25 setting object or read method recovered for this label.",
+      "unresolved": [
+        "Runtime ReadValuesOperation support/value method not recovered offline"
+      ],
+      "value_model": "native choices recovered: ?=car_setting_cornerig_lights_with_turn_signal",
+      "write_method": "Do not write on VW/PQ25 from this key. The recovered direct path is Ford-only."
+    },
+    {
+      "category": "lighting_fog",
+      "current_value": "unknown",
+      "key": "car_setting_right_fog_light_as",
+      "label": "Use the right fog light as\u2026",
+      "mapping_status": "recovered_non_vag_ford_setting",
+      "native_string_found": true,
+      "possible_values": [
+        {
+          "coding_effect": "unknown",
+          "evidence": "Carista instruction text names this choice; native requested byte[] and coding/adaptation effect are not recovered.",
+          "label": "Cornering lights",
+          "requested_value": null
+        },
+        {
+          "coding_effect": "unknown",
+          "evidence": "Carista instruction text names this choice; native requested byte[] and coding/adaptation effect are not recovered.",
+          "label": "Use DRL via fog and cornering lights",
+          "requested_value": null
+        }
+      ],
+      "pq25_bits": "",
+      "priority": "alternate_vag_path_recovery_target",
+      "proof_status": "recovered_non_vag_ford_setting: Official Play 9.8.3 x86 string for car_setting_right_fog_light_as is referenced at 0x00e7376f inside _ZN12FordSettings11getSettingsEv.; The constructor call at 0x00e737ce targets 0x00ee59f0, whose symbol is shared_ptr_emplace<FordUdsSetting, ..., RA33_Kc, NumericalInterpretation>.; No official x86 reference to this exact key was found inside _ZN14VagCanSettings11getSettingsEv.",
+      "read_method": "Recovered direct constructor is FordUdsSetting only; no VAG/PQ25 setting object or read method recovered for this label.",
+      "unresolved": [
+        "Runtime ReadValuesOperation support/value method not recovered offline"
+      ],
+      "value_model": "not a recovered PQ25 value; preferred x86 direct ref is Ford-only",
+      "write_method": "Do not write on VW/PQ25 from this key. The recovered direct path is Ford-only."
     }
   ],
+  "source": "C:\\Users\\victo\\Downloads\\PoloCornering\\carista_apk_analysis\\pq25_carista_setting_catalog.json",
+  "unresolved_priority_settings": [],
   "warning": "Offline ReadValuesOperation catalog view. It is not a live getAvailableItems() dump."
 }

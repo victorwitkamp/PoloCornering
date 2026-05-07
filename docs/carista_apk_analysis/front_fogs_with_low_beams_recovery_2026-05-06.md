@@ -91,6 +91,13 @@ The VAG-side high-beam fog setting remains the separately recovered
 candidates such as `220D01` / `220A58`, but no write seed without a positive
 payload and runtime branch proof.
 
+The VAG per-side fog output-role candidates remain the separately recovered
+`car_setting_cornering_lights_via_fogs_left/right` keys. They prove `055C` /
+`055D` offset `5` mask `FF` choice tables, but the recovered guards are MQB/MK8
+or gateway/MEB. The older ARM per-side region includes `5Q0937084*` and
+`6C093708*` patterns, not `6R0937087K`, so these are not current Polo write
+seeds.
+
 ## Reconstructed Behavior Boundary
 
 For the direct `car_setting_front_fogs_with_low_beams` key, the close

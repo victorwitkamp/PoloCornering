@@ -2,6 +2,10 @@ param(
     [switch]$RunHeadless,
     [switch]$ExportTargets,
     [switch]$ExportAddressTargets,
+    [switch]$RunX86Headless,
+    [switch]$ExportX86VagLightingBranches,
+    [switch]$ExportX86ReverseTargets,
+    [switch]$X86NoAnalysis,
     [switch]$PrepareAndroidDex,
     [switch]$RunAndroidDexHeadless,
     [switch]$ExportAndroidBridge,
@@ -9,6 +13,8 @@ param(
     [string]$HeadlessMaxMem = "8G",
     [string]$ExportDir = "",
     [string]$AddressExportDir = "",
+    [string]$X86LightingExportDir = "",
+    [string]$X86ReverseExportDir = "",
     [string]$AndroidExportDir = "",
     [switch]$Force
 )
@@ -25,11 +31,14 @@ $JdkDir = Join-Path $ToolsDir "jdk21"
 $ExtractDir = Join-Path $ScriptDir "extracted"
 $XapkPath = Join-Path $ScriptDir "reacquire_20260424\carista_9.8.2.xapk"
 $LibPath = Join-Path $ExtractDir "libCarista.so"
+$X86LibPath = Join-Path $ScriptDir "play_9.8.3\extracted\lib\x86\libCarista.so"
 $AndroidExtractDir = Join-Path $ExtractDir "android"
 $AndroidBaseApkPath = Join-Path $AndroidExtractDir "com.prizmos.carista.apk"
 $AndroidDexDir = Join-Path $AndroidExtractDir "dex"
 $ProjectDir = Join-Path $ScriptDir "ghidra_project"
 $ProjectName = "CaristaNative"
+$X86ProjectDir = Join-Path $ScriptDir "play_9.8.3\ghidra_x86_project"
+$X86ProjectName = "CaristaNativeX86"
 $AndroidProjectDir = Join-Path $ScriptDir "ghidra_android_project"
 $AndroidProjectName = "CaristaAndroid"
 $GhidraScriptsDir = Join-Path $ScriptDir "ghidra_scripts"
@@ -38,6 +47,12 @@ if (-not $ExportDir) {
 }
 if (-not $AddressExportDir) {
     $AddressExportDir = Join-Path $ScriptDir "ghidra_address_targets"
+}
+if (-not $X86LightingExportDir) {
+    $X86LightingExportDir = Join-Path $ScriptDir "play_9.8.3\ghidra_x86_vag_lighting"
+}
+if (-not $X86ReverseExportDir) {
+    $X86ReverseExportDir = Join-Path $ScriptDir "play_9.8.3\ghidra_x86_reverse_targets"
 }
 if (-not $AndroidExportDir) {
     $AndroidExportDir = Join-Path $ScriptDir "ghidra_android_exports"
@@ -119,11 +134,16 @@ Ensure-Directory $ToolsDir
 Ensure-Directory $DownloadDir
 Ensure-Directory $ExtractDir
 
-if (-not (Test-Path $XapkPath)) {
+$NeedsArmInputs = $RunHeadless -or $ExportTargets -or $ExportAddressTargets -or $PrepareAndroidDex -or $RunAndroidDexHeadless -or $ExportAndroidBridge
+if ($NeedsArmInputs -and -not (Test-Path $XapkPath)) {
     throw "Missing XAPK at $XapkPath"
 }
 
-if ($PrepareAndroidDex -and -not ($RunHeadless -or $ExportTargets -or $ExportAddressTargets -or $RunAndroidDexHeadless -or $ExportAndroidBridge)) {
+if (($RunX86Headless -or $ExportX86VagLightingBranches -or $ExportX86ReverseTargets) -and -not (Test-Path $X86LibPath)) {
+    throw "Missing Play 9.8.3 x86 libCarista.so at $X86LibPath"
+}
+
+if ($PrepareAndroidDex -and -not ($RunHeadless -or $ExportTargets -or $ExportAddressTargets -or $RunX86Headless -or $ExportX86VagLightingBranches -or $ExportX86ReverseTargets -or $RunAndroidDexHeadless -or $ExportAndroidBridge)) {
     Expand-CaristaAndroidInputs
     return
 }
@@ -184,7 +204,7 @@ if (-not (Test-Path $JdkDir)) {
     Write-Host "Using existing JDK directory"
 }
 
-if ((-not (Test-Path $LibPath)) -or $Force) {
+if ($NeedsArmInputs -and ((-not (Test-Path $LibPath)) -or $Force)) {
     Add-Type -AssemblyName System.IO.Compression.FileSystem
     Write-Host "Extracting libCarista.so from XAPK..."
     $Xapk = [System.IO.Compression.ZipFile]::OpenRead($XapkPath)
@@ -217,7 +237,7 @@ if ((-not (Test-Path $LibPath)) -or $Force) {
     } finally {
         $Xapk.Dispose()
     }
-} else {
+} elseif ($NeedsArmInputs) {
     Write-Host "Using existing extracted libCarista.so"
 }
 
@@ -230,7 +250,7 @@ if (-not (Test-Path $GhidraRun)) { throw "Missing $GhidraRun" }
 if (-not (Test-Path $AnalyzeHeadless)) { throw "Missing $AnalyzeHeadless" }
 if (-not (Test-Path $LaunchBat)) { throw "Missing $LaunchBat" }
 if (-not (Test-Path $JavaExe)) { throw "Missing $JavaExe" }
-if (($ExportTargets -or $ExportAddressTargets) -and -not (Test-Path $GhidraScriptsDir)) { throw "Missing $GhidraScriptsDir" }
+if (($ExportTargets -or $ExportAddressTargets -or $ExportX86VagLightingBranches -or $ExportX86ReverseTargets) -and -not (Test-Path $GhidraScriptsDir)) { throw "Missing $GhidraScriptsDir" }
 if ($ExportAndroidBridge -and -not (Test-Path $GhidraScriptsDir)) { throw "Missing $GhidraScriptsDir" }
 
 $env:JAVA_HOME = $JdkDir
@@ -240,6 +260,7 @@ Write-Host ""
 Write-Host "Ghidra:        $GhidraDir"
 Write-Host "JDK:           $JdkDir"
 Write-Host "libCarista.so: $LibPath"
+Write-Host "x86 lib:       $X86LibPath"
 Write-Host "Ghidra UI:     $GhidraRun"
 Write-Host "Headless:      $AnalyzeHeadless"
 
@@ -273,6 +294,40 @@ if ($ExportAddressTargets) {
     Ensure-Directory $AddressExportDir
     Write-Host "Exporting address-target decompilation to $AddressExportDir"
     Invoke-GhidraHeadless @($ProjectDir, $ProjectName, "-process", "libCarista.so", "-readOnly", "-noanalysis", "-scriptPath", $GhidraScriptsDir, "-postScript", "ExportCaristaAddressTargets.java", $AddressExportDir)
+}
+
+if ($RunX86Headless) {
+    if ($CleanProject -and (Test-Path $X86ProjectDir)) {
+        Write-Host "Removing existing x86 Ghidra project: $X86ProjectDir"
+        Remove-Item -Recurse -Force $X86ProjectDir
+    }
+    Ensure-Directory $X86ProjectDir
+    Write-Host "Running Ghidra headless import/analyze for Play 9.8.3 x86 with heap $HeadlessMaxMem. This can take a while..."
+    $X86ImportArgs = @($X86ProjectDir, $X86ProjectName, "-import", $X86LibPath, "-processor", "x86:LE:32:default", "-cspec", "gcc", "-overwrite")
+    if ($X86NoAnalysis) {
+        $X86ImportArgs += "-noanalysis"
+    } else {
+        $X86ImportArgs += @("-analysisTimeoutPerFile", "1800")
+    }
+    Invoke-GhidraHeadless $X86ImportArgs
+}
+
+if ($ExportX86VagLightingBranches) {
+    if (-not (Test-Path $X86ProjectDir)) {
+        throw "Missing x86 Ghidra project at $X86ProjectDir. Run with -RunX86Headless first."
+    }
+    Ensure-Directory $X86LightingExportDir
+    Write-Host "Exporting x86 VAG lighting branches to $X86LightingExportDir"
+    Invoke-GhidraHeadless @($X86ProjectDir, $X86ProjectName, "-process", "libCarista.so", "-readOnly", "-noanalysis", "-scriptPath", $GhidraScriptsDir, "-postScript", "ExportCaristaX86VagLightingBranches.java", $X86LightingExportDir)
+}
+
+if ($ExportX86ReverseTargets) {
+    if (-not (Test-Path $X86ProjectDir)) {
+        throw "Missing x86 Ghidra project at $X86ProjectDir. Run with -RunX86Headless first."
+    }
+    Ensure-Directory $X86ReverseExportDir
+    Write-Host "Exporting x86 reverse targets to $X86ReverseExportDir"
+    Invoke-GhidraHeadless @($X86ProjectDir, $X86ProjectName, "-process", "libCarista.so", "-readOnly", "-noanalysis", "-scriptPath", $GhidraScriptsDir, "-postScript", "ExportCaristaX86ReverseTargets.java", $X86ReverseExportDir)
 }
 
 if ($RunAndroidDexHeadless) {

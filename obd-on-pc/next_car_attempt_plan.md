@@ -81,6 +81,25 @@ Back-in-car persistence check:
 
 The target coding persisted after returning to the car.
 
+2026-05-06 engine-running read-only context snapshot:
+
+```text
+log summary:
+obd-on-pc/logs/live_minimum_context_retry_ack_20260506_193832_summary.json
+
+220600 -> 6206003AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000
+coding  ->   3AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000
+220601 -> 6206011E
+220606 -> 620606001800018000
+22F1A5 -> 62F1A50005F3C7E719
+```
+
+This confirms the target `0600` coding still persists with the engine running.
+The live wrapper initially saw only the first frame of multi-frame responses;
+the complete retry proved that ECU application response frames beginning with
+`0x0` must be ACKed with the same recovered `B((seq + 1) & 0x0F)` rule before
+the remaining response frames arrive.
+
 Physical behavior with the target coding persisted:
 
 ```text
@@ -237,6 +256,89 @@ a coming/leaving-home output/master branch that makes fogs the steady output
 
 This is still an explanation and reconstruction target, not a live instruction.
 
+## Actual Fix Path Now
+
+The next step toward actually fixing the fogs is to prove or kill the stored
+role-conflict hypothesis, not to flip another long-coding bit.
+
+Current best evidence:
+
+```text
+220601 -> 6206011E
+```
+
+2026-05-07 current-state in-car read-only confirmation, using the exact
+Carista TP2.0 channel parameter request `A00194FF82FF`, returned:
+
+```text
+220600 -> 6206003AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000
+220601 -> 6206011E
+220606 -> 620606001800018000
+22F1A5 -> 62F1A50005F3C7E719
+```
+
+Retained log:
+
+```text
+obd-on-pc/logs/readonly_tp20_20260507_075726_tp20_readonly_context.json
+```
+
+The trailing `1E` is byte-for-byte equal to Carista's recovered
+`car_setting_enabled_coming_home_or_leaving_home` choice in the older VAG
+per-side fog-role tables:
+
+```text
+left  055C offset 5 mask FF: 00=off, 16=on, 1E=enabled coming-home/leaving-home
+right 055D offset 5 mask FF: 00=off, 17=on, 1E=enabled coming-home/leaving-home
+```
+
+That makes `0601=1E` the strongest current repair clue: the front fog outputs
+may be owned by a coming/leaving-home or low-beam-linked role while the known
+cornering master bits are already set.
+
+What this does not prove:
+
+```text
+do not write 2E0601
+do not write 2E055C or 2E055D
+do not treat 1E -> 16/17 as a payload until a positive current path is recovered
+```
+
+`0606=001800018000` is weaker. Successful isolated reads reassembled to that
+same payload, but the switch-state sweeps mostly produced `no_response` or
+`disconnect`, so there is no proven lamp-state correlation for `0606` yet.
+
+The useful next live proof is therefore a focused read-only correlation pass:
+
+```text
+for each state, open a fresh TP2.0 channel, read only 220600, 220601, 220606, 22F1A5
+states: low beam off/on, high beam, front fogs, rear fog, left indicator, right indicator, steering angle left/right
+record manual lamp observation and input state for each state
+if possible, also capture raw CAN headers 390, 392, 0D0, 0C2, 1A0, 320, 470
+```
+
+The proof target is simple:
+
+```text
+If 0601 stays 1E while raw CAN proves the BCM sees blinkers/fogs/high-beam, 0601 is stored role/configuration.
+If 0601 changes after an external Carista/VCDS visible setting change, use that before/after delta to recover the real write path.
+If 0606 changes with a lamp state, decode it as live/status first, not as a repair payload.
+```
+
+The lowest-risk path to a real repair is a before/after capture around a known
+UI-level change made by Carista or VCDS, with this reproduction recording the
+diagnostic delta. The local reproduction should only send a repair write after
+that delta or an equivalent native branch proves the constructor, current
+payload, target branch, selected availability predicate, and requested-choice
+encoding.
+
+The x86-led static pass is still negative for an owned `0601` path: the Play
+9.8.3 x86 scan found zero decoded instruction operands for `0x0601`,
+`0x220601`, or `0x620601`, and no decoded instruction reference tying
+`car_setting_enabled_coming_home_or_leaving_home` to DID `0601`. Treat ARM
+part-pattern evidence only as corroboration; the ARM per-side region shows
+`5Q0937084*` / `6C093708*`, not `6R0937087K`.
+
 That is still a blocked read-first lead, not a write instruction. Offline native
 recovery now shows raw type 7 dispatches through `readVagUdsValue` and
 `ReadRawDataByIdentifierCommand`, so Carista's direct native read request for
@@ -322,20 +424,85 @@ state, or different transport path for that exact constructor branch.
 The next high-value work is offline reconstruction:
 
 ```text
-1. Dump constructor StringWhitelist contents for the AvailBy=2 VAG branches and match them to 6R0937087K.
-2. Resolve the special getVagSettingAvailabilityForEcu vtable +0x3C predicate path.
-3. Find any alternate VW/PQ25 VAG key or ReadValuesOperation value object behind the visible fog-role behavior.
-4. Trace the positive companion reads 220601 -> 1E and 220606 -> 001800018000 back to recovered native setting/value branches.
-5. Keep requested-choice encoding branch-specific; do not promote compact choice values to write payloads without a positive current path.
+1. Treat 220601 -> 1E as the top repair clue and prove whether it is stored fog-role/CH-LH configuration.
+2. Keep x86 as primary authority; use ARM only as corroboration for older tables and part-pattern scope.
+3. Resolve the special getVagSettingAvailabilityForEcu vtable +0x3C predicate path.
+4. Dump constructor StringWhitelist contents for the AvailBy=2 VAG branches and match them to 6R0937087K.
+5. Find any alternate VW/PQ25 VAG key or ReadValuesOperation value object behind the visible fog-role behavior.
+6. Trace 220606 -> 001800018000 only after fresh captures show whether it is live state or stable status.
+7. Keep requested-choice encoding branch-specific; do not promote compact choice values to write payloads without a positive current path.
 ```
+
+## 2026-05-08 Deep RE Round Findings
+
+A full re-read of all 12 recovered branch files plus the helpers table produced
+the following closures and one new open hypothesis.
+
+### Closed (no 6R branch, not a fix path)
+
+- `coming_home_via_fogs` (`012C929B`): all sub-branches use MK7/B8/MQB
+  whitelists.  No 6R sub-branch exists.  Coming-home fog role on 6R/PQ25
+  is controlled only by long-coding bits in DID 0600 (byte 13, bit 6).
+- `cornering_lights_activation_d1d` (`012DA8BD`): DID 0x0D1D, guarded by
+  MK7/6C/MQB/B8 whitelists/access codes.  Not applicable to 6R.
+- `cornering_lights_min/max_activation_speed_d1d` (`012DAF54`, `012DB176`):
+  also DID 0x0D1D, also non-6R.
+- `car_setting_use_cornering_lights`: maps to the same byte 12 bit 6 as
+  `car_setting_cornering_lights_via_fogs`.  Not a separate prerequisite.
+
+### New open hypothesis: DRL-via-fogs enabling individual fog output control
+
+`car_setting_drl_via_fogs` has an official 6R/PQ25 branch recovered at
+`012CDE7B`:
+
+```text
+DID 0600 byte 0x17 (23), mask 0x04 (bit 2)
+whitelist: CENTRAL_ELEC_6R_5C_7E_7H
+interpretation: YES_NO
+callee: VagUdsCodingSetting_drl_via_fogs (01361520 file VA)
+```
+
+In the current live coding (2026-05-07) byte 23 = `0x00`, so bit 2 is
+**CLEAR** (DRL via fogs disabled).
+
+Five named 6R constructors are now modelled in
+`CaristaReproduction/VagUdsCodingSetting.py`:
+
+```text
+VagUdsCodingSetting_cornering_fogs()            -> byte 12, mask 0x40
+VagUdsCodingSetting_cornering_fogs_experimental() -> byte 21, mask 0x80
+VagUdsCodingSetting_cornering_turn_signals()    -> byte 21, mask 0x04
+VagUdsCodingSetting_drl_via_fogs()              -> byte 23, mask 0x04  (NEW; currently CLEAR)
+VagUdsCodingSetting_turn_off_fogs_high_beam()   -> byte 21, mask 0x20
+```
+
+**Hypothesis**: Some PQ25 BCM implementations use the DRL-via-fogs coding bit
+to gate individual left/right fog output control.  When only the cornering bits
+are set but DRL-via-fogs remains clear, the BCM may continue driving both fog
+outputs together as a single pair, preventing per-side cornering activation.
+
+This is NOT confirmed.  The recommended proof step is a before/after
+correlation read-only pass in the car:
+
+```text
+1. Read 220600 baseline (expect 3AB82B9F...6C680ED000C8412F60A6...)
+2. Ask Carista or VCDS to enable DRL via fogs for the 6R (if shown as available).
+3. Re-read 220600 and check whether byte 23 bit 2 changes.
+4. With DRL-via-fogs set, test the cornering fog behavior (indicator + slow speed).
+5. If behavior changes, the hypothesis is confirmed and we have the write path.
+6. If not, this bit is also ruled out.
+```
+
+Do not write `2E0600` with byte 23 bit 2 set until the correlation test has
+a positive read-only result or a direct Carista-visible UI path is confirmed.
 
 If another live read-only session is needed, keep it to positive baseline/context
 reads unless a newly recovered branch changes the hypothesis:
 
 ```text
 220600  current long coding
-220601  stable companion clue, previously 6206011E
-220606  stable companion clue, previously 620606001800018000
+220601  strongest stored-role clue, previously 6206011E
+220606  weaker companion clue, previously 620606001800018000
 22F1A5  workshop-code/status context
 ```
 

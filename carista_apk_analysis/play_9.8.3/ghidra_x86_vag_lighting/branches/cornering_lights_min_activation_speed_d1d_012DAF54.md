@@ -1,0 +1,222 @@
+# cornering_lights_min_activation_speed_d1d
+
+Target address: `012daf54` (Ghidra `012eaf54`)
+Setting key: `car_setting_cornering_lights_min_activation_speed`
+Recovered shape: DID/raw address 0x0D1D offset 3 mask 0xFF branch family guarded by MK7/MQB/gateway-style guards
+Function: `<none>`
+
+## Symbols At Target
+- <none>
+
+## Instruction Window
+
+- `012dad8b` `PUSH EAX`
+- `012dad8c` `CALL ECX`
+- `012dad8e` `ADD ESP,0xc` scalars: `0xC`
+- `012dad91` `LEA EAX,[EBP + 0xffffa380]` scalars: `0xFFFFA380`
+- `012dad97` `MOV dword ptr [EBP + 0xfffe8bc4],EAX` scalars: `0xFFFE8BC4`
+- `012dad9d` `MOV dword ptr [EBP + 0xfffedf54],0xd1d` scalars: `0xFFFEDF54` `0xD1D`
+- `012dada7` `MOV dword ptr [EBP + 0xfffedf50],0xb` scalars: `0xFFFEDF50` `0xB`
+- `012dadb1` `MOV dword ptr [EBP + 0xfffedf4c],0xff` scalars: `0xFFFEDF4C` `0xFF`
+- `012dadbb` `MOV dword ptr [EBP + 0xffff92dc],0x0` scalars: `0xFFFF92DC` `0x0`
+- `012dadc5` `MOV dword ptr [EBP + 0xffff92d8],0xa0` scalars: `0xFFFF92D8` `0xA0`
+- `012dadcf` `MOV EAX,dword ptr [EBP + 0xfffe8b54]` scalars: `0xFFFE8B54` recovered: `local-0x174ac->str=0x00a1f438:car_setting_enabled`
+- `012dadd5` `MOV dword ptr [EBP + 0xffff92e0],EAX` scalars: `0xFFFF92E0` recovered: `EAX->str=0x00a1f438:car_setting_enabled`
+- `012daddb` `MOV dword ptr [EBP + 0xffff92e8],0x0` scalars: `0xFFFF92E8` `0x0`
+- `012dade5` `MOV dword ptr [EBP + 0xffff92e4],0x0` scalars: `0xFFFF92E4` `0x0`
+- `012dadef` `MOV EAX,dword ptr [EBP + 0xfffe8ba4]` scalars: `0xFFFE8BA4` recovered: `local-0x1745c->str=0x00970e3a:car_setting_disabled`
+- `012dadf5` `MOV dword ptr [EBP + 0xffff92ec],EAX` scalars: `0xFFFF92EC` recovered: `EAX->str=0x00970e3a:car_setting_disabled`
+- `012dadfb` `LEA EAX,[EBP + 0xffff92d8]` scalars: `0xFFFF92D8`
+- `012dae01` `MOV dword ptr [EBP + 0xfffedf30],EAX` scalars: `0xFFFEDF30`
+- `012dae07` `MOV dword ptr [EBP + 0xfffedf34],0x2` scalars: `0xFFFEDF34` `0x2`
+- `012dae11` `SUB ESP,0x10` scalars: `0x10`
+- `012dae14` `MOVSD XMM0,qword ptr [EBP + 0xfffedf30]` scalars: `0xFFFEDF30`
+- `012dae1c` `MOVSD qword ptr [ESP + 0x4],XMM0` scalars: `0x4`
+- `012dae22` `LEA ESI,[EBP + 0xfffedf38]` scalars: `0xFFFEDF38`
+- `012dae28` `MOV dword ptr [ESP],ESI`
+- `012dae2b` `CALL 0x00c17c90` refs: `UNCONDITIONAL_CALL -> 00c07c90` `sym=SUB_00c17c90`
+- `012dae30` `ADD ESP,0x10` scalars: `0x10`
+- `012dae33` `SUB ESP,0x8` scalars: `0x8`
+- `012dae36` `LEA EAX,[EBP + 0xfffedf44]` scalars: `0xFFFEDF44`
+- `012dae3c` `PUSH ESI`
+- `012dae3d` `PUSH EAX`
+- `012dae3e` `CALL 0x00c17c10` refs: `UNCONDITIONAL_CALL -> 00c07c10` `sym=SUB_00c17c10`
+- `012dae43` `ADD ESP,0xc` scalars: `0xC`
+- `012dae46` `SUB ESP,0x8` scalars: `0x8`
+- `012dae49` `LEA EAX,[EBX + 0xfece4198]` scalars: `0xFECE4198` recovered: `ebx->str=0x007197b0:car_setting_afs_step_3`
+- `012dae4f` `LEA EDX,[EBP + 0xfffedf50]` scalars: `0xFFFEDF50`
+- `012dae55` `LEA ESI,[EBP + 0xfffedf54]` scalars: `0xFFFEDF54`
+- `012dae5b` `LEA ECX,[EBP + 0xfffedf58]` scalars: `0xFFFEDF58`
+- `012dae61` `PUSH dword ptr [EBP + 0xfffe8bd8]` scalars: `0xFFFE8BD8` recovered: `local-0x17428->got=0x01a3264c:_ZN13VagAccessCode20UDS_CENTRAL_ELEC_MK7E`
+- `012dae67` `LEA EDI,[EBP + 0xfffedf44]` scalars: `0xFFFEDF44`
+- `012dae6d` `PUSH EDI`
+- `012dae6e` `PUSH EAX` recovered: `EAX->str=0x007197b0:car_setting_afs_step_3`
+- `012dae6f` `LEA EAX,[EBP + 0xfffedf4c]` scalars: `0xFFFEDF4C`
+- `012dae75` `PUSH EAX`
+- `012dae76` `PUSH EDX`
+- `012dae77` `PUSH ESI`
+- `012dae78` `PUSH dword ptr [EBP + 0xfffe8bc0]` scalars: `0xFFFE8BC0` recovered: `local-0x17440->got=0x01a32b90:_ZN13VagWhitelists20CENTRAL_ELEC_MK7_ALLE`
+- `012dae7e` `PUSH dword ptr [EBP + 0xfffe8be0]` scalars: `0xFFFE8BE0` recovered: `local-0x17420->got=0x01a328b4:_ZN9VagUdsEcu12CENTRAL_ELECE`
+- `012dae84` `LEA EAX,[EBP + 0xffff7420]` scalars: `0xFFFF7420`
+- `012dae8a` `PUSH EAX`
+- `012dae8b` `PUSH ECX`
+- `012dae8c` `CALL 0x0137ccc0` refs: `UNCONDITIONAL_CALL -> 0136ccc0` `sym=SUB_0137ccc0`
+- `012dae91` `ADD ESP,0x2c` scalars: `0x2C`
+- `012dae94` `MOV EAX,dword ptr [EBP + 0xfffedf58]` scalars: `0xFFFEDF58`
+- `012dae9a` `MOV ECX,dword ptr [EAX]`
+- `012dae9c` `MOV ECX,dword ptr [ECX + 0x30]` scalars: `0x30`
+- `012dae9f` `SUB ESP,0x8` scalars: `0x8`
+- `012daea2` `PUSH EAX`
+- `012daea3` `LEA EAX,[EBP + 0xffffa380]` scalars: `0xFFFFA380`
+- `012daea9` `PUSH EAX`
+- `012daeaa` `CALL ECX`
+- `012daeac` `ADD ESP,0xc` scalars: `0xC`
+- `012daeaf` `LEA EAX,[EBP + 0xffffa388]` scalars: `0xFFFFA388`
+- `012daeb5` `MOV dword ptr [EBP + 0xfffe8bc4],EAX` scalars: `0xFFFE8BC4`
+- `012daebb` `MOV dword ptr [EBP + 0xfffedf24],0xd1d` scalars: `0xFFFEDF24` `0xD1D`
+- `012daec5` `MOV dword ptr [EBP + 0xfffedf20],0x3` scalars: `0xFFFEDF20` `0x3`
+- `012daecf` `MOV dword ptr [EBP + 0xfffedf1c],0xff` scalars: `0xFFFEDF1C` `0xFF`
+- `012daed9` `MOV dword ptr [EBP + 0xfffedf10],0x0` scalars: `0xFFFEDF10` `0x0`
+- `012daee3` `MOV dword ptr [EBP + 0xfffedf0c],0xfe` scalars: `0xFFFEDF0C` `0xFE`
+- `012daeed` `MOV dword ptr [EBP + 0xfffedf08],0x1` scalars: `0xFFFEDF08` `0x1`
+- `012daef7` `XORPS XMM0,XMM0`
+- `012daefa` `MOVSD qword ptr [EBP + 0xfffedf00],XMM0` scalars: `0xFFFEDF00`
+- `012daf02` `MOV dword ptr [EBP + 0xfffedefc],0x3fe00000` scalars: `0xFFFEDEFC` `0x3FE00000`
+- `012daf0c` `MOV dword ptr [EBP + 0xfffedef8],0x0` scalars: `0xFFFEDEF8` `0x0`
+- `012daf16` `SUB ESP,0x4` scalars: `0x4`
+- `012daf19` `LEA EDX,[EBP + 0xfffedef8]` scalars: `0xFFFEDEF8`
+- `012daf1f` `LEA ECX,[EBP + 0xfffedf00]` scalars: `0xFFFEDF00`
+- `012daf25` `LEA ESI,[EBP + 0xfffedf0c]` scalars: `0xFFFEDF0C`
+- `012daf2b` `LEA EDI,[EBP + 0xfffedf10]` scalars: `0xFFFEDF10`
+- `012daf31` `LEA EAX,[EBP + 0xfffedf14]` scalars: `0xFFFEDF14`
+- `012daf37` `PUSH EDX`
+- `012daf38` `PUSH ECX`
+- `012daf39` `PUSH dword ptr [EBP + 0xfffe8b18]` scalars: `0xFFFE8B18` recovered: `local-0x174e8->got=0x01a2f334:_ZN4Unit4KM_HE`
+- `012daf3f` `LEA ECX,[EBP + 0xfffedf08]` scalars: `0xFFFEDF08`
+- `012daf45` `PUSH ECX`
+- `012daf46` `PUSH ESI`
+- `012daf47` `PUSH EDI`
+- `012daf48` `PUSH EAX`
+- `012daf49` `CALL 0x00c17720` refs: `UNCONDITIONAL_CALL -> 00c07720` `sym=SUB_00c17720`
+- `012daf4e` `ADD ESP,0x1c` scalars: `0x1C`
+- `012daf51` `SUB ESP,0x8` scalars: `0x8`
+- `012daf54` **=>** `LEA ESI,[EBX + 0xfef3170d]` scalars: `0xFEF3170D` recovered: `ebx->str=0x00966d25:car_setting_cornering_lights_min_activation_speed`
+- `012daf5a` `LEA EAX,[EBP + 0xfffedf1c]` scalars: `0xFFFEDF1C`
+- `012daf60` `LEA EDX,[EBP + 0xfffedf24]` scalars: `0xFFFEDF24`
+- `012daf66` `LEA ECX,[EBP + 0xfffedf28]` scalars: `0xFFFEDF28`
+- `012daf6c` `PUSH dword ptr [EBP + 0xfffe8bd8]` scalars: `0xFFFE8BD8` recovered: `local-0x17428->got=0x01a3264c:_ZN13VagAccessCode20UDS_CENTRAL_ELEC_MK7E`
+- `012daf72` `LEA EDI,[EBP + 0xfffedf14]` scalars: `0xFFFEDF14`
+- `012daf78` `PUSH EDI`
+- `012daf79` `PUSH ESI` recovered: `ESI->str=0x00966d25:car_setting_cornering_lights_min_activation_speed`
+- `012daf7a` `PUSH EAX`
+- `012daf7b` `LEA EAX,[EBP + 0xfffedf20]` scalars: `0xFFFEDF20`
+- `012daf81` `PUSH EAX`
+- `012daf82` `PUSH EDX`
+- `012daf83` `PUSH dword ptr [EBP + 0xfffe8b88]` scalars: `0xFFFE8B88` recovered: `local-0x17478->got=0x01a329bc:_ZN13VagWhitelists19CENTRAL_ELEC_MK7_6CE`
+- `012daf89` `PUSH dword ptr [EBP + 0xfffe8be0]` scalars: `0xFFFE8BE0` recovered: `local-0x17420->got=0x01a328b4:_ZN9VagUdsEcu12CENTRAL_ELECE`
+- `012daf8f` `LEA EAX,[EBP + 0xffff7420]` scalars: `0xFFFF7420`
+- `012daf95` `PUSH EAX`
+- `012daf96` `PUSH ECX`
+- `012daf97` `CALL 0x0137cea0` refs: `UNCONDITIONAL_CALL -> 0136cea0` `sym=SUB_0137cea0`
+- `012daf9c` `ADD ESP,0x2c` scalars: `0x2C`
+- `012daf9f` `MOVSD XMM0,qword ptr [EBP + 0xfffedf28]` scalars: `0xFFFEDF28`
+- `012dafa7` `MOVSD qword ptr [EBP + 0xffffa388],XMM0` scalars: `0xFFFFA388`
+- `012dafaf` `MOV dword ptr [EBP + 0xfffedf28],0x0` scalars: `0xFFFEDF28` `0x0`
+- `012dafb9` `MOV dword ptr [EBP + 0xfffedf2c],0x0` scalars: `0xFFFEDF2C` `0x0`
+- `012dafc3` `LEA EAX,[EBP + 0xffffa390]` scalars: `0xFFFFA390`
+- `012dafc9` `MOV dword ptr [EBP + 0xfffe8bc4],EAX` scalars: `0xFFFE8BC4`
+- `012dafcf` `MOV dword ptr [EBP + 0xfffedeec],0xd1d` scalars: `0xFFFEDEEC` `0xD1D`
+- `012dafd9` `MOV dword ptr [EBP + 0xfffedee8],0x2` scalars: `0xFFFEDEE8` `0x2`
+- `012dafe3` `MOV dword ptr [EBP + 0xfffedee4],0xff` scalars: `0xFFFEDEE4` `0xFF`
+- `012dafed` `MOV dword ptr [EBP + 0xfffeded8],0x0` scalars: `0xFFFEDED8` `0x0`
+- `012daff7` `MOV dword ptr [EBP + 0xfffeded4],0xfe` scalars: `0xFFFEDED4` `0xFE`
+- `012db001` `MOV dword ptr [EBP + 0xfffeded0],0x1` scalars: `0xFFFEDED0` `0x1`
+- `012db00b` `XORPS XMM0,XMM0`
+- `012db00e` `MOVSD qword ptr [EBP + 0xfffedec8],XMM0` scalars: `0xFFFEDEC8`
+- `012db016` `MOV dword ptr [EBP + 0xfffedec4],0x3fe00000` scalars: `0xFFFEDEC4` `0x3FE00000`
+- `012db020` `MOV dword ptr [EBP + 0xfffedec0],0x0` scalars: `0xFFFEDEC0` `0x0`
+- `012db02a` `SUB ESP,0x4` scalars: `0x4`
+- `012db02d` `LEA EDX,[EBP + 0xfffedec0]` scalars: `0xFFFEDEC0`
+- `012db033` `LEA ECX,[EBP + 0xfffedec8]` scalars: `0xFFFEDEC8`
+- `012db039` `LEA EDI,[EBP + 0xfffeded4]` scalars: `0xFFFEDED4`
+- `012db03f` `LEA EAX,[EBP + 0xfffededc]` scalars: `0xFFFEDEDC`
+- `012db045` `PUSH EDX`
+- `012db046` `PUSH ECX`
+- `012db047` `PUSH dword ptr [EBP + 0xfffe8b18]` scalars: `0xFFFE8B18` recovered: `local-0x174e8->got=0x01a2f334:_ZN4Unit4KM_HE`
+- `012db04d` `LEA ECX,[EBP + 0xfffeded0]` scalars: `0xFFFEDED0`
+- `012db053` `PUSH ECX`
+- `012db054` `PUSH EDI`
+- `012db055` `LEA ECX,[EBP + 0xfffeded8]` scalars: `0xFFFEDED8`
+- `012db05b` `PUSH ECX`
+- `012db05c` `PUSH EAX`
+- `012db05d` `CALL 0x00c17720` refs: `UNCONDITIONAL_CALL -> 00c07720` `sym=SUB_00c17720`
+- `012db062` `ADD ESP,0x1c` scalars: `0x1C`
+- `012db065` `SUB ESP,0x8` scalars: `0x8`
+- `012db068` `LEA EAX,[EBP + 0xfffedee4]` scalars: `0xFFFEDEE4`
+- `012db06e` `LEA EDX,[EBP + 0xfffedeec]` scalars: `0xFFFEDEEC`
+- `012db074` `LEA ECX,[EBP + 0xfffedef0]` scalars: `0xFFFEDEF0`
+- `012db07a` `PUSH dword ptr [EBP + 0xfffe8bd8]` scalars: `0xFFFE8BD8` recovered: `local-0x17428->got=0x01a3264c:_ZN13VagAccessCode20UDS_CENTRAL_ELEC_MK7E`
+- `012db080` `LEA EDI,[EBP + 0xfffededc]` scalars: `0xFFFEDEDC`
+- `012db086` `PUSH EDI`
+- `012db087` `PUSH ESI` recovered: `ESI->str=0x00966d25:car_setting_cornering_lights_min_activation_speed`
+- `012db088` `PUSH EAX`
+- `012db089` `LEA EAX,[EBP + 0xfffedee8]` scalars: `0xFFFEDEE8`
+- `012db08f` `PUSH EAX`
+- `012db090` `PUSH EDX`
+- `012db091` `PUSH dword ptr [EBP + 0xfffe8bb8]` scalars: `0xFFFE8BB8` recovered: `local-0x17448->got=0x01a32b9c:_ZN13VagWhitelists26CENTRAL_ELEC_MK7_NEW_MQBA0E`
+- `012db097` `PUSH dword ptr [EBP + 0xfffe8be0]` scalars: `0xFFFE8BE0` recovered: `local-0x17420->got=0x01a328b4:_ZN9VagUdsEcu12CENTRAL_ELECE`
+- `012db09d` `LEA EAX,[EBP + 0xffff7420]` scalars: `0xFFFF7420`
+- `012db0a3` `PUSH EAX`
+- `012db0a4` `PUSH ECX`
+- `012db0a5` `CALL 0x0137cea0` refs: `UNCONDITIONAL_CALL -> 0136cea0` `sym=SUB_0137cea0`
+- `012db0aa` `ADD ESP,0x2c` scalars: `0x2C`
+- `012db0ad` `MOVSD XMM0,qword ptr [EBP + 0xfffedef0]` scalars: `0xFFFEDEF0`
+- `012db0b5` `MOVSD qword ptr [EBP + 0xffffa390],XMM0` scalars: `0xFFFFA390`
+- `012db0bd` `MOV dword ptr [EBP + 0xfffedef0],0x0` scalars: `0xFFFEDEF0` `0x0`
+- `012db0c7` `MOV dword ptr [EBP + 0xfffedef4],0x0` scalars: `0xFFFEDEF4` `0x0`
+- `012db0d1` `LEA EAX,[EBP + 0xffffa398]` scalars: `0xFFFFA398`
+- `012db0d7` `MOV dword ptr [EBP + 0xfffe8bc4],EAX` scalars: `0xFFFE8BC4`
+- `012db0dd` `MOV dword ptr [EBP + 0xfffedeb4],0xd1d` scalars: `0xFFFEDEB4` `0xD1D`
+- `012db0e7` `MOV dword ptr [EBP + 0xfffedeb0],0x4` scalars: `0xFFFEDEB0` `0x4`
+- `012db0f1` `MOV dword ptr [EBP + 0xfffedeac],0xff` scalars: `0xFFFEDEAC` `0xFF`
+- `012db0fb` `MOV dword ptr [EBP + 0xfffedea0],0x0` scalars: `0xFFFEDEA0` `0x0`
+- `012db105` `MOV dword ptr [EBP + 0xfffede9c],0xfe` scalars: `0xFFFEDE9C` `0xFE`
+- `012db10f` `MOV dword ptr [EBP + 0xfffede98],0x1` scalars: `0xFFFEDE98` `0x1`
+- `012db119` `XORPS XMM0,XMM0`
+- `012db11c` `MOVSD qword ptr [EBP + 0xfffede90],XMM0` scalars: `0xFFFEDE90`
+- `012db124` `MOV dword ptr [EBP + 0xfffede8c],0x3fe00000` scalars: `0xFFFEDE8C` `0x3FE00000`
+- `012db12e` `MOV dword ptr [EBP + 0xfffede88],0x0` scalars: `0xFFFEDE88` `0x0`
+- `012db138` `SUB ESP,0x4` scalars: `0x4`
+- `012db13b` `LEA EDX,[EBP + 0xfffede88]` scalars: `0xFFFEDE88`
+- `012db141` `LEA ECX,[EBP + 0xfffede90]` scalars: `0xFFFEDE90`
+- `012db147` `LEA ESI,[EBP + 0xfffede9c]` scalars: `0xFFFEDE9C`
+- `012db14d` `LEA EDI,[EBP + 0xfffedea0]` scalars: `0xFFFEDEA0`
+- `012db153` `LEA EAX,[EBP + 0xfffedea4]` scalars: `0xFFFEDEA4`
+- `012db159` `PUSH EDX`
+- `012db15a` `PUSH ECX`
+- `012db15b` `PUSH dword ptr [EBP + 0xfffe8b18]` scalars: `0xFFFE8B18` recovered: `local-0x174e8->got=0x01a2f334:_ZN4Unit4KM_HE`
+- `012db161` `LEA ECX,[EBP + 0xfffede98]` scalars: `0xFFFEDE98`
+- `012db167` `PUSH ECX`
+- `012db168` `PUSH ESI`
+- `012db169` `PUSH EDI`
+- `012db16a` `PUSH EAX`
+- `012db16b` `CALL 0x00c17720` refs: `UNCONDITIONAL_CALL -> 00c07720` `sym=SUB_00c17720`
+- `012db170` `ADD ESP,0x1c` scalars: `0x1C`
+- `012db173` `SUB ESP,0x8` scalars: `0x8`
+- `012db176` `LEA EAX,[EBX + 0xfea9535b]` scalars: `0xFEA9535B` recovered: `ebx->str=0x004ca973:car_setting_cornering_lights_max_activation_speed`
+- `012db17c` `LEA ECX,[EBP + 0xfffedeb0]` scalars: `0xFFFEDEB0`
+- `012db182` `LEA EDX,[EBP + 0xfffedeb4]` scalars: `0xFFFEDEB4`
+- `012db188` `LEA EDI,[EBP + 0xfffedeb8]` scalars: `0xFFFEDEB8`
+- `012db18e` `PUSH dword ptr [EBP + 0xfffe8bd8]` scalars: `0xFFFE8BD8` recovered: `local-0x17428->got=0x01a3264c:_ZN13VagAccessCode20UDS_CENTRAL_ELEC_MK7E`
+- `012db194` `LEA ESI,[EBP + 0xfffedea4]` scalars: `0xFFFEDEA4`
+- `012db19a` `PUSH ESI`
+- `012db19b` `MOV dword ptr [EBP + 0xfffe8bc0],EAX` scalars: `0xFFFE8BC0` recovered: `EAX->str=0x004ca973:car_setting_cornering_lights_max_activation_speed`
+- `012db1a1` `PUSH EAX` recovered: `EAX->str=0x004ca973:car_setting_cornering_lights_max_activation_speed`
+- `012db1a2` `LEA EAX,[EBP + 0xfffedeac]` scalars: `0xFFFEDEAC`
+- `012db1a8` `PUSH EAX`
+- `012db1a9` `PUSH ECX`
+- `012db1aa` `PUSH EDX`
+- `012db1ab` `PUSH dword ptr [EBP + 0xfffe8b88]` scalars: `0xFFFE8B88` recovered: `local-0x17478->got=0x01a329bc:_ZN13VagWhitelists19CENTRAL_ELEC_MK7_6CE`
+- `012db1b1` `PUSH dword ptr [EBP + 0xfffe8be0]` scalars: `0xFFFE8BE0` recovered: `local-0x17420->got=0x01a328b4:_ZN9VagUdsEcu12CENTRAL_ELECE`
+- `012db1b7` `LEA EAX,[EBP + 0xffff7420]` scalars: `0xFFFF7420`
+- `012db1bd` `PUSH EAX`

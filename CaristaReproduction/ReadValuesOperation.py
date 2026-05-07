@@ -47,6 +47,7 @@ CARISTA_EXACT_CHANNEL_PARAMETER_REQUEST = "A00194FF82FF"
 POLO_LIVE_PROVEN_CHANNEL_PARAMETER_REQUEST = "A00F8AFF32FF"
 DEFAULT_PQ25_CATALOG_PATH = Path(__file__).resolve().parents[1] / "carista_apk_analysis" / "pq25_carista_setting_catalog.json"
 PQ25_BIT_RE = re.compile(r"byte\s+(?P<byte>\d+)\s+bit\s+(?P<bit>\d+)", re.IGNORECASE)
+PQ25_MASK_RE = re.compile(r"byte\s+(?P<byte>0x[0-9a-f]+|\d+)\s+mask\s+0x(?P<mask>[0-9a-f]+)", re.IGNORECASE)
 CARISTA_INSTRUCTION_CHOICE_LABELS: dict[str, tuple[str, ...]] = {
     "car_setting_fog_when": ("Cornering lights", "Use DRL via fog and cornering lights"),
     "car_setting_left_fog_light_as": ("Cornering lights", "Use DRL via fog and cornering lights"),
@@ -65,9 +66,13 @@ CARISTA_LIVE_COMPANION_READS: tuple[ReadValueRequest, ...] = (
         status="live_positive_companion_observed",
         included_by_default=False,
         evidence=(
-            "Live BCM reads returned 6206011E across several lamp-switch states.",
-            "Preferred x86 static sweep found no decoded instruction operand immediate 0x0601 in libCarista.so, so no official Play 9.8.3 VAG setting/live-data branch is tied to this DID yet.",
-            "The native Setting branch that causes this companion read is not yet recovered, so this is a probe companion rather than a primary Carista read-values request.",
+            "Live BCM reads returned 6206011E across switch-left, switch-middle, switch-right, pulled-fog, and turn-signal states, so 0601 behaves like stored configuration/status rather than live switch state.",
+            "A 2026-05-07 current-state read-only TP2.0 pass on the exact Carista channel parameters A00194FF82FF again returned 6206011E.",
+            "The 1E payload byte is byte-for-byte equal to the recovered car_setting_enabled_coming_home_or_leaving_home choice in the older ARM 055C/055D per-side fog-role tables, beside left-on 16 and right-on 17.",
+            "Official Play 9.8.3 x86 contains car_setting_enabled_coming_home_or_leaving_home at 0x012D349A as a VagUdsAdaptationSetting branch using raw 0x0565, offset 5, mask 0x3F, and choice value 0x1E under CENTRAL_ELEC_MK7_ALL; this explains the reused enum but not DID 0601.",
+            "Direct Play 9.8.3 x86 Capstone/pyelftools sweep found zero decoded instruction operands for 0x0601, 0x0606, 0x220601, 0x220606, 0x620601, or 0x620606; raw/ascii hits are PDX names, sample-response text, unwind/table bytes, and unrelated code bytes, not recovered VAG/PQ25 Setting constructors.",
+            "The x86 binary contains car_setting_enabled_coming_home_or_leaving_home in .rodata, but the direct-reference sweep found no instruction or raw pointer tying that enum string to DID 0601.",
+            "Because 055C/055D reject live and no 0601 native Setting branch is recovered, this is a high-priority role clue, not a write seed for 2E0601 or 1E->16/17.",
         ),
     ),
     ReadValueRequest(
@@ -79,8 +84,10 @@ CARISTA_LIVE_COMPANION_READS: tuple[ReadValueRequest, ...] = (
         status="live_positive_companion_observed",
         included_by_default=False,
         evidence=(
-            "Previous live BCM read returned 620606001800018000.",
-            "Preferred x86 static sweep found no decoded instruction operand immediate 0x0606 in libCarista.so; the few raw 06060000 byte hits are simulator/data-table artifacts, not recovered VAG/PQ25 setting constructors.",
+            "Successful isolated live BCM reads on 2026-04-29 and 2026-05-04 reassembled to 620606001800018000.",
+            "A 2026-05-07 current-state read-only TP2.0 pass on the exact Carista channel parameters A00194FF82FF again returned 620606001800018000.",
+            "The retained switch-state sweeps did not produce usable 0606 variation; most rows are no_response or disconnect, so no lamp-state correlation is proven for this payload.",
+            "Preferred x86 Capstone/pyelftools static sweep found no decoded instruction operand immediate 0x0606, 0x220606, or 0x620606 in libCarista.so; raw/ascii hits are sample-response text, table bytes, or unrelated code bytes, not recovered VAG/PQ25 setting constructors.",
             "Kept separate from the primary ReadValuesOperation model until the native constructor/availability branch is recovered.",
         ),
     ),
@@ -216,7 +223,10 @@ def ReadValuesOperation_nativeFlow() -> tuple[ReadValuesOperationFlowStep, ...]:
             dispatch="availability predicate choke point",
             purpose="Select whether a mixed setting branch applies to this exact ECU/PDX/revision.",
             evidence=(
-                "Uses setting type byte, VIN-derived PDX/file identifiers, and ECU ASAM/revision data.",
+                "Uses the setting type byte first: type 4/5/9 enter the recovered VagSetting::isSubmodule path and call VagOperationDelegate::getVagSettingAvailabilityForSubmodule; types 0/3/7/8 fall through to AvailBy routing.",
+                "The recovered submodule helper at x86 0x016c97d0 walks the VagEcuInfo +0x10 submodule vector and calls the setting StringWhitelist at VagSetting +0x54 against each non-null submodule VagEcuInfo full_scan_part_number value at +0x08.",
+                "Normal no-AvailBy lighting branches use AvailBy=2, which checks the constructor StringWhitelist against the ECU tag string at VagEcuInfo+0x08.",
+                "Other AvailBy routes use VIN-derived PDX/file identifiers and ECU ASAM/revision data.",
                 "This is why a visible Carista key cannot be converted directly into one raw DID/write path.",
             ),
         ),
@@ -239,6 +249,7 @@ def ReadValuesOperation_nativeFlow() -> tuple[ReadValuesOperationFlowStep, ...]:
                 "Type 7 -> readVagUdsValue / ReadDataByIdentifierCommand.",
                 "Type 8 -> readVagUdsCodingValue and cached UDS coding bytes.",
                 "Types 5/9 -> readVagUdsSubmoduleValue after submodule-id resolution.",
+                "Play 9.8.3 x86 submodule-ID commands are now recovered: GetSubmoduleIdsOverUdsCommand::processPayload parses two 6-byte MSB-first bitmaps; GetVagUdsSubmoduleIdsCommand::processPayload parses even-length 16-bit entries with zero high byte.",
             ),
         ),
         ReadValuesOperationFlowStep(
@@ -268,6 +279,8 @@ def _core_requests() -> tuple[ReadValueRequest, ...]:
             evidence=(
                 "ReadValuesOperation availability and raw-value branches depend on ECU identity/coding metadata.",
                 "Carista exposes GetEcuInfoOperation.getCodingRawAddress(short) in the Java/native bridge.",
+                "Play 9.8.3 x86 GetVagCanEcuInfoCommand::processPayloads at 0x00c38ad0 allocates a shared_ptr<vector<shared_ptr<VagEcuInfo>>> and pushes successfully decoded secondary payloads into it for the submodule availability vector.",
+                "The processPayloads tail calls allocator<VagEcuInfoWithCoding>::construct via 0x01971aa0; the VagEcuInfo constructor at 0x013c95b0 stores that vector shared_ptr at VagEcuInfo +0x10/+0x14.",
             ),
         ),
         ReadValueRequest(
@@ -435,17 +448,102 @@ def _is_relevant(setting: dict[str, Any]) -> bool:
     )
 
 
-def _current_value_from_coding(setting: dict[str, Any], coding: HexString) -> str:
-    match = PQ25_BIT_RE.search(_text(setting, "pq25_bits"))
-    if not match:
-        return _text(setting, "current_value") or "unknown"
-    byte_index = int(match.group("byte"))
-    bit_index = int(match.group("bit"))
-    return bit_state(coding, byte_index, bit_index)
-
-
 def _setting_recovery(setting: dict[str, Any]) -> VagCanSettingsSettingRecovery | None:
     return VAG_CAN_SETTINGS_RECOVERIES.get(_text(setting, "key"))
+
+
+def _single_bit_index(mask: int) -> int | None:
+    if mask <= 0 or mask & (mask - 1):
+        return None
+    return mask.bit_length() - 1
+
+
+def _has_recovered_pq25_coding_evidence(setting_recovery: VagCanSettingsSettingRecovery) -> bool:
+    evidence_text = " ".join(
+        item
+        for item in (
+            setting_recovery.native_helper or "",
+            setting_recovery.read_method,
+            *setting_recovery.evidence,
+        )
+        if item
+    )
+    return "Official x86" in evidence_text and (
+        "pushes CENTRAL_ELEC_6R_5C_7E_7H" in evidence_text
+        or "pushes CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S" in evidence_text
+        or "x86 6R/PQ25" in evidence_text
+        or "6R/PQ25 byte" in evidence_text
+    )
+
+
+def _recovered_coding_mask(setting: dict[str, Any]) -> tuple[int, int] | None:
+    setting_recovery = _setting_recovery(setting)
+    if setting_recovery is None:
+        return None
+    if setting_recovery.immediate_index is None or setting_recovery.immediate_value is None:
+        return None
+    if not _has_recovered_pq25_coding_evidence(setting_recovery):
+        return None
+    if setting_recovery.constructor_status in {
+        "recovered_non_vag_ford_setting",
+        "recovered_non_vag_bmw_setting",
+        "refs_only_unresolved",
+        "catalog_only_unresolved",
+    }:
+        return None
+    return setting_recovery.immediate_index, setting_recovery.immediate_value
+
+
+def _pq25_bits(setting: dict[str, Any]) -> str:
+    recovered_coding_mask = _recovered_coding_mask(setting)
+    if recovered_coding_mask is None:
+        return _text(setting, "pq25_bits")
+    byte_index, mask = recovered_coding_mask
+    bit_index = _single_bit_index(mask)
+    if bit_index is None:
+        return f"DID 0600 byte {byte_index} mask 0x{mask:02X}"
+    return f"DID 0600 byte {byte_index} bit {bit_index} (mask 0x{mask:02X})"
+
+
+def _coding_mask_state(coding: HexString, byte_index: int, mask: int) -> str:
+    data = bytes.fromhex(normalize_coding(coding))
+    if not 0 <= byte_index < len(data):
+        raise ValueError(f"byte index {byte_index} is outside {len(data)} coding bytes")
+    return "set" if data[byte_index] & mask else "clear"
+
+
+def _has_branch_specific_recovered_choices(setting_recovery: VagCanSettingsSettingRecovery) -> bool:
+    if not setting_recovery.choices:
+        return False
+    if not any(choice.requested_value is None for choice in setting_recovery.choices):
+        return False
+    evidence_text = " ".join(choice.evidence for choice in setting_recovery.choices)
+    return "Branch-specific encoding" in evidence_text or "branch-specific" in evidence_text.lower()
+
+
+def _current_value_from_coding(setting: dict[str, Any], coding: HexString) -> str:
+    recovered_coding_mask = _recovered_coding_mask(setting)
+    if recovered_coding_mask is not None:
+        byte_index, mask = recovered_coding_mask
+        return _coding_mask_state(coding, byte_index, mask)
+
+    setting_recovery = _setting_recovery(setting)
+    if setting_recovery is not None and _has_branch_specific_recovered_choices(setting_recovery):
+        return "unknown"
+
+    bits = _pq25_bits(setting)
+    bit_match = PQ25_BIT_RE.search(bits)
+    if bit_match:
+        byte_index = int(bit_match.group("byte"))
+        bit_index = int(bit_match.group("bit"))
+        return bit_state(coding, byte_index, bit_index)
+    mask_match = PQ25_MASK_RE.search(bits)
+    if mask_match:
+        byte_text = mask_match.group("byte")
+        byte_index = int(byte_text, 16 if byte_text.lower().startswith("0x") else 10)
+        mask = int(mask_match.group("mask"), 16)
+        return _coding_mask_state(coding, byte_index, mask)
+    return _text(setting, "current_value") or "unknown"
 
 
 def _possible_values(setting: dict[str, Any]) -> tuple[SettingValueOption, ...]:
@@ -559,7 +657,7 @@ def ReadValuesOperation_buildPq25SettingReport(
             key=_text(setting, "key"),
             label=_text(setting, "label"),
             category=_text(setting, "category"),
-            pq25_bits=_text(setting, "pq25_bits"),
+            pq25_bits=_pq25_bits(setting),
             current_value=_current_value_from_coding(setting, normalized),
             possible_values=_possible_values(setting),
             value_model=_value_model(setting),

@@ -148,7 +148,7 @@ def CheckSettingsOperation_buildPq25BcmPlan(
             "VagCanCommunicator::readResponses/parsePacket control flow is recovered and log-corroborated, but the full native Result/vector object model is not rebuilt offline.",
             "The Polo-proven A00F8AFF32FF channel parameter request is retained as live evidence, but Carista's exact fallback decision logic is not recovered.",
             "ReadValuesOperation.getAvailableItems() is modeled from static/native evidence; it is not a live Java map dump from Carista.",
-            "Per-setting availability predicate/sub-object recovery is still required for mixed lighting branches.",
+            "Normal AvailBy=2 lighting selection is modeled through recovered StringWhitelist matching; the type 4/5/9 submodule route is now recovered as a VagEcuInfo+0x10 vector scan, but vector population and any separate 0601 owner path remain unresolved.",
         ),
     )
 

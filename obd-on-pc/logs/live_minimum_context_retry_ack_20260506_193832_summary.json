@@ -1,0 +1,203 @@
+{
+  "baud": 38400,
+  "finished": "2026-05-06T19:38:52.085",
+  "port": "COM10",
+  "results": [
+    {
+      "ack_response_frames": [
+        {
+          "header": "300",
+          "payload": "012B9F08A1000000"
+        },
+        {
+          "header": "300",
+          "payload": "023008006C680ED0"
+        },
+        {
+          "header": "300",
+          "payload": "0300C8412F60A600"
+        },
+        {
+          "header": "300",
+          "payload": "1400200000000000"
+        }
+      ],
+      "ack_sent": "B4",
+      "attempt": 1,
+      "channel_frames": [
+        {
+          "header": "220",
+          "payload": "00D00003380301"
+        },
+        {
+          "header": "300",
+          "payload": "A10F8AFF4FFF"
+        }
+      ],
+      "channel_status": "carista_exact",
+      "expected_transmit_ack": "B1",
+      "finished": "2026-05-06T19:38:40.790",
+      "frames": [
+        {
+          "header": "300",
+          "payload": "B1"
+        },
+        {
+          "header": "300",
+          "payload": "0000216206003AB8"
+        },
+        {
+          "header": "300",
+          "payload": "012B9F08A1000000"
+        },
+        {
+          "header": "300",
+          "payload": "023008006C680ED0"
+        },
+        {
+          "header": "300",
+          "payload": "0300C8412F60A600"
+        },
+        {
+          "header": "300",
+          "payload": "1400200000000000"
+        }
+      ],
+      "label": "ReadValuesOperation <uds_coding_0600>: ReadDataByIdentifierCommand(0600) / readVagUdsCodingValue; path=UDS coding current-value read on TP2.0 unit 09; status=live_positive_primary_coding_read",
+      "payload": "6206003AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000",
+      "request": "220600",
+      "request_packets": [
+        "100003220600"
+      ],
+      "started": "2026-05-06T19:38:36.922",
+      "status": "positive"
+    },
+    {
+      "ack_response_frames": [],
+      "ack_sent": "B1",
+      "attempt": 1,
+      "channel_frames": [
+        {
+          "header": "220",
+          "payload": "00D00003380301"
+        },
+        {
+          "header": "300",
+          "payload": "A10F8AFF4FFF"
+        }
+      ],
+      "channel_status": "carista_exact",
+      "expected_transmit_ack": "B1",
+      "finished": "2026-05-06T19:38:44.230",
+      "frames": [
+        {
+          "header": "300",
+          "payload": "B1"
+        },
+        {
+          "header": "300",
+          "payload": "1000046206011E"
+        }
+      ],
+      "label": "ReadValuesOperation pq25_live_companion_0601: live Carista/PQ25 companion DID; native Setting branch unresolved; path=UDS ReadDataByIdentifier on the same TP2.0 data channel; status=live_positive_companion_observed",
+      "payload": "6206011E",
+      "request": "220601",
+      "request_packets": [
+        "100003220601"
+      ],
+      "started": "2026-05-06T19:38:41.204",
+      "status": "positive"
+    },
+    {
+      "ack_response_frames": [
+        {
+          "header": "300",
+          "payload": "1100018000"
+        }
+      ],
+      "ack_sent": "B1",
+      "attempt": 1,
+      "channel_frames": [
+        {
+          "header": "220",
+          "payload": "00D00003380301"
+        },
+        {
+          "header": "300",
+          "payload": "A10F8AFF4FFF"
+        }
+      ],
+      "channel_status": "carista_exact",
+      "expected_transmit_ack": "B1",
+      "finished": "2026-05-06T19:38:47.655",
+      "frames": [
+        {
+          "header": "300",
+          "payload": "B1"
+        },
+        {
+          "header": "300",
+          "payload": "0000096206060018"
+        },
+        {
+          "header": "300",
+          "payload": "1100018000"
+        }
+      ],
+      "label": "ReadValuesOperation pq25_live_companion_0606: live Carista/PQ25 companion DID; native Setting branch unresolved; path=UDS ReadDataByIdentifier on the same TP2.0 data channel; status=live_positive_companion_observed",
+      "payload": "620606001800018000",
+      "request": "220606",
+      "request_packets": [
+        "100003220606"
+      ],
+      "started": "2026-05-06T19:38:44.650",
+      "status": "positive"
+    },
+    {
+      "ack_response_frames": [
+        {
+          "header": "300",
+          "payload": "11F3C7E719"
+        }
+      ],
+      "ack_sent": "B1",
+      "attempt": 1,
+      "channel_frames": [
+        {
+          "header": "220",
+          "payload": "00D00003380301"
+        },
+        {
+          "header": "300",
+          "payload": "A10F8AFF4FFF"
+        }
+      ],
+      "channel_status": "carista_exact",
+      "expected_transmit_ack": "B1",
+      "finished": "2026-05-06T19:38:51.060",
+      "frames": [
+        {
+          "header": "300",
+          "payload": "B1"
+        },
+        {
+          "header": "300",
+          "payload": "00000962F1A50005"
+        },
+        {
+          "header": "300",
+          "payload": "11F3C7E719"
+        }
+      ],
+      "label": "approved minimum context read",
+      "payload": "62F1A50005F3C7E719",
+      "request": "22F1A5",
+      "request_packets": [
+        "10000322F1A5"
+      ],
+      "started": "2026-05-06T19:38:48.064",
+      "status": "positive"
+    }
+  ],
+  "started": "2026-05-06T19:38:32.722"
+}

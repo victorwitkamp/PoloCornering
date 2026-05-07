@@ -85,9 +85,9 @@ config.hdpi.apk
 reacquire_20260424/split_armv7_unpacked/lib/armeabi-v7a/libCarista.so
 ```
 
-- LIEF confirmed that this library is `ARCH.ARM` / `ELF32`, which established
-  that the real patch and analysis target is the ARMv7 split, not an arm64
-  build.
+- ELF parsing confirmed that this library is `ARCH.ARM` / `ELF32`, which
+  established that the real patch and analysis target is the ARMv7 split, not
+  an arm64 build.
 
 ### Static reverse-engineering of Carista's VAG path
 

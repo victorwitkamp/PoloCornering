@@ -1,0 +1,529 @@
+{
+  "started": "2026-05-07T07:57:41",
+  "blocked_services": [
+    "27",
+    "2E",
+    "31",
+    "3B"
+  ],
+  "init_log": [
+    {
+      "order": 1,
+      "phase": "elm_init",
+      "command": "ATZ",
+      "raw": "ELM327 v1.5"
+    },
+    {
+      "order": 2,
+      "phase": "elm_init",
+      "command": "ATE0",
+      "raw": "ATE0\rOK"
+    },
+    {
+      "order": 3,
+      "phase": "elm_init",
+      "command": "ATL0",
+      "raw": "OK"
+    },
+    {
+      "order": 4,
+      "phase": "elm_init",
+      "command": "ATS0",
+      "raw": "OK"
+    },
+    {
+      "order": 5,
+      "phase": "elm_init",
+      "command": "ATH1",
+      "raw": "OK"
+    },
+    {
+      "order": 6,
+      "phase": "elm_init",
+      "command": "ATCAF0",
+      "raw": "OK"
+    },
+    {
+      "order": 7,
+      "phase": "elm_init",
+      "command": "ATV1",
+      "raw": "OK"
+    },
+    {
+      "order": 8,
+      "phase": "elm_init",
+      "command": "ATAL",
+      "raw": "OK"
+    },
+    {
+      "order": 9,
+      "phase": "elm_init",
+      "command": "ATSP6",
+      "raw": "OK"
+    },
+    {
+      "order": 10,
+      "phase": "elm_init",
+      "command": "ATDP",
+      "raw": "ISO 15765-4 (CAN 11/500)"
+    },
+    {
+      "order": 11,
+      "phase": "elm_init",
+      "command": "ATRV",
+      "raw": "14.1V"
+    }
+  ],
+  "results": [
+    {
+      "label": "current_state_20260507",
+      "request": "220600",
+      "status": "positive",
+      "payload": "6206003AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000",
+      "channel_parameter": "A00194FF82FF",
+      "frames": [
+        "0000216206003AB8",
+        "012B9F08A1000000",
+        "023008006C680ED0",
+        "0300C8412F60A600",
+        "1400200000000000"
+      ],
+      "raw_exchange": [
+        {
+          "order": 1,
+          "phase": "channel_setup",
+          "command": "ATSP6",
+          "raw": "OK"
+        },
+        {
+          "order": 2,
+          "phase": "channel_setup",
+          "command": "ATCAF0",
+          "raw": "OK"
+        },
+        {
+          "order": 3,
+          "phase": "channel_setup",
+          "command": "ATV1",
+          "raw": "OK"
+        },
+        {
+          "order": 4,
+          "phase": "channel_setup",
+          "command": "ATAR",
+          "raw": "OK"
+        },
+        {
+          "order": 5,
+          "phase": "channel_setup",
+          "command": "ATSH200",
+          "raw": "OK"
+        },
+        {
+          "order": 6,
+          "phase": "channel_setup",
+          "command": "ATST0A",
+          "raw": "OK"
+        },
+        {
+          "order": 7,
+          "phase": "tp20_open",
+          "command": "20C00010000301",
+          "raw": "22000D00003380301"
+        },
+        {
+          "order": 8,
+          "phase": "channel_setup",
+          "command": "ATST32",
+          "raw": "OK"
+        },
+        {
+          "order": 9,
+          "phase": "channel_setup",
+          "command": "ATSH338",
+          "raw": "OK"
+        },
+        {
+          "order": 10,
+          "phase": "channel_setup",
+          "command": "ATCRA300",
+          "raw": "OK"
+        },
+        {
+          "order": 11,
+          "phase": "channel_parameters",
+          "command": "A00194FF82FF",
+          "raw": "22000D00003380301\r300A10F8AFF4FFF"
+        },
+        {
+          "order": 12,
+          "phase": "application_timeout",
+          "command": "ATST20",
+          "raw": "OK"
+        },
+        {
+          "order": 13,
+          "phase": "application_request_expect_B1",
+          "command": "100003220600",
+          "raw": "300B1\r3000000216206003AB8"
+        },
+        {
+          "order": 14,
+          "phase": "application_response_ack",
+          "command": "B1",
+          "raw": "300012B9F08A1000000"
+        },
+        {
+          "order": 15,
+          "phase": "application_response_ack",
+          "command": "B2",
+          "raw": "300023008006C680ED0"
+        },
+        {
+          "order": 16,
+          "phase": "application_response_ack",
+          "command": "B3",
+          "raw": "3000300C8412F60A600"
+        },
+        {
+          "order": 17,
+          "phase": "application_response_ack",
+          "command": "B4",
+          "raw": "3001400200000000000"
+        },
+        {
+          "order": 18,
+          "phase": "tp20_disconnect_setup",
+          "command": "ATSH338",
+          "raw": "OK"
+        },
+        {
+          "order": 19,
+          "phase": "tp20_disconnect",
+          "command": "A8",
+          "raw": "300A8"
+        }
+      ]
+    },
+    {
+      "label": "current_state_20260507",
+      "request": "220601",
+      "status": "positive",
+      "payload": "6206011E",
+      "channel_parameter": "A00194FF82FF",
+      "frames": [
+        "1000046206011E"
+      ],
+      "raw_exchange": [
+        {
+          "order": 1,
+          "phase": "channel_setup",
+          "command": "ATSP6",
+          "raw": "OK"
+        },
+        {
+          "order": 2,
+          "phase": "channel_setup",
+          "command": "ATCAF0",
+          "raw": "OK"
+        },
+        {
+          "order": 3,
+          "phase": "channel_setup",
+          "command": "ATV1",
+          "raw": "OK"
+        },
+        {
+          "order": 4,
+          "phase": "channel_setup",
+          "command": "ATAR",
+          "raw": "OK"
+        },
+        {
+          "order": 5,
+          "phase": "channel_setup",
+          "command": "ATSH200",
+          "raw": "OK"
+        },
+        {
+          "order": 6,
+          "phase": "channel_setup",
+          "command": "ATST0A",
+          "raw": "OK"
+        },
+        {
+          "order": 7,
+          "phase": "tp20_open",
+          "command": "20C00010000301",
+          "raw": "22000D00003380301"
+        },
+        {
+          "order": 8,
+          "phase": "channel_setup",
+          "command": "ATST32",
+          "raw": "OK"
+        },
+        {
+          "order": 9,
+          "phase": "channel_setup",
+          "command": "ATSH338",
+          "raw": "OK"
+        },
+        {
+          "order": 10,
+          "phase": "channel_setup",
+          "command": "ATCRA300",
+          "raw": "OK"
+        },
+        {
+          "order": 11,
+          "phase": "channel_parameters",
+          "command": "A00194FF82FF",
+          "raw": "22000D00003380301\r300A10F8AFF4FFF"
+        },
+        {
+          "order": 12,
+          "phase": "application_timeout",
+          "command": "ATST20",
+          "raw": "OK"
+        },
+        {
+          "order": 13,
+          "phase": "application_request_expect_B1",
+          "command": "100003220601",
+          "raw": "300B1\r3001000046206011E"
+        },
+        {
+          "order": 14,
+          "phase": "tp20_disconnect_setup",
+          "command": "ATSH338",
+          "raw": "OK"
+        },
+        {
+          "order": 15,
+          "phase": "tp20_disconnect",
+          "command": "A8",
+          "raw": "300A8"
+        }
+      ]
+    },
+    {
+      "label": "current_state_20260507",
+      "request": "220606",
+      "status": "positive",
+      "payload": "620606001800018000",
+      "channel_parameter": "A00194FF82FF",
+      "frames": [
+        "0000096206060018",
+        "1100018000"
+      ],
+      "raw_exchange": [
+        {
+          "order": 1,
+          "phase": "channel_setup",
+          "command": "ATSP6",
+          "raw": "OK"
+        },
+        {
+          "order": 2,
+          "phase": "channel_setup",
+          "command": "ATCAF0",
+          "raw": "OK"
+        },
+        {
+          "order": 3,
+          "phase": "channel_setup",
+          "command": "ATV1",
+          "raw": "OK"
+        },
+        {
+          "order": 4,
+          "phase": "channel_setup",
+          "command": "ATAR",
+          "raw": "OK"
+        },
+        {
+          "order": 5,
+          "phase": "channel_setup",
+          "command": "ATSH200",
+          "raw": "OK"
+        },
+        {
+          "order": 6,
+          "phase": "channel_setup",
+          "command": "ATST0A",
+          "raw": "OK"
+        },
+        {
+          "order": 7,
+          "phase": "tp20_open",
+          "command": "20C00010000301",
+          "raw": "22000D00003380301"
+        },
+        {
+          "order": 8,
+          "phase": "channel_setup",
+          "command": "ATST32",
+          "raw": "OK"
+        },
+        {
+          "order": 9,
+          "phase": "channel_setup",
+          "command": "ATSH338",
+          "raw": "OK"
+        },
+        {
+          "order": 10,
+          "phase": "channel_setup",
+          "command": "ATCRA300",
+          "raw": "OK"
+        },
+        {
+          "order": 11,
+          "phase": "channel_parameters",
+          "command": "A00194FF82FF",
+          "raw": "22000D00003380301\r300A10F8AFF4FFF"
+        },
+        {
+          "order": 12,
+          "phase": "application_timeout",
+          "command": "ATST20",
+          "raw": "OK"
+        },
+        {
+          "order": 13,
+          "phase": "application_request_expect_B1",
+          "command": "100003220606",
+          "raw": "300B1\r3000000096206060018"
+        },
+        {
+          "order": 14,
+          "phase": "application_response_ack",
+          "command": "B1",
+          "raw": "3001100018000"
+        },
+        {
+          "order": 15,
+          "phase": "tp20_disconnect_setup",
+          "command": "ATSH338",
+          "raw": "OK"
+        },
+        {
+          "order": 16,
+          "phase": "tp20_disconnect",
+          "command": "A8",
+          "raw": "300A8"
+        }
+      ]
+    },
+    {
+      "label": "current_state_20260507",
+      "request": "22F1A5",
+      "status": "positive",
+      "payload": "62F1A50005F3C7E719",
+      "channel_parameter": "A00194FF82FF",
+      "frames": [
+        "00000962F1A50005",
+        "11F3C7E719"
+      ],
+      "raw_exchange": [
+        {
+          "order": 1,
+          "phase": "channel_setup",
+          "command": "ATSP6",
+          "raw": "OK"
+        },
+        {
+          "order": 2,
+          "phase": "channel_setup",
+          "command": "ATCAF0",
+          "raw": "OK"
+        },
+        {
+          "order": 3,
+          "phase": "channel_setup",
+          "command": "ATV1",
+          "raw": "OK"
+        },
+        {
+          "order": 4,
+          "phase": "channel_setup",
+          "command": "ATAR",
+          "raw": "OK"
+        },
+        {
+          "order": 5,
+          "phase": "channel_setup",
+          "command": "ATSH200",
+          "raw": "OK"
+        },
+        {
+          "order": 6,
+          "phase": "channel_setup",
+          "command": "ATST0A",
+          "raw": "OK"
+        },
+        {
+          "order": 7,
+          "phase": "tp20_open",
+          "command": "20C00010000301",
+          "raw": "22000D00003380301"
+        },
+        {
+          "order": 8,
+          "phase": "channel_setup",
+          "command": "ATST32",
+          "raw": "OK"
+        },
+        {
+          "order": 9,
+          "phase": "channel_setup",
+          "command": "ATSH338",
+          "raw": "OK"
+        },
+        {
+          "order": 10,
+          "phase": "channel_setup",
+          "command": "ATCRA300",
+          "raw": "OK"
+        },
+        {
+          "order": 11,
+          "phase": "channel_parameters",
+          "command": "A00194FF82FF",
+          "raw": "22000D00003380301\r300A10F8AFF4FFF"
+        },
+        {
+          "order": 12,
+          "phase": "application_timeout",
+          "command": "ATST20",
+          "raw": "OK"
+        },
+        {
+          "order": 13,
+          "phase": "application_request_expect_B1",
+          "command": "10000322F1A5",
+          "raw": "300B1\r30000000962F1A50005"
+        },
+        {
+          "order": 14,
+          "phase": "application_response_ack",
+          "command": "B1",
+          "raw": "30011F3C7E719"
+        },
+        {
+          "order": 15,
+          "phase": "tp20_disconnect_setup",
+          "command": "ATSH338",
+          "raw": "OK"
+        },
+        {
+          "order": 16,
+          "phase": "tp20_disconnect",
+          "command": "A8",
+          "raw": "300A8"
+        }
+      ]
+    }
+  ]
+}
