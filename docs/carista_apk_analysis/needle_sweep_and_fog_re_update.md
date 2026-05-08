@@ -73,10 +73,12 @@ car_setting_instr_needle_sweep_method_b ecu=INSTRUMENT_CLUSTER raw address=22A2 
 
 ## Safe Next Car Test
 
-The next test is read-only:
+The old one-off `run_next_cluster_needle_probe.ps1` wrapper was removed during
+cleanup. The same read-only probe can be run directly through the generic UDS
+scanner if this historical needle-sweep lead is revisited:
 
 ```powershell
-.\obd-on-pc\run_next_cluster_needle_probe.ps1 -Port COM10 -Baud 38400
+python .\obd-on-pc\scan_vag_uds_headers.py --port COM10 --baud 38400 --timeout 2.5 --headers 714 --discovery-commands 22F187 --detail-commands 2222A2,22F187,22F189,22F197,22F1A5 --run-id cluster_needle_readonly
 ```
 
 That probes cluster header `714` and sends only:

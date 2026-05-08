@@ -71,6 +71,7 @@ CARISTA_LIVE_COMPANION_READS: tuple[ReadValueRequest, ...] = (
             "The 1E payload byte is byte-for-byte equal to the recovered car_setting_enabled_coming_home_or_leaving_home choice in the older ARM 055C/055D per-side fog-role tables, beside left-on 16 and right-on 17.",
             "Official Play 9.8.3 x86 contains car_setting_enabled_coming_home_or_leaving_home at 0x012D349A as a VagUdsAdaptationSetting branch using raw 0x0565, offset 5, mask 0x3F, and choice value 0x1E under CENTRAL_ELEC_MK7_ALL; this explains the reused enum but not DID 0601.",
             "Direct Play 9.8.3 x86 Capstone/pyelftools sweep found zero decoded instruction operands for 0x0601, 0x0606, 0x220601, 0x220606, 0x620601, or 0x620606; raw/ascii hits are PDX names, sample-response text, unwind/table bytes, and unrelated code bytes, not recovered VAG/PQ25 Setting constructors.",
+            "The same x86 binary has a readable simulator/sample-response row for ECU VAGCAN20 with 220600 data, 220601: 6206011E, and 220606: 620606001800038000; this mirrors the live 1E value but is still sample-response evidence, not a recovered Setting constructor.",
             "The x86 binary contains car_setting_enabled_coming_home_or_leaving_home in .rodata, but the direct-reference sweep found no instruction or raw pointer tying that enum string to DID 0601.",
             "Because 055C/055D reject live and no 0601 native Setting branch is recovered, this is a high-priority role clue, not a write seed for 2E0601 or 1E->16/17.",
         ),

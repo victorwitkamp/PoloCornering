@@ -1,0 +1,120 @@
+{
+  "run_id": "bcm_all_safe_reads_20260508_083940",
+  "profiles": [
+    "all-safe"
+  ],
+  "commands": [
+    "220601",
+    "220606",
+    "1802FF00",
+    "1902FF",
+    "22F187",
+    "22F189",
+    "22F197",
+    "22F1A5",
+    "220600",
+    "1A9B",
+    "1A9F",
+    "1A9A"
+  ],
+  "cycles": 1,
+  "pause": 0.0,
+  "observations": [
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:39:46",
+      "command": "220601",
+      "payload": "6206011E",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:39:51",
+      "command": "220606",
+      "payload": "620606001800018000",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:39:57",
+      "command": "1802FF00",
+      "payload": "5800",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:40:02",
+      "command": "1902FF",
+      "payload": "7F1911",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:40:07",
+      "command": "22F187",
+      "payload": "62F1873652303933373038374B20",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:40:12",
+      "command": "22F189",
+      "payload": "62F18930323534",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:40:17",
+      "command": "22F197",
+      "payload": "62F19742434D205051323520482B3420",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:40:22",
+      "command": "22F1A5",
+      "payload": "62F1A50005F3C7E719",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:40:27",
+      "command": "220600",
+      "payload": "6206003AB02BBF08A10000003008006D2B0CD000C0412F60820000200000000000",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:40:32",
+      "command": "1A9B",
+      "payload": "7F1A11",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:40:37",
+      "command": "1A9F",
+      "payload": "7F1A11",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:40:42",
+      "command": "1A9A",
+      "payload": "7F1A11",
+      "changed": false,
+      "error": ""
+    }
+  ]
+}

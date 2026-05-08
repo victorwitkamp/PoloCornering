@@ -1,0 +1,160 @@
+run_id=hard_monitor_probe_20260508_081033
+port=COM10 baud=38400
+## init
+>>> ATZ
+'ATZ\r\n\r\rELM327 v1.5\r\r>'
+>>> ATE0
+'ATE0\rOK\r\r>'
+>>> ATL1
+'OK\r\n\r\n>'
+>>> ATS1
+'OK\r\n\r\n>'
+>>> ATH1
+'OK\r\n\r\n>'
+>>> ATCAF0
+'OK\r\n\r\n>'
+>>> ATV1
+'OK\r\n\r\n>'
+>>> ATAL
+'OK\r\n\r\n>'
+>>> ATSP6
+'OK\r\n\r\n>'
+## command support probes
+>>> ATI
+'ELM327 v1.5\r\n\r\n>'
+>>> AT@1
+'OBDII to RS232 Interpreter\r\n\r\n>'
+>>> ATDPN
+'6\r\n\r\n>'
+>>> ATDP
+'ISO 15765-4 (CAN 11/500)\r\n\r\n>'
+>>> ATCS
+'T:00 R:00 \r\n\r\n>'
+>>> ATBD
+'05 00 00 03 38 A8 00 00 00 00 00 00 00 \r\n\r\n>'
+>>> ATMA monitor2s before='' after='STOPPED\r\n\r\n>' lines=[]
+>>> ATMR390 monitor2s before='?\r\n\r\n>' after='?\r\n\r\n>' lines=[]
+>>> ATMT390 monitor2s before='?\r\n\r\n>' after='?\r\n\r\n>' lines=[]
+>>> ATMR300 monitor2s before='?\r\n\r\n>' after='?\r\n\r\n>' lines=[]
+>>> ATMT338 monitor2s before='?\r\n\r\n>' after='?\r\n\r\n>' lines=[]
+## filter monitor tests
+### all_cm0_cf0
+>>> ATSP6
+'OK\r\n\r\n>'
+>>> ATH1
+'OK\r\n\r\n>'
+>>> ATL1
+'OK\r\n\r\n>'
+>>> ATS1
+'OK\r\n\r\n>'
+>>> ATCAF0
+'OK\r\n\r\n>'
+>>> ATAL
+'OK\r\n\r\n>'
+>>> ATCM000
+'OK\r\n\r\n>'
+>>> ATCF000
+'OK\r\n\r\n>'
+>>> ATMA before=''
+after_stop='STOPPED\r\n\r\n>'
+parsed_lines=0
+### all_cm00000000_cf00000000
+>>> ATSP6
+'OK\r\n\r\n>'
+>>> ATH1
+'OK\r\n\r\n>'
+>>> ATL1
+'OK\r\n\r\n>'
+>>> ATS1
+'OK\r\n\r\n>'
+>>> ATCAF0
+'OK\r\n\r\n>'
+>>> ATAL
+'OK\r\n\r\n>'
+>>> ATCM00000000
+'OK\r\n\r\n>'
+>>> ATCF00000000
+'OK\r\n\r\n>'
+>>> ATMA before=''
+after_stop='STOPPED\r\n\r\n>'
+parsed_lines=0
+### 390_cm7ff_cf390
+>>> ATSP6
+'OK\r\n\r\n>'
+>>> ATH1
+'OK\r\n\r\n>'
+>>> ATL1
+'OK\r\n\r\n>'
+>>> ATS1
+'OK\r\n\r\n>'
+>>> ATCAF0
+'OK\r\n\r\n>'
+>>> ATAL
+'OK\r\n\r\n>'
+>>> ATCM7FF
+'OK\r\n\r\n>'
+>>> ATCF390
+'OK\r\n\r\n>'
+>>> ATMA before=''
+after_stop='STOPPED\r\n\r\n>'
+parsed_lines=0
+### 392_cm7ff_cf392
+>>> ATSP6
+'OK\r\n\r\n>'
+>>> ATH1
+'OK\r\n\r\n>'
+>>> ATL1
+'OK\r\n\r\n>'
+>>> ATS1
+'OK\r\n\r\n>'
+>>> ATCAF0
+'OK\r\n\r\n>'
+>>> ATAL
+'OK\r\n\r\n>'
+>>> ATCM7FF
+'OK\r\n\r\n>'
+>>> ATCF392
+'OK\r\n\r\n>'
+>>> ATMA before=''
+after_stop='STOPPED\r\n\r\n>'
+parsed_lines=0
+### 470_cm7ff_cf470
+>>> ATSP6
+'OK\r\n\r\n>'
+>>> ATH1
+'OK\r\n\r\n>'
+>>> ATL1
+'OK\r\n\r\n>'
+>>> ATS1
+'OK\r\n\r\n>'
+>>> ATCAF0
+'OK\r\n\r\n>'
+>>> ATAL
+'OK\r\n\r\n>'
+>>> ATCM7FF
+'OK\r\n\r\n>'
+>>> ATCF470
+'OK\r\n\r\n>'
+>>> ATMA before=''
+after_stop='STOPPED\r\n\r\n>'
+parsed_lines=0
+### 300_cm7ff_cf300
+>>> ATSP6
+'OK\r\n\r\n>'
+>>> ATH1
+'OK\r\n\r\n>'
+>>> ATL1
+'OK\r\n\r\n>'
+>>> ATS1
+'OK\r\n\r\n>'
+>>> ATCAF0
+'OK\r\n\r\n>'
+>>> ATAL
+'OK\r\n\r\n>'
+>>> ATCM7FF
+'OK\r\n\r\n>'
+>>> ATCF300
+'OK\r\n\r\n>'
+>>> ATMA before=''
+after_stop='STOPPED\r\n\r\n>'
+parsed_lines=0

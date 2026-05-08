@@ -244,7 +244,8 @@
         "Live BCM reads returned 6206011E across switch-left, switch-middle, switch-right, pulled-fog, and turn-signal states, so 0601 behaves like stored configuration/status rather than live switch state.",
         "A 2026-05-07 current-state read-only TP2.0 pass on the exact Carista channel parameters A00194FF82FF again returned 6206011E.",
         "The 1E payload byte is byte-for-byte equal to the recovered car_setting_enabled_coming_home_or_leaving_home choice in the older ARM 055C/055D per-side fog-role tables, beside left-on 16 and right-on 17.",
-        "Direct Play 9.8.3 x86 Capstone/pyelftools sweep found zero decoded instruction operands for 0x0601, 0x220601, or 0x620601; raw/ascii contexts include PDX filenames, ECU sample-response text such as 'ECU 17FC0076 220601: 62060118', unwind/table bytes, and unrelated code bytes, not recovered VAG/PQ25 Setting constructors.",
+        "Direct Play 9.8.3 x86 Capstone/pyelftools sweep found zero decoded instruction operands for 0x0601, 0x0606, 0x220601, 0x220606, 0x620601, or 0x620606; raw/ascii hits are PDX names, sample-response text, unwind/table bytes, and unrelated code bytes, not recovered VAG/PQ25 Setting constructors.",
+        "The same x86 binary has a readable simulator/sample-response row for ECU VAGCAN20 with 220600 data, 220601: 6206011E, and 220606: 620606001800038000; this mirrors the live 1E value but is still sample-response evidence, not a recovered Setting constructor.",
         "The x86 binary contains car_setting_enabled_coming_home_or_leaving_home in .rodata, but the direct-reference sweep found no instruction or raw pointer tying that enum string to DID 0601.",
         "Because 055C/055D reject live and no 0601 native Setting branch is recovered, this is a high-priority role clue, not a write seed for 2E0601 or 1E->16/17."
       ],

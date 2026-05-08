@@ -1,0 +1,20 @@
+{
+  "run_id": "readonly_optional_role_20260507_134000",
+  "records": [
+    {
+      "did": "056C",
+      "request": "22056C",
+      "payload": "7F2231"
+    },
+    {
+      "did": "0D04",
+      "request": "220D04",
+      "payload": "7F2231"
+    },
+    {
+      "did": "0D1D",
+      "request": "220D1D",
+      "payload": "7F2231"
+    }
+  ]
+}

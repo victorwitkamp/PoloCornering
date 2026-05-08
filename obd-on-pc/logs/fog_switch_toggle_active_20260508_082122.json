@@ -1,0 +1,156 @@
+{
+  "run_id": "fog_switch_toggle_active_20260508_082122",
+  "commands": [
+    "220601",
+    "220606",
+    "1802FF00"
+  ],
+  "cycles": 6,
+  "pause": 1.0,
+  "observations": [
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:21:30",
+      "command": "220601",
+      "payload": "6206011E",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:21:35",
+      "command": "220606",
+      "payload": "620606001800018000",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:21:40",
+      "command": "1802FF00",
+      "payload": "5800",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 2,
+      "timestamp": "2026-05-08T08:21:47",
+      "command": "220601",
+      "payload": "6206011E",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 2,
+      "timestamp": "2026-05-08T08:21:52",
+      "command": "220606",
+      "payload": "620606001800018000",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 2,
+      "timestamp": "2026-05-08T08:21:57",
+      "command": "1802FF00",
+      "payload": "5800",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 3,
+      "timestamp": "2026-05-08T08:22:03",
+      "command": "220601",
+      "payload": "6206011E",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 3,
+      "timestamp": "2026-05-08T08:22:08",
+      "command": "220606",
+      "payload": "620606001800018000",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 3,
+      "timestamp": "2026-05-08T08:22:13",
+      "command": "1802FF00",
+      "payload": "5800",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 4,
+      "timestamp": "2026-05-08T08:22:19",
+      "command": "220601",
+      "payload": "6206011E",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 4,
+      "timestamp": "2026-05-08T08:22:24",
+      "command": "220606",
+      "payload": "620606001800018000",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 4,
+      "timestamp": "2026-05-08T08:22:29",
+      "command": "1802FF00",
+      "payload": "5800",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 5,
+      "timestamp": "2026-05-08T08:22:35",
+      "command": "220601",
+      "payload": "6206011E",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 5,
+      "timestamp": "2026-05-08T08:22:40",
+      "command": "220606",
+      "payload": "620606001800018000",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 5,
+      "timestamp": "2026-05-08T08:22:45",
+      "command": "1802FF00",
+      "payload": "5800",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 6,
+      "timestamp": "2026-05-08T08:22:51",
+      "command": "220601",
+      "payload": "6206011E",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 6,
+      "timestamp": "2026-05-08T08:22:56",
+      "command": "220606",
+      "payload": "620606001800018000",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 6,
+      "timestamp": "2026-05-08T08:23:01",
+      "command": "1802FF00",
+      "payload": "5800",
+      "changed": false,
+      "error": ""
+    }
+  ]
+}

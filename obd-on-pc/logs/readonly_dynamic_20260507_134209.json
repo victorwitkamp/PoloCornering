@@ -1,0 +1,233 @@
+{
+  "run_id": "readonly_dynamic_20260507_134209",
+  "records": [
+    {
+      "t": 0.487,
+      "sample": 1,
+      "request": "220601",
+      "payload": "6206011E"
+    },
+    {
+      "t": 1.308,
+      "sample": 1,
+      "request": "220606",
+      "payload": "620606001800018000"
+    },
+    {
+      "t": 2.477,
+      "sample": 2,
+      "request": "220601",
+      "payload": "6206011E"
+    },
+    {
+      "t": 3.261,
+      "sample": 2,
+      "request": "220606",
+      "payload": "620606001800018000"
+    },
+    {
+      "t": 4.446,
+      "sample": 3,
+      "request": "220601",
+      "payload": "6206011E"
+    },
+    {
+      "t": 5.296,
+      "sample": 3,
+      "request": "220606",
+      "payload": "620606001800018000"
+    },
+    {
+      "t": 6.488,
+      "sample": 4,
+      "request": "220601",
+      "payload": "6206011E"
+    },
+    {
+      "t": 7.213,
+      "sample": 4,
+      "request": "220606",
+      "payload": "6206060018"
+    },
+    {
+      "t": 8.171,
+      "sample": 5,
+      "request": "220601",
+      "payload": null
+    },
+    {
+      "t": 8.398,
+      "sample": 5,
+      "request": "220606",
+      "payload": null
+    },
+    {
+      "t": 9.325,
+      "sample": 6,
+      "request": "220601",
+      "payload": null
+    },
+    {
+      "t": 9.551,
+      "sample": 6,
+      "request": "220606",
+      "payload": null
+    },
+    {
+      "t": 10.477,
+      "sample": 7,
+      "request": "220601",
+      "payload": null
+    },
+    {
+      "t": 10.717,
+      "sample": 7,
+      "request": "220606",
+      "payload": null
+    },
+    {
+      "t": 11.644,
+      "sample": 8,
+      "request": "220601",
+      "payload": null
+    },
+    {
+      "t": 11.89,
+      "sample": 8,
+      "request": "220606",
+      "payload": null
+    },
+    {
+      "t": 12.832,
+      "sample": 9,
+      "request": "220601",
+      "payload": null
+    },
+    {
+      "t": 13.087,
+      "sample": 9,
+      "request": "220606",
+      "payload": null
+    },
+    {
+      "t": 14.03,
+      "sample": 10,
+      "request": "220601",
+      "payload": null
+    },
+    {
+      "t": 14.271,
+      "sample": 10,
+      "request": "220606",
+      "payload": null
+    },
+    {
+      "t": 15.186,
+      "sample": 11,
+      "request": "220601",
+      "payload": null
+    },
+    {
+      "t": 15.413,
+      "sample": 11,
+      "request": "220606",
+      "payload": null
+    },
+    {
+      "t": 16.34,
+      "sample": 12,
+      "request": "220601",
+      "payload": null
+    },
+    {
+      "t": 16.617,
+      "sample": 12,
+      "request": "220606",
+      "payload": null
+    },
+    {
+      "t": 17.561,
+      "sample": 13,
+      "request": "220601",
+      "payload": null
+    },
+    {
+      "t": 17.789,
+      "sample": 13,
+      "request": "220606",
+      "payload": null
+    },
+    {
+      "t": 18.731,
+      "sample": 14,
+      "request": "220601",
+      "payload": null
+    },
+    {
+      "t": 18.956,
+      "sample": 14,
+      "request": "220606",
+      "payload": null
+    },
+    {
+      "t": 19.918,
+      "sample": 15,
+      "request": "220601",
+      "payload": null
+    },
+    {
+      "t": 20.144,
+      "sample": 15,
+      "request": "220606",
+      "payload": null
+    },
+    {
+      "t": 21.072,
+      "sample": 16,
+      "request": "220601",
+      "payload": null
+    },
+    {
+      "t": 21.313,
+      "sample": 16,
+      "request": "220606",
+      "payload": null
+    },
+    {
+      "t": 22.255,
+      "sample": 17,
+      "request": "220601",
+      "payload": null
+    },
+    {
+      "t": 22.496,
+      "sample": 17,
+      "request": "220606",
+      "payload": null
+    },
+    {
+      "t": 23.436,
+      "sample": 18,
+      "request": "220601",
+      "payload": null
+    },
+    {
+      "t": 23.662,
+      "sample": 18,
+      "request": "220606",
+      "payload": null
+    },
+    {
+      "t": 24.589,
+      "sample": 19,
+      "request": "220601",
+      "payload": null
+    },
+    {
+      "t": 24.831,
+      "sample": 19,
+      "request": "220606",
+      "payload": null
+    }
+  ]
+}

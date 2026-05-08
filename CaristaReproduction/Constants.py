@@ -19,6 +19,7 @@ CODING_TYPE_LOOKUP: dict[int, HexString] = {
 CORNERING_FIXES: dict[CorneringFixKey, tuple[int, int, str]] = {
     "base-fog": (12, 6, "Base fog-light cornering function"),
     "turn-signal": (21, 2, "Turn-signal-triggered cornering assist"),
+    "drl-via-fogs": (23, 2, "DRL via fogs (car_setting_drl_via_fogs, byte 23 bit 2, offset=0x17 mask=0x04)"),
 }
 
 PQ25_SUPPORTED_SETTING_DEFINITIONS: tuple[tuple[str, str, CorneringFixKey], ...] = (

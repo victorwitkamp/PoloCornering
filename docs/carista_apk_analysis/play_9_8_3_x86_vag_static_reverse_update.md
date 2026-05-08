@@ -138,12 +138,12 @@ non-6R same-key variants where that evidence is recovered.
 | `car_setting_coming_leaving_home_output` | official x86 direct branches call helper `0x0133fdf0` with raw/address `0x110e`, offset `2`, field/mask `1`, but the whitelists are `CENTRAL_ELEC_MK8` or `UDS_CAN_GATEWAY_MEB`, not 6R/PQ25 |
 | `car_setting_coming_home_via_low_beams` | official x86 direct branch is B8-scoped `0x012c8a8a -> 0x01358fd0`, immediate pair byte `0x06` / mask `0x10`; no x86 6R/PQ25 direct branch recovered |
 | `car_setting_coming_home_via_fogs` | official x86 direct branch is B8-scoped `0x012c92d0 -> 0x01340190`, immediate pair byte `0x06` / mask `0x20`; nearby turn-signal/reverse CH/LH blocks are MK7/MQB scoped |
-| `car_setting_drl_via_fogs` | x86 6R/PQ25 branch `0x012cdeb6 -> 0x01361520`, whitelist `CENTRAL_ELEC_6R_5C_7E_7H`, byte `0x17` / mask `0x04`; other variants include `0x11/0x10`, `0x0e/0x02`, `0x02/0x08`, and rejected `055C` adaptation branches |
+| `car_setting_drl_via_fogs` | x86 6R/PQ25 branch `0x012cdeb6 -> 0x01361520`, whitelist `CENTRAL_ELEC_6R_5C_7E_7H`, byte `0x17` / mask `0x04`; 2026-05-07 write set this bit and behavior did not change; exact helper family remains unresolved because branch-export labels conflict with direct PLT/dynamic-symbol audit |
 | `car_setting_turn_off_fogs_with_high_beam` | x86 6R/PQ25 branch `0x012d4dea -> 0x0135e580`, whitelist `CENTRAL_ELEC_6R_5C_7E_7H`, byte `0x15` / mask `0x20`; non-6R variants include `0x0e/0x04`, `0x04/0x02`, and rejected adaptation raw `0x0d01` |
 | `car_setting_assist_dr_lights` | x86 6R/PQ25 branch `0x012d9bad -> 0x013625a0`, whitelist `CENTRAL_ELEC_6R_5C_7E_7H`, byte `0x16` / mask `0x20` |
 | `car_setting_cornering_lights_via_fogs` | x86 6R/PQ25 branch `0x012d9f7b -> 0x01358fd0`, whitelist `CENTRAL_ELEC_6R_5C_7E_7H`, byte `0x0c` / mask `0x40`; current coding already has this bit set and behavior testing disproved it as the missing fix |
 | `car_setting_cornering_lights_via_fogs_experimental` | x86 6R/PQ25 branch `0x012da0f2 -> 0x0135eaf0`, whitelist `CENTRAL_ELEC_6R_5C_7E_7H`, byte `0x15` / mask `0x80`; fresh engine-running coding byte `0x15` is `0xA6`, so this bit is already set |
-| `car_setting_cornering_lights_with_turn_signals` | x86 explicit turn-signal branch `0x012da761 -> 0x0135e920`, whitelist `CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S`, byte `0x15` / mask `0x04`; fresh engine-running coding byte `0x15` is `0xA6`, so this bit is already set |
+| `car_setting_cornering_lights_with_turn_signals` | x86 explicit turn-signal branch `0x012da761 -> 0x0135e920`, whitelist `CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S`, byte `0x15` / mask `0x04`; fresh engine-running coding byte `0x15` is `0xA6`, so this bit is already set; it is a blinker-trigger enable, not an output-role selector |
 | `car_setting_cornering_lights_via_fogs_left` | x86 has two type-7 `VagUdsAdaptationSetting` same-key branches: `0x012da25a -> 0x0136c910` and `0x012da39a -> 0x01356f90`; older ARM type-7 evidence uses `0x055c`, offset `5`, mask `0xff`, choices include `0x00`, `0x16`, `0x1e` |
 | `car_setting_cornering_lights_via_fogs_right` | x86 has two type-7 `VagUdsAdaptationSetting` same-key branches: `0x012da5a9 -> 0x01368690` and `0x012da6e9 -> 0x0136caf0`; older ARM type-7 evidence uses `0x055d`, offset `5`, mask `0xff`, choices include `0x00`, `0x17`, `0x1e` |
 | `car_setting_fog_lights_on_reverse` | Ghidra x86 D1D branch `0x012d632e -> 0x013591a0`, raw/DID `0x0d1d`, offset `0`, mask `0x02`, guarded by `UDS_CENTRAL_ELEC_MK7`, `CENTRAL_ELEC_MK7_6C`, and `VagUdsEcu::CENTRAL_ELEC`; later same-key D1D variant uses `CENTRAL_ELEC_MK7_NEW_MQBA0` plus `CENTRAL_ELEC_MK8`-derived guard |
@@ -237,15 +237,31 @@ request `A00194FF82FF` returned `220601 -> 6206011E` and
 `220606 -> 620606001800018000` again. The retained log is
 `obd-on-pc/logs/readonly_tp20_20260507_075726_tp20_readonly_context.json`. The
 x86 static sweep still finds no decoded `0x0601` / `0x220601` / `0x620601`
-setting constructor path, so `0601=1E` remains a high-priority live companion
-clue, not a write seed.
+setting constructor path. The same x86 binary does carry a readable simulator
+sample row for `ECU VAGCAN20` with `220601: 6206011E` and
+`220606: 620606001800038000`, so the exact `1E` value is now confirmed in
+static sample-response data too. That still makes `0601=1E` a high-priority
+role clue, not a recovered write seed.
 
-The most useful negative finding for the next car visit is the explicit
-turn-signal setting: `car_setting_cornering_lights_with_turn_signals` maps to
-byte `0x15` mask `0x04` on the x86 6R/PQ25 branch, and the fresh engine-running
-coding byte `0x15` is `0xA6`. That bit is already set, as is the experimental
-cornering-fogs bit at byte `0x15` mask `0x80`; both therefore look like ruled-out
-standalone fixes for the observed missing turn-signal cornering behavior.
+The 2026-05-07 live write also killed the DRL-via-fogs standalone hypothesis:
+byte `0x17` mask `0x04` was changed from clear to set and persisted, but the
+front fogs stayed as steady paired outputs in the headlight switch position and
+still did not show useful left/right turn-signal ownership.
+
+The most useful negative/clarifying finding for the next car visit is the
+explicit turn-signal setting: `car_setting_cornering_lights_with_turn_signals`
+maps to byte `0x15` mask `0x04` on the x86 6R/PQ25 branch, and the fresh
+engine-running coding byte `0x15` is `0xA6`. That bit is already set, as is the
+experimental cornering-fogs bit at byte `0x15` mask `0x80`; both therefore look
+like prerequisites/triggers rather than the missing output-role fix.
+
+External PQ25/VCDS references match the x86 interpretation of byte `0x15` mask
+`0x04`: Byte 21 Bit 2 enables cornering lights via the turn signal/blinker when
+cornering lights are active. It can keep a cornering lamp on while a blinker is
+active at low speed, but it does not explain both front fogs staying steadily on
+with the headlight switch and no per-side ownership. That symptom still points
+toward fog-switch request, CH/LH/fog role, wiring, or unsupported per-side
+outputs.
 
 The direct visible fog-role labels are now negative for VW/PQ25 on x86:
 

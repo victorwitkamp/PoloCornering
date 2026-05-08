@@ -1,0 +1,163 @@
+{
+  "run_id": "kwp21_lowbeam_fog_on_20260508_085416",
+  "profiles": [
+    "kwp21-early"
+  ],
+  "commands": [
+    "2101",
+    "2102",
+    "2103",
+    "2104",
+    "2105",
+    "2106",
+    "2107",
+    "2108",
+    "2109",
+    "210A",
+    "210B",
+    "210C",
+    "210D",
+    "210E",
+    "210F"
+  ],
+  "setup_commands": [],
+  "cycles": 1,
+  "pause": 0.0,
+  "observations": [
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:54:22",
+      "command": "2101",
+      "setup": [],
+      "payload": "6101250087250034250087250031",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:54:27",
+      "command": "2102",
+      "setup": [],
+      "payload": "610206807006806C25021C078000",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:54:32",
+      "command": "2103",
+      "setup": [],
+      "payload": "61032500882500882500882501AB",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:54:37",
+      "command": "2104",
+      "setup": [],
+      "payload": "61042500872500C12500A72500A7",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:54:42",
+      "command": "2105",
+      "setup": [],
+      "payload": "61052500AD2500AD2500AD2500AD",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:54:47",
+      "command": "2106",
+      "setup": [],
+      "payload": "61062500AB2500AB2500AB2500A7",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:54:52",
+      "command": "2107",
+      "setup": [],
+      "payload": "61072500B22500B22500B22500B2",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:54:57",
+      "command": "2108",
+      "setup": [],
+      "payload": "61082500A72500F82500F82500A7",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:55:02",
+      "command": "2109",
+      "setup": [],
+      "payload": "61092500882500882500C0250000",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:55:07",
+      "command": "210A",
+      "setup": [],
+      "payload": "610A25021C25021C25021C25021C",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:55:12",
+      "command": "210B",
+      "setup": [],
+      "payload": "610B25021C25021C25021C2500C2",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:55:16",
+      "command": "210C",
+      "setup": [],
+      "payload": "610C2500A72500A72500A72500A7",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:55:21",
+      "command": "210D",
+      "setup": [],
+      "payload": "610D2500882500A72500A72500A7",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:55:26",
+      "command": "210E",
+      "setup": [],
+      "payload": "610E2500BF2500BF2500BF2500BF",
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:55:31",
+      "command": "210F",
+      "setup": [],
+      "payload": "610F2500A72500BF3600002500F8",
+      "changed": false,
+      "error": ""
+    }
+  ]
+}

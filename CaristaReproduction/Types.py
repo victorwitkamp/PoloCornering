@@ -7,7 +7,7 @@ HexString: TypeAlias = str
 JsonObject: TypeAlias = dict[str, object]
 BitAction: TypeAlias = Literal["set", "clear"]
 BitState: TypeAlias = Literal["set", "clear"]
-CorneringFixKey: TypeAlias = Literal["base-fog", "turn-signal"]
+CorneringFixKey: TypeAlias = Literal["base-fog", "turn-signal", "drl-via-fogs"]
 RawValueType: TypeAlias = Literal[0, 1, 7, 8]
 VagCanSettingsConstructorStatus: TypeAlias = Literal[
     "write_blocked_read_rejected",

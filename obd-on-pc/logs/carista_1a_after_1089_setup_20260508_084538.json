@@ -1,0 +1,58 @@
+{
+  "run_id": "carista_1a_after_1089_setup_20260508_084538",
+  "profiles": [],
+  "commands": [
+    "1A9B",
+    "1A9F",
+    "1A9A"
+  ],
+  "setup_commands": [
+    "1089"
+  ],
+  "cycles": 1,
+  "pause": 0.0,
+  "observations": [
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:45:44",
+      "command": "1A9B",
+      "setup": [
+        {
+          "command": "1089",
+          "payload": "5089"
+        }
+      ],
+      "payload": null,
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:45:50",
+      "command": "1A9F",
+      "setup": [
+        {
+          "command": "1089",
+          "payload": "5089"
+        }
+      ],
+      "payload": null,
+      "changed": false,
+      "error": ""
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:45:56",
+      "command": "1A9A",
+      "setup": [
+        {
+          "command": "1089",
+          "payload": "5089"
+        }
+      ],
+      "payload": null,
+      "changed": false,
+      "error": ""
+    }
+  ]
+}

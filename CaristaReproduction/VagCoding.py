@@ -58,6 +58,14 @@ def set_coding_bit(coding: HexString, byte_index: int, bit_index: int) -> HexStr
     return data.hex().upper()
 
 
+def clear_coding_bit(coding: HexString, byte_index: int, bit_index: int) -> HexString:
+    data = bytearray.fromhex(normalize_coding(coding))
+    if not 0 <= byte_index < len(data):
+        raise ValueError(f"byte index {byte_index} is outside {len(data)} coding bytes")
+    data[byte_index] = apply_bit(data[byte_index], bit_index, "clear")
+    return data.hex().upper()
+
+
 def apply_cornering_fixes(coding: HexString, fixes: tuple[CorneringFixKey, ...]) -> HexString:
     target = normalize_coding(coding)
     for fix in fixes:

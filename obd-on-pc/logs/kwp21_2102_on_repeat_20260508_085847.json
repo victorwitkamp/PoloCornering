@@ -1,0 +1,66 @@
+{
+  "run_id": "kwp21_2102_on_repeat_20260508_085847",
+  "profiles": [],
+  "commands": [
+    "2102"
+  ],
+  "setup_commands": [],
+  "cycles": 6,
+  "pause": 0.2,
+  "observations": [
+    {
+      "cycle": 1,
+      "timestamp": "2026-05-08T08:58:55",
+      "command": "2102",
+      "setup": [],
+      "payload": null,
+      "changed": false,
+      "error": "RuntimeError: TP2.0 open request did not get channel response: 'CAN ERROR\\r\\r>'"
+    },
+    {
+      "cycle": 2,
+      "timestamp": "2026-05-08T08:58:57",
+      "command": "2102",
+      "setup": [],
+      "payload": null,
+      "changed": false,
+      "error": "RuntimeError: TP2.0 open request did not get channel response: 'CAN ERROR\\r\\r>'"
+    },
+    {
+      "cycle": 3,
+      "timestamp": "2026-05-08T08:58:59",
+      "command": "2102",
+      "setup": [],
+      "payload": null,
+      "changed": false,
+      "error": "RuntimeError: TP2.0 open request did not get channel response: 'CAN ERROR\\r\\r>'"
+    },
+    {
+      "cycle": 4,
+      "timestamp": "2026-05-08T08:59:01",
+      "command": "2102",
+      "setup": [],
+      "payload": null,
+      "changed": false,
+      "error": "RuntimeError: TP2.0 open request did not get channel response: 'CAN ERROR\\r\\r>'"
+    },
+    {
+      "cycle": 5,
+      "timestamp": "2026-05-08T08:59:03",
+      "command": "2102",
+      "setup": [],
+      "payload": null,
+      "changed": false,
+      "error": "RuntimeError: TP2.0 open request did not get channel response: 'CAN ERROR\\r\\r>'"
+    },
+    {
+      "cycle": 6,
+      "timestamp": "2026-05-08T08:59:05",
+      "command": "2102",
+      "setup": [],
+      "payload": null,
+      "changed": false,
+      "error": "RuntimeError: TP2.0 open request did not get channel response: 'CAN ERROR\\r\\r>'"
+    }
+  ]
+}

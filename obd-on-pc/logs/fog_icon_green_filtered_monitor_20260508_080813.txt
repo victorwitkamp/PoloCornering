@@ -1,0 +1,4 @@
+run_id=fog_icon_green_filtered_monitor_20260508_080813
+390: 0 frames
+392: 0 frames
+470: 0 frames

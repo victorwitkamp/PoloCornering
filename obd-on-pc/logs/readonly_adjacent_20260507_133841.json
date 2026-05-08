@@ -1,0 +1,52 @@
+{
+  "run_id": "readonly_adjacent_20260507_133841",
+  "records": [
+    {
+      "did": "0600",
+      "request": "220600",
+      "payload": "6206003AB82B9F08A10000003008006C680ED000C8412F60A60000C8412F60A600",
+      "coding": "3AB82B9F08A10000003008006C680ED000C8412F60A60000C8412F60A600",
+      "byte23_bit2": "clear"
+    },
+    {
+      "did": "0601",
+      "request": "220601",
+      "payload": "6206011E"
+    },
+    {
+      "did": "0606",
+      "request": "220606",
+      "payload": "620606001800018000"
+    },
+    {
+      "did": "F1A5",
+      "request": "22F1A5",
+      "payload": "62F1A50005F3C7E719"
+    },
+    {
+      "did": "0554",
+      "request": "220554",
+      "payload": "7F2231"
+    },
+    {
+      "did": "0555",
+      "request": "220555",
+      "payload": "7F2231"
+    },
+    {
+      "did": "0556",
+      "request": "220556",
+      "payload": "7F2231"
+    },
+    {
+      "did": "0557",
+      "request": "220557",
+      "payload": "7F2231"
+    },
+    {
+      "did": "056C",
+      "request": "22056C",
+      "payload": null
+    }
+  ]
+}

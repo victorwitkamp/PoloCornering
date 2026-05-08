@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
@@ -23,6 +24,8 @@ RAW_PATTERNS = {
     "ascii_0606": b"0606",
     "ascii_220601": b"220601",
     "ascii_220606": b"220606",
+    "ascii_6206011E": b"6206011E",
+    "ascii_62060118": b"62060118",
 }
 STRING_NEEDLES = (
     b"car_setting_enabled_coming_home_or_leaving_home",
@@ -149,6 +152,17 @@ def _scan_raw_contexts(
     return contexts
 
 
+def _scan_embedded_220601_responses(sections: Iterable[ElfSection]) -> Counter[str]:
+    responses: Counter[str] = Counter()
+    pattern = re.compile(rb"220601: ([0-9A-Fa-f-]+)")
+    for section in sections:
+        if section.name not in {".rodata", ".text", ".data.rel.ro"}:
+            continue
+        for match in pattern.finditer(section.data):
+            responses[match.group(1).decode("ascii").upper()] += 1
+    return responses
+
+
 def _scan_string_locations(sections: Iterable[ElfSection]) -> list[tuple[str, str, int]]:
     locations: list[tuple[str, str, int]] = []
     for section in sections:
@@ -196,6 +210,7 @@ def main() -> int:
     instruction_hits = _scan_instruction_operands(sections)
     raw_counts = _scan_raw_patterns(sections)
     raw_contexts = _scan_raw_contexts(sections)
+    embedded_220601_responses = _scan_embedded_220601_responses(sections)
     string_locations = _scan_string_locations(sections)
     direct_string_refs = _scan_direct_string_refs(sections, string_locations)
     string_instruction_refs = _scan_instruction_refs_to_values(
@@ -245,6 +260,15 @@ def main() -> int:
         if section_name in NON_EVIDENCE_SECTIONS:
             continue
         print(f"  {section_name:18s} {label:14s} {count}")
+
+    print("embedded 220601 response payloads in readable binary tables:")
+    if not embedded_220601_responses:
+        print("  none")
+    else:
+        for payload, count in embedded_220601_responses.most_common():
+            print(f"  {payload:10s} {count}")
+    print(f"embedded 6206011E present: {'YES' if embedded_220601_responses.get('6206011E') else 'NO'}")
+    print(f"embedded 62060118 present: {'YES' if embedded_220601_responses.get('62060118') else 'NO'}")
 
     print("raw context previews:")
     for section_name, label, address, context in raw_contexts:

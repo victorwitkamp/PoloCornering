@@ -1,0 +1,29 @@
+run_id=interactive_monitor_toggle_20260508_081249
+instructions=toggle indicator/fog switch during monitor window
+>>> ATZ
+'\r\rELM327 v1.5\r\r>'
+>>> ATE0
+'ATE0\rOK\r\r>'
+>>> ATL1
+'OK\r\n\r\n>'
+>>> ATS1
+'OK\r\n\r\n>'
+>>> ATH1
+'OK\r\n\r\n>'
+>>> ATCAF0
+'OK\r\n\r\n>'
+>>> ATV1
+'OK\r\n\r\n>'
+>>> ATAL
+'OK\r\n\r\n>'
+>>> ATSP6
+'OK\r\n\r\n>'
+>>> ATCM000
+'OK\r\n\r\n>'
+>>> ATCF000
+'OK\r\n\r\n>'
+>>> ATMA 20s
+STOPPED\r\n
+\r\n
+>
+parsed_lines=0

@@ -339,6 +339,10 @@ Safety boundary remains unchanged: the recovered type `7` path reads the per-sid
   `NissanLiveData` whitelist initializer, not a VAG setting constructor. Other
   x86 raw/ascii hits are symbol/relocation, PDX, unwind, or table noise until a
   decoded VAG constructor or `ReadValuesOperation` path proves otherwise.
+- One x86 readable simulator/sample-response row does mirror this car's value:
+  `ECU VAGCAN20 220601: 6206011E` with
+  `220606: 620606001800038000`. Treat that as sample-response evidence, not a
+  recovered `0601` Setting constructor or write path.
 - Current classification: `0601=1E` is a strong live role clue, but x86 does not
   yet prove whether it is stored config, status/current-value container, or a
   read-only mirror of another setting.
@@ -347,6 +351,121 @@ Safety boundary remains unchanged: the recovered type `7` path reads the per-sid
   setting predicate/vtable slot `+0x3C`, then dump the selected
   `StringWhitelist` contents for normal `AvailBy=2` branches and match those to
   `6R0937087K`.
+
+2026-05-07 turn-signal-cornering bit review:
+
+- Current post-DRL coding has byte `0x15 = A6`, so byte 21 bit 2
+  (`car_setting_cornering_lights_with_turn_signals`) is enabled. It was already
+  enabled before the 2026-05-07 DRL-via-fogs write.
+- Official x86 evidence keeps this setting narrow: `0x012da72c -> 0x012da761`
+  passes `CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S`, byte `0x15`, mask `0x04`, and
+  `YES_NO`. The branch has no fog/low-beam role choice table and no per-side
+  output mapping.
+- External PQ25/VCDS references agree with that interpretation. VAG-Coding's
+  Polo 6R note says Byte 21 Bit 2 activates cornering lights with the fog lamps
+  when the indicator is active. The Seat Ibiza 6J/PQ25 VCDS note describes the
+  same bit as a blinker trigger: below about 15-20 km/h, cornering fogs can
+  activate from steering angle and/or the blinker; disabling the bit removes the
+  blinker trigger while steering-angle cornering remains.
+- Therefore Byte 21 Bit 2 being enabled is normal if the goal is
+  turn-signal-triggered cornering. It can make a cornering lamp stay on while
+  waiting with the blinker on, but it does not explain both front fogs being
+  steadily on in the headlight switch position with no useful left/right
+  ownership.
+- The steady paired-fog symptom remains more consistent with a separate
+  fog-switch request, output-role/CH-LH assignment, BCM wiring, or unsupported
+  per-side output on this `087K` BCM. Do not use Byte 21 Bit 2 as the next fix
+  lever except as a temporary baseline-off comparison.
+- External Polo 6R retrofit discussions also keep wiring in scope: front fog /
+  turning-light harnesses route the two fog outputs to BCM plug B pins 9 and 10
+  and permanent supply to B11, while other setups distinguish switch-powered
+  fogs from BCM-controlled cornering/static-cornering lamps. If both fogs are
+  steady in the headlight switch position with no fog pull, that is more likely
+  a fog-request/wiring/output-role issue than the Byte 21 Bit 2 trigger bit.
+
+External references retained for this distinction:
+
+```text
+https://www.vag-coding.fr/vw/polo-5-6r/polo-5-6r-corner-lights-avec-clignotant/
+https://automobiles.fredericbazin.fr/PDF/TutoVCDS/PDF/Ibiza%206J%20VCDS%20Options%20EN.pdf
+https://vwforum.ro/topic/82461-info-detaliere-coduri-modul-09-central-electronics/
+https://www.mypolo.nl/xenforo/threads/bochtverlichting-en-mistlampen.17681/page-2#post-293870
+https://www.uk-polos.net/viewtopic.php?p=553138
+```
+
+2026-05-07 cause narrowing after DRL-via-fogs failed:
+
+- The current live coding has all recovered 6R/PQ25 cornering/fog prerequisite
+  bits set: byte `0x0C` mask `0x40`, byte `0x15` masks `0x04`, `0x20`, `0x80`,
+  and byte `0x17` mask `0x04`. Static x86 evidence gives no remaining direct
+  `0600` cornering trigger branch for `6R0937087K`.
+- The observed behavior is a paired front-fog request: both fogs are steady in
+  the low-beam/headlight switch position and go off with high beam. That is
+  exactly what the already-set `turn_off_fogs_with_high_beam` bit would do to a
+  normal front-fog request. It is not evidence that the blinker-trigger bit is
+  wrong.
+- The top practical hypothesis is now switch input or wiring: the BCM may be
+  receiving the front-fog switch request on `T73a/7` whenever low beams are on,
+  or the lamps may be wired through an ordinary/bridged fog circuit instead of
+  independent BCM static-cornering outputs. Factory switch behavior is
+  pull-to-front-fog, so front fogs on in the plain low-beam position should be
+  treated as abnormal unless the car has a deliberate non-factory module.
+- PQ25 wiring references identify `T73b/9` and `T73b/10` as the separate left
+  and right cornering/fog outputs and `T73b/11` as the supply path. External
+  retrofit notes also distinguish fuse 54 ordinary fog wiring from fuse 57
+  BCM-controlled static-cornering wiring. If the car is on the ordinary/bridged
+  path, software bits cannot produce left/right ownership.
+- Ross-Tech thread `26139` is directly relevant: a PQ25 `6R7 937 087 H` retrofit
+  accepted byte 21 bits 2/7 but did not work until byte 12 bit 6 was also set
+  and the light-switch wire was corrected to `T73a/7`; the thread also calls out
+  `T73b/11` terminal-30 supply. Its final coding changed byte 12 bit 6 and byte
+  21 bits 2/7, which are already set on this Polo. That makes the thread
+  supporting evidence for wiring/state/role ownership, not a new coding bit.
+- Byte 12 bit 0 is related to the wider parking/DRL wiring problem space but is
+  not proven as the current direct cause. External Polo 6R references describe it as
+  Scandinavian/Nordic mode (`parking lights ON with terminal 15 ON`) and warn
+  that it can disrupt fog behavior in sidelights/parking-light mode because the
+  BCM treats the signal as DRL/parking-light state. The latest 2026-05-08
+  captured coding has byte `0x0C = 6D`, so bit 0 is set. Earlier controlled
+  codings with byte `0x0C = 6C` make this a live-tested axis, but not a
+  recovered Carista role selector or safe standalone fix.
+- The strongest remaining software clue is still `220601 -> 6206011E`, because
+  `1E` overlaps the per-side role enum value
+  `car_setting_enabled_coming_home_or_leaving_home`. This remains a read-only
+  clue only: x86 static recovery has found no decoded `0601` Setting constructor,
+  and direct `055C` / `055D` reads reject on this BCM.
+
+Next car-session inspection path, no new write implied:
+
+1. Confirm whether the front fog indicator is lit when the fogs are on in the
+   low-beam/headlight switch position without pulling the switch. If yes, the
+   BCM likely sees an active front-fog request.
+2. Check whether pulling/pushing the fog switch changes the fog state or
+   indicator independently. If it does not, suspect `T73a/7` or light-switch pin
+   wiring.
+3. Track byte 12 bit 0 explicitly in any future coding snapshot. It is a
+   parking/DRL/Standlicht mode bit, not a recovered cornering-output selector.
+4. Inspect the fuse/wiring path: fuse 54 ordinary front-fog path versus fuse 57
+   BCM/static-cornering path; verify separate wires to `T73b/9` and `T73b/10`
+   and supply on `T73b/11`.
+5. Only after that, continue static work on `0601` / CH-LH role ownership. Do
+   not write `0601`, `055C`, or `055D` from the current evidence.
+
+Additional external references retained for the wiring/output-owner hypothesis:
+
+```text
+https://polo.blue/bcm-pq25-t73a-t73b/
+https://polo.blue/info-about-bcm-pq25/
+https://uk-polos.net/viewtopic.php?p=576321
+https://www.clubpolo.co.uk/topic/312041-where-to-find-the-bcm-number-on-a-6r/
+https://portal-diagnostov.com/en/2021/01/24/6645648-vw-polo-2010-daytime-running-light-and-fog-lights-wiring-diagrams-pin/
+https://uk-polos.net/viewtopic.php?sid=17958e1f0bb230ca944f00c1c477e7a6&start=45&t=74767
+https://www.vwpolo.net/switching_lights_on_and_off-128.html
+https://forums.ross-tech.com/index.php?threads/26139/
+https://uk-polos.net/viewtopic.php?p=589389
+https://uk-polos.net/viewtopic.php?start=15&t=77188
+https://uk-polos.net/viewtopic.php?p=492025
+```
 
 ---
 
@@ -396,8 +515,8 @@ branches against the `6R0937087K` ECU-tag route:
 | `car_setting_coming_home_req_rls` | Reused-key branch `0x012c74fe -> 0x0133b390`, `CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S`, DID `0600` byte `0x0A`, mask `0x04`; adjacent `coming_home_menu_default_req_rls` is MK7/6C raw `0x0D04` adaptation evidence. | PQ25 CH/LH prerequisite branch is now x86-confirmed, but it is not a `0601` owner path and not a standalone cornering-fog write plan. |
 | `car_setting_cornering_lights_via_fogs` | `0x012d9f7b -> 0x01358fd0`, `CENTRAL_ELEC_6R_5C_7E_7H`, byte `0x0C`, mask `0x40` | Already set in live coding; behavior-disproven as standalone fix. |
 | `car_setting_cornering_lights_via_fogs_experimental` | `0x012da0f2 -> 0x0135eaf0`, `CENTRAL_ELEC_6R_5C_7E_7H`, byte `0x15`, mask `0x80` | Fresh engine-running byte `0x15 = 0xA6`; bit already set. |
-| `car_setting_cornering_lights_with_turn_signals` | `0x012da761 -> 0x0135e920`, `CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S`, byte `0x15`, mask `0x04` | Explicit turn-signal-cornering bit is already set. |
-| `car_setting_drl_via_fogs` | `0x012cdeb6 -> 0x01361520`, `CENTRAL_ELEC_6R_5C_7E_7H`, byte `0x17`, mask `0x04` | Clear on current car; DRL/fog clue, not the observed cornering symptom. |
+| `car_setting_cornering_lights_with_turn_signals` | `0x012da761 -> 0x0135e920`, `CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S`, byte `0x15`, mask `0x04` | Explicit blinker-trigger bit is already set; not an output-role selector and not a steady-paired-fog explanation. |
+| `car_setting_drl_via_fogs` | `0x012cdeb6 -> 0x01361520`, `CENTRAL_ELEC_6R_5C_7E_7H`, byte `0x17`, mask `0x04` | Set by the 2026-05-07 live write and persisted; behavior unchanged, so behavior-disproven standalone. |
 | `car_setting_turn_off_fogs_with_high_beam` | `0x012d4dea -> 0x0135e580`, `CENTRAL_ELEC_6R_5C_7E_7H`, byte `0x15`, mask `0x20` | Set in fresh engine-running coding; physical high-beam fog shutoff already occurs. |
 | `car_setting_assist_dr_lights` | `0x012d9bad -> 0x013625a0`, `CENTRAL_ELEC_6R_5C_7E_7H`, byte `0x16`, mask `0x20` | Clear on current car; lower-priority ADL clue. |
 

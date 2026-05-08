@@ -793,11 +793,16 @@ def VagCanSettings_getPq25SettingRecoveries() -> tuple[VagCanSettingsSettingReco
             ),
             read_method="Coding-style byte 0x15 mask 0x04 branch; no separate direct DID candidate recovered.",
             write_method="Do not write: fresh engine-running coding byte 0x15 is 0xA6, so mask 0x04 is already set.",
-            next_re_step="This explicit turn-signal key is already enabled in current coding; look for prerequisite/output-role branches instead of toggling it again.",
+            next_re_step=(
+                "This explicit turn-signal key is already enabled in current coding. Treat it as the blinker-trigger "
+                "enable, not the source of steady paired fog output; look for prerequisite/output-role branches instead."
+            ),
             evidence=(
                 "Official x86 0x012da72c loads car_setting_cornering_lights_with_turn_signals before the 0x012da761 helper call.",
                 "Official x86 0x012da761 pushes CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S, VagCanEcu::CENTRAL_ELEC, byte 0x15, mask 0x04, and YES_NO.",
                 "Fresh engine-running coding byte 0x15 is 0xA6, so this bit is already set while turn-signal cornering behavior is absent.",
+                "PQ25 VCDS references describe byte 21 bit 2 as allowing cornering lights to activate from the turn-signal/blinker trigger when normal cornering lights are active; this matches the native branch as a trigger-source bit, not a front-fog/low-beam output-role selector.",
+                "A remembered observation that fogs stayed on while this setting was enabled is therefore ambiguous: one side can remain on while a blinker is active at low speed, but both fogs steadily on in the headlight switch position points to a separate fog-switch/output-role/CH-LH path.",
             ),
         ),
         VagCanSettingsSettingRecovery(
@@ -1295,7 +1300,8 @@ def VagCanSettings_getPq25SettingRecoveries() -> tuple[VagCanSettingsSettingReco
             constructor_kind="mixed",
             constructor_status="constructor_partial",
             native_helper=(
-                "official x86 6R/PQ25: 0x012cdeb6 -> 0x01361520 VagCanLongCodingSetting guarded by CENTRAL_ELEC_6R_5C_7E_7H byte 0x17/mask 0x04; "
+                "official x86 6R/PQ25: 0x012cdeb6 -> 0x01361520 guarded by CENTRAL_ELEC_6R_5C_7E_7H byte 0x17/mask 0x04; "
+                "exact helper family is unresolved because the branch-export coding label conflicts with direct PLT/dynamic-symbol audit; "
                 "official x86 non-6R variants include 0x012cdf28 -> 0x01363440 and additional MK5/MK6/B8 coding branches; "
                 "010B71D0 -> 010DAEDC VagUdsCodingSetting; "
                 "010B7764 -> 010DC980 VagCanLongCodingSetting; "
@@ -1317,27 +1323,18 @@ def VagCanSettings_getPq25SettingRecoveries() -> tuple[VagCanSettingsSettingReco
                 "Read: 22 0600 -> 30-byte response; "
                 "VagSetting_extractValue(coding, offset=23, mask='04') -> '00' (DISABLED) or '01' (ENABLED). "
                 "ByteUtils_getLsbOffset('04')=2; result=(byte_23 & 0x04) >> 2. "
-                "Current live BCM: byte 23 = 0x00 => extractValue returns '00' => car_setting_no = DISABLED. "
+                "Post-2026-05-07 live BCM: byte 23 = 0x04 => extractValue returns '01' => car_setting_yes = ENABLED. "
                 "The 22055C adaptation candidate at offset 6 returned 7F2231 live and is blocked."
             ),
             write_method=(
-                "ACTIONABLE pending live correlation test. "
-                "The 6R/PQ25 branch targets DID 0600 byte 23 mask 0x04 via the same guarded 2E0600 write sequence "
-                "proven on this BCM for the cornering bits. "
-                "Modify: VagSetting_insertValue(coding, offset=23, mask='04', requested='01') => byte 23 = 0x04. "
-                "Target coding: 3AB82B9F08A10000003008006C680ED000C8412F60A60004200000000000 (byte 23: 0x00->0x04). "
-                "Write sequence: 2EF199 YYMMDD -> 22F1A5 -> 2EF198 workshop-code -> 2E0600 [30 bytes] -> 22 0600 verify. "
-                "Do not write until the live correlation test (read-only before/after) confirms whether Carista "
-                "or VCDS shows this setting as a separately togglable item on this BCM."
+                "Live-written and persisted on 2026-05-07 using the guarded Carista-shaped DID 0600 sequence. "
+                "Target coding was 3AB82B9F08A10000003008006C680ED000C8412F60A60004200000000000 "
+                "(byte 23: 0x00->0x04). Behavior did not change, so do not retest as a standalone fix."
             ),
             next_re_step=(
-                "TOP PRIORITY live hypothesis: DRL-via-fogs (byte 23 bit 2) may enable per-side fog output routing "
-                "in the BCM firmware, which is the prerequisite for cornering-via-fogs to produce individual left/right "
-                "activation. This is the ONLY recovered CENTRAL_ELEC_6R_5C_7E_7H bit not set in the current BCM. "
-                "Recommended test: (1) read-only correlation pass — check if Carista app or VCDS shows drl_via_fogs "
-                "as an available separately-togglable setting for this BCM; (2) if available, capture before/after "
-                "220600 delta to confirm the byte/mask; (3) then perform the guarded 2E0600 write with the "
-                "computed target coding and test cornering fog behaviour."
+                "Keep as mapped negative evidence. Focus next on the unresolved fog-output role/CH-LH path, "
+                "the stable 220601 -> 6206011E companion, and reconciliation of the x86 helper-family "
+                "classification for this wrapper before deriving any new write candidates."
             ),
             evidence=(
                 "Official Play 9.8.3 x86 string ref is 0x012cde7b.",
@@ -1347,11 +1344,11 @@ def VagCanSettings_getPq25SettingRecoveries() -> tuple[VagCanSettingsSettingReco
                 "The DID 0600 and long-coding variants pass MultipleChoiceInterpretation::YES_NO (014f1fd8), whose static init maps car_setting_no=00 and car_setting_yes=01.",
                 "Two 010B1980 calls construct VagUdsAdaptationSetting via 010C0590.",
                 "The 055C adaptation table stores raw address 055C, offset 6, mask FF, disabled 00, enabled 14.",
-                "Deep RE (2026-05-08): callee VagUdsCodingSetting_drl_via_fogs at 01361520 allocates 0x6C bytes (same size as all other VagUdsCodingSetting helpers) and calls inner-init 0x0197dcb0 with args (self, byte_ptr=23, mask_ptr=0x04, whitelist=CENTRAL_ELEC_6R_5C_7E_7H, ecu=CENTRAL_ELEC, key, YES_NO). Shape is byte-for-byte identical to the other 6R coding constructors.",
-                "Deep RE (2026-05-08): after construction, caller dispatches vtable[12] (slot +0x30) on the result object to push it into the settings collection. This is a lifetime/collection management call, NOT an ECU read or write. Carista software has no inter-setting dependency between drl_via_fogs and cornering_lights_via_fogs.",
-                "Deep RE (2026-05-08): VagOperationDelegate::getVagSettingAvailabilityForEcu (016b4180) evaluates each VagSetting independently via StringWhitelist::itemMatches. The CENTRAL_ELEC_6R_5C_7E_7H whitelist matches 6R0937087K, so drl_via_fogs IS available for this BCM. No code path gates cornering availability on drl_via_fogs state.",
-                "BCM firmware hypothesis (not Carista software): DRL-via-fogs bit (byte 23, bit 2) may instruct the BCM to assign fog hardware outputs to the per-side DRL control channel instead of the paired front-fog channel. Without it, both fog relays/transistors share a single driver path with no individual addressing, making cornering (which requires per-side control) physically impossible regardless of the coding bits. Physical observation (fogs as steady paired output, no turn-signal response) matches the paired-channel model.",
-                "This is the only CENTRAL_ELEC_6R_5C_7E_7H DID 0600 coding bit not set in the current live BCM. All other cornering-relevant 6R bits (byte 12 bit 6, byte 21 bits 2/5/7) are already set and were behaviour-disproven as standalone fixes on 2026-05-05.",
+                "Deep RE (2026-05-07): after construction, caller dispatches vtable[12] (slot +0x30) on the result object to push it into the settings collection. This is a lifetime/collection management call, NOT an ECU read or write. Carista software has no inter-setting dependency between drl_via_fogs and cornering_lights_via_fogs.",
+                "Deep RE (2026-05-07): VagOperationDelegate::getVagSettingAvailabilityForEcu (016b4180) evaluates each VagSetting independently via StringWhitelist::itemMatches. The CENTRAL_ELEC_6R_5C_7E_7H whitelist matches 6R0937087K; no code path gates cornering availability on drl_via_fogs state.",
+                "Live 2026-05-07: guarded DID 0600 write set byte 23 bit 2 and fresh 220600 reads confirmed persistence as 3AB82B9F08A10000003008006C680ED000C8412F60A60004200000000000.",
+                "Live 2026-05-07: physical behavior did not change after byte 23 bit 2 was set; fogs still behaved as steady paired outputs in the headlight switch position with no useful turn-signal left/right ownership.",
+                "Post-session x86 helper-family audit found a PLT/dynamic-symbol mismatch for wrapper 0x01361520: the branch-export label and byte/mask callsite look coding-like, but the inner PLT target resolves to shared_ptr_emplace<VagUdsAdaptationSetting, ...>. Treat the exact helper class as unresolved until constructor args are reconciled.",
                 YES_NO_SINGLETON_EVIDENCE,
             ),
         ),

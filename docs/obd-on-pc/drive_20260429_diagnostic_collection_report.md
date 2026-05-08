@@ -135,7 +135,7 @@ No other headers in the scanned `700..71F` and `7E0..7E7` ranges responded.
 | `22F187` | `62F187354B30` | `5K0` |
 | `22F191` | `62F191354B30` | `5K0` |
 | `22F1DF` | `62F1DF40` | raw `40` |
-| `1902FF` | `590299D20000` | positive raw DTC/status response; not decoded yet |
+| `1902FF` | `590299D20000` | UDS `19/02` positive response with status availability mask `99`; incomplete `DTCAndStatusRecord` leaves trailing raw bytes `D20000` without a status byte |
 
 ### Cluster `714 -> 77E`
 
@@ -147,7 +147,7 @@ No other headers in the scanned `700..71F` and `7E0..7E7` ranges responded.
 | `22F191` | `62F191365230` | `6R0` |
 | `22F18C` | `62F18C303030` | `000` |
 | `22F1DF` | `62F1DF40` | raw `40` |
-| `1902FF` | `590299C4010008` | positive raw DTC/status response; not decoded yet |
+| `1902FF` | `590299C4010008` | UDS `19/02` positive response with status availability mask `99`; one complete DTC record `C40100` (SAE-format candidate `U0401:00`) status `08` = `confirmedDTC` |
 | `1802FF00` | `7F1811` | service not supported |
 
 ### Header `715 -> 77F`
@@ -184,8 +184,9 @@ The other-ECU scans were successful enough to establish a small module inventory
 and preserve raw DTC/status responses for later decoding, especially:
 
 ```text
-711->77B 1902FF: 590299D20000
-714->77E 1902FF: 590299C4010008
+  BCM/KWP 1802FF00: 58020C9820038B20 -> DTC candidates 03224 and 00907, status 0x20 raw bit b5
+  711->77B 1902FF: 590299D20000 -> incomplete UDS DTC/status record after availability mask 0x99
+  714->77E 1902FF: 590299C4010008 -> DTC C40100, SAE-format candidate U0401:00, confirmedDTC
 ```
 
 Those raw `59...` payloads should be decoded separately before treating them as

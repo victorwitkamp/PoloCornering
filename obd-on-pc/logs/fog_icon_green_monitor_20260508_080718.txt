@@ -1,0 +1,4 @@
+run_id=fog_icon_green_monitor_20260508_080718
+all_frames=0 relevant=0
+
+reset_frames=0 relevant=0

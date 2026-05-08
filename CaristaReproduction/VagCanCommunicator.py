@@ -138,12 +138,16 @@ class VagCanCommunicator:
         return VAG_CAN_COMMUNICATOR_RECEIVE_MORE_RECOVERED_FLOW
 
     @staticmethod
-    def parsePacket() -> tuple[str, ...]:
-        return VAG_CAN_COMMUNICATOR_PARSE_PACKET_RECOVERED_FLOW
+    def parsePacket(raw_packet: HexString | None = None) -> tuple[str, ...] | "VagCanCommunicator.VagCanPacket":
+        if raw_packet is None:
+            return VAG_CAN_COMMUNICATOR_PARSE_PACKET_RECOVERED_FLOW
+        return parsePacket(raw_packet)
 
     @staticmethod
-    def readResponses() -> tuple[str, ...]:
-        return VAG_CAN_COMMUNICATOR_READ_RESPONSES_RECOVERED_FLOW
+    def readResponses(raw_packets: Iterable[HexString] | None = None) -> tuple[str, ...] | HexString | None:
+        if raw_packets is None:
+            return VAG_CAN_COMMUNICATOR_READ_RESPONSES_RECOVERED_FLOW
+        return readResponses(raw_packets)
 
     @staticmethod
     def sendAck(sequence: int, receive_after_send: bool = False) -> HexString:
@@ -200,6 +204,56 @@ def generateOutgoingPackets(counter: int, request: HexString) -> list[VagCanComm
         )
         sequence = (sequence + 1) & 0xF
     return packets
+
+
+def parsePacket(raw_packet: HexString) -> VagCanCommunicator.VagCanPacket:
+    packet = clean_hex(raw_packet, "VagCanPacket")
+    if len(packet) < 2:
+        raise ValueError("VagCanPacket must include an opcode byte")
+    op_code_byte = int(packet[:2], 16)
+    sequence = op_code_byte & 0x0F
+    op_class = op_code_byte & 0xF0
+    if op_class in (0x00, 0x20):
+        op_code = VagCanCommunicator.OpCode.CONTINUATION
+    elif op_class == 0x10:
+        op_code = VagCanCommunicator.OpCode.FINAL
+    elif op_class == 0xB0:
+        op_code = VagCanCommunicator.OpCode.ACK
+    elif packet == "A3":
+        op_code = VagCanCommunicator.OpCode.KEEP_ALIVE
+        sequence = 0
+    elif packet == "A8":
+        op_code = VagCanCommunicator.OpCode.DISCONNECT
+        sequence = 0
+    else:
+        raise ValueError(f"unsupported VagCanPacket opcode class: {packet[:2]}")
+    return VagCanCommunicator.VagCanPacket(raw=packet, sequence=sequence, op_code=op_code)
+
+
+def readResponses(raw_packets: Iterable[HexString]) -> HexString | None:
+    data = bytearray()
+    saw_done_packet = False
+    for raw_packet in raw_packets:
+        packet = clean_hex(raw_packet, "VagCanPacket")
+        if isTransmitAck(packet) or packet in {"A3", "A8"}:
+            continue
+        parsed = parsePacket(packet)
+        if parsed.op_code not in (VagCanCommunicator.OpCode.CONTINUATION, VagCanCommunicator.OpCode.FINAL):
+            continue
+        if len(packet) > 2:
+            data.extend(bytes.fromhex(packet[2:]))
+        if parsed.is_final:
+            saw_done_packet = True
+
+    if not data:
+        return None
+    if len(data) < 2:
+        return data.hex().upper()
+    payload_length = ((data[0] & 0x0F) << 8) | data[1]
+    payload = data[2:2 + payload_length]
+    if not payload and saw_done_packet:
+        return data.hex().upper()
+    return payload.hex().upper() if payload else None
 
 
 def nextSeqNum(counter: int, packet_count: int) -> int:

@@ -152,7 +152,10 @@ def VagUdsCodingSetting_drl_via_fogs() -> VagUdsCodingSetting:
       Extract  : VagSetting_extractValue(coding, offset=23, mask="04")
         ByteUtils_getLsbOffset("04") = 2  (bit 2 is the LSB of mask 0x04)
         result   = (byte_23 & 0x04) >> 2  => "00" = NO, "01" = YES
-      Current  : byte 23 = 0x00 => extractValue returns "00" => car_setting_no
+      Pre-write current:
+        byte 23 = 0x00 => extractValue returns "00" => car_setting_no.
+      Post-2026-05-07 current:
+        byte 23 = 0x04 => extractValue returns "01" => car_setting_yes.
 
     WRITE path (same guarded 2E0600 sequence proven on this BCM):
       Modify   : VagSetting_insertValue(coding, offset=23, mask="04", requested="01")
@@ -171,27 +174,25 @@ def VagUdsCodingSetting_drl_via_fogs() -> VagUdsCodingSetting:
       target  : 3AB82B9F08A10000003008006C680ED000C8412F60A60004200000000000
       delta   : byte 23 0x00 -> 0x04
 
-    BCM FIRMWARE HYPOTHESIS (NOT confirmed by Carista software):
+    Former BCM firmware hypothesis, now behavior-disproven standalone:
       The BCM (6R0937087K) appears to drive fog outputs as a single paired
       'front fog channel' regardless of the cornering coding bits being set.
       Physical observation: fogs activate together as a steady low-beam-linked
       pair; no per-side cornering response to indicator inputs.
 
-      Hypothesis: the DRL-via-fogs bit (byte 23 bit 2) may instruct the BCM
+      Hypothesis tested: the DRL-via-fogs bit (byte 23 bit 2) might instruct the BCM
       firmware to re-assign the fog hardware outputs from the 'front fog channel'
       (single paired path, no individual addressing) to the 'DRL channel'
       (per-side addressing, capable of left/right independent activation).
-      The cornering logic would then route through the DRL channel and produce
-      per-side output.  Without this bit, the BCM ignores per-side cornering
-      commands because the fog driver circuit has no individual routing.
 
-      This is the only recovered CENTRAL_ELEC_6R_5C_7E_7H coding bit that is
-      NOT already set in the current live BCM.  All other cornering-relevant
-      6R bits are set and behavior-disproven as standalone fixes.
+      Live outcome: the 2026-05-07 write set byte 23 bit 2 and persisted, but
+      the fog behavior stayed unchanged. This bit is therefore not the missing
+      standalone fix. Keep it as mapped evidence, not as an active target.
 
     Live status (2026-05-07):
-      DID 0600 byte 23 = 0x00 => mask 0x04 CLEAR => DRL via fogs DISABLED.
-      PRIORITY: live before/after correlation test required before 2E0600 write.
+      DID 0600 byte 23 = 0x04 => mask 0x04 SET => DRL via fogs ENABLED.
+      Physical behavior unchanged: steady paired fogs in headlight position,
+      no useful left/right turn-signal-cornering ownership.
     """
     return VagUdsCodingSetting_ctor_ecu_byte(value=0x04, value_offset=23)
 
