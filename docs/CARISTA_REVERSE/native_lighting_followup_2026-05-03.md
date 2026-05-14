@@ -13,7 +13,7 @@ Useful artifacts:
 - `carista_apk_analysis/ghidra_scripts/ExportCaristaInstructionWindows.java`
 - `carista_apk_analysis/ghidra_instruction_windows/*.txt`
 - `CaristaReproduction/VagCanSettings.py`
-- `docs/carista_apk_analysis/vag_can_settings_recoveries.json`
+- `docs/CARISTA_REVERSE/generated/vag_can_settings_recoveries.json`
 
 For future native digs, prefer hardcoded instruction-window targets over broad decompiler runs.
 
@@ -352,11 +352,12 @@ Safety boundary remains unchanged: the recovered type `7` path reads the per-sid
   `StringWhitelist` contents for normal `AvailBy=2` branches and match those to
   `6R0937087K`.
 
-2026-05-07 turn-signal-cornering bit review:
+2026-05-07 turn-signal-cornering bit review, updated with the latest retained
+2026-05-08 coding:
 
-- Current post-DRL coding has byte `0x15 = A6`, so byte 21 bit 2
-  (`car_setting_cornering_lights_with_turn_signals`) is enabled. It was already
-  enabled before the 2026-05-07 DRL-via-fogs write.
+- Latest retained coding has byte `0x15 = 82`, so byte 21 bit 2
+  (`car_setting_cornering_lights_with_turn_signals`) is clear. Full expert
+  backup sets byte `0x15` to `86`.
 - Official x86 evidence keeps this setting narrow: `0x012da72c -> 0x012da761`
   passes `CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S`, byte `0x15`, mask `0x04`, and
   `YES_NO`. The branch has no fog/low-beam role choice table and no per-side
@@ -393,11 +394,12 @@ https://www.mypolo.nl/xenforo/threads/bochtverlichting-en-mistlampen.17681/page-
 https://www.uk-polos.net/viewtopic.php?p=553138
 ```
 
-2026-05-07 cause narrowing after DRL-via-fogs failed:
+2026-05-07 cause narrowing after DRL-via-fogs failed, updated with the latest
+retained 2026-05-08 coding:
 
-- The current live coding has all recovered 6R/PQ25 cornering/fog prerequisite
-  bits set: byte `0x0C` mask `0x40`, byte `0x15` masks `0x04`, `0x20`, `0x80`,
-  and byte `0x17` mask `0x04`. Static x86 evidence gives no remaining direct
+- The latest retained coding has byte `0x0C` mask `0x40` and byte `0x15` mask
+  `0x80` set. Byte `0x15` masks `0x04` and `0x20`, and byte `0x17` mask `0x04`,
+  are clear after rollback. Static x86 evidence gives no remaining direct
   `0600` cornering trigger branch for `6R0937087K`.
 - The observed behavior is a paired front-fog request: both fogs are steady in
   the low-beam/headlight switch position and go off with high beam. That is
@@ -514,10 +516,10 @@ branches against the `6R0937087K` ECU-tag route:
 |---|---|---|
 | `car_setting_coming_home_req_rls` | Reused-key branch `0x012c74fe -> 0x0133b390`, `CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S`, DID `0600` byte `0x0A`, mask `0x04`; adjacent `coming_home_menu_default_req_rls` is MK7/6C raw `0x0D04` adaptation evidence. | PQ25 CH/LH prerequisite branch is now x86-confirmed, but it is not a `0601` owner path and not a standalone cornering-fog write plan. |
 | `car_setting_cornering_lights_via_fogs` | `0x012d9f7b -> 0x01358fd0`, `CENTRAL_ELEC_6R_5C_7E_7H`, byte `0x0C`, mask `0x40` | Already set in live coding; behavior-disproven as standalone fix. |
-| `car_setting_cornering_lights_via_fogs_experimental` | `0x012da0f2 -> 0x0135eaf0`, `CENTRAL_ELEC_6R_5C_7E_7H`, byte `0x15`, mask `0x80` | Fresh engine-running byte `0x15 = 0xA6`; bit already set. |
-| `car_setting_cornering_lights_with_turn_signals` | `0x012da761 -> 0x0135e920`, `CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S`, byte `0x15`, mask `0x04` | Explicit blinker-trigger bit is already set; not an output-role selector and not a steady-paired-fog explanation. |
-| `car_setting_drl_via_fogs` | `0x012cdeb6 -> 0x01361520`, `CENTRAL_ELEC_6R_5C_7E_7H`, byte `0x17`, mask `0x04` | Set by the 2026-05-07 live write and persisted; behavior unchanged, so behavior-disproven standalone. |
-| `car_setting_turn_off_fogs_with_high_beam` | `0x012d4dea -> 0x0135e580`, `CENTRAL_ELEC_6R_5C_7E_7H`, byte `0x15`, mask `0x20` | Set in fresh engine-running coding; physical high-beam fog shutoff already occurs. |
+| `car_setting_cornering_lights_via_fogs_experimental` | `0x012da0f2 -> 0x0135eaf0`, `CENTRAL_ELEC_6R_5C_7E_7H`, byte `0x15`, mask `0x80` | Latest retained byte `0x15 = 0x82`; bit set. |
+| `car_setting_cornering_lights_with_turn_signals` | `0x012da761 -> 0x0135e920`, `CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S`, byte `0x15`, mask `0x04` | Latest retained byte `0x15 = 0x82`; bit clear. Full expert backup sets byte `0x15` to `0x86`. |
+| `car_setting_drl_via_fogs` | `0x012cdeb6 -> 0x01361520`, `CENTRAL_ELEC_6R_5C_7E_7H`, byte `0x17`, mask `0x04` | Set by the 2026-05-07 live write; behavior unchanged; latest retained coding has it clear after rollback. |
+| `car_setting_turn_off_fogs_with_high_beam` | `0x012d4dea -> 0x0135e580`, `CENTRAL_ELEC_6R_5C_7E_7H`, byte `0x15`, mask `0x20` | Latest retained byte `0x15 = 0x82`; bit clear. Older byte `0xA6` state had it set. |
 | `car_setting_assist_dr_lights` | `0x012d9bad -> 0x013625a0`, `CENTRAL_ELEC_6R_5C_7E_7H`, byte `0x16`, mask `0x20` | Clear on current car; lower-priority ADL clue. |
 
 Negative x86 branch-selection facts:
@@ -543,7 +545,8 @@ Negative x86 branch-selection facts:
 Near-term car-read conclusion:
 
 - Do not retest byte `0x0C` mask `0x40`, byte `0x15` mask `0x80`, or byte
-  `0x15` mask `0x04` as standalone fixes; all are already set or disproven.
+  `0x15` mask `0x04` as standalone fixes; they are either set in the latest
+  retained coding or behavior-disproven from earlier enabled tests.
 - The remaining likely gap is an output-role/prerequisite path not exposed by the
   direct per-side `055C` / `055D` branches.
 
@@ -554,7 +557,7 @@ The output-role path is now separated into three buckets for the actual
 
 | Bucket | Evidence | Current conclusion |
 |---|---|---|
-| Recovered 6R/PQ25 prerequisites | `cornering_lights_via_fogs`, `cornering_lights_via_fogs_experimental`, `cornering_lights_with_turn_signals`, and `turn_off_fogs_with_high_beam` all have x86 6R/PQ25 DID `0600` byte/mask branches. | All relevant masks are already set in the fresh engine-running coding or behavior-disproven as standalone fixes. |
+| Recovered 6R/PQ25 prerequisites | `cornering_lights_via_fogs`, `cornering_lights_via_fogs_experimental`, `cornering_lights_with_turn_signals`, and `turn_off_fogs_with_high_beam` all have x86 6R/PQ25 DID `0600` byte/mask branches. | These masks are either set in the latest retained coding or behavior-disproven from earlier enabled tests; none is a standalone output-role fix. |
 | Per-side fog role/output branches | `cornering_lights_via_fogs_left/right` recover `055C`/`055D` offset `5` mask `FF`, but x86 guards are MQB/MK8 or gateway/MEB. ARM neighbors include `5Q0937084*` and `6C093708*`, not `6R0937087K`. | Do not promote these to the Polo path without a separate special-predicate proof or positive raw payload. |
 | CH/LH output selector | `coming_leaving_home_output` has branch-specific `110E`, DID `0600` byte `0x0D` mask `0x40`, and DID `0600` byte `0x11` mask `0x08` encodings. `22110E` rejected live and x86 direct branches are MK8/gateway scoped. | Current value is intentionally reported as unknown because the choice encoding flips by branch. |
 

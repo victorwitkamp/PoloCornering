@@ -102,8 +102,8 @@ def VagUdsCodingSetting_cornering_fogs_experimental() -> VagUdsCodingSetting:
       callee: VagUdsCodingSetting_cornering_fogs_experimental (0135eaf0 file VA / 0135eaf0 Ghidra)
       interpretation: ENABLED_DISABLED
 
-    Live status (2026-05-07):
-      DID 0600 byte 21 = 0xA6 => mask 0x80 SET => coded ENABLED.
+    Latest retained status (2026-05-08):
+      DID 0600 byte 21 = 0x82 => mask 0x80 SET => coded ENABLED.
     """
     return VagUdsCodingSetting_ctor_ecu_byte(value=0x80, value_offset=21)
 
@@ -119,8 +119,9 @@ def VagUdsCodingSetting_cornering_turn_signals() -> VagUdsCodingSetting:
       012da761: CALL VagUdsCodingSetting_cornering_turn_signals (0135e920 file VA / 0135e920 Ghidra)
       interpretation: YES_NO
 
-    Live status (2026-05-07):
-      DID 0600 byte 21 = 0xA6 => mask 0x04 SET => coded ENABLED.
+    Latest retained status (2026-05-08):
+      DID 0600 byte 21 = 0x82 => mask 0x04 CLEAR.
+      Full expert backup sets this bit: byte 21 = 0x86.
     """
     return VagUdsCodingSetting_ctor_ecu_byte(value=0x04, value_offset=21)
 
@@ -154,8 +155,10 @@ def VagUdsCodingSetting_drl_via_fogs() -> VagUdsCodingSetting:
         result   = (byte_23 & 0x04) >> 2  => "00" = NO, "01" = YES
       Pre-write current:
         byte 23 = 0x00 => extractValue returns "00" => car_setting_no.
-      Post-2026-05-07 current:
+      Post-2026-05-07 DRL test state:
         byte 23 = 0x04 => extractValue returns "01" => car_setting_yes.
+      Latest retained 2026-05-08 rollback state:
+        byte 23 = 0x00 => extractValue returns "00" => car_setting_no.
 
     WRITE path (same guarded 2E0600 sequence proven on this BCM):
       Modify   : VagSetting_insertValue(coding, offset=23, mask="04", requested="01")
@@ -189,10 +192,9 @@ def VagUdsCodingSetting_drl_via_fogs() -> VagUdsCodingSetting:
       the fog behavior stayed unchanged. This bit is therefore not the missing
       standalone fix. Keep it as mapped evidence, not as an active target.
 
-    Live status (2026-05-07):
-      DID 0600 byte 23 = 0x04 => mask 0x04 SET => DRL via fogs ENABLED.
-      Physical behavior unchanged: steady paired fogs in headlight position,
-      no useful left/right turn-signal-cornering ownership.
+    Latest retained status (2026-05-08):
+      DID 0600 byte 23 = 0x00 => mask 0x04 CLEAR after rollback.
+      The 2026-05-07 enabled test persisted but did not change physical behavior.
     """
     return VagUdsCodingSetting_ctor_ecu_byte(value=0x04, value_offset=23)
 
@@ -206,8 +208,9 @@ def VagUdsCodingSetting_turn_off_fogs_high_beam() -> VagUdsCodingSetting:
       DID 0600 byte 0x15 (21) mask 0x20.
       callee: VagUdsCodingSetting_turn_off_fogs_high_beam (0135e580 file VA / 0135e580 Ghidra)
 
-    Live status (2026-05-07):
-      DID 0600 byte 21 = 0xA6 => mask 0x20 SET => fogs-off-with-high-beam ENABLED.
-      Physical observation confirms: high beam on causes front fogs to turn off.
+    Latest retained status (2026-05-08):
+      DID 0600 byte 21 = 0x82 => mask 0x20 CLEAR.
+      Older byte 0xA6 state had the bit set and matched the observed high-beam
+      fog cutoff behavior.
     """
     return VagUdsCodingSetting_ctor_ecu_byte(value=0x20, value_offset=21)

@@ -11,7 +11,7 @@ from typing import Any, Iterable
 HexString = str
 
 HEX_TOKEN_RE = re.compile(r"(?<![0-9A-Fa-f])(?:[0-9A-Fa-f]{2}){2,}(?![0-9A-Fa-f])")
-INTERESTING_RESPONSE_PREFIXES = ("58", "59", "7F")
+INTERESTING_RESPONSE_PREFIXES = ("58", "59", "62", "5A", "7F")
 
 UDS_DTC_STATUS_BITS = (
     (0x01, "testFailed"),
@@ -29,13 +29,22 @@ NEGATIVE_RESPONSE_CODES = {
     0x11: "serviceNotSupported",
     0x12: "subFunctionNotSupported",
     0x13: "incorrectMessageLengthOrInvalidFormat",
+    0x21: "busyRepeatRequest",
     0x22: "conditionsNotCorrect",
+    0x24: "requestSequenceError",
     0x31: "requestOutOfRange",
     0x33: "securityAccessDenied",
     0x35: "invalidKey",
     0x36: "exceededNumberOfAttempts",
     0x37: "requiredTimeDelayNotExpired",
     0x78: "requestCorrectlyReceivedResponsePending",
+    0x7E: "subFunctionNotSupportedInActiveSession",
+    0x7F: "subFunctionNotSupportedInActiveSession",
+    0x80: "uploadDownloadNotAccepted",
+    0x81: "rpmTooHigh",
+    0x83: "engineIsRunning",
+    0x84: "responseTooLong",
+    0x88: "vehicleSpeedTooHigh",
 }
 
 UDS_READ_DTC_SUBFUNCTIONS = {
@@ -55,6 +64,40 @@ UDS_READ_DTC_SUBFUNCTIONS = {
     0x0E: "reportMostRecentConfirmedDTC",
     0x0F: "reportMirrorMemoryDTCByStatusMask",
     0x55: "reportDTCInformationByDTCReadinessGroupIdentifier",
+}
+
+UDS_DID_NAMES = {
+    0x055C: "PQ25 fog/CH-LH left adaptation candidate",
+    0x055D: "PQ25 fog/CH-LH right adaptation candidate",
+    0x056D: "PQ25 coming-home via fogs adaptation candidate",
+    0x0600: "PQ25 BCM long coding",
+    0x0601: "PQ25 BCM live companion/status value",
+    0x0606: "PQ25 BCM live companion/status value",
+    0x0A57: "PQ25 coming/leaving-home adaptation candidate",
+    0x0D01: "PQ25 fog/high-beam adaptation candidate",
+    0x0D04: "PQ25 coming/leaving-home menu adaptation candidate",
+    0x0D1D: "PQ25 lighting adaptation candidate",
+    0x110E: "PQ25 coming/leaving-home output adaptation candidate",
+    0xF17E: "standard ECU identification DID F17E",
+    0xF187: "standard vehicle manufacturer spare part number",
+    0xF189: "standard application software identification",
+    0xF18B: "standard ECU manufacturing date",
+    0xF18C: "standard ECU serial number",
+    0xF190: "standard VIN",
+    0xF191: "standard hardware number",
+    0xF197: "standard system name / component",
+    0xF1A3: "standard ECU hardware version",
+    0xF1A5: "standard ECU programming/workshop fingerprint",
+    0xF1AA: "standard system supplier ECU hardware/software number",
+    0xF1DF: "standard vehicle manufacturer ECU software number",
+}
+
+KWP_LOCAL_IDENTIFIER_NAMES = {
+    0x86: "retained Carista KWP debug/local identifier 86",
+    0x91: "retained Carista KWP debug/local identifier 91",
+    0x9A: "Carista VAG CAN long coding",
+    0x9B: "Carista VAG CAN ECU info",
+    0x9F: "Carista VAG CAN ECU list",
 }
 
 
@@ -93,6 +136,15 @@ def sae_dtc_candidate(raw_24bit: HexString) -> str:
     return f"{system}{first_digit:X}{raw[0] & 0x0F:X}{raw[1]:02X}:{raw[2]:02X}"
 
 
+def ascii_candidate(data: bytes) -> str | None:
+    trimmed = data.rstrip(b"\x00 ")
+    if not trimmed:
+        return None
+    if all(32 <= byte <= 126 for byte in trimmed):
+        return trimmed.decode("ascii", errors="replace")
+    return None
+
+
 def strip_can_header_if_present(value: HexString) -> tuple[HexString, list[str]]:
     if len(value) % 2 == 0:
         return value, []
@@ -114,6 +166,37 @@ def strip_tp20_application_frame(value: HexString) -> tuple[HexString, list[str]
     return value, []
 
 
+def strip_isotp_single_frame(value: HexString) -> tuple[HexString, list[str]]:
+    if len(value) < 4 or len(value) % 2:
+        return value, []
+    data = bytes.fromhex(value)
+    if data[0] >> 4 != 0:
+        return value, []
+    length = data[0] & 0x0F
+    if not 0 < length <= len(data) - 1:
+        return value, []
+    payload = data[1 : 1 + length].hex().upper()
+    if not payload.startswith(INTERESTING_RESPONSE_PREFIXES):
+        return value, []
+    return payload, [f"stripped ISO-TP single-frame prefix length={length}"]
+
+
+def strip_isotp_first_frame(value: HexString) -> tuple[HexString, list[str]]:
+    if len(value) < 6 or len(value) % 2:
+        return value, []
+    data = bytes.fromhex(value)
+    if data[0] >> 4 != 1 or len(data) < 3:
+        return value, []
+    declared_length = ((data[0] & 0x0F) << 8) | data[1]
+    payload = data[2:].hex().upper()
+    if not declared_length or not payload.startswith(INTERESTING_RESPONSE_PREFIXES):
+        return value, []
+    note = f"stripped ISO-TP first-frame prefix declared_length={declared_length}"
+    if declared_length > len(data) - 2:
+        note += "; payload is partial until continuation frames are assembled"
+    return payload, [note]
+
+
 def normalize_application_payload(raw: str) -> tuple[HexString, HexString, list[str], list[str]]:
     normalized = clean_hex(raw)
     notes: list[str] = []
@@ -128,8 +211,13 @@ def normalize_application_payload(raw: str) -> tuple[HexString, HexString, list[
         warnings.append("hex payload has an odd number of nibbles")
         return normalized, "", notes, warnings
 
-    application_payload, new_notes = strip_tp20_application_frame(candidate)
+    application_payload, new_notes = strip_isotp_single_frame(candidate)
     notes.extend(new_notes)
+    application_payload, new_notes = strip_tp20_application_frame(application_payload)
+    notes.extend(new_notes)
+    if not new_notes:
+        application_payload, new_notes = strip_isotp_first_frame(application_payload)
+        notes.extend(new_notes)
     return normalized, application_payload, notes, warnings
 
 
@@ -215,7 +303,16 @@ def decode_uds_read_dtc_information(raw: str, normalized: HexString, payload: He
         subfunction = data[1]
         details["subfunction"] = f"{subfunction:02X}"
         details["subfunction_name"] = UDS_READ_DTC_SUBFUNCTIONS.get(subfunction, "unknown")
-        if subfunction == 0x02:
+        if subfunction in (0x01, 0x11):
+            if len(data) < 6:
+                warnings.append("reportNumberOfDTC response is shorter than the standard 6-byte count layout")
+            else:
+                availability_mask = data[2]
+                details["dtc_status_availability_mask"] = f"{availability_mask:02X}"
+                details["available_status_bits"] = status_bit_names(availability_mask, UDS_DTC_STATUS_BITS)
+                details["dtc_format_identifier"] = f"{data[3]:02X}"
+                details["dtc_count"] = (data[4] << 8) | data[5]
+        elif subfunction == 0x02:
             if len(data) < 3:
                 warnings.append("reportDTCByStatusMask response is missing DTC status availability mask")
             else:
@@ -243,6 +340,26 @@ def decode_uds_read_dtc_information(raw: str, normalized: HexString, payload: He
                             "status_bits": status_bit_names(status, UDS_DTC_STATUS_BITS),
                         }
                     )
+        elif subfunction in (0x04, 0x06):
+            if len(data) < 6:
+                warnings.append(f"{details['subfunction_name']} response is missing the DTC/status record")
+            else:
+                dtc_hex = data[2:5].hex().upper()
+                status = data[5]
+                extra_data = data[6:].hex().upper()
+                records.append(
+                    {
+                        "index": 1,
+                        "dtc_raw_24bit": dtc_hex,
+                        "sae_format_candidate": sae_dtc_candidate(dtc_hex),
+                        "status": f"{status:02X}",
+                        "status_bits": status_bit_names(status, UDS_DTC_STATUS_BITS),
+                        "record_data": extra_data,
+                        "record_data_bytes": len(data) - 6,
+                    }
+                )
+                if not extra_data:
+                    warnings.append(f"{details['subfunction_name']} returned no data bytes after the DTC/status record")
         else:
             warnings.append("UDS ReadDTCInformation subfunction is not decoded by this utility yet")
     return DiagnosticPayloadDecode(
@@ -253,6 +370,99 @@ def decode_uds_read_dtc_information(raw: str, normalized: HexString, payload: He
         response="read_dtc_information_positive",
         details=details,
         records=records,
+        notes=notes,
+        warnings=warnings,
+        source=source,
+    )
+
+
+def decode_uds_read_data_by_identifier_positive(
+    raw: str,
+    normalized: HexString,
+    payload: HexString,
+    notes: list[str],
+    source: str,
+) -> DiagnosticPayloadDecode:
+    data = bytes.fromhex(payload)
+    warnings: list[str] = []
+    details: dict[str, Any] = {"service": "62", "request_service": "22"}
+    if len(data) < 3:
+        warnings.append("ReadDataByIdentifier positive response is shorter than 3 bytes")
+    else:
+        did = (data[1] << 8) | data[2]
+        value = data[3:]
+        details.update(
+            {
+                "did": f"{did:04X}",
+                "did_name": UDS_DID_NAMES.get(did, "unknown"),
+                "value_raw": value.hex().upper(),
+                "value_bytes": len(value),
+            }
+        )
+        value_ascii = ascii_candidate(value)
+        if value_ascii is not None:
+            details["value_ascii"] = value_ascii
+        if did == 0x0600:
+            details["value_kind"] = "coding"
+            details["coding_bytes"] = len(value)
+        elif did == 0xF1A5:
+            details["value_kind"] = "workshop/programming fingerprint"
+            details["workshop_code_payload_candidate"] = value.hex().upper()
+    return DiagnosticPayloadDecode(
+        raw_input=raw,
+        normalized_input=normalized,
+        application_payload=payload,
+        protocol="UDS",
+        response="read_data_by_identifier_positive",
+        details=details,
+        notes=notes,
+        warnings=warnings,
+        source=source,
+    )
+
+
+def decode_kwp_local_identifier_positive(
+    raw: str,
+    normalized: HexString,
+    payload: HexString,
+    notes: list[str],
+    source: str,
+) -> DiagnosticPayloadDecode:
+    data = bytes.fromhex(payload)
+    warnings: list[str] = []
+    details: dict[str, Any] = {"service": "5A", "request_service": "1A"}
+    if len(data) < 2:
+        warnings.append("KWP local-identifier positive response is shorter than 2 bytes")
+    else:
+        local_identifier = data[1]
+        value = data[2:]
+        details.update(
+            {
+                "local_identifier": f"{local_identifier:02X}",
+                "local_identifier_name": KWP_LOCAL_IDENTIFIER_NAMES.get(local_identifier, "unknown"),
+                "value_raw": value.hex().upper(),
+                "value_bytes": len(value),
+            }
+        )
+        value_ascii = ascii_candidate(value)
+        if value_ascii is not None:
+            details["value_ascii"] = value_ascii
+        if local_identifier == 0x9A:
+            details["value_kind"] = "coding"
+            details["coding_bytes"] = len(value)
+        elif local_identifier == 0x9B and len(value) >= 0x1A:
+            details["value_kind"] = "Carista VAG CAN ECU info"
+            details["part_number_ascii"] = ascii_candidate(value[:12]) or ""
+            details["raw_address4"] = value[0x0C:0x10].hex().upper()
+            details["coding_type_selector"] = f"{value[0x10]:02X}"
+            details["initial_value6"] = value[0x14:0x1A].hex().upper()
+    return DiagnosticPayloadDecode(
+        raw_input=raw,
+        normalized_input=normalized,
+        application_payload=payload,
+        protocol="KWP2000",
+        response="local_identifier_positive",
+        details=details,
         notes=notes,
         warnings=warnings,
         source=source,
@@ -277,6 +487,10 @@ def decode_payload(raw: str, *, source: str = "") -> DiagnosticPayloadDecode:
         decoded = decode_kwp_read_dtc_by_status(raw, normalized, payload, notes, source)
     elif payload.startswith("59"):
         decoded = decode_uds_read_dtc_information(raw, normalized, payload, notes, source)
+    elif payload.startswith("62"):
+        decoded = decode_uds_read_data_by_identifier_positive(raw, normalized, payload, notes, source)
+    elif payload.startswith("5A"):
+        decoded = decode_kwp_local_identifier_positive(raw, normalized, payload, notes, source)
     else:
         decoded = DiagnosticPayloadDecode(
             raw_input=raw,
@@ -285,7 +499,7 @@ def decode_payload(raw: str, *, source: str = "") -> DiagnosticPayloadDecode:
             protocol="unknown",
             response="unrecognized_payload",
             notes=notes,
-            warnings=["payload is not a supported DTC/status response"],
+            warnings=["payload is not a supported diagnostic response"],
             source=source,
         )
     decoded.warnings = warnings + decoded.warnings
@@ -367,6 +581,13 @@ def render_decode(decoded: DiagnosticPayloadDecode) -> str:
                     bits=format_flags(record["status_bits"]),
                 )
             )
+            if "record_data" in record:
+                lines.append(
+                    "    record_data: {record_data} ({record_data_bytes} byte(s))".format(
+                        record_data=record["record_data"] or "<none>",
+                        record_data_bytes=record["record_data_bytes"],
+                    )
+                )
     for warning in decoded.warnings:
         lines.append(f"  warning: {warning}")
     return "\n".join(lines)

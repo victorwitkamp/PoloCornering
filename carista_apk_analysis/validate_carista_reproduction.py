@@ -8,6 +8,12 @@ if str(WORKSPACE_ROOT) not in sys.path:
     sys.path.insert(0, str(WORKSPACE_ROOT))
 
 from CaristaReproduction.Commands.WriteDataByIdentifierCommand import WriteDataByIdentifierCommand_getRequest
+from CaristaReproduction.Commands.VagDiagnosticCommands import (
+    GetVagCanTroubleCodesCommand_getRequest,
+    GetVagUdsTroubleCodesCommand_getRequest,
+    ReadVagUdsExtRecordByDtcCommand_getRequest,
+    ReadVagUdsSnapshotRecordByDtcCommand_getRequest,
+)
 from CaristaReproduction.Commands.GetSubmoduleIdsOverUdsCommand import (
     GetSubmoduleIdsOverUdsCommand_processPayload,
 )
@@ -47,6 +53,10 @@ from CaristaReproduction.VagCanCommunicator import (
     next_counter_after_request,
     sendAck,
     sendNack,
+)
+from CaristaReproduction.VagDiagnosticsOperation import (
+    VagDiagnosticsOperation_buildPq25Plan,
+    VagDiagnosticsOperation_pq25BcmReadOnlyRequests,
 )
 from CaristaReproduction.VagCanSettings import VagCanSettings_getPq25SettingRecoveries
 from CaristaReproduction.VagCanSettings import (
@@ -99,6 +109,10 @@ def assert_contains(haystack: str | None, needle: str) -> None:
 
 def main() -> int:
     assert WriteDataByIdentifierCommand_getRequest(0xF198, "0005F3C7E719") == "2EF1980005F3C7E719"
+    assert GetVagCanTroubleCodesCommand_getRequest() == "1802FF00"
+    assert GetVagUdsTroubleCodesCommand_getRequest() == "1902FF"
+    assert ReadVagUdsExtRecordByDtcCommand_getRequest("C40100") == "1906C40100FF"
+    assert ReadVagUdsSnapshotRecordByDtcCommand_getRequest("C40100") == "1904C40100FF"
     assert BaseCommand_extractState("7F2224") == State.OBD2_REQUEST_SEQUENCE_ERROR
     assert BaseCommand_extractState("7F2233") == State.OBD2_SECURITY_ACCESS_DENIED
     assert "responsePending" in BaseCommand_describeNegativePayload("7F2E78")
@@ -142,6 +156,20 @@ def main() -> int:
     assert any("three-hex-digit CAN header" in item for item in VAG_CAN_COMMUNICATOR_PARSE_PACKET_RECOVERED_FLOW)
     assert any("sendNack(expectedSeq)" in item for item in VAG_CAN_COMMUNICATOR_READ_RESPONSES_RECOVERED_FLOW)
     assert any("95 positive read records" in item for item in VAG_CAN_COMMUNICATOR_READ_RESPONSES_DYNAMIC_EVIDENCE)
+
+    diagnostics_plan = VagDiagnosticsOperation_buildPq25Plan()
+    assert VagDiagnosticsOperation_pq25BcmReadOnlyRequests() == ("1802FF00", "1902FF")
+    assert VagDiagnosticsOperation_pq25BcmReadOnlyRequests(include_known_detail=True) == (
+        "1802FF00",
+        "1902FF",
+        "1906C40100FF",
+        "1904C40100FF",
+    )
+    assert any(
+        finding.response == "5906C4010008" and "ReadVagUdsExtRecordByDtcCommand" in finding.carista_symbol
+        for finding in diagnostics_plan.log_findings
+    )
+    assert any(finding.topic == "receive-more handling" and "A3" in finding.carista_behavior for finding in diagnostics_plan.transport_findings)
 
     left = car_setting_cornering_lights_via_fogs_left()
     right = car_setting_cornering_lights_via_fogs_right()

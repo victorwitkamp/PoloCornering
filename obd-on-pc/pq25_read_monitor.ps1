@@ -1,16 +1,15 @@
 <#
-run_bcm_active_monitor.ps1 - PowerShell wrapper for read-only BCM active polling.
+pq25_read_monitor.ps1 - PowerShell wrapper for read-only BCM active polling.
+
+Replaces: run_bcm_active_monitor.ps1
 
 Usage:
-    .\run_bcm_active_monitor.ps1
-    .\run_bcm_active_monitor.ps1 -Profile all-safe -Cycles 1
-    .\run_bcm_active_monitor.ps1 -Commands 1A9B,1A9F,1A9A -SetupCommand 1089 -Cycles 1
-    .\run_bcm_active_monitor.ps1 -Kwp21Range 10,1F -Cycles 1
-    .\run_bcm_active_monitor.ps1 -Did22Range 0550,056F -Cycles 1
-    .\run_bcm_active_monitor.ps1 -Service1ARange 80,9F -Cycles 1
-    .\run_bcm_active_monitor.ps1 -Profile scaling-known-dids -Cycles 1
-    .\run_bcm_active_monitor.ps1 -VagAdaptationKind short -VagAdaptationChannel 2F -Cycles 1
-    .\run_bcm_active_monitor.ps1 -Cycles 10 -Label fog_switch_toggle
+    .\obd-on-pc\pq25_read_monitor.ps1
+    .\obd-on-pc\pq25_read_monitor.ps1 -Profile all-safe -Cycles 1
+    .\obd-on-pc\pq25_read_monitor.ps1 -Commands 1A9B,1A9F,1A9A -SetupCommand 1089 -Cycles 1
+    .\obd-on-pc\pq25_read_monitor.ps1 -Kwp21Range 10,1F -Cycles 1
+    .\obd-on-pc\pq25_read_monitor.ps1 -Did22Range 0550,056F -Cycles 1
+    .\obd-on-pc\pq25_read_monitor.ps1 -ListProfiles
 #>
 param(
     [string]$Port = "COM10",
@@ -30,7 +29,7 @@ param(
     [switch]$ListProfiles
 )
 
-$Script = Join-Path $PSScriptRoot "run_bcm_active_monitor.py"
+$Script = Join-Path $PSScriptRoot "pq25_read_monitor.py"
 $RepoRoot = Split-Path -Parent $PSScriptRoot
 $VenvPython = Join-Path $RepoRoot ".venv\Scripts\python.exe"
 $Python = if (Test-Path $VenvPython) { $VenvPython } else { "python" }

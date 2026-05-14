@@ -2,6 +2,12 @@
 
 Date: 2026-05-06
 
+**Historical catalog note (2026-05-14):** this file preserves the generated
+2026-05-06 catalog. For the current retained in-car state, use
+`../OBD_DIAGNOSTICS/pq25_evidence_matrix.md`. The latest retained coding is
+`3AB02BBF08A10000003008006D2B0CD000C0412F60820000200000000000`, so older rows
+showing byte 21 as `A2`/`A6` are historical context, not current state.
+
 This is an offline catalog for the Polo/PQ25 BCM work. It joins Carista app resources/native strings, the current 30-byte long coding, the supplied/reference coding, and the local PQ25 candidate bit map.
 
 It is not a Carista live `ReadValuesOperation.getAvailableItems()` dump. Rows marked unmapped are visible in the app resources but not proved supported on this exact BCM.
@@ -12,7 +18,7 @@ It is not a Carista live `ReadValuesOperation.getAvailableItems()` dump. Rows ma
 carista_apk_analysis/pq25_carista_settings_catalog.csv
 carista_apk_analysis/pq25_carista_longcoding_bits.csv
 carista_apk_analysis/pq25_carista_setting_catalog.json
-docs/carista_apk_analysis/pq25_carista_setting_catalog.md
+docs/CARISTA_REVERSE/pq25_carista_setting_catalog.md
 ```
 
 ## Summary

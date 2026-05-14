@@ -5,12 +5,12 @@ from pathlib import Path
 from .Communicator import COMMUNICATOR_INTERNAL_EXECUTE_COMMAND_RECOVERED_FLOW, COMMUNICATOR_RUN_COMMAND_RECOVERED_FLOW
 from .ConnectionManager import CONNECTION_MANAGER_RUN_COMMAND_RECOVERED_FLOW
 from .Models.CheckSettingsOperation import CheckSettingsOperationFlowStep, CheckSettingsOperationPlan
-from .ReadValuesOperation import (
+from .ReadValuesOperationBuilder import (
     ReadValuesOperation_buildPq25BcmPlan,
     ReadValuesOperation_buildPq25SettingReport,
 )
 from .Types import HexString
-from .VagCanEcu import VagCanEcu_buildPq25ScanPlan
+from .VagCanEcuBuilder import VagCanEcu_buildPq25ScanPlan
 from .VagCanCommunicator import (
     VAG_CAN_COMMUNICATOR_ESTABLISH_ECU_COMM_RECOVERED_FLOW,
     VAG_CAN_COMMUNICATOR_PARSE_PACKET_RECOVERED_FLOW,

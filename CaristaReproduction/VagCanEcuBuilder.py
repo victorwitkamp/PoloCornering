@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from .Commands.GetVagCanEcuListCommand import GetVagCanEcuListCommand_getRequest
-from .ReadValuesOperation import (
+from .ReadValuesOperationBuilder import (
     CARISTA_EXACT_CHANNEL_PARAMETER_REQUEST,
     CARISTA_TP20_UNIT_09_OPEN_REQUEST,
     ReadValuesOperation_buildPq25BcmPlan,

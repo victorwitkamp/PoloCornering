@@ -8,11 +8,8 @@ catalogs and branch exports when more context is needed.
 
 ## Superseded Files
 
-```text
-docs/carista_apk_analysis/carista_reverse_engineering_status.md
-docs/carista_apk_analysis/carista_replication_gap_analysis.md
-docs/carista_apk_analysis/carista_relevant_evidence.md
-```
+The older split status/gap/evidence notes from the former docs
+`carista_apk_analysis` layout are superseded by this summary.
 
 ## Scope
 
@@ -78,29 +75,35 @@ write must still succeed and be verified by a fresh `220600` read.
 
 ## Current PQ25 Setting Facts
 
-Official/recovered 6R/PQ25 long-coding branches now represented in
+Official/recovered 6R/PQ25 long-coding branches represented in
 `CaristaReproduction`:
 
-| Setting key | DID/location | Status |
+| Setting key | DID/location | Latest retained state |
 |---|---|---|
 | `car_setting_cornering_lights_via_fogs` | `0600` byte 12 mask `0x40` | set; behavior-disproven standalone |
 | `car_setting_cornering_lights_via_fogs_experimental` | `0600` byte 21 mask `0x80` | set; not sufficient standalone |
-| `car_setting_cornering_lights_with_turn_signals` | `0600` byte 21 mask `0x04` | set; behavior-disproven standalone |
-| `car_setting_turn_off_fogs_with_high_beam` | `0600` byte 21 mask `0x20` | set; matches high-beam fog cutoff |
-| `car_setting_drl_via_fogs` | `0600` byte 23 mask `0x04` | tested; behavior-disproven for this symptom |
+| `car_setting_cornering_lights_with_turn_signals` | `0600` byte 21 mask `0x04` | clear in latest 2026-05-08 coding; full expert backup sets it |
+| `car_setting_turn_off_fogs_with_high_beam` | `0600` byte 21 mask `0x20` | clear in latest 2026-05-08 coding; older byte `A6` state had it set |
+| `car_setting_drl_via_fogs` | `0600` byte 23 mask `0x04` | clear after rollback; tested and behavior-disproven for this symptom |
 
-Current live reads:
+Latest retained live reads:
 
 ```text
-220600 -> 6206003AB82B9F08A10000003008006C680ED000C8412F60A60000200000000000
+220600 -> 6206003AB02BBF08A10000003008006D2B0CD000C0412F60820000200000000000
 220601 -> 6206011E
 220606 -> 620606001800018000
 22F1A5 -> 62F1A50005F3C7E719
 ```
 
-The 2026-05-07 in-car DRL-via-fogs test wrote byte 23 bit 2 and verified the
-coding change, but it did not fix the visible behavior. The next live target is
-restoring the expert backup:
+The 2026-05-07 DRL-via-fogs test wrote byte 23 bit 2 and verified the coding
+change, but it did not fix the visible behavior. The latest retained state is
+the expert-backup family with byte 21 bit 2 cleared:
+
+```text
+3AB02BBF08A10000003008006D2B0CD000C0412F60820000200000000000
+```
+
+The full expert backup remains available as a guarded target:
 
 ```text
 3AB02BBF08A10000003008006D2B0CD000C0412F60860000200000000000
@@ -138,7 +141,8 @@ Setting object. It is not a write seed.
 Current generated/catalog outputs:
 
 ```text
-docs/carista_apk_analysis/pq25_carista_setting_catalog.md
+docs/CARISTA_REVERSE/pq25_carista_setting_catalog.md
+docs/CARISTA_REVERSE/generated/vag_can_settings_recoveries.json
 carista_apk_analysis/pq25_carista_setting_catalog.json
 carista_apk_analysis/pq25_carista_settings_catalog.csv
 carista_apk_analysis/pq25_carista_longcoding_bits.csv
@@ -165,14 +169,20 @@ python -m CaristaReproduction --current-settings --coding <30-byte-coding>
 python -m CaristaReproduction --uds-write-plan --coding <current-coding> --target-coding 3AB02BBF08A10000003008006D2B0CD000C0412F60860000200000000000 --workshop-code 0005F3C7E719
 ```
 
+Future non-fog diagnostics roadmap:
+
+```text
+docs/CARISTA_REVERSE/pq25_future_diagnostics_roadmap.md
+```
+
 ## Open Work
 
-1. Restore the expert backup coding through the temporary thin runner in
-   `obd-on-pc/`.
-2. Remove the temporary live runner after the restore unless an immediate retry
-   is needed.
-3. Focus the remaining investigation on unresolved role ownership, not another
-   direct `0600` cornering bit.
+1. Keep future live reads/writes on the consolidated `pq25_read_monitor` and
+   `pq25_write_session` entrypoints.
+2. Focus the remaining investigation on unresolved role ownership and switch
+   input evidence, not another direct `0600` cornering bit.
+3. Continue static recovery of any real VAG/PQ25 fog-role path before promoting
+   `0601`, `055C`, `055D`, or adjacent values into write material.
 
 ## Unresolved Issues To Focus
 

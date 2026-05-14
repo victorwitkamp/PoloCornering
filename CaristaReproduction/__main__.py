@@ -26,10 +26,10 @@ from CaristaReproduction.Commands.VagCanAdaptationCommands import (
     StartReadVagCanRoutineCommand_getRequest,
     StopReadVagCanRoutineCommand_getRequest,
 )
-from CaristaReproduction.CheckSettingsOperation import CheckSettingsOperation_buildPq25BcmPlan
+from CaristaReproduction.CheckSettingsOperationBuilder import CheckSettingsOperation_buildPq25BcmPlan
 from CaristaReproduction.Constants import CORNERING_FIXES
-from CaristaReproduction.JniBridge import build_jni_bridge_summary
-from CaristaReproduction.ReadValuesOperation import ReadValuesOperation_buildPq25BcmPlan, ReadValuesOperation_buildPq25SettingReport
+from CaristaReproduction.JniBridgeBuilder import build_jni_bridge_summary
+from CaristaReproduction.ReadValuesOperationBuilder import ReadValuesOperation_buildPq25BcmPlan, ReadValuesOperation_buildPq25SettingReport
 from CaristaReproduction.Renderers import (
     render_carista_process_validation,
     render_carista_uds_coding_write_plan,
@@ -42,15 +42,18 @@ from CaristaReproduction.Renderers import (
     render_read_values_operation_plan_progress,
     render_read_values_operation_setting_report,
     render_read_values_operation_setting_report_progress,
+    render_vag_diagnostics_operation_plan,
+    render_vag_diagnostics_operation_progress,
     render_vag_can_settings_current_values,
     render_vag_can_settings_setting_recoveries,
     render_vag_can_ecu_scan_plan,
     render_vag_can_ecu_scan_plan_progress,
 )
 from CaristaReproduction.Types import CorneringFixKey
-from CaristaReproduction.VagCanEcu import VagCanEcu_buildPq25ScanPlan
+from CaristaReproduction.VagCanEcuBuilder import VagCanEcu_buildPq25ScanPlan
 from CaristaReproduction.VagCanSettings import VagCanSettings_getPq25SettingRecoveries
 from CaristaReproduction.VagCoding import apply_cornering_fixes, normalize_coding, read_coding
+from CaristaReproduction.VagDiagnosticsOperationBuilder import VagDiagnosticsOperation_buildPq25Plan
 from CaristaReproduction.VagOperationDelegate import build_carista_uds_coding_write_plan, validate_carista_process
 from CaristaReproduction.VagUdsAdaptationSetting import (
     car_setting_cornering_lights_via_fogs_left,
@@ -141,6 +144,7 @@ def main() -> int:
     parser.add_argument("--jni-bridge-summary", action="store_true", help="Print recovered JNI/native bridge evidence and unresolved ReadValuesOperation slots.")
     parser.add_argument("--jni-export-dir", type=Path, help="Override exact-flow JNI export directory for --jni-bridge-summary.")
     parser.add_argument("--ecu-scan-plan", action="store_true", help="Print the current Carista-shaped PQ25 ECU scan plan.")
+    parser.add_argument("--diagnostics-plan", action="store_true", help="Print the recovered Carista-shaped PQ25 diagnostics/DTC plan.")
     parser.add_argument("--check-settings-operation", action="store_true", help="Print the recovered CheckSettingsOperation -> ReadValuesOperation scan flow.")
     parser.add_argument("--read-values-plan", action="store_true", help="Print the recovered Carista ReadValuesOperation PQ25 BCM read plan.")
     parser.add_argument(
@@ -200,6 +204,18 @@ def main() -> int:
         if args.json_output:
             args.json_output.parent.mkdir(parents=True, exist_ok=True)
             args.json_output.write_text(json.dumps(asdict(ecu_scan_plan), indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        return 0
+    if args.diagnostics_plan:
+        diagnostics_plan = VagDiagnosticsOperation_buildPq25Plan()
+        _emit_process_output(
+            "diagnostics_plan",
+            render_vag_diagnostics_operation_plan(diagnostics_plan),
+            render_vag_diagnostics_operation_progress(diagnostics_plan),
+            args,
+        )
+        if args.json_output:
+            args.json_output.parent.mkdir(parents=True, exist_ok=True)
+            args.json_output.write_text(json.dumps(asdict(diagnostics_plan), indent=2, sort_keys=True) + "\n", encoding="utf-8")
         return 0
     if args.check_settings_operation:
         coding = read_coding(args.coding, args.coding_file) if (args.coding or args.coding_file) else None

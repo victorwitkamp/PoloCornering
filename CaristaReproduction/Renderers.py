@@ -6,6 +6,7 @@ from .Models.CaristaUdsCodingWritePlan import CaristaUdsCodingWritePlan
 from .Models.JniBridge import JniBridgeSummary
 from .Models.ReadValuesOperation import ReadValuesOperationPlan, ReadValuesOperationSettingReport
 from .Models.VagCanEcu import VagCanEcuScanPlan
+from .Models.VagDiagnosticsOperation import VagDiagnosticsOperationPlan
 from .Types import HexString
 from .VagCanSettings import UNMODELED_CARISTA_GROUPS, VagCanSettings_pq25CurrentSettingStates, VagCanSettingsSettingRecovery
 from .VagUdsAdaptationSetting import VagUdsAdaptationSetting
@@ -190,6 +191,70 @@ def render_vag_can_ecu_scan_plan_progress(plan: VagCanEcuScanPlan) -> str:
         lines.append(
             f"- {probe.ecu.ecu_id}: open {probe.tp20_open_request}, channel {probe.expected_send_header}/{probe.expected_listen_header}, params {probe.channel_parameter_request}"
         )
+    lines.append("Current gaps:")
+    for item in plan.unresolved:
+        lines.append(f"- {item}")
+    return "\n".join(lines) + "\n"
+
+
+def render_vag_diagnostics_operation_plan(plan: VagDiagnosticsOperationPlan) -> str:
+    lines = [
+        "Carista PQ25 diagnostics recovery",
+        "",
+        f"Name:    {plan.name}",
+        f"Vehicle: {plan.vehicle_scope}",
+        f"Source:  {plan.source}",
+        "",
+        "Recovered/candidate read-only requests:",
+    ]
+    for request in plan.requests:
+        profile = "default BCM profile" if request.included_in_bcm_profile else "module-aware/detail only"
+        lines.append(f"  {request.order}. {request.request}: {request.command_name}")
+        lines.append(f"     ECU scope: {request.ecu_scope}")
+        lines.append(f"     purpose: {request.purpose}")
+        lines.append(f"     safety/status: {request.safety_class}; {request.status}; {profile}")
+        for evidence in request.evidence:
+            lines.append(f"     evidence: {evidence}")
+        for unresolved in request.unresolved:
+            lines.append(f"     unresolved: {unresolved}")
+
+    lines.extend(["", "Log translations added or confirmed:"])
+    for finding in plan.log_findings:
+        lines.append(f"  {finding.response}: {finding.translation}")
+        lines.append(f"     Carista symbol/path: {finding.carista_symbol}")
+        for evidence in finding.evidence:
+            lines.append(f"     evidence: {evidence}")
+        for unresolved in finding.unresolved:
+            lines.append(f"     unresolved: {unresolved}")
+
+    lines.extend(["", "No-response/reset handling recovered from Carista:"])
+    for finding in plan.transport_findings:
+        lines.append(f"  {finding.topic}: {finding.carista_behavior}")
+        for evidence in finding.log_evidence:
+            lines.append(f"     log evidence: {evidence}")
+        lines.append(f"     implementation: {finding.implementation_note}")
+
+    lines.extend(["", "Unresolved:"])
+    for item in plan.unresolved:
+        lines.append(f"  {item}")
+    return "\n".join(lines) + "\n"
+
+
+def render_vag_diagnostics_operation_progress(plan: VagDiagnosticsOperationPlan) -> str:
+    default_requests = tuple(request for request in plan.requests if request.included_in_bcm_profile)
+    detail_requests = tuple(request for request in plan.requests if not request.included_in_bcm_profile)
+    lines = [
+        "Carista PQ25 diagnostics recovery",
+        f"Read-only request candidates: {len(plan.requests)} ({len(default_requests)} BCM-profile, {len(detail_requests)} detail/module-aware)",
+        f"Translated retained responses: {len(plan.log_findings)}",
+        f"Recovered no-response/reset handling points: {len(plan.transport_findings)}",
+        "BCM-profile requests:",
+    ]
+    for request in default_requests:
+        lines.append(f"- {request.request}: {request.command_name} ({request.status})")
+    lines.append("Transport handling to preserve:")
+    for finding in plan.transport_findings:
+        lines.append(f"- {finding.topic}: {finding.implementation_note}")
     lines.append("Current gaps:")
     for item in plan.unresolved:
         lines.append(f"- {item}")

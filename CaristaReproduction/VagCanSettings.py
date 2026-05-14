@@ -381,7 +381,7 @@ VAG_CAN_SETTINGS_NATIVE_SETTINGS: tuple[VagCanSettingsNativeSetting, ...] = (
         ),
         recovered_shape=(
             "official x86 6R/PQ25 branch: CENTRAL_ELEC_6R_5C_7E_7H plus VagCanEcu::CENTRAL_ELEC, byte 0x15 mask 0x80",
-            "fresh engine-running coding byte 0x15 is 0xA6, so mask 0x80 is already set while turn-signal cornering behavior is absent",
+            "latest retained 2026-05-08 coding byte 0x15 is 0x82, so mask 0x80 is set while turn-signal cornering behavior was still absent",
         ),
         read_candidate_dids=(),
         safety_note="Already set in current coding; not a missing-fix write seed.",
@@ -394,10 +394,10 @@ VAG_CAN_SETTINGS_NATIVE_SETTINGS: tuple[VagCanSettingsNativeSetting, ...] = (
         ),
         recovered_shape=(
             "official x86 6R/PQ25 branch: CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S plus VagCanEcu::CENTRAL_ELEC, byte 0x15 mask 0x04",
-            "fresh engine-running coding byte 0x15 is 0xA6, so mask 0x04 is already set while turn-signal cornering behavior is absent",
+            "latest retained 2026-05-08 coding byte 0x15 is 0x82, so mask 0x04 is clear; full expert backup sets byte 0x15 to 0x86",
         ),
         read_candidate_dids=(),
-        safety_note="This is the explicit turn-signal-cornering key, but its recovered bit is already set on the car.",
+        safety_note="This is the explicit turn-signal-cornering key; guarded set/clear targets exist, but earlier enabled testing did not prove it as a standalone fix.",
     ),
     VagCanSettingsNativeSetting(
         key="car_setting_cornering_lights_activation",
@@ -645,7 +645,7 @@ def VagCanSettings_getPq25SettingRecoveries() -> tuple[VagCanSettingsSettingReco
             ecu="PQ25 BCM / unit 09",
             native_function="_ZN14VagCanSettings11getSettingsEv / official Play 9.8.3 x86",
             reference_address="0x012da210 (Play 9.8.3 x86); 01082988 / 01082A4A (older ARM windows)",
-            instruction_window="docs/carista_apk_analysis/play_9_8_3_x86_vag_static_reverse_update.md; cornering_fogs_left_ref_1_01082988.txt; cornering_fogs_left_ref_2_01082A4A.txt",
+            instruction_window="docs/CARISTA_REVERSE/play_9_8_3_x86_vag_static_reverse_update.md; cornering_fogs_left_ref_1_01082988.txt; cornering_fogs_left_ref_2_01082A4A.txt",
             constructor_kind="mixed",
             constructor_status="write_blocked_read_rejected",
             native_helper="official x86: 0x012da25a -> 0x0136c910 -> PLT 0x0197e2f0 VagUdsAdaptationSetting; 0x012da39a -> 0x01356f90 -> PLT 0x0197d6f0 VagUdsAdaptationSetting. Older ARM: 01082988 -> 010B90CC -> 010E44E8 VagUdsAdaptationSetting and 01082A4A -> 010B5620 -> 010D2BD0 VagUdsAdaptationSetting; readVagUdsValue -> ReadRawDataByIdentifierCommand applies to the 055C type-7 branches",
@@ -683,7 +683,7 @@ def VagCanSettings_getPq25SettingRecoveries() -> tuple[VagCanSettingsSettingReco
             ecu="PQ25 BCM / unit 09",
             native_function="_ZN14VagCanSettings11getSettingsEv / official Play 9.8.3 x86",
             reference_address="0x012da55f (Play 9.8.3 x86); 01082B78 / 01082C34 (older ARM windows)",
-            instruction_window="docs/carista_apk_analysis/play_9_8_3_x86_vag_static_reverse_update.md; cornering_fogs_right_ref_1_01082B78.txt; cornering_fogs_right_ref_2_01082C34.txt",
+            instruction_window="docs/CARISTA_REVERSE/play_9_8_3_x86_vag_static_reverse_update.md; cornering_fogs_right_ref_1_01082B78.txt; cornering_fogs_right_ref_2_01082C34.txt",
             constructor_kind="mixed",
             constructor_status="write_blocked_read_rejected",
             native_helper="official x86: 0x012da5a9 -> 0x01368690 -> PLT 0x0197e0a0 VagUdsAdaptationSetting; 0x012da6e9 -> 0x0136caf0 -> PLT 0x0197e300 VagUdsAdaptationSetting. Older ARM: 01082B78 -> 010B8574 -> 010E0DE8 VagUdsAdaptationSetting and 01082C34 -> 010B9120 -> 010E466C VagUdsAdaptationSetting; readVagUdsValue -> ReadRawDataByIdentifierCommand applies to the 055D type-7 branches",
@@ -721,7 +721,7 @@ def VagCanSettings_getPq25SettingRecoveries() -> tuple[VagCanSettingsSettingReco
             ecu="PQ25 BCM / unit 09",
             native_function="_ZN14VagCanSettings11getSettingsEv / official Play 9.8.3 x86",
             reference_address="0x012d9ed4 / 0x012d9f7b (Play 9.8.3 x86)",
-            instruction_window="docs/carista_apk_analysis/play_9_8_3_x86_vag_static_reverse_update.md",
+            instruction_window="docs/CARISTA_REVERSE/play_9_8_3_x86_vag_static_reverse_update.md",
             constructor_kind="FullByteVagCanShortAdaptationSetting",
             constructor_status="constructor_partial",
             native_helper=(
@@ -752,7 +752,7 @@ def VagCanSettings_getPq25SettingRecoveries() -> tuple[VagCanSettingsSettingReco
             ecu="PQ25 BCM / unit 09",
             native_function="_ZN14VagCanSettings11getSettingsEv / official Play 9.8.3 x86",
             reference_address="0x012da0bd / 0x012da0f2 (Play 9.8.3 x86)",
-            instruction_window="docs/carista_apk_analysis/play_9_8_3_x86_vag_static_reverse_update.md",
+            instruction_window="docs/CARISTA_REVERSE/play_9_8_3_x86_vag_static_reverse_update.md",
             constructor_kind="VagUdsCodingSetting",
             constructor_status="constructor_partial",
             native_helper="official x86 0x012da0f2 -> 0x0135eaf0 VagUdsCodingSetting / VagCanEcu / MultipleChoiceInterpretation",
@@ -765,12 +765,12 @@ def VagCanSettings_getPq25SettingRecoveries() -> tuple[VagCanSettingsSettingReco
                 "Official x86 0x012da0f2 branch passes MultipleChoiceInterpretation::YES_NO into the 6R/PQ25 byte 0x15 mask 0x80 branch."
             ),
             read_method="Coding-style byte 0x15 mask 0x80 branch; no separate direct DID candidate recovered.",
-            write_method="Do not write: fresh engine-running coding byte 0x15 is 0xA6, so mask 0x80 is already set.",
+            write_method="Do not write as a standalone fix: latest retained coding byte 0x15 is 0x82, so mask 0x80 is already set.",
             next_re_step="Treat as already-enabled negative evidence for this symptom unless runtime Carista UI proves otherwise.",
             evidence=(
                 "Official x86 0x012da0bd loads car_setting_cornering_lights_via_fogs_experimental.",
                 "Official x86 0x012da0f2 pushes CENTRAL_ELEC_6R_5C_7E_7H, VagCanEcu::CENTRAL_ELEC, byte 0x15, mask 0x80, and YES_NO.",
-                "Fresh engine-running coding byte 0x15 is 0xA6, so this bit is already set while turn-signal cornering behavior is absent.",
+                "Latest retained 2026-05-08 coding byte 0x15 is 0x82, so this bit remains set while turn-signal cornering behavior was still absent.",
             ),
         ),
         VagCanSettingsSettingRecovery(
@@ -779,7 +779,7 @@ def VagCanSettings_getPq25SettingRecoveries() -> tuple[VagCanSettingsSettingReco
             ecu="PQ25 BCM / unit 09",
             native_function="_ZN14VagCanSettings11getSettingsEv / official Play 9.8.3 x86",
             reference_address="0x012da72c / 0x012da761 (Play 9.8.3 x86)",
-            instruction_window="docs/carista_apk_analysis/play_9_8_3_x86_vag_static_reverse_update.md",
+            instruction_window="docs/CARISTA_REVERSE/play_9_8_3_x86_vag_static_reverse_update.md",
             constructor_kind="VagUdsCodingSetting",
             constructor_status="constructor_partial",
             native_helper="official x86 0x012da761 -> 0x0135e920 VagUdsCodingSetting / VagCanEcu / MultipleChoiceInterpretation",
@@ -792,15 +792,15 @@ def VagCanSettings_getPq25SettingRecoveries() -> tuple[VagCanSettingsSettingReco
                 "Official x86 0x012da761 branch passes MultipleChoiceInterpretation::YES_NO into the explicit turn-signal-cornering byte 0x15 mask 0x04 branch."
             ),
             read_method="Coding-style byte 0x15 mask 0x04 branch; no separate direct DID candidate recovered.",
-            write_method="Do not write: fresh engine-running coding byte 0x15 is 0xA6, so mask 0x04 is already set.",
+            write_method="Guarded set/clear only; latest retained coding byte 0x15 is 0x82, so mask 0x04 is clear, while full expert backup sets byte 0x15 to 0x86.",
             next_re_step=(
-                "This explicit turn-signal key is already enabled in current coding. Treat it as the blinker-trigger "
-                "enable, not the source of steady paired fog output; look for prerequisite/output-role branches instead."
+                "Treat this as the blinker-trigger enable, not the source of steady paired fog output; "
+                "look for prerequisite/output-role branches instead."
             ),
             evidence=(
                 "Official x86 0x012da72c loads car_setting_cornering_lights_with_turn_signals before the 0x012da761 helper call.",
                 "Official x86 0x012da761 pushes CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S, VagCanEcu::CENTRAL_ELEC, byte 0x15, mask 0x04, and YES_NO.",
-                "Fresh engine-running coding byte 0x15 is 0xA6, so this bit is already set while turn-signal cornering behavior is absent.",
+                "Latest retained 2026-05-08 coding byte 0x15 is 0x82, so this bit is clear; earlier enabled testing did not prove it as a standalone fix.",
                 "PQ25 VCDS references describe byte 21 bit 2 as allowing cornering lights to activate from the turn-signal/blinker trigger when normal cornering lights are active; this matches the native branch as a trigger-source bit, not a front-fog/low-beam output-role selector.",
                 "A remembered observation that fogs stayed on while this setting was enabled is therefore ambiguous: one side can remain on while a blinker is active at low speed, but both fogs steadily on in the headlight switch position points to a separate fog-switch/output-role/CH-LH path.",
             ),
@@ -925,7 +925,7 @@ def VagCanSettings_getPq25SettingRecoveries() -> tuple[VagCanSettingsSettingReco
             ecu="PQ25 BCM / unit 09",
             native_function="_ZN14VagCanSettings11getSettingsEv / official Play 9.8.3 x86; FUN_0105f6c0 older ARM",
             reference_address="0x012c71a3 / 0x012c74fe 6R/PQ25 reused key branch (Play 9.8.3 x86); 0107671A / 01076772 / 010767E0 / 01076964",
-            instruction_window="docs/carista_apk_analysis/play_9_8_3_x86_vag_static_reverse_update.md; coming_home_req_rls_ref_0107671A.txt; coming_home_master_ref_01076860.txt",
+            instruction_window="docs/CARISTA_REVERSE/play_9_8_3_x86_vag_static_reverse_update.md; coming_home_req_rls_ref_0107671A.txt; coming_home_master_ref_01076860.txt",
             constructor_kind="mixed",
             constructor_status="constructor_multi_path_runtime_branch_unresolved",
             native_helper=(
@@ -1034,7 +1034,7 @@ def VagCanSettings_getPq25SettingRecoveries() -> tuple[VagCanSettingsSettingReco
             ecu="PQ25 BCM / unit 09",
             native_function="_ZN14VagCanSettings11getSettingsEv / official Play 9.8.3 x86; FUN_0105f6c0 older ARM",
             reference_address="0x012c9a61 / 0x012c9a96 (Play 9.8.3 x86); 0107813E / nearby duration variants",
-            instruction_window="docs/carista_apk_analysis/play_9_8_3_x86_vag_static_reverse_update.md; coming_home_duration_ref_0107813E.txt",
+            instruction_window="docs/CARISTA_REVERSE/play_9_8_3_x86_vag_static_reverse_update.md; coming_home_duration_ref_0107813E.txt",
             constructor_kind="mixed",
             constructor_status="constructor_multi_path_runtime_branch_unresolved",
             native_helper=(
@@ -1079,7 +1079,7 @@ def VagCanSettings_getPq25SettingRecoveries() -> tuple[VagCanSettingsSettingReco
             ecu="PQ25 BCM / unit 09",
             native_function="_ZN14VagCanSettings11getSettingsEv / official Play 9.8.3 x86",
             reference_address="0x012c88d0 (Play 9.8.3 x86); 010775EE / 01077694 / 01079282 / 01079316 (older ARM windows)",
-            instruction_window="docs/carista_apk_analysis/play_9_8_3_x86_vag_static_reverse_update.md; coming_leaving_home_output_ref_1_010775EE.txt; coming_leaving_home_output_ref_2_01079282.txt",
+            instruction_window="docs/CARISTA_REVERSE/play_9_8_3_x86_vag_static_reverse_update.md; coming_leaving_home_output_ref_1_010775EE.txt; coming_leaving_home_output_ref_2_01079282.txt",
             constructor_kind="mixed",
             constructor_status="constructor_multi_path_recovered_coding_raw_address_unresolved",
             native_helper="official x86 direct: 0x012c8913 and 0x012c8a1e -> 0x0133fdf0 VagUdsAdaptationSetting helpers guarded by CENTRAL_ELEC_MK8 or UDS_CAN_GATEWAY_MEB; older ARM: 0x010B1930 -> 0x010C0418 VagUdsAdaptationSetting and 0x010B4218 -> 0x010CCBC8 VagUdsCodingSetting",
@@ -1120,7 +1120,7 @@ def VagCanSettings_getPq25SettingRecoveries() -> tuple[VagCanSettingsSettingReco
             ecu="PQ25 BCM / unit 09",
             native_function="_ZN14VagCanSettings11getSettingsEv / official Play 9.8.3 x86",
             reference_address="0x012c8a55 (Play 9.8.3 x86); 010776D8 (older ARM window)",
-            instruction_window="docs/carista_apk_analysis/play_9_8_3_x86_vag_static_reverse_update.md; coming_home_via_low_beams_ref_010776D8.txt",
+            instruction_window="docs/CARISTA_REVERSE/play_9_8_3_x86_vag_static_reverse_update.md; coming_home_via_low_beams_ref_010776D8.txt",
             constructor_kind="mixed",
             constructor_status="constructor_partial",
             native_helper="official x86 direct key: 0x012c8a8a -> 0x01358fd0 FullByteVagCanShortAdaptationSetting / VagCanEcu / MultipleChoiceInterpretation guarded by CENTRAL_ELEC_B8; older ARM fallback: 0x010B5A98 -> 0x010D4140 VagUdsCodingSetting",
@@ -1151,7 +1151,7 @@ def VagCanSettings_getPq25SettingRecoveries() -> tuple[VagCanSettingsSettingReco
             ecu="PQ25 BCM / unit 09",
             native_function="_ZN14VagCanSettings11getSettingsEv / official Play 9.8.3 x86",
             reference_address="0x012c929b (Play 9.8.3 x86); 01077C50 (older ARM window)",
-            instruction_window="docs/carista_apk_analysis/play_9_8_3_x86_vag_static_reverse_update.md; coming_home_via_fogs_ref_01077C50.txt",
+            instruction_window="docs/CARISTA_REVERSE/play_9_8_3_x86_vag_static_reverse_update.md; coming_home_via_fogs_ref_01077C50.txt",
             constructor_kind="mixed",
             constructor_status="constructor_partial",
             native_helper="official x86 direct key: 0x012c92d0 -> 0x01340190 VagUdsCodingSetting / VagCanEcu / MultipleChoiceInterpretation guarded by CENTRAL_ELEC_B8; older ARM fallback: 0x010B19D0 -> 0x010C0708 VagUdsCodingSetting",
@@ -1183,7 +1183,7 @@ def VagCanSettings_getPq25SettingRecoveries() -> tuple[VagCanSettingsSettingReco
             ecu="PQ25 BCM / unit 09",
             native_function="_ZN14VagCanSettings11getSettingsEv / official Play 9.8.3 x86; FUN_0105f6c0 older ARM",
             reference_address="0x012ca544 / 0x012ca6e9 6R/PQ25 branch (Play 9.8.3 x86); 0107879A / 01078896",
-            instruction_window="docs/carista_apk_analysis/play_9_8_3_x86_vag_static_reverse_update.md; leaving_home_req_rls_ref_0107879A.txt",
+            instruction_window="docs/CARISTA_REVERSE/play_9_8_3_x86_vag_static_reverse_update.md; leaving_home_req_rls_ref_0107879A.txt",
             constructor_kind="mixed",
             constructor_status="constructor_multi_path_runtime_branch_unresolved",
             native_helper="official x86 0x012ca6e9 -> 0x01340190 VagUdsCodingSetting guarded by CENTRAL_ELEC_6R_5C_7E_7H_EXP_1S; 010B7184 -> 010DAD6C VagCanLongCodingSetting; 010B19D0 -> 010C0708 VagUdsCodingSetting",
@@ -1247,7 +1247,7 @@ def VagCanSettings_getPq25SettingRecoveries() -> tuple[VagCanSettingsSettingReco
             ecu="PQ25 BCM / unit 09",
             native_function="_ZN14VagCanSettings11getSettingsEv / official Play 9.8.3 x86; FUN_0105f6c0 older ARM",
             reference_address="0x012cacd4 / 0x012cad09 (Play 9.8.3 x86); 01078C66 / nearby duration variants",
-            instruction_window="docs/carista_apk_analysis/play_9_8_3_x86_vag_static_reverse_update.md; leaving_home_duration_ref_01078C66.txt; coming_leaving_home_output_ref_2_01079282.txt",
+            instruction_window="docs/CARISTA_REVERSE/play_9_8_3_x86_vag_static_reverse_update.md; leaving_home_duration_ref_01078C66.txt; coming_leaving_home_output_ref_2_01079282.txt",
             constructor_kind="mixed",
             constructor_status="constructor_multi_path_runtime_branch_unresolved",
             native_helper=(
@@ -1296,7 +1296,7 @@ def VagCanSettings_getPq25SettingRecoveries() -> tuple[VagCanSettingsSettingReco
             ecu="PQ25 BCM / unit 09",
             native_function="_ZN14VagCanSettings11getSettingsEv / official Play 9.8.3 x86",
             reference_address="0x012cde7b (Play 9.8.3 x86); 0107AA66 / 0107AAAC / 0107AB04 / 0107AB60 / 0107ABF4 / 0107AC84 (older ARM windows)",
-            instruction_window="docs/carista_apk_analysis/play_9_8_3_x86_vag_static_reverse_update.md; drl_via_fogs_ref_1_0107AA66.txt; drl_via_fogs_ref_2_0107ABF4.txt",
+            instruction_window="docs/CARISTA_REVERSE/play_9_8_3_x86_vag_static_reverse_update.md; drl_via_fogs_ref_1_0107AA66.txt; drl_via_fogs_ref_2_0107ABF4.txt",
             constructor_kind="mixed",
             constructor_status="constructor_partial",
             native_helper=(
@@ -1358,7 +1358,7 @@ def VagCanSettings_getPq25SettingRecoveries() -> tuple[VagCanSettingsSettingReco
             ecu="PQ25 BCM / unit 09",
             native_function="_ZN14VagCanSettings11getSettingsEv / official Play 9.8.3 x86",
             reference_address="0x012d4db5 (Play 9.8.3 x86); 0107F15A / 0107F1B4 / 0107F20A / 0107F26C / 0107F2D6 / 0107F330 (older ARM windows)",
-            instruction_window="docs/carista_apk_analysis/play_9_8_3_x86_vag_static_reverse_update.md; turn_off_fogs_with_high_beam_ref_1_0107F15A.txt; turn_off_fogs_with_high_beam_ref_2_0107F26C.txt",
+            instruction_window="docs/CARISTA_REVERSE/play_9_8_3_x86_vag_static_reverse_update.md; turn_off_fogs_with_high_beam_ref_1_0107F15A.txt; turn_off_fogs_with_high_beam_ref_2_0107F26C.txt",
             constructor_kind="mixed",
             constructor_status="constructor_partial",
             native_helper=(
@@ -1399,7 +1399,7 @@ def VagCanSettings_getPq25SettingRecoveries() -> tuple[VagCanSettingsSettingReco
             ecu="PQ25 BCM / unit 09",
             native_function="_ZN14VagCanSettings11getSettingsEv / official Play 9.8.3 x86",
             reference_address="0x012d9b78 (Play 9.8.3 x86); 0108252C (older ARM window)",
-            instruction_window="docs/carista_apk_analysis/play_9_8_3_x86_vag_static_reverse_update.md; assist_dr_lights_ref_0108252C.txt",
+            instruction_window="docs/CARISTA_REVERSE/play_9_8_3_x86_vag_static_reverse_update.md; assist_dr_lights_ref_0108252C.txt",
             constructor_kind="mixed",
             constructor_status="constructor_partial",
             native_helper="official x86 6R/PQ25: 0x012d9bad -> 0x013625a0 VagCanLongCodingSetting guarded by CENTRAL_ELEC_6R_5C_7E_7H byte 0x16/mask 0x20; 0x012d9cc0 -> 0x0135f600 non-6R cornering_lights branch; older ARM 010B74A0 -> 010DBC4C VagUdsCodingSetting",

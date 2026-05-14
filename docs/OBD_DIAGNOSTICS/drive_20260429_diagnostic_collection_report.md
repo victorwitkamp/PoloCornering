@@ -16,20 +16,21 @@ Blocked services remained excluded:
 3B write data by local identifier
 ```
 
-New helper scripts:
+Historical helper scripts used during this collection have been retired. Current
+repeatable read-only procedures use:
 
 ```text
-obd-on-pc/collect_drive_diagnostics.ps1
+obd-on-pc/pq25_read_monitor.ps1
 obd-on-pc/scan_vag_uds_headers.py
 ```
 
-Main log groups:
+Retained evidence groups:
 
 ```text
-obd-on-pc/logs/drive_20260429_1008_live_*
-obd-on-pc/logs/drive_20260429_1046_all_uds_ecus_fixed_uds_header_scan.*
-obd-on-pc/logs/drive_20260429_1048_other_ecus_dtc_identity_uds_header_scan.*
-obd-on-pc/logs/drive_20260429_1050_pending_dtc_retry_uds_header_scan.*
+docs/OBD_DIAGNOSTICS/session_artifacts/drive_20260429_1008_live_*
+docs/OBD_DIAGNOSTICS/session_artifacts/drive_20260429_1046_all_uds_ecus_fixed_uds_header_scan.*
+docs/OBD_DIAGNOSTICS/session_artifacts/drive_20260429_1048_other_ecus_dtc_identity_uds_header_scan.*
+docs/OBD_DIAGNOSTICS/session_artifacts/drive_20260429_1050_pending_dtc_retry_uds_header_scan.*
 ```
 
 ## BCM Drive Collection

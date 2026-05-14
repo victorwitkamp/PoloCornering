@@ -4,6 +4,7 @@ import argparse
 import csv
 import json
 import re
+import sys
 import time
 from dataclasses import asdict, dataclass
 from datetime import datetime
@@ -12,11 +13,44 @@ from typing import TypeAlias
 
 import serial
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from CaristaReproduction.Commands.ReadDataByIdentifierCommand import ReadDataByIdentifierCommand_getRequest
+from CaristaReproduction.Commands.VagDiagnosticCommands import (
+    GetVagCanTroubleCodesCommand_getRequest,
+    GetVagUdsTroubleCodesCommand_getRequest,
+    ReadVagUdsExtRecordByDtcCommand_getRequest,
+    ReadVagUdsSnapshotRecordByDtcCommand_getRequest,
+)
+from CaristaReproduction.VagDiagnosticsOperation import KNOWN_UDS_DTC_FROM_LOGS
+
 
 HexString: TypeAlias = str
 BLOCKED_PREFIXES = ("27", "2E", "31", "3B")
-DEFAULT_DISCOVERY_COMMANDS = ("22F190", "22F187")
-DEFAULT_DETAIL_COMMANDS = ("22F190", "22F187", "22F189", "22F197", "220600")
+DEFAULT_DISCOVERY_COMMANDS = (
+    ReadDataByIdentifierCommand_getRequest(0xF190),
+    ReadDataByIdentifierCommand_getRequest(0xF187),
+)
+DEFAULT_DETAIL_COMMANDS = (
+    ReadDataByIdentifierCommand_getRequest(0xF190),
+    ReadDataByIdentifierCommand_getRequest(0xF187),
+    ReadDataByIdentifierCommand_getRequest(0xF189),
+    ReadDataByIdentifierCommand_getRequest(0xF197),
+    ReadDataByIdentifierCommand_getRequest(0x0600),
+)
+COMMAND_PROFILES = {
+    "identity": DEFAULT_DETAIL_COMMANDS,
+    "carista-dtc": (
+        GetVagCanTroubleCodesCommand_getRequest(),
+        GetVagUdsTroubleCodesCommand_getRequest(),
+    ),
+    "carista-dtc-detail-known": (
+        GetVagCanTroubleCodesCommand_getRequest(),
+        GetVagUdsTroubleCodesCommand_getRequest(),
+        ReadVagUdsExtRecordByDtcCommand_getRequest(KNOWN_UDS_DTC_FROM_LOGS),
+        ReadVagUdsSnapshotRecordByDtcCommand_getRequest(KNOWN_UDS_DTC_FROM_LOGS),
+    ),
+}
 DEFAULT_HEADERS = tuple(f"{value:03X}" for value in range(0x700, 0x720)) + tuple(
     f"{value:03X}" for value in range(0x7E0, 0x7E8)
 )
@@ -75,6 +109,17 @@ def expected_response_header(request_header: HexString) -> HexString:
 def positive_marker(command: HexString) -> HexString:
     service = int(command[:2], 16)
     return f"{service + 0x40:02X}{command[2:]}"
+
+
+def is_response_pending(payload: HexString) -> bool:
+    return len(payload) >= 6 and payload.startswith("7F") and payload[4:6] == "78"
+
+
+def commands_from_profiles(profile_names: tuple[str, ...]) -> tuple[HexString, ...]:
+    commands: list[HexString] = []
+    for profile_name in profile_names:
+        commands.extend(COMMAND_PROFILES[profile_name])
+    return tuple(dict.fromkeys(commands))
 
 
 def read_until_prompt(ser: serial.Serial, timeout: float) -> str:
@@ -187,22 +232,35 @@ def probe(
     request_header: HexString,
     command: HexString,
     timeout: float,
+    pending_retries: int,
+    pending_pause: float,
     *,
     command_log: list[ElmCommandLogEntry] | None = None,
 ) -> UdsReadResult:
     response_header = expected_response_header(request_header)
     send_elm(ser, f"ATSH{request_header}", timeout, phase="set_header", command_log=command_log)
     send_elm(ser, f"ATCRA{response_header}", timeout, phase="set_response_filter", command_log=command_log)
-    raw = send_elm(ser, command, timeout, pause=0.25, phase="uds_read", command_log=command_log)
-    frames = extract_frames(raw, response_header)
-    payload = reassemble_isotp(frames)
+    raw_parts: list[str] = []
+    payload = ""
+    raw = ""
+    for attempt in range(pending_retries + 1):
+        phase = "uds_read" if attempt == 0 else "uds_read_response_pending_retry"
+        raw = send_elm(ser, command, timeout, pause=0.25, phase=phase, command_log=command_log)
+        raw_parts.append(clean_raw(raw))
+        frames = extract_frames(raw, response_header)
+        payload = reassemble_isotp(frames)
+        if not is_response_pending(payload):
+            break
+        if attempt < pending_retries:
+            time.sleep(pending_pause)
+    combined_raw = "\n--- response-pending retry ---\n".join(part for part in raw_parts if part)
     return UdsReadResult(
         request_header=request_header,
         response_header=response_header,
         command=command,
         status=classify(command, raw, payload),
         payload=payload,
-        raw=clean_raw(raw),
+        raw=combined_raw,
     )
 
 
@@ -275,12 +333,27 @@ def main() -> int:
     parser.add_argument("--baud", type=int, default=38400)
     parser.add_argument("--timeout", type=float, default=1.4)
     parser.add_argument("--headers", type=parse_headers, default=DEFAULT_HEADERS)
+    parser.add_argument("--profile", choices=tuple(COMMAND_PROFILES), action="append", default=[], help="Add a recovered Carista command profile. Can be repeated.")
     parser.add_argument("--discovery-commands", type=parse_csv_hex, default=DEFAULT_DISCOVERY_COMMANDS)
     parser.add_argument("--detail-commands", type=parse_csv_hex, default=DEFAULT_DETAIL_COMMANDS)
+    parser.add_argument("--pending-retries", type=int, default=1, help="Retry a read-only request this many times after 7F xx 78 responsePending.")
+    parser.add_argument("--pending-pause", type=float, default=0.5, help="Pause between responsePending retries in seconds.")
     parser.add_argument("--output-dir", type=Path, default=Path("logs"))
     parser.add_argument("--run-id", default=datetime.now().strftime("vag_uds_scan_%Y%m%d_%H%M%S"))
+    parser.add_argument("--list-profiles", action="store_true")
     parser.add_argument("--verbose", action="store_true", help="Print ELM init responses and responder details to the terminal.")
     args = parser.parse_args()
+
+    if args.list_profiles:
+        for name, commands in COMMAND_PROFILES.items():
+            print(f"{name}: {' '.join(commands)}")
+        return 0
+    if args.pending_retries < 0:
+        parser.error("--pending-retries must be non-negative")
+
+    profile_commands = commands_from_profiles(tuple(args.profile))
+    discovery_commands = tuple(dict.fromkeys(args.discovery_commands + profile_commands))
+    detail_commands = tuple(dict.fromkeys(args.detail_commands + profile_commands))
 
     results: list[UdsReadResult] = []
     command_log: list[ElmCommandLogEntry] = []
@@ -296,12 +369,20 @@ def main() -> int:
             print(f"Adapter: ELM initialization complete ({len(init_output)} commands)")
 
         header_count = len(args.headers)
-        print(f"Discovery: scanning {header_count} header(s) x {len(args.discovery_commands)} read command(s)")
+        print(f"Discovery: scanning {header_count} header(s) x {len(discovery_commands)} read command(s)")
         for header_index, header in enumerate(args.headers, start=1):
             if not args.verbose:
                 print(f"Discovery: header {header_index}/{header_count} {header}")
-            for command in args.discovery_commands:
-                result = probe(ser, header, command, args.timeout, command_log=command_log)
+            for command in discovery_commands:
+                result = probe(
+                    ser,
+                    header,
+                    command,
+                    args.timeout,
+                    args.pending_retries,
+                    args.pending_pause,
+                    command_log=command_log,
+                )
                 results.append(result)
                 if result.status in {"positive", "negative", "other"}:
                     responders.add(header)
@@ -310,14 +391,22 @@ def main() -> int:
         print(f"Discovery: complete, {len(responders)} responder header(s)")
         detail_headers = sorted(responders)
         if detail_headers:
-            print(f"Detail: reading {len(detail_headers)} responder header(s) x {len(args.detail_commands)} command(s)")
+            print(f"Detail: reading {len(detail_headers)} responder header(s) x {len(detail_commands)} command(s)")
         for detail_index, header in enumerate(detail_headers, start=1):
             if not args.verbose:
                 print(f"Detail: header {detail_index}/{len(detail_headers)} {header}")
-            for command in args.detail_commands:
+            for command in detail_commands:
                 if any(result.request_header == header and result.command == command for result in results):
                     continue
-                result = probe(ser, header, command, args.timeout, command_log=command_log)
+                result = probe(
+                    ser,
+                    header,
+                    command,
+                    args.timeout,
+                    args.pending_retries,
+                    args.pending_pause,
+                    command_log=command_log,
+                )
                 results.append(result)
                 if result.status in {"positive", "negative", "other"}:
                     print_probe_result(result)

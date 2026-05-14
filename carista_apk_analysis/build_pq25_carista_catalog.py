@@ -547,7 +547,7 @@ def build_report(setting_rows: list[SettingCatalogRow], bit_rows: list[LongCodin
         "carista_apk_analysis/pq25_carista_settings_catalog.csv",
         "carista_apk_analysis/pq25_carista_longcoding_bits.csv",
         "carista_apk_analysis/pq25_carista_setting_catalog.json",
-        "docs/carista_apk_analysis/pq25_carista_setting_catalog.md",
+        "docs/CARISTA_REVERSE/pq25_carista_setting_catalog.md",
         "```",
         "",
         "## Summary",

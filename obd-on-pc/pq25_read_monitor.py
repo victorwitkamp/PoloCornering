@@ -1,7 +1,27 @@
+"""
+pq25_read_monitor.py - active read-only PQ25 BCM monitor using TP2.0 one-shot reads.
+
+Replaces: run_bcm_active_monitor.py
+
+All protocol framing and request building uses CaristaReproduction.
+ELM327/TP2.0 transport is shared from _tp20_transport.py.
+
+Read-only guardrail: blocks 27, 2E, 31, 3B. Only accepts 18, 19, 1A, 21, 22, 24.
+
+Usage:
+    python obd-on-pc/pq25_read_monitor.py
+    python obd-on-pc/pq25_read_monitor.py --profile switch --cycles 8 --label fog_switch_toggle
+    python obd-on-pc/pq25_read_monitor.py --profile carista-dtc --cycles 1
+    python obd-on-pc/pq25_read_monitor.py --profile fog-role-candidates
+    python obd-on-pc/pq25_read_monitor.py --kwp21-range 10 1F --cycles 1 --label kwp21_10_1f
+    python obd-on-pc/pq25_read_monitor.py --did22-range 0550 056F --cycles 1
+    python obd-on-pc/pq25_read_monitor.py --vag-adaptation-channel 2F --label ch2f
+    python obd-on-pc/pq25_read_monitor.py --commands 220601 --commands 220606 --cycles 3
+    python obd-on-pc/pq25_read_monitor.py --list-profiles
+"""
 from __future__ import annotations
 
 import argparse
-import importlib.util
 import json
 import re
 import sys
@@ -16,6 +36,7 @@ import serial
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from CaristaReproduction.ReadValuesOperation import ReadValuesOperation_pq25BcmRequests
+from CaristaReproduction.VagDiagnosticsOperation import VagDiagnosticsOperation_pq25BcmReadOnlyRequests
 from CaristaReproduction.Commands.VagCanAdaptationCommands import (
     READ_VAG_CAN_LONG_ADAPTATION_BASIC_ID,
     READ_VAG_CAN_SHORT_ADAPTATION_BASIC_ID,
@@ -30,6 +51,16 @@ from CaristaReproduction.Commands.VagCanAdaptationCommands import (
     StopReadVagCanRoutineCommand_getRequest,
 )
 
+# Shared ELM327/TP2.0 transport
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from _tp20_transport import (
+    elm_send,
+    init_elm,
+    tp20_close,
+    tp20_open,
+    tp20_request,
+)
+
 READ_ONLY_BLOCKED_PREFIXES = ("27", "2E", "31", "3B")
 READ_ONLY_ALLOWED_PREFIXES = ("18", "19", "1A", "21", "22", "24")
 READ_ONLY_SETUP_PREFIXES = ("10", "3E")
@@ -40,6 +71,8 @@ _HEX_RE = re.compile(r"^[0-9A-Fa-f]+$")
 MONITOR_PROFILES: dict[str, tuple[str, ...]] = {
     "switch": DEFAULT_COMMANDS,
     "dtc": ("1802FF00", "1902FF"),
+    "carista-dtc": VagDiagnosticsOperation_pq25BcmReadOnlyRequests(),
+    "carista-dtc-detail-known": VagDiagnosticsOperation_pq25BcmReadOnlyRequests(include_known_detail=True),
     "identity": ("22F187", "22F189", "22F197", "22F1A5"),
     "coding": ("220600",),
     "carista-core": ReadValuesOperation_pq25BcmRequests(include_live_companions=True),
@@ -74,17 +107,6 @@ MONITOR_PROFILES["all-safe"] = tuple(
         for command in MONITOR_PROFILES[profile]
     )
 )
-
-
-def _load_bcm_runner():
-    path = Path(__file__).with_name("run_bcm_coding_session.py").resolve()
-    spec = importlib.util.spec_from_file_location("bcm_runner", path)
-    if spec is None or spec.loader is None:
-        raise RuntimeError(f"failed to load {path}")
-    module = importlib.util.module_from_spec(spec)
-    sys.modules["bcm_runner"] = module
-    spec.loader.exec_module(module)
-    return module
 
 
 def _normalize_hex(value: str) -> str:
@@ -267,13 +289,13 @@ def _parse_vag_adaptation_step(kind: str, parser_name: str, payload: str | None)
     return parsed
 
 
-def _read_once(runner, ser: serial.Serial, command: str, setup_commands: Sequence[str]) -> tuple[str | None, list[dict[str, str | None]]]:
-    _unused, t3_ms = runner._tp20_open(ser)
+def _read_once(ser: serial.Serial, command: str, setup_commands: Sequence[str]) -> tuple[str | None, list[dict[str, str | None]]]:
+    _, t3_ms = tp20_open(ser)
     counter = 0
     setup_observations: list[dict[str, str | None]] = []
     try:
         for setup_command in setup_commands:
-            setup_payload, counter = runner._tp20_request(
+            setup_payload, counter = tp20_request(
                 ser,
                 counter,
                 setup_command,
@@ -281,27 +303,26 @@ def _read_once(runner, ser: serial.Serial, command: str, setup_commands: Sequenc
                 label=f"setup {setup_command}",
             )
             setup_observations.append({"command": setup_command, "payload": setup_payload})
-        payload, _next_counter = runner._tp20_request(ser, counter, command, t3_ms, label=command)
+        payload, _next_counter = tp20_request(ser, counter, command, t3_ms, label=command)
         return payload, setup_observations
     finally:
-        runner._tp20_close(ser)
+        tp20_close(ser)
 
 
 def _read_vag_adaptation_once(
-    runner,
     ser: serial.Serial,
     kind: str,
     channel: int,
     plan: Sequence[dict[str, str]],
     setup_commands: Sequence[str],
 ) -> tuple[list[dict[str, object]], list[dict[str, str | None]]]:
-    _unused, t3_ms = runner._tp20_open(ser)
+    _, t3_ms = tp20_open(ser)
     counter = 0
     setup_observations: list[dict[str, str | None]] = []
     step_observations: list[dict[str, object]] = []
     try:
         for setup_command in setup_commands:
-            setup_payload, counter = runner._tp20_request(
+            setup_payload, counter = tp20_request(
                 ser,
                 counter,
                 setup_command,
@@ -310,7 +331,7 @@ def _read_vag_adaptation_once(
             )
             setup_observations.append({"command": setup_command, "payload": setup_payload})
         for step in plan:
-            payload, counter = runner._tp20_request(
+            payload, counter = tp20_request(
                 ser,
                 counter,
                 step["command"],
@@ -327,7 +348,7 @@ def _read_vag_adaptation_once(
             )
         return step_observations, setup_observations
     finally:
-        runner._tp20_close(ser)
+        tp20_close(ser)
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -398,130 +419,75 @@ def main(argv: Sequence[str] | None = None) -> int:
         else ()
     )
     profile_names = args.profile or ([] if args.commands or adaptation_plan else ["switch"])
-    explicit_commands = (
-        tuple(args.commands)
-        + _kwp21_range_commands(args.kwp21_range)
-        + _did22_range_commands(args.did22_range)
-        + _service1a_range_commands(args.service1a_range)
-    )
-    commands = _commands_from_profiles(profile_names, explicit_commands)
-    setup_commands = tuple(_normalize_setup_command(command) for command in args.setup_command)
-    args.log_dir.mkdir(parents=True, exist_ok=True)
-    run_id = f"{args.label}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
-    out_path = args.log_dir / f"{run_id}.json"
+    setup_commands = tuple(_normalize_setup_command(cmd) for cmd in args.setup_command)
 
-    print(f"Active BCM monitor run_id={run_id}")
-    print(f"port={args.port} baud={args.baud}")
-    print(f"profiles={' '.join(profile_names)}")
-    print(f"commands={' '.join(commands)}")
-    if adaptation_plan:
-        adaptation_commands = " ".join(step["command"] for step in adaptation_plan)
-        print(f"vag adaptation read={args.vag_adaptation_kind} channel={adaptation_channel:02X}")
-        print(f"vag adaptation commands={adaptation_commands}")
-    if setup_commands:
-        print(f"per-read setup={' '.join(setup_commands)}")
-    print("Explicit --commands blocked services: 27 2E 31 3B")
-    print("Other non-allowed prefixes are rejected before serial access.")
-    if adaptation_plan:
-        print("Carista VAG adaptation mode sends only the exact 31/32 read-routine sequence above.")
-    print(f"Allowed read prefixes: {' '.join(READ_ONLY_ALLOWED_PREFIXES)}")
-    print(f"Allowed setup prefixes: {' '.join(READ_ONLY_SETUP_PREFIXES)}")
-    print("Toggle the light switch/fog pull while cycles run.")
+    # Build the full command list
+    all_commands = list(_commands_from_profiles(profile_names, args.commands))
+    all_commands.extend(_kwp21_range_commands(args.kwp21_range))
+    all_commands.extend(_did22_range_commands(args.did22_range))
+    all_commands.extend(_service1a_range_commands(args.service1a_range))
 
-    if args.cycles <= 0:
-        print("\nDry run only; no serial port opened because cycles <= 0.")
+    if not all_commands and not adaptation_plan:
+        print("No commands or adaptation plan to execute.")
         return 0
 
-    runner = _load_bcm_runner()
-    observations: list[dict[str, object]] = []
-    previous: dict[str, str | None] = {}
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    run_id = f"{args.label}_{ts}"
+    args.log_dir.mkdir(parents=True, exist_ok=True)
+    log_path = args.log_dir / f"{run_id}.json"
+
+    print(f"BCM active read monitor  run_id={run_id}")
+    print(f"profiles={profile_names or None}  commands={all_commands or None}")
+    print(f"vag adaptation: kind={args.vag_adaptation_kind} channel={adaptation_channel or 'none'}")
+    print(f"cycles={args.cycles}  pause={args.pause}s  label={args.label}")
+    print(f"Blocked services (safety): {' '.join(READ_ONLY_BLOCKED_PREFIXES)}")
+    print()
+
+    if all_commands:
+        print(f"Commands: {' '.join(all_commands)}")
+    print()
 
     with serial.Serial(args.port, args.baud, timeout=0.1) as ser:
-        runner._init_elm(ser)
-        for cycle in range(1, args.cycles + 1):
-            print(f"\n=== cycle {cycle}/{args.cycles} ===")
-            for command in commands:
-                started = datetime.now().isoformat(timespec="seconds")
-                try:
-                    payload, setup_observations = _read_once(runner, ser, command, setup_commands)
-                    error = ""
-                except Exception as exc:  # live monitor should log and continue
-                    payload = None
-                    setup_observations = []
-                    error = f"{type(exc).__name__}: {exc}"
-                changed = command in previous and previous[command] != payload
-                previous[command] = payload
-                status = "CHANGED" if changed else "same"
-                print(f"{command} -> {payload or '(none)'}  {status}{'  ' + error if error else ''}")
-                observations.append(
-                    {
-                        "cycle": cycle,
-                        "timestamp": started,
-                        "command": command,
-                        "setup": setup_observations,
-                        "payload": payload,
-                        "changed": changed,
-                        "error": error,
-                    }
+        init_elm(ser)
+
+        observations: list[dict[str, object]] = []
+
+        for cycle in range(args.cycles):
+            print(f"\n--- cycle {cycle + 1}/{args.cycles} ---")
+
+            for command in all_commands:
+                payload, setup_observations = _read_once(ser, command, setup_commands)
+                observations.append({
+                    "cycle": cycle + 1,
+                    "command": command,
+                    "payload": payload,
+                    "setup_observations": setup_observations,
+                })
+                if payload:
+                    print(f"  {command} -> {payload}")
+                else:
+                    print(f"  {command} -> (no payload)")
+
+            if adaptation_plan:
+                adapt_observations, adapt_setup = _read_vag_adaptation_once(
+                    ser, args.vag_adaptation_kind, adaptation_channel,
+                    adaptation_plan, setup_commands,
                 )
-            if adaptation_plan and adaptation_channel is not None:
-                started = datetime.now().isoformat(timespec="seconds")
-                try:
-                    steps, setup_observations = _read_vag_adaptation_once(
-                        runner,
-                        ser,
-                        args.vag_adaptation_kind,
-                        adaptation_channel,
-                        adaptation_plan,
-                        setup_commands,
-                    )
-                    error = ""
-                except Exception as exc:  # routine probing should log and continue
-                    steps = []
-                    setup_observations = []
-                    error = f"{type(exc).__name__}: {exc}"
-                parsed_values = [
-                    step["parsed"].get("value")
-                    for step in steps
-                    if isinstance(step.get("parsed"), dict) and step["parsed"].get("value") is not None
-                ]
-                parsed_suffix = f" parsed={','.join(str(value) for value in parsed_values)}" if parsed_values else ""
-                print(
-                    f"vag-adaptation {args.vag_adaptation_kind} {adaptation_channel:02X}"
-                    f" -> {len(steps)} steps{parsed_suffix}{'  ' + error if error else ''}"
-                )
-                observations.append(
-                    {
-                        "cycle": cycle,
-                        "timestamp": started,
-                        "type": "vag_adaptation_read",
-                        "kind": args.vag_adaptation_kind,
-                        "channel": f"{adaptation_channel:02X}",
-                        "setup": setup_observations,
-                        "steps": steps,
-                        "error": error,
-                    }
-                )
-            if cycle != args.cycles:
+                observations.append({
+                    "cycle": cycle + 1,
+                    "type": "vag-adaptation",
+                    "kind": args.vag_adaptation_kind,
+                    "channel": adaptation_channel,
+                    "steps": adapt_observations,
+                    "setup_observations": adapt_setup,
+                })
+
+            if cycle < args.cycles - 1:
                 time.sleep(args.pause)
 
-    out_path.write_text(
-        json.dumps(
-            {
-                "run_id": run_id,
-                "profiles": profile_names,
-                "commands": commands,
-                "setup_commands": setup_commands,
-                "cycles": args.cycles,
-                "pause": args.pause,
-                "observations": observations,
-            },
-            indent=2,
-        )
-        + "\n",
-        encoding="utf-8",
-    )
-    print(f"\nSaved {out_path}")
+    # Save observations
+    log_path.write_text(json.dumps(observations, indent=2) + "\n", encoding="utf-8")
+    print(f"\nObservations saved: {log_path}")
     return 0
 
 
